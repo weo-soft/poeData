@@ -153,24 +153,37 @@ function getCategoryFilename(categoryId) {
     return 'divinationCards/divinationCards.json';
   }
   
-  // Convert category ID to filename
-  // Other categories -> "categoryDetails.json" (remove trailing 's')
+  // Special handling for new categories with subdirectory structure
+  const categoryFileMap = {
+    'breach-splinters': 'breachSplinter/breachSplinter.json', // Note: singular "Splinter"
+    'breachstones': 'breachstones/breachStones.json',
+    'catalysts': 'catalysts/catalysts.json',
+    'delirium-orbs': 'deliriumOrbs/deliriumOrbs.json',
+    'essences': 'essences/essences.json',
+    'fossils': 'fossils/fossils.json',
+    'legion-emblems': 'legionEmblems/legionEmblems.json',
+    'legion-splinters': 'legionSplinters/legionSplinters.json',
+    'oils': 'oils/oils.json',
+    'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
+  };
   
+  if (categoryFileMap[categoryId]) {
+    return categoryFileMap[categoryId];
+  }
+  
+  // Fallback: Convert category ID to filename (kebab-case to camelCase)
+  // Pattern: "category-id" -> "categoryIdDetails.json"
   const parts = categoryId.split('-');
   const baseName = parts.map((part, index) => {
     if (index === 0) {
-      // Remove trailing 's' if present (scarabs -> scarab)
-      return part.replace(/s$/, '');
+      // First part: keep as-is (lowercase)
+      return part;
     }
-    // For subsequent parts, capitalize first letter and remove trailing 's' if present
-    // "cards" -> "Card"
-    const capitalized = part.charAt(0).toUpperCase() + part.slice(1);
-    return capitalized.replace(/s$/, '');
+    // Subsequent parts: capitalize first letter
+    return part.charAt(0).toUpperCase() + part.slice(1);
   }).join('');
   
-  // Keep first letter lowercase to match actual filenames
-  // categoryDetails.json
-  
+  // Return filename with Details.json suffix
   return `${baseName}Details.json`;
 }
 
@@ -217,6 +230,56 @@ export async function getAvailableCategories() {
       id: 'divination-cards',
       name: 'Divination Cards',
       description: 'Collectible cards that can be turned in for rewards'
+    },
+    {
+      id: 'breach-splinters',
+      name: 'Breach Splinters',
+      description: 'Splinters that combine to create breachstones'
+    },
+    {
+      id: 'breachstones',
+      name: 'Breachstones',
+      description: 'Stones that open breach domains'
+    },
+    {
+      id: 'catalysts',
+      name: 'Catalysts',
+      description: 'Items used to enhance quality of jewelry'
+    },
+    {
+      id: 'delirium-orbs',
+      name: 'Delirium Orbs',
+      description: 'Orbs that add delirium effects to maps'
+    },
+    {
+      id: 'essences',
+      name: 'Essences',
+      description: 'Items used to craft item modifiers'
+    },
+    {
+      id: 'fossils',
+      name: 'Fossils',
+      description: 'Items used to modify crafting outcomes'
+    },
+    {
+      id: 'legion-emblems',
+      name: 'Legion Emblems',
+      description: 'Emblems that open legion encounters'
+    },
+    {
+      id: 'legion-splinters',
+      name: 'Legion Splinters',
+      description: 'Splinters that combine to create legion emblems'
+    },
+    {
+      id: 'oils',
+      name: 'Oils',
+      description: 'Items used to anoint passive skills'
+    },
+    {
+      id: 'tattoos',
+      name: 'Tattoos',
+      description: 'Items that modify passive skill trees'
     }
   ];
   

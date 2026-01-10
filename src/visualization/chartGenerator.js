@@ -29,12 +29,6 @@ export function generateCategoryCharts(container, items, _categoryId) {
   const chartsGrid = document.createElement('div');
   chartsGrid.className = 'charts-grid';
   
-  // Drop Level Distribution Chart
-  const dropLevelChart = createDropLevelChart(items);
-  if (dropLevelChart) {
-    chartsGrid.appendChild(dropLevelChart);
-  }
-  
   // Drop Weight Distribution Chart
   const dropWeightChart = createDropWeightChart(items);
   if (dropWeightChart) {
@@ -42,70 +36,6 @@ export function generateCategoryCharts(container, items, _categoryId) {
   }
   
   container.appendChild(chartsGrid);
-}
-
-/**
- * Create drop level distribution chart
- * @param {Array} items - Array of items
- * @returns {HTMLElement|null} Chart container or null
- */
-function createDropLevelChart(items) {
-  const container = document.createElement('div');
-  container.className = 'chart-container';
-  
-  const canvas = document.createElement('canvas');
-  container.appendChild(canvas);
-  
-  // Group items by drop level
-  const levelGroups = {};
-  items.forEach(item => {
-    const level = item.dropLevel || 0;
-    levelGroups[level] = (levelGroups[level] || 0) + 1;
-  });
-  
-  const levels = Object.keys(levelGroups).map(Number).sort((a, b) => a - b);
-  const counts = levels.map(level => levelGroups[level]);
-  
-  new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels: levels.map(l => `Level ${l}`),
-      datasets: [{
-        label: 'Items by Drop Level',
-        data: counts,
-        backgroundColor: 'rgba(175, 96, 37, 0.6)',
-        borderColor: 'rgba(175, 96, 37, 1)',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Drop Level Distribution',
-          color: '#d4d4d4'
-        },
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#d4d4d4' },
-          grid: { color: '#3a3a3a' }
-        },
-        x: {
-          ticks: { color: '#d4d4d4' },
-          grid: { color: '#3a3a3a' }
-        }
-      }
-    }
-  });
-  
-  return container;
 }
 
 /**

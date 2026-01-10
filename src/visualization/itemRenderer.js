@@ -44,10 +44,19 @@ export async function renderItemDetails(container, item, categoryId) {
     
     const baseList = createElement('dl', { className: 'attribute-list' });
     
-    addAttribute(baseList, 'ID', item.id);
-    addAttribute(baseList, 'Name', item.name);
-    addAttribute(baseList, 'Drop Level', item.dropLevel);
-    addAttribute(baseList, 'Drop Weight', item.dropWeight);
+    // Add base attributes only if they exist
+    if (item.id) {
+      addAttribute(baseList, 'ID', item.id);
+    }
+    if (item.name) {
+      addAttribute(baseList, 'Name', item.name);
+    }
+    if (item.dropLevel !== undefined && item.dropLevel !== null) {
+      addAttribute(baseList, 'Drop Level', item.dropLevel);
+    }
+    if (item.dropWeight !== undefined && item.dropWeight !== null) {
+      addAttribute(baseList, 'Drop Weight', item.dropWeight);
+    }
     
     baseSection.appendChild(baseList);
     sideBySideContainer.appendChild(baseSection);
@@ -61,10 +70,19 @@ export async function renderItemDetails(container, item, categoryId) {
     
     const baseList = createElement('dl', { className: 'attribute-list' });
     
-    addAttribute(baseList, 'ID', item.id);
-    addAttribute(baseList, 'Name', item.name);
-    addAttribute(baseList, 'Drop Level', item.dropLevel);
-    addAttribute(baseList, 'Drop Weight', item.dropWeight);
+    // Add base attributes only if they exist
+    if (item.id) {
+      addAttribute(baseList, 'ID', item.id);
+    }
+    if (item.name) {
+      addAttribute(baseList, 'Name', item.name);
+    }
+    if (item.dropLevel !== undefined && item.dropLevel !== null) {
+      addAttribute(baseList, 'Drop Level', item.dropLevel);
+    }
+    if (item.dropWeight !== undefined && item.dropWeight !== null) {
+      addAttribute(baseList, 'Drop Weight', item.dropWeight);
+    }
     
     baseSection.appendChild(baseList);
     container.appendChild(baseSection);
@@ -73,6 +91,11 @@ export async function renderItemDetails(container, item, categoryId) {
   // Category-specific attributes
   if (categoryId === 'scarabs') {
     renderScarabAttributes(container, item);
+  } else if (categoryId === 'divination-cards') {
+    renderDivinationCardAttributes(container, item);
+  } else {
+    // Generic rendering for new categories and unknown attributes
+    renderGenericAttributes(container, item, categoryId);
   }
 }
 
@@ -187,5 +210,89 @@ function renderDivinationCardAttributes(container, item) {
   
   section.appendChild(list);
   container.appendChild(section);
+}
+
+/**
+ * Render generic attributes for new categories or unknown category-specific attributes
+ * Displays all attributes that are not base attributes
+ * @param {HTMLElement} container - Container element
+ * @param {Object} item - Item object
+ * @param {string} categoryId - Category identifier
+ */
+function renderGenericAttributes(container, item, categoryId) {
+  // Base attributes that should not be shown again
+  const baseAttributes = ['id', 'name', 'dropLevel', 'dropWeight', 'icon'];
+  
+  // Get all item keys and filter out base attributes
+  const categorySpecificKeys = Object.keys(item).filter(key => !baseAttributes.includes(key));
+  
+  // If there are category-specific attributes, render them
+  if (categorySpecificKeys.length > 0) {
+    const section = createElement('div', { className: 'item-section category-attributes' });
+    const categoryName = formatCategoryName(categoryId);
+    const title = createElement('h2', { textContent: `${categoryName} Attributes` });
+    section.appendChild(title);
+    
+    const list = createElement('dl', { className: 'attribute-list' });
+    
+    categorySpecificKeys.forEach(key => {
+      const value = item[key];
+      if (value !== undefined && value !== null) {
+        // Format key name (camelCase to Title Case)
+        const formattedKey = key
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/^./, str => str.toUpperCase())
+          .trim();
+        
+        if (Array.isArray(value)) {
+          // Handle array values
+          const dt = createElement('dt', { textContent: formattedKey });
+          const dd = createElement('dd');
+          if (value.length > 0) {
+            const valueList = createElement('ul');
+            value.forEach(val => {
+              const li = createElement('li', { textContent: String(val) });
+              valueList.appendChild(li);
+            });
+            dd.appendChild(valueList);
+          } else {
+            dd.textContent = 'None';
+          }
+          list.appendChild(dt);
+          list.appendChild(dd);
+        } else if (typeof value === 'object') {
+          // Handle object values (render as JSON-like string)
+          const dt = createElement('dt', { textContent: formattedKey });
+          const dd = createElement('dd', { 
+            textContent: JSON.stringify(value, null, 2),
+            className: 'json-value'
+          });
+          list.appendChild(dt);
+          list.appendChild(dd);
+        } else if (typeof value === 'boolean') {
+          // Handle boolean values
+          addAttribute(list, formattedKey, value ? 'Yes' : 'No');
+        } else {
+          // Handle primitive values
+          addAttribute(list, formattedKey, String(value));
+        }
+      }
+    });
+    
+    section.appendChild(list);
+    container.appendChild(section);
+  }
+}
+
+/**
+ * Format category name for display
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Formatted name
+ */
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 

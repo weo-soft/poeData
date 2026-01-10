@@ -118,18 +118,46 @@ function formatCategoryName(categoryId) {
  * @returns {string} Filename
  */
 function getCategoryFilename(categoryId) {
+  // Special handling for scarabs - use new directory structure
+  if (categoryId === 'scarabs') {
+    return 'scarabs/scarabs.json';
+  }
+  
+  // Special handling for divination-cards - use new directory structure
+  if (categoryId === 'divination-cards') {
+    return 'divinationCards/divinationCards.json';
+  }
+  
+  // Special handling for new categories with subdirectory structure
+  const categoryFileMap = {
+    'breach-splinters': 'breachSplinter/breachSplinter.json', // Note: singular "Splinter"
+    'breachstones': 'breachstones/breachStones.json',
+    'catalysts': 'catalysts/catalysts.json',
+    'delirium-orbs': 'deliriumOrbs/deliriumOrbs.json',
+    'essences': 'essences/essences.json',
+    'fossils': 'fossils/fossils.json',
+    'legion-emblems': 'legionEmblems/legionEmblems.json',
+    'legion-splinters': 'legionSplinters/legionSplinters.json',
+    'oils': 'oils/oils.json',
+    'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
+  };
+  
+  if (categoryFileMap[categoryId]) {
+    return categoryFileMap[categoryId];
+  }
+  
+  // Fallback: Convert category ID to filename (kebab-case to camelCase)
   const parts = categoryId.split('-');
   const baseName = parts.map((part, index) => {
     if (index === 0) {
-      // Remove trailing 's' if present (scarabs -> scarab)
-      return part.replace(/s$/, '');
+      // First part: keep as-is (lowercase)
+      return part;
     }
-    // For subsequent parts, capitalize first letter and remove trailing 's' if present
-    // "cards" -> "Card"
-    const capitalized = part.charAt(0).toUpperCase() + part.slice(1);
-    return capitalized.replace(/s$/, '');
+    // Subsequent parts: capitalize first letter
+    return part.charAt(0).toUpperCase() + part.slice(1);
   }).join('');
-  // Keep first letter lowercase to match actual filenames
+  
+  // Return filename with Details.json suffix
   return `${baseName}Details.json`;
 }
 

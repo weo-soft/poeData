@@ -1363,3 +1363,92 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
+/* List View Styles */
+.list-view-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+  margin: 2rem 0;
+}
+
+.list-view-item {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: border-color 0.2s, transform 0.2s, background-color 0.2s;
+  min-height: 80px;
+}
+
+.list-view-item:hover {
+  border-color: var(--poe-accent);
+  transform: translateY(-2px);
+  background-color: rgba(175, 96, 37, 0.1);
+}
+
+.list-view-item-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 100%;
+}
+
+.list-view-item-icon-container {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.list-view-item-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.list-view-item-name-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.list-view-item-name {
+  color: var(--poe-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+}
+
+.list-view-empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.list-view-empty-state h2 {
+  color: var(--poe-text);
+  margin-bottom: 1rem;
+}
+
+.list-view-empty-state p {
+  color: var(--poe-text-dim);
+  margin-bottom: 1.5rem;
+}
+
