@@ -120,16 +120,16 @@ async function renderCardContent(cardContainer, card, width) {
   cardContainer.appendChild(title);
   cardState.elements.title = title;
   
-  // Add card art if available (try public first, then src)
-  if (card.artFilename) {
+  // Add card art if available (use card id as filename, try public first, then src)
+  if (card.id) {
     const artImg = createElement('img', {
       className: 'div-card-art',
-      src: `/assets/images/divinationcards/${card.artFilename}.png`,
+      src: `/assets/images/divinationcards/${card.id}.png`,
       alt: card.name
     });
     artImg.onerror = () => {
       // Try src path as fallback
-      artImg.src = `/src/assets/images/divinationcards/${card.artFilename}.png`;
+      artImg.src = `/src/assets/images/divinationcards/${card.id}.png`;
       artImg.onerror = () => {
         // Hide image if both paths fail
         artImg.style.display = 'none';

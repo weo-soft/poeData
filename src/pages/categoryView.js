@@ -152,9 +152,19 @@ function formatCategoryName(categoryId) {
 /**
  * Get category filename
  * @param {string} categoryId - Category identifier
- * @returns {string} Filename
+ * @returns {string} Filename or path
  */
 function getCategoryFilename(categoryId) {
+  // Special handling for scarabs - use new directory structure
+  if (categoryId === 'scarabs') {
+    return 'scarabs/scarabs.json';
+  }
+  
+  // Special handling for divination-cards - use new directory structure
+  if (categoryId === 'divination-cards') {
+    return 'divinationCards/divinationCards.json';
+  }
+  
   const parts = categoryId.split('-');
   const baseName = parts.map((part, index) => {
     if (index === 0) {

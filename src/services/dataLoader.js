@@ -28,11 +28,21 @@ export async function loadCategoryData(categoryId) {
       throw new Error(`Failed to load category data: ${response.statusText}`);
     }
     
-    const data = await response.json();
+    let data = await response.json();
     
     // Validate it's an array
     if (!Array.isArray(data)) {
       throw new Error(`Invalid data format: expected array, got ${typeof data}`);
+    }
+    
+    // Special handling for scarabs - merge weight data from dataset
+    if (categoryId === 'scarabs') {
+      data = await mergeScarabWeights(data);
+    }
+    
+    // Special handling for divination-cards - merge weight data from dataset
+    if (categoryId === 'divination-cards') {
+      data = await mergeDivinationCardWeights(data);
     }
     
     // Cache the data
@@ -46,14 +56,105 @@ export async function loadCategoryData(categoryId) {
 }
 
 /**
+ * Merge weight data from dataset into scarab items
+ * @param {Array} items - Array of scarab items
+ * @returns {Promise<Array>} Items with dropWeight merged from dataset
+ */
+async function mergeScarabWeights(items) {
+  try {
+    // Load the dataset
+    const datasetResponse = await fetch('/data/scarabs/datasets/dataset1.json');
+    
+    if (!datasetResponse.ok) {
+      console.warn('Could not load scarab dataset, items will not have dropWeight');
+      return items;
+    }
+    
+    const dataset = await datasetResponse.json();
+    
+    // Create a map of item ID to weight
+    const weightMap = new Map();
+    if (dataset.items && Array.isArray(dataset.items)) {
+      dataset.items.forEach(item => {
+        if (item.id && item.weight !== undefined) {
+          weightMap.set(item.id, item.weight);
+        }
+      });
+    }
+    
+    // Merge weights into items
+    return items.map(item => {
+      const weight = weightMap.get(item.id);
+      if (weight !== undefined) {
+        return { ...item, dropWeight: weight };
+      }
+      return item;
+    });
+  } catch (error) {
+    console.warn('Error merging scarab weights:', error);
+    return items;
+  }
+}
+
+/**
+ * Merge weight data from dataset into divination card items
+ * @param {Array} items - Array of divination card items
+ * @returns {Promise<Array>} Items with dropWeight merged from dataset
+ */
+async function mergeDivinationCardWeights(items) {
+  try {
+    // Load the dataset
+    const datasetResponse = await fetch('/data/divinationCards/datasets/dataset1.json');
+    
+    if (!datasetResponse.ok) {
+      console.warn('Could not load divination card dataset, items will not have dropWeight');
+      return items;
+    }
+    
+    const dataset = await datasetResponse.json();
+    
+    // Create a map of item ID to weight
+    const weightMap = new Map();
+    if (dataset.items && Array.isArray(dataset.items)) {
+      dataset.items.forEach(item => {
+        if (item.id && item.weight !== undefined) {
+          weightMap.set(item.id, item.weight);
+        }
+      });
+    }
+    
+    // Merge weights into items
+    return items.map(item => {
+      const weight = weightMap.get(item.id);
+      if (weight !== undefined) {
+        return { ...item, dropWeight: weight };
+      }
+      return item;
+    });
+  } catch (error) {
+    console.warn('Error merging divination card weights:', error);
+    return items;
+  }
+}
+
+/**
  * Get category filename from category ID
  * @param {string} categoryId - Category identifier
- * @returns {string} Filename (e.g., "scarabDetails.json")
+ * @returns {string} Filename or path (e.g., "scarabDetails.json" or "scarabs/scarabs.json")
  */
 function getCategoryFilename(categoryId) {
+  // Special handling for scarabs - use new directory structure
+  if (categoryId === 'scarabs') {
+    return 'scarabs/scarabs.json';
+  }
+  
+  // Special handling for divination-cards - use new directory structure
+  if (categoryId === 'divination-cards') {
+    return 'divinationCards/divinationCards.json';
+  }
+  
   // Convert category ID to filename
-  // "scarabs" -> "scarabDetails.json" (remove trailing 's')
-  // "divination-cards" -> "divinationCardDetails.json" (remove trailing 's' from "cards" too)
+  // Other categories -> "categoryDetails.json" (remove trailing 's')
   
   const parts = categoryId.split('-');
   const baseName = parts.map((part, index) => {
@@ -68,7 +169,7 @@ function getCategoryFilename(categoryId) {
   }).join('');
   
   // Keep first letter lowercase to match actual filenames
-  // scarabDetails.json, divinationCardDetails.json
+  // categoryDetails.json
   
   return `${baseName}Details.json`;
 }

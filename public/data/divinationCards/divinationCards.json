@@ -63,8 +63,16 @@
     "dropMonsters": [
       "Guardian of the Chimera"
     ],
+    "explicitModifiers": [
+      {
+        "text": "<magicitem>{Jewellery of Farrul}\n<default>{Item Level:} <normal>{100}\n<default>{Shaper + Hunter Item}",
+        "optional": false
+      }
+    ],
+    "flavourText": "<size:29>{The mighty huntress always called for her chare,\nBut what we shared was a Lifelong Bond.}",
     "stackSize": 3,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "a-familiar-call"
   },
   {
     "name": "A Fate Worse Than Death",
@@ -382,7 +390,15 @@
       "Hector Titucius, Eternal Servant"
     ],
     "stackSize": 13,
-    "dropLevel": 64
+    "dropLevel": 64,
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Voltaxic Rift}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Born of relentless Fury and abhorrence, warped by turmail and anguish, tainted through desire and carnality, I thirst for bloodshed once more.",
+    "id": "anarchys-price"
   },
   {
     "name": "Arrogance of the Vaal",
@@ -767,7 +783,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 1,
-    "dropLevel": 35
+    "dropLevel": 35,
+    "explicitModifiers": [
+      {
+        "text": "<currencyitem>{5x Divine Orb}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Even though his flame has burned out, \nHe will never fade away.",
+    "id": "brothers-gift"
   },
   {
     "name": "Brother's Stash",
@@ -777,7 +801,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 1,
-    "dropLevel": 35
+    "dropLevel": 35,
+    "explicitModifiers": [
+      {
+        "text": "<currencyitem>{5x Exalted Orb}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Even though he found the stash just in time,\nHe would trade it all away and then some to have him back.",
+    "id": "brothers-stash"
   },
   {
     "name": "Brotherhood in Exile",
@@ -841,7 +873,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 6,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Xoph's Blood}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "<size:28>{There's a ülace where up is down,\nwhere right is wrong,\nwhere pleasure is agony,\nand where the living wish only for death.}",
+    "id": "burning-blood"
   },
   {
     "name": "Call to the First Ones",
@@ -1632,7 +1672,15 @@
       "Vaal Flesh Merchant"
     ],
     "stackSize": 9,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Legendary Leggings}\n<corrupted>{Corrupted}\n<default>{Double-Influenced Item}\n<default>{Item Level:} <normal>{97}\n<corrupted>{Two-Implicit}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Some people act as beacons, illuminating the path for others. I was lucky to meet one such person.\n\n- Anton to Zhenya.",
+    "id": "fateful-meeting"
   },
   {
     "name": "Father's Love",
@@ -1730,7 +1778,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 4,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "explicitModifiers": [
+      {
+        "text": "<magicitem>{Helmet}\n<default>{Double-Influenced Item}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Why not both?",
+    "id": "further-invention"
   },
   {
     "name": "Gemcutter's Mercy",
@@ -2032,7 +2088,6 @@
         "optional": false
       }
     ],
-    "flavourText": "",
     "id": "humility"
   },
   {
@@ -2183,7 +2238,15 @@
     "dropMonsters": [],
     "stackSize": 9,
     "dropLevel": 81,
-    "additionalDropRestrictions": "Unknown drop location"
+    "additionalDropRestrictions": "Unknown drop location",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Forbidden Shako}",
+        "optional": false
+      }
+    ],
+    "flavourText": "He was seeking sanity, but the demons were inside his head.",
+    "id": "judging-voices"
   },
   {
     "name": "Justified Ambition",
@@ -2291,7 +2354,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 3,
-    "dropLevel": 64
+    "dropLevel": 64,
+    "id": "last-stand",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{The Surrender}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Return with your shield...\nor on it."
   },
   {
     "name": "Left to Fate",
@@ -2584,7 +2655,14 @@
     ],
     "dropMonsters": [],
     "stackSize": 4,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "merciless-armament",
+    "explicitModifiers": [
+      {
+        "text": "<magicitem>{magic}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ]
   },
   {
     "name": "Might is Right",
@@ -2868,7 +2946,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 7,
-    "dropLevel": 80
+    "dropLevel": 80,
+    "id": "pride-of-the-first-ones",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Farrul's Fur}",
+        "optional": false
+      }
+    ],
+    "flavourText": "\"through thick and thin,\nblood and bone,\na peaceful life\nis one I can't condone.\"\n- Tukohama, Father Of War"
   },
   {
     "name": "Prometheus' Armoury",
@@ -3172,7 +3258,15 @@
       "Farrul, First of the Plains"
     ],
     "stackSize": 7,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "silence-and-frost",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{The Pandemonius}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Cry havoc!\nUnleash pandemonium!"
   },
   {
     "name": "Society's Remorse",
@@ -3548,7 +3642,15 @@
       "It That Fled"
     ],
     "stackSize": 5,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-bargain",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{flawless breachstone}",
+        "optional": false
+      }
+    ],
+    "flavourText": "In the pursuit of power, as in that of wealth,\nanything goes."
   },
   {
     "name": "The Battle Born",
@@ -3739,7 +3841,15 @@
       "Null Portal"
     ],
     "stackSize": 4,
-    "dropLevel": 68
+    "dropLevel": 68,
+    "id": "the-breach",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Breach}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Ever get the feeling you're being watched...?"
   },
   {
     "name": "The Brittle Emperor",
@@ -3932,7 +4042,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 18,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-catch",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{trinket}\n<default>{Item Level:} <normal>{99}",
+        "optional": false
+      }
+    ],
+    "flavourText": "The largest hooks offer the greatest catch, but often the catch is the hook."
   },
   {
     "name": "The Celestial Justicar",
@@ -4349,7 +4467,15 @@
       "Agent of the Void"
     ],
     "stackSize": 6,
-    "dropLevel": 68
+    "dropLevel": 68,
+    "id": "the-dreamer",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Dreamer}",
+        "optional": false
+      }
+    ],
+    "flavourText": "A dark note drips\nfrom the dreamer's Lips,\nA honeyed melody.\nWe stand, we fall\non his beck and call,\nforin his dream we're free."
   },
   {
     "name": "The Dreamland",
@@ -4959,14 +5085,14 @@
     "dropMonsters": [],
     "stackSize": 5,
     "dropLevel": 23,
+    "flavourText": "\"I don't believe in karma. If it were real, I would never win.\"",
+    "id": "the-gambler",
     "explicitModifiers": [
       {
-        "text": "<divination>{Divination Card}",
+        "text": "<uniqueitem>{Her Mask}",
         "optional": false
       }
-    ],
-    "flavourText": "\"I don't believe in karma. If it were real, I would never win.\"",
-    "id": "the-gambler"
+    ]
   },
   {
     "name": "The Garish Power",
@@ -5078,7 +5204,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 5,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-gulf",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Thread of Hope}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "I thought love stronger than all,\nbut time and isolation broke\nthat which madness could not"
   },
   {
     "name": "The Hale Heart",
@@ -5090,7 +5224,15 @@
       "The Purifier"
     ],
     "stackSize": 4,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-hale-heart",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Elder-influenced}\n<default>{Influenced Item}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Though the years weakened his mind, his body remained deadly as Ever."
   },
   {
     "name": "The Harvester",
@@ -5159,7 +5301,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 6,
-    "dropLevel": 67
+    "dropLevel": 67,
+    "id": "the-hive-of-knowledge",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Machina Mitts}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Within years of knowledge, distilled by careful craftsmanship, lies great power."
   },
   {
     "name": "The Hoarder",
@@ -6017,7 +6167,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 7,
-    "dropLevel": 50
+    "dropLevel": 50,
+    "id": "the-one-that-got-away",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Replica Bated Breath}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Savor Life's missing pieces.\nTo complete one's final goal\nis to take one's last breath."
   },
   {
     "name": "The One With All",
@@ -6205,7 +6363,15 @@
       "Zilquapa, Architect of the Breach"
     ],
     "stackSize": 4,
-    "dropLevel": 68
+    "dropLevel": 68,
+    "id": "the-price-of-loyalty",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Skin of the Loyal}\n<corrupted>{Corrupted}\n<default>{Item Level:} <normal>{25}",
+        "optional": false
+      }
+    ],
+    "flavourText": "\"Forge me a carapace from their skin, imbuaed with their soul. Then feed their flesh to the hounds.\""
   },
   {
     "name": "The Price of Prescience",
@@ -6383,7 +6549,15 @@
       "Pale Virtue"
     ],
     "stackSize": 5,
-    "dropLevel": 68
+    "dropLevel": 68,
+    "id": "the-puzzle",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{breachstone splinters}",
+        "optional": false
+      }
+    ],
+    "flavourText": "As countless fractures weaken the divide, nightmares seep through from the other side."
   },
   {
     "name": "The Queen",
@@ -6590,7 +6764,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 4,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-sacrifice",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Sacrifice}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ],
+    "flavourText": "For some, the price of power is never too great.."
   },
   {
     "name": "The Saint's Treasure",
@@ -7120,7 +7302,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 2,
-    "dropLevel": 68
+    "dropLevel": 68,
+    "id": "the-throne",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Kaom's Roots}\n<corrupted>{Corrupted}",
+        "optional": false
+      }
+    ],
+    "flavourText": "A king's movement is unwavering."
   },
   {
     "name": "The Tinkerer's Table",
@@ -7241,7 +7431,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 2,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-tumbleweed",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Redeemer-influenced}\n<default>{Influenced Item}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ],
+    "flavourText": "Love is the only redemption after succumbing to the grasps of the wasteland."
   },
   {
     "name": "The Twilight Moon",
@@ -7321,7 +7519,15 @@
       "Chayula, Who Dreamt"
     ],
     "stackSize": 8,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-undisputed",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Elder-influenced}\n<default>{Influenced Item}\n<default>{Item Level:} <normal>{100}",
+        "optional": false
+      }
+    ],
+    "flavourText": "To create something truly spectacular, you must total failure."
   },
   {
     "name": "The Unexpected Prize",
@@ -7714,7 +7920,15 @@
       "Ghorr, the Grasping Maw"
     ],
     "stackSize": 8,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "the-world-eater",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Starforge}",
+        "optional": false
+      }
+    ],
+    "flavourText": "(310-341) to (645-709.5)"
   },
   {
     "name": "The Wrath",
@@ -8002,7 +8216,7 @@
         "optional": false
       }
     ],
-    "flavourText": "",
+    "flavourText": "They fought the storm together as one,\nUntil the longest of days was done.\nTheir love grew stronger\nwith every breath,\nUntil it was broken apart in death.",
     "id": "vanity"
   },
   {
@@ -8128,7 +8342,15 @@
     ],
     "dropMonsters": [],
     "stackSize": 9,
-    "dropLevel": 81
+    "dropLevel": 81,
+    "id": "who-asked",
+    "explicitModifiers": [
+      {
+        "text": "<uniqueitem>{Fractured}\n<default>{Item Level:} <normal>{83}",
+        "optional": false
+      }
+    ],
+    "flavourText": "In the midst\nof unrelenting requests,\nThe blacksmith's Forge\nconjures the unpredictable\ncountless voices, countless desires -\nyielding weapons as diverse\nas those who ask"
   },
   {
     "name": "Winter's Embrace",
