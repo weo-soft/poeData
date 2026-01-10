@@ -45,6 +45,15 @@ export async function loadCategoryData(categoryId) {
       data = await mergeDivinationCardWeights(data);
     }
     
+    // Special handling for merged categories - merge data from multiple files
+    if (categoryId === 'breach') {
+      data = await mergeBreachData(data);
+    }
+    
+    if (categoryId === 'legion') {
+      data = await mergeLegionData(data);
+    }
+    
     // Cache the data
     dataCache.set(categoryId, data);
     
@@ -138,6 +147,52 @@ async function mergeDivinationCardWeights(items) {
 }
 
 /**
+ * Merge breach data from splinters and stones
+ * @param {Array} initialData - Initial data (from breachstones)
+ * @returns {Promise<Array>} Merged items from both files
+ */
+async function mergeBreachData(initialData) {
+  try {
+    // Load breach splinters data
+    const splintersResponse = await fetch('/data/breachSplinter/breachSplinter.json');
+    if (splintersResponse.ok) {
+      const splintersData = await splintersResponse.json();
+      if (Array.isArray(splintersData)) {
+        // Combine both arrays
+        return [...initialData, ...splintersData];
+      }
+    }
+    return initialData;
+  } catch (error) {
+    console.warn('Could not load breach splinters data:', error);
+    return initialData;
+  }
+}
+
+/**
+ * Merge legion data from splinters and emblems
+ * @param {Array} initialData - Initial data (from legion-splinters)
+ * @returns {Promise<Array>} Merged items from both files
+ */
+async function mergeLegionData(initialData) {
+  try {
+    // Load legion emblems data
+    const emblemsResponse = await fetch('/data/legionEmblems/legionEmblems.json');
+    if (emblemsResponse.ok) {
+      const emblemsData = await emblemsResponse.json();
+      if (Array.isArray(emblemsData)) {
+        // Combine both arrays
+        return [...initialData, ...emblemsData];
+      }
+    }
+    return initialData;
+  } catch (error) {
+    console.warn('Could not load legion emblems data:', error);
+    return initialData;
+  }
+}
+
+/**
  * Get category filename from category ID
  * @param {string} categoryId - Category identifier
  * @returns {string} Filename or path (e.g., "scarabDetails.json" or "scarabs/scarabs.json")
@@ -153,16 +208,23 @@ function getCategoryFilename(categoryId) {
     return 'divinationCards/divinationCards.json';
   }
   
+  // Special handling for merged categories
+  if (categoryId === 'breach') {
+    // Start with breachstones, then merge splinters in mergeBreachData
+    return 'breachstones/breachStones.json';
+  }
+  
+  if (categoryId === 'legion') {
+    // Start with legion-splinters, then merge emblems in mergeLegionData
+    return 'legionSplinters/legionSplinters.json';
+  }
+  
   // Special handling for new categories with subdirectory structure
   const categoryFileMap = {
-    'breach-splinters': 'breachSplinter/breachSplinter.json', // Note: singular "Splinter"
-    'breachstones': 'breachstones/breachStones.json',
     'catalysts': 'catalysts/catalysts.json',
     'delirium-orbs': 'deliriumOrbs/deliriumOrbs.json',
     'essences': 'essences/essences.json',
     'fossils': 'fossils/fossils.json',
-    'legion-emblems': 'legionEmblems/legionEmblems.json',
-    'legion-splinters': 'legionSplinters/legionSplinters.json',
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
   };
@@ -232,14 +294,9 @@ export async function getAvailableCategories() {
       description: 'Collectible cards that can be turned in for rewards'
     },
     {
-      id: 'breach-splinters',
-      name: 'Breach Splinters',
-      description: 'Splinters that combine to create breachstones'
-    },
-    {
-      id: 'breachstones',
-      name: 'Breachstones',
-      description: 'Stones that open breach domains'
+      id: 'breach',
+      name: 'Breach',
+      description: 'Breach splinters and breachstones'
     },
     {
       id: 'catalysts',
@@ -262,14 +319,9 @@ export async function getAvailableCategories() {
       description: 'Items used to modify crafting outcomes'
     },
     {
-      id: 'legion-emblems',
-      name: 'Legion Emblems',
-      description: 'Emblems that open legion encounters'
-    },
-    {
-      id: 'legion-splinters',
-      name: 'Legion Splinters',
-      description: 'Splinters that combine to create legion emblems'
+      id: 'legion',
+      name: 'Legion',
+      description: 'Legion splinters and emblems'
     },
     {
       id: 'oils',

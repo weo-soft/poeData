@@ -342,3 +342,392 @@ export function getCellAtPosition(cells, x, y) {
 export function getCellById(cells, cellId) {
   return cells.find(cell => cell.id === cellId) || null;
 }
+
+/**
+ * Category-to-tab image mapping
+ * Maps category identifiers to their corresponding stash tab image files and grid configuration keys
+ */
+export const CATEGORY_GRID_MAPPING = {
+  'breach': {
+    tabImagePath: '/assets/images/stashTabs/breach-tab.png',
+    gridConfigKey: 'breach',
+    imageDirectory: '/assets/images/breach/' // Will need to handle both subdirectories
+  },
+  'legion': {
+    tabImagePath: '/assets/images/stashTabs/fragments-tab.png',
+    gridConfigKey: 'fragments',
+    imageDirectory: '/assets/images/legion/' // Will need to handle both subdirectories
+  },
+  'delirium-orbs': {
+    tabImagePath: '/assets/images/stashTabs/delirium-orbs-tab.png',
+    gridConfigKey: 'delirium-orbs',
+    imageDirectory: '/assets/images/deliriumOrbs/'
+  },
+  'essences': {
+    tabImagePath: '/assets/images/stashTabs/essence-tab.png',
+    gridConfigKey: 'essence',
+    imageDirectory: '/assets/images/essences/'
+  },
+  'fossils': {
+    tabImagePath: '/assets/images/stashTabs/fossils-tab.png',
+    gridConfigKey: 'fossils',
+    imageDirectory: '/assets/images/fossils/'
+  },
+  'oils': {
+    tabImagePath: '/assets/images/stashTabs/oils-tab.png',
+    gridConfigKey: 'oils',
+    imageDirectory: '/assets/images/oils/'
+  },
+  'catalysts': {
+    tabImagePath: '/assets/images/stashTabs/catalysts-tab.png',
+    gridConfigKey: 'catalysts',
+    imageDirectory: '/assets/images/catalysts/'
+  }
+};
+
+/**
+ * Get stash tab image path for a category
+ * @param {string} categoryId - Category identifier
+ * @returns {string|null} Image path or null if category doesn't have grid view
+ */
+export function getCategoryTabImage(categoryId) {
+  const mapping = CATEGORY_GRID_MAPPING[categoryId];
+  return mapping ? mapping.tabImagePath : null;
+}
+
+/**
+ * Get image directory path for category item images
+ * @param {string} categoryId - Category identifier
+ * @returns {string|null} Directory path or null if category doesn't have grid view
+ */
+export function getCategoryImageDirectory(categoryId) {
+  const mapping = CATEGORY_GRID_MAPPING[categoryId];
+  return mapping ? mapping.imageDirectory : null;
+}
+
+/**
+ * Get grid configuration key for a category
+ * @param {string} categoryId - Category identifier
+ * @returns {string|null} Grid config key or null if category doesn't have grid view
+ */
+export function getGridConfigKey(categoryId) {
+  const mapping = CATEGORY_GRID_MAPPING[categoryId];
+  return mapping ? mapping.gridConfigKey : null;
+}
+
+/**
+ * Grid configuration for breach-tab.png
+ * Image dimensions: 840 x 794 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ * This is a placeholder configuration - cell positions must be determined by analyzing the image
+ */
+export const BREACH_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/breach-tab.png',
+  imageDimensions: {
+    width: 840,
+    height: 794
+  },
+  cellGroups: [
+    // TODO: Analyze breach-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    // Actual positions should match the visual layout in the image
+    { x: 100, y: 50, count: 5, type: 'breachstone' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'breachstone': [] // Will be populated based on item data or use default sorting
+  }
+};
+
+/**
+ * Grid configuration for fragments-tab.png
+ * Image dimensions: 842 x 792 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ * Used by: legion-splinters, legion-emblems
+ */
+export const FRAGMENTS_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/fragments-tab.png',
+  imageDimensions: {
+    width: 842,
+    height: 792
+  },
+  cellGroups: [
+    // TODO: Analyze fragments-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    { x: 100, y: 50, count: 10, type: 'fragment' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'fragment': []
+  }
+};
+
+/**
+ * Grid configuration for delirium-orbs-tab.png
+ * Image dimensions: 839 x 841 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ */
+export const DELIRIUM_ORBS_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/delirium-orbs-tab.png',
+  imageDimensions: {
+    width: 839,
+    height: 841
+  },
+  cellGroups: [
+    // TODO: Analyze delirium-orbs-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    { x: 100, y: 50, count: 8, type: 'delirium-orb' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'delirium-orb': []
+  }
+};
+
+/**
+ * Grid configuration for essence-tab.png
+ * Image dimensions: 842 x 840 pixels (measured)
+ * Essences are organized in rows, each row containing different tiers of the same essence
+ * Starting from center (lowest tier) moving outwards (highest tier)
+ * Cells are 63x63 pixels
+ * Top right corner of first cell of top row: (493, 27)
+ */
+export const ESSENCE_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/essence-tab.png',
+  imageDimensions: {
+    width: 842,
+    height: 840
+  },
+  cellGroups: [
+    // First 4 rows: 7 members each
+    // Row 0: Rightmost cell top-right: (493, 27), top-left: (430, 27)
+    // Leftmost cell (7 members): (430 - 6*63) = (430 - 378) = (52, 27)
+    { x: 52, y: 27, count: 7, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 52, y: 90, count: 7, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 52, y: 153, count: 7, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 52, y: 216, count: 7, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    
+    // Next 4 rows: 6 members each
+    // Row 4: Rightmost cell top-right: (427, 290), top-left: (364, 290)
+    // Leftmost cell (6 members): (364 - 5*63) = (364 - 315) = (49, 290)
+    { x: 49, y: 290, count: 6, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 49, y: 353, count: 6, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 49, y: 416, count: 6, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 49, y: 479, count: 6, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    
+    // Next 4 rows: 5 members each
+    // Row 8: Rightmost cell top-right: (361, 553), top-left: (298, 553)
+    // Leftmost cell (5 members): (298 - 4*63) = (298 - 252) = (46, 553)
+    { x: 46, y: 553, count: 5, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 46, y: 616, count: 5, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 46, y: 679, count: 5, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    { x: 46, y: 742, count: 5, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence' },
+    
+    // Right-expanding rows: expand from center to the right
+    // First 4 rows: 4 members each, top-left at (549, 27) as specified
+    // Tiers are in the same columns conceptually, but positioned to the right to avoid overlap
+    { x: 549, y: 27, count: 4, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 549, y: 90, count: 4, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 549, y: 153, count: 4, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 549, y: 216, count: 4, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    
+    // Next 4 rows: 3 members each
+    // Moved two columns (126 pixels) further right from previous position
+    // Previous: x=486, new: x=486 + 126 = 612
+    { x: 612, y: 279, count: 3, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 612, y: 342, count: 3, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 612, y: 405, count: 3, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    { x: 612, y: 468, count: 3, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-right' },
+    
+    // Special essences: each in their own row, same column
+    // Top-left corner of first row: (745, 553)
+    // Order: Insanity, Horror, Delirium, Hysteria
+    { x: 745, y: 553, count: 1, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-special' },
+    { x: 745, y: 616, count: 1, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-special' },
+    { x: 745, y: 679, count: 1, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-special' },
+    { x: 745, y: 742, count: 1, cellWidth: 63, cellHeight: 63, padding: 0, type: 'essence-special' }
+  ],
+  defaultCellSize: {
+    width: 63,
+    height: 63
+  },
+  defaultPadding: 0,
+  itemOrderConfig: {
+    'essence': []
+  }
+};
+
+/**
+ * Grid configuration for fossils-tab.png
+ * Image dimensions: 839 x 839 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ */
+export const FOSSILS_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/fossils-tab.png',
+  imageDimensions: {
+    width: 839,
+    height: 839
+  },
+  cellGroups: [
+    // TODO: Analyze fossils-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    { x: 100, y: 50, count: 12, type: 'fossil' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'fossil': []
+  }
+};
+
+/**
+ * Grid configuration for oils-tab.png
+ * Image dimensions: 843 x 842 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ */
+export const OILS_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/oils-tab.png',
+  imageDimensions: {
+    width: 843,
+    height: 842
+  },
+  cellGroups: [
+    // TODO: Analyze oils-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    { x: 100, y: 50, count: 12, type: 'oil' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'oil': []
+  }
+};
+
+/**
+ * Grid configuration for catalysts-tab.png
+ * Image dimensions: 844 x 839 pixels (measured)
+ * NOTE: Cell positions need to be analyzed from the actual image
+ */
+export const CATALYSTS_GRID_CONFIG = {
+  tabImagePath: '/assets/images/stashTabs/catalysts-tab.png',
+  imageDimensions: {
+    width: 844,
+    height: 839
+  },
+  cellGroups: [
+    // TODO: Analyze catalysts-tab.png to determine actual cell positions
+    // For now, using a simple single-row layout as placeholder
+    // Actual positions should match the visual layout in the image
+    { x: 100, y: 50, count: 10, type: 'catalyst' }
+  ],
+  defaultCellSize: {
+    width: 49,
+    height: 48
+  },
+  defaultPadding: 2,
+  itemOrderConfig: {
+    'catalyst': []
+  }
+};
+
+/**
+ * Map of grid config keys to their configuration objects
+ */
+const GRID_CONFIGS = {
+  'breach': BREACH_GRID_CONFIG,
+  'fragments': FRAGMENTS_GRID_CONFIG,
+  'delirium-orbs': DELIRIUM_ORBS_GRID_CONFIG,
+  'essence': ESSENCE_GRID_CONFIG,
+  'fossils': FOSSILS_GRID_CONFIG,
+  'oils': OILS_GRID_CONFIG,
+  'catalysts': CATALYSTS_GRID_CONFIG
+};
+
+/**
+ * Get grid configuration for a category
+ * @param {string} categoryId - Category identifier
+ * @returns {Object|null} Grid configuration object or null if category doesn't have grid view
+ */
+export function getGridConfig(categoryId) {
+  const configKey = getGridConfigKey(categoryId);
+  if (!configKey) {
+    return null;
+  }
+  return GRID_CONFIGS[configKey] || null;
+}
+
+/**
+ * Create cell definitions from group configuration for a specific grid config
+ * Supports per-group overrides for cell dimensions and padding
+ * @param {Object} gridConfig - Grid configuration object with cellGroups array
+ * @returns {Array<Object>} Array of cell definitions
+ */
+export function createCellsFromGroupsForCategory(gridConfig) {
+  if (!gridConfig || !gridConfig.cellGroups) {
+    return [];
+  }
+  
+  const cells = [];
+  let cellId = 0;
+  let globalRow = 0;
+  let lastY = -1;
+  
+  const defaultCellSize = gridConfig.defaultCellSize || CELL_SIZE;
+  const defaultPadding = gridConfig.defaultPadding ?? CELL_PADDING;
+  
+  gridConfig.cellGroups.forEach((group, groupConfigIndex) => {
+    // Determine row number based on Y position
+    // If Y changed significantly, it's a new row
+    if (lastY === -1 || Math.abs(group.y - lastY) > 10) {
+      // New row detected
+      if (lastY !== -1) {
+        globalRow++;
+      }
+      lastY = group.y;
+    }
+    
+    // Get cell dimensions and padding for this group (with fallback to defaults)
+    const cellWidth = group.cellWidth ?? defaultCellSize.width;
+    const cellHeight = group.cellHeight ?? defaultCellSize.height;
+    const padding = group.padding ?? defaultPadding;
+    
+    // Create cells in this group
+    let colInRow = 0;
+    for (let i = 0; i < group.count; i++) {
+      const cellX = group.x + i * (cellWidth + padding);
+      
+      cells.push({
+        id: `cell-${cellId++}`,
+        x: cellX,
+        y: group.y,
+        width: cellWidth,
+        height: cellHeight,
+        row: globalRow,
+        col: colInRow++,
+        groupIndex: i, // Index within the group (0-based)
+        groupType: group.type, // Type of group (e.g., 'breachstone', 'essence')
+        groupConfigIndex: groupConfigIndex // Index of the group in cellGroups array
+      });
+    }
+  });
+  
+  return cells;
+}
