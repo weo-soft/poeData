@@ -10,6 +10,27 @@ const iconCache = new Map();
 const PLACEHOLDER_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
 /**
+ * Get list of icon directories to try for a category
+ * For merged categories, returns multiple directories
+ * @param {string} categoryId - Category identifier
+ * @param {string} baseDir - Base directory from getIconDirectory
+ * @returns {Array<string>} Array of directory paths to try
+ */
+function getIconDirectoriesForCategory(categoryId, baseDir) {
+  // For merged categories, try multiple subdirectories
+  if (categoryId === 'breach') {
+    return ['breachstones', 'breachSplinters'];
+  }
+  
+  if (categoryId === 'legion') {
+    return ['legionSplinters', 'legionEmblems'];
+  }
+  
+  // For other categories, just return the base directory
+  return [baseDir];
+}
+
+/**
  * Map category ID to icon directory name
  * Some categories use kebab-case IDs but camelCase directory names
  * @param {string} categoryId - Category identifier (kebab-case)
@@ -18,10 +39,9 @@ const PLACEHOLDER_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB
 function getIconDirectory(categoryId) {
   // Special mappings for categories with different directory names
   const directoryMap = {
-    'breach-splinters': 'breachSplinters',
+    'breach': 'breach', // Will try multiple subdirectories in loadItemIcon
     'delirium-orbs': 'deliriumOrbs',
-    'legion-emblems': 'legionEmblems',
-    'legion-splinters': 'legionSplinters',
+    'legion': 'legion', // Will try multiple subdirectories in loadItemIcon
     'divination-cards': 'divinationcards'
   };
   
@@ -79,28 +99,36 @@ export async function loadItemIcon(item, categoryId) {
   // Get correct icon directory name
   const iconDir = getIconDirectory(categoryId);
   
-  // Try primary path first
-  let imagePath = `/assets/images/${iconDir}/${iconFilename}`;
-  let image;
+  // For merged categories, try multiple directories
+  const directoriesToTry = getIconDirectoriesForCategory(categoryId, iconDir);
   
-  try {
-    image = await loadImage(imagePath);
-    iconCache.set(cacheKey, image);
-    return image;
-  } catch (e) {
-    // Fallback to src path
+  for (const dir of directoriesToTry) {
+    // Try primary path first
+    let imagePath = `/assets/images/${dir}/${iconFilename}`;
+    let image;
+    
     try {
-      imagePath = `/src/assets/images/${iconDir}/${iconFilename}`;
       image = await loadImage(imagePath);
       iconCache.set(cacheKey, image);
       return image;
-    } catch (error) {
-      // Both paths failed, cache null and return placeholder
-      console.warn(`Failed to load icon for item ${item.id} in category ${categoryId}:`, error);
-      iconCache.set(cacheKey, null);
-      return createPlaceholderImage();
+    } catch (e) {
+      // Fallback to src path
+      try {
+        imagePath = `/src/assets/images/${dir}/${iconFilename}`;
+        image = await loadImage(imagePath);
+        iconCache.set(cacheKey, image);
+        return image;
+      } catch (error) {
+        // Continue to next directory
+        continue;
+      }
     }
   }
+  
+  // All directories failed, cache null and return placeholder
+  console.warn(`Failed to load icon for item ${item.id} in category ${categoryId} from any directory`);
+  iconCache.set(cacheKey, null);
+  return createPlaceholderImage();
 }
 
 /**
