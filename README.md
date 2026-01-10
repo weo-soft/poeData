@@ -4,8 +4,9 @@ A static web application that provides detailed data and visualizations for Path
 
 ## Features
 
-- **Browse Categories**: Explore available item categories (Scarabs, Divination Cards, etc.)
-- **Stash Tab Visualization**: View items in an in-game style stash tab using HTML5 Canvas
+- **Browse Categories**: Explore available item categories (Scarabs, Divination Cards, Breach Splinters, Breachstones, Catalysts, Delirium Orbs, Essences, Fossils, Legion Emblems, Legion Splinters, Oils, Tattoos)
+- **Stash Tab Visualization**: View items in an in-game style stash tab using HTML5 Canvas (for Scarabs)
+- **List View**: Browse items in a simple list format with names and icons (for new categories)
 - **Item Details**: See detailed information about each item
 - **Statistics Charts**: View data trends and distributions using Chart.js
 - **Raw JSON Access**: Direct links to JSON data for programmatic access
@@ -79,8 +80,18 @@ tests/
 ## Data Files
 
 Item data is stored in JSON files in `public/data/`:
-- `scarabDetails.json` - Scarab items
-- `divinationCardDetails.json` - Divination card items
+- `scarabs/scarabs.json` - Scarab items
+- `divinationCards/divinationCards.json` - Divination card items
+- `breachSplintersDetails.json` - Breach Splinters items
+- `breachstonesDetails.json` - Breachstones items
+- `catalystsDetails.json` - Catalysts items
+- `deliriumOrbsDetails.json` - Delirium Orbs items
+- `essencesDetails.json` - Essences items
+- `fossilsDetails.json` - Fossils items
+- `legionEmblemsDetails.json` - Legion Emblems items
+- `legionSplintersDetails.json` - Legion Splinters items
+- `oilsDetails.json` - Oils items
+- `tattoosDetails.json` - Tattoos items
 
 ## Direct JSON Access
 
