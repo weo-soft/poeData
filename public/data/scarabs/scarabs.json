@@ -1,0 +1,874 @@
+[
+  {
+    "name": "Abyss Scarab",
+    "id": "abyss-scarab",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains an additional Abyss",
+    "dropLevel": 68
+  },
+  {
+    "name": "Abyss Scarab of Edifice",
+    "id": "abyss-scarab-of-edifice",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Abysses in Area that do not lead to an Abyssal Depths lead to a Stygian Spire\nAbyss pits in Area that do not lead to an Abyssal Depths or spawn an Abyssal Trove will spawn Minor Stygian Spires",
+    "dropLevel": 73
+  },
+  {
+    "name": "Abyss Scarab of Multitudes",
+    "id": "abyss-scarab-of-multitudes",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Abysses in Area spawn 50% increased Monsters",
+    "dropLevel": 73
+  },
+  {
+    "name": "Abyss Scarab of Profound Depth",
+    "id": "abyss-scarab-of-profound-depth",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Monsters from Abysses in Areas have increased Difficulty and Reward for\neach prior Pit in that Abyss",
+    "dropLevel": 78
+  },
+  {
+    "name": "Ambush Scarab",
+    "id": "ambush-scarab",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Area contains 3 additional Strongboxes",
+    "dropLevel": 68
+  },
+  {
+    "name": "Ambush Scarab of Containment",
+    "id": "ambush-scarab-of-containment",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains many additional Strongboxes\nArea's inhabitants are lying in ambush",
+    "dropLevel": 78
+  },
+  {
+    "name": "Ambush Scarab of Discernment",
+    "id": "ambush-scarab-of-discernment",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Strongboxes in Area are more likely to be rarer varieties",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ambush Scarab of Hidden Compartments",
+    "id": "ambush-scarab-of-hidden-compartments",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "15% Chance for Strongboxes in Area to be openable again",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ambush Scarab of Potency",
+    "id": "ambush-scarab-of-potency",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "75% Increased effect of Explicit Modifiers on Strongboxes in Area",
+    "dropLevel": 73
+  },
+  {
+    "name": "Anarchy Scarab",
+    "id": "anarchy-scarab",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains 4 additional Rogue Exiles",
+    "dropLevel": 68
+  },
+  {
+    "name": "Anarchy Scarab of Gigantification",
+    "id": "anarchy-scarab-of-gigantification",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Wild Rogue Exiles in Area have a 30% chance to be replaced with a Rogue Giant",
+    "dropLevel": 78
+  },
+  {
+    "name": "Anarchy Scarab of Partnership",
+    "id": "anarchy-scarab-of-partnership",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Wild Rogue Exiles in Area have a 50% chance to appear in pairs",
+    "dropLevel": 73
+  },
+  {
+    "name": "Bestiary Scarab",
+    "id": "bestiary-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains Einhar",
+    "dropLevel": 68
+  },
+  {
+    "name": "Bestiary Scarab of Duplicating",
+    "id": "bestiary-scarab-of-duplicating",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Create a copy of Beasts captured in Area",
+    "dropLevel": 73
+  },
+  {
+    "name": "Bestiary Scarab of the Herd",
+    "id": "bestiary-scarab-of-the-herd",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains 5 additional Red Beasts if it contains Einhar",
+    "dropLevel": 73
+  },
+  {
+    "name": "Betrayal Scarab",
+    "id": "betrayal-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains Jun",
+    "dropLevel": 68
+  },
+  {
+    "name": "Betrayal Scarab of Reinforcements",
+    "id": "betrayal-scarab-of-reinforcements",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Immortal Syndicate Members in Area have 50% increased chance to be accompanied by reinforcements",
+    "dropLevel": 73
+  },
+  {
+    "name": "Betrayal Scarab of the Allflame",
+    "id": "betrayal-scarab-of-the-allflame",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "75% Increased number of Monster Packs Substituted by Allflame Embers in Area",
+    "dropLevel": 73
+  },
+  {
+    "name": "Beyond Scarab",
+    "id": "beyond-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Slaying enemies close together in Area can attract monsters from Beyond this realm",
+    "dropLevel": 68
+  },
+  {
+    "name": "Beyond Scarab of Haemophilia",
+    "id": "beyond-scarab-of-haemophilia",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Beyond Portals in Area have 50% increased Merging Radius\nCharacters that Kill Beyond Rare Monsters in Area have a 30% chance to gain their Modifiers for 20 seconds",
+    "dropLevel": 73
+  },
+  {
+    "name": "Beyond Scarab of Resurgence",
+    "id": "beyond-scarab-of-resurgence",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Beyond Bosses in Area are enraged on low life\nBeyond Bosses in Area drop 100% increased Tainted Currency\nBeyond Portals in Area have 30% increased chance to spawn a Unique Boss",
+    "dropLevel": 78
+  },
+  {
+    "name": "Beyond Scarab of the Invasion",
+    "id": "beyond-scarab-of-the-invasion",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Rare and Unique Monsters slain in Area create 8 to 12 additional Beyond Portals",
+    "dropLevel": 78
+  },
+  {
+    "name": "Blight Scarab",
+    "id": "blight-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains a Blight Encounter",
+    "dropLevel": 68
+  },
+  {
+    "name": "Blight Scarab of Blooming",
+    "id": "blight-scarab-of-blooming",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Blight Encounters in Area have up to 3 additional Unique Bosses\nUnique enemies in Blight Encounters have 100% increased life\nTier 14+ Blighted Maps found in Area drop as Blight-Ravaged Maps instead",
+    "dropLevel": 78
+  },
+  {
+    "name": "Blight Scarab of Invigoration",
+    "id": "blight-scarab-of-invigoration",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Each Empowering Tower in Areas grants Blighted Monsters in\nrange increased Difficulty and Reward",
+    "dropLevel": 78
+  },
+  {
+    "name": "Blight Scarab of the Blightheart",
+    "id": "blight-scarab-of-the-blightheart",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Blight Encounters in Area have one Blighted Chest\nBlight Encounters in Area spawn many more waves of Enemies\nBlighted Chests in Area grow larger and more\nrewarding the more Blighted Enemies are slain",
+    "dropLevel": 73
+  },
+  {
+    "name": "Breach Scarab",
+    "id": "breach-scarab",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains 2 additional Breaches",
+    "dropLevel": 68
+  },
+  {
+    "name": "Breach Scarab of Lordship",
+    "id": "breach-scarab-of-lordship",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Breaches in Area each contain a Breachlord",
+    "dropLevel": 73
+  },
+  {
+    "name": "Breach Scarab of Resonant Cascade",
+    "id": "breach-scarab-of-resonant-cascade",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Breaches in Areas open and close 10% faster for each Breach already opened\nMonsters from Breaches in Areas have increased Difficulty and Reward for\neach Breach already opened",
+    "dropLevel": 78
+  },
+  {
+    "name": "Breach Scarab of Snares",
+    "id": "breach-scarab-of-snares",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Breaches in Area have 3 to 5 additional Clasped Hands\nClasped Hands in Area are guarded by a rare Breach Monster",
+    "dropLevel": 78
+  },
+  {
+    "name": "Breach Scarab of Splintering",
+    "id": "breach-scarab-of-splintering",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Breach Monsters in Area drop 50% more Breach Splinters\nClasped Hands in Area drop 50% more Breach Splinters",
+    "dropLevel": 73
+  },
+  {
+    "name": "Cartography Scarab of Corruption",
+    "id": "cartography-scarab-of-corruption",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Non-Unique Maps found in Area are Corrupted with 8 Modifiers",
+    "dropLevel": 73
+  },
+  {
+    "name": "Cartography Scarab of Escalation",
+    "id": "cartography-scarab-of-escalation",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "10% increased Maps found in Area for each Map Modifier affecting Area",
+    "dropLevel": 68
+  },
+  {
+    "name": "Cartography Scarab of Risk",
+    "id": "cartography-scarab-of-risk",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area has 2 additional random Modifiers",
+    "dropLevel": 78
+  },
+  {
+    "name": "Cartography Scarab of the Multitude",
+    "id": "cartography-scarab-of-the-multitude",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Area contains 8 to 12 additional packs of\nDifficult and Rewarding Monsters which drop 300% increased Maps",
+    "dropLevel": 73
+  },
+  {
+    "name": "Delirium Scarab",
+    "id": "delirium-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains a Mirror of Delirium",
+    "dropLevel": 68
+  },
+  {
+    "name": "Delirium Scarab of Delusions",
+    "id": "delirium-scarab-of-delusions",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Maps found in Area have layers of Delirium",
+    "dropLevel": 73
+  },
+  {
+    "name": "Delirium Scarab of Mania",
+    "id": "delirium-scarab-of-mania",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Delirium Reward Meters fill 100% faster in Area\nDelirium in Area increases 50% faster with distance from the mirror",
+    "dropLevel": 73
+  },
+  {
+    "name": "Delirium Scarab of Neuroses",
+    "id": "delirium-scarab-of-neuroses",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Delirium Encounters in Area contain all Unique Delirium Bosses\nCan only be used with Tier 11+ Maps",
+    "dropLevel": 73
+  },
+  {
+    "name": "Delirium Scarab of Paranoia",
+    "id": "delirium-scarab-of-paranoia",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Delirium Encounters in Area generate 2 additional Reward types",
+    "dropLevel": 73
+  },
+  {
+    "name": "Divination Scarab of Pilfering",
+    "id": "divination-scarab-of-pilfering",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Divination Cards which drop in Area are stolen by a Final Map Boss\nThat Final Map Boss becomes more Difficult and deals\nincreased Damage the more Divination Cards they have stolen\nThat Final Map Boss duplicates all stolen Divination Cards when defeated",
+    "dropLevel": 78
+  },
+  {
+    "name": "Divination Scarab of Plenty",
+    "id": "divination-scarab-of-plenty",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains 6 to 10 additional Packs of Divination Touched Magic Monsters that\nhave 1000% increased chance to drop Divination Cards",
+    "dropLevel": 73
+  },
+  {
+    "name": "Divination Scarab of The Cloister",
+    "id": "divination-scarab-of-the-cloister",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains 8 to 12 additional packs of Doedre's Devoted\nDoedre's Devoted have 1% additional chance to drop a Stacked Deck",
+    "dropLevel": 68
+  },
+  {
+    "name": "Domination Scarab",
+    "id": "domination-scarab",
+    "dropEnabledd": true,
+    "limit": 4,
+    "description": "Area contains 2 additional Shrines",
+    "dropLevel": 68
+  },
+  {
+    "name": "Domination Scarab of Apparitions",
+    "id": "domination-scarab-of-apparitions",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains 2 additional Apparition Shrines",
+    "dropLevel": 78
+  },
+  {
+    "name": "Domination Scarab of Evolution",
+    "id": "domination-scarab-of-evolution",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains an additional Evolving Shrine",
+    "dropLevel": 73
+  },
+  {
+    "name": "Domination Scarab of Terrors",
+    "id": "domination-scarab-of-terrors",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Shrines in Area are guarded by an Atlas Boss\nModifiers to the Final Map Boss also apply to these Atlas Bosses",
+    "dropLevel": 78
+  },
+  {
+    "name": "Essence Scarab",
+    "id": "essence-scarab",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains 2 additional Imprisoned Monsters",
+    "dropLevel": 68
+  },
+  {
+    "name": "Essence Scarab of Adaptation",
+    "id": "essence-scarab-of-adaptation",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Imprisoned Monsters released in Areas grant a random Essence Modifier to another Imprisoned Monster in the Area\nImprisoned Monsters in Areas have increased Difficulty and Reward for\neach Essence Modifier",
+    "dropLevel": 78
+  },
+  {
+    "name": "Essence Scarab of Ascent",
+    "id": "essence-scarab-of-ascent",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Essences found in Area are a tier higher",
+    "dropLevel": 73
+  },
+  {
+    "name": "Essence Scarab of Calcification",
+    "id": "essence-scarab-of-calcification",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Rare monsters that are natural inhabitants of the Area are imprisoned by Essences",
+    "dropLevel": 78
+  },
+  {
+    "name": "Essence Scarab of Stability",
+    "id": "essence-scarab-of-stability",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Corrupting an Essence in Area can only result in\nupgrading or transforming Essences",
+    "dropLevel": 73
+  },
+  {
+    "name": "Expedition Scarab",
+    "id": "expedition-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains an Expedition Encounter",
+    "dropLevel": 68
+  },
+  {
+    "name": "Expedition Scarab of Archaeology",
+    "id": "expedition-scarab-of-archaeology",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Remnants in Expedition Encounters in Area have 2 additional Suffixes and Prefixes",
+    "dropLevel": 78
+  },
+  {
+    "name": "Expedition Scarab of Runefinding",
+    "id": "expedition-scarab-of-runefinding",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Expedition Encounters in Area have 100% increased\nnumber of Runic Monster Markers",
+    "dropLevel": 73
+  },
+  {
+    "name": "Expedition Scarab of Verisium Powder",
+    "id": "expedition-scarab-of-verisium-powder",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Expedition Encounters in Area have 50% increased number of Explosives\n80% increased Explosive Radius",
+    "dropLevel": 73
+  },
+  {
+    "name": "Harbinger Scarab",
+    "id": "harbinger-scarab",
+    "dropEnabledd": true,
+    "limit": 4,
+    "description": "Area contains 3 additional Harbingers",
+    "dropLevel": 68
+  },
+  {
+    "name": "Harbinger Scarab of Obelisks",
+    "id": "harbinger-scarab-of-obelisks",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Harbingers in Area spawn Empowered Obelisks\nEmpowered Obelisks drop Currency Shards when defeated",
+    "dropLevel": 73
+  },
+  {
+    "name": "Harbinger Scarab of Regency",
+    "id": "harbinger-scarab-of-regency",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Harbingers in Area have a 50% chance to be replaced by a powerful Harbinger Boss",
+    "dropLevel": 73
+  },
+  {
+    "name": "Harbinger Scarab of Warhoards",
+    "id": "harbinger-scarab-of-warhoards",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Currency shards dropped by Harbingers in Area are duplicated",
+    "dropLevel": 73
+  },
+  {
+    "name": "Harvest Scarab",
+    "id": "harvest-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains the Sacred Grove",
+    "dropLevel": 68
+  },
+  {
+    "name": "Harvest Scarab of Cornucopia",
+    "id": "harvest-scarab-of-cornucopia",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "If Area contains the Sacred Grove, it will contain up to 1 additional Tier 4 seed of each type, if possible",
+    "dropLevel": 78
+  },
+  {
+    "name": "Harvest Scarab of Doubling",
+    "id": "harvest-scarab-of-doubling",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Lifeforce dropped by Harvest Monsters in Area is duplicated\nHarvest Monsters in Area have 100% more Life",
+    "dropLevel": 73
+  },
+  {
+    "name": "Horned Scarab of Awakening",
+    "id": "horned-scarab-of-awakening",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "You can select one Imbued crafting option on the Map Device",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Bloodlines",
+    "id": "horned-scarab-of-bloodlines",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area has 150% increased Magic Monsters\nMagic Monsters in area have an additional Modifier",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Glittering",
+    "id": "horned-scarab-of-glittering",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Players in Area gain increased Item Rarity for each Monster\nslain, up to 400%, decaying over time",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Nemeses",
+    "id": "horned-scarab-of-nemeses",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Rare Monsters in Area have 2 additional Modifiers",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Pandemonium",
+    "id": "horned-scarab-of-pandemonium",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Monster packs in Area have a 15% chance to be replaced by a random Atlas Boss\nModifiers to the Final Map Boss also apply to these Atlas Bosses",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Preservation",
+    "id": "horned-scarab-of-preservation",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Other Scarabs are not consumed on use",
+    "dropLevel": 81
+  },
+  {
+    "name": "Horned Scarab of Tradition",
+    "id": "horned-scarab-of-tradition",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "All Rare and Unique Monsters in Area have dropped items\ntransformed by a Reward Modifier",
+    "dropLevel": 81
+  },
+  {
+    "name": "Incursion Scarab",
+    "id": "incursion-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains Alva",
+    "dropLevel": 68
+  },
+  {
+    "name": "Incursion Scarab of Champions",
+    "id": "incursion-scarab-of-champions",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Incursions in Area have a 35% chance for all Monsters to be at least Magic\nIncursions in Area have 15% increased Pack Size",
+    "dropLevel": 73
+  },
+  {
+    "name": "Incursion Scarab of Invasion",
+    "id": "incursion-scarab-of-invasion",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Area contains 12 to 16 additional packs of Incursion Monsters",
+    "dropLevel": 73
+  },
+  {
+    "name": "Incursion Scarab of Timelines",
+    "id": "incursion-scarab-of-timelines",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Final Architect slain in Area will drop an Itemised Temple\nItemised Temples dropped in Area are generated based on current Temple layout, but with randomised room tiers",
+    "dropLevel": 78
+  },
+  {
+    "name": "Influencing Scarab of Conversion",
+    "id": "influencing-scarab-of-conversion",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Tier 14+ Maps found in Area have a chance to drop as Shaper Guardian, Elder Guardian, Conqueror or Unique Synthesised Maps instead",
+    "dropLevel": 73
+  },
+  {
+    "name": "Influencing Scarab of Hordes",
+    "id": "influencing-scarab-of-hordes",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Influenced Monster Packs in Area have 40% increased Pack Size",
+    "dropLevel": 73
+  },
+  {
+    "name": "Influencing Scarab of the Elder",
+    "id": "influencing-scarab-of-the-elder",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Adds Elder Influence outcome to Area",
+    "dropLevel": 68
+  },
+  {
+    "name": "Influencing Scarab of the Shaper",
+    "id": "influencing-scarab-of-the-shaper",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Adds Shaper Influence outcome to Area",
+    "dropLevel": 68
+  },
+  {
+    "name": "Kalguuran Scarab",
+    "id": "kalguuran-scarab",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains an additional Ore Deposit",
+    "dropLevel": 68
+  },
+  {
+    "name": "Kalguuran Scarab of Guarded Riches",
+    "id": "kalguuran-scarab-of-guarded-riches",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Monsters guarding Ore Deposits in Area are at least Magic",
+    "dropLevel": 73
+  },
+  {
+    "name": "Kalguuran Scarab of Refinement",
+    "id": "kalguuran-scarab-of-refinement",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Ore Deposits in Area grant Smelted Bars instead of Marking Ore",
+    "dropLevel": 78
+  },
+  {
+    "name": "Legion Scarab",
+    "id": "legion-scarab",
+    "dropEnabledd": true,
+    "limit": 5,
+    "description": "Area contains an additional Legion Encounter",
+    "dropLevel": 68
+  },
+  {
+    "name": "Legion Scarab of Command",
+    "id": "legion-scarab-of-command",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Legion Factions in Area are accompanied by a General",
+    "dropLevel": 73
+  },
+  {
+    "name": "Legion Scarab of Eternal Conflict",
+    "id": "legion-scarab-of-eternal-conflict",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Legion Monsters in Area can be broken out of Stasis multiple times\nLegion Monsters in Area gain increased Difficulty and Reward for each time they are broken out",
+    "dropLevel": 78
+  },
+  {
+    "name": "Legion Scarab of Officers",
+    "id": "legion-scarab-of-officers",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Legion Factions in Area have 5 additional Sergeants",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ritual Scarab of Abundance",
+    "id": "ritual-scarab-of-abundance",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Rituals in Area offer 100% increased Favours",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ritual Scarab of Selectiveness",
+    "id": "ritual-scarab-of-selectiveness",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Rerolling Favours at Ritual Altars in Area has no cost the first 2 times\nRitual Altars in Area allow rerolling Favours 1 additional time",
+    "dropLevel": 68
+  },
+  {
+    "name": "Ritual Scarab of Wisps",
+    "id": "ritual-scarab-of-wisps",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Ritual Altars in Area spawn a Wildwood Wisp\nWildwood Wisps grant 100% increased Tribute Gained to nearby Players",
+    "dropLevel": 73
+  },
+  {
+    "name": "Scarab of Adversaries",
+    "id": "scarab-of-adversaries",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains 4 additional Packs with Mirrored Rare Monsters",
+    "dropLevel": 68
+  },
+  {
+    "name": "Scarab of Bisection",
+    "id": "scarab-of-bisection",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "You can select the Nullify Prefixes or Nullify Suffixes crafting options on the Map Device",
+    "dropLevel": 78
+  },
+  {
+    "name": "Scarab of Divinity",
+    "id": "scarab-of-divinity",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Up to 3 additional Rare Monsters in Area will be Pantheon-Touched\nApparitions spawned by Pantheon-Touched Monsters deal 100% increased damage",
+    "dropLevel": 73
+  },
+  {
+    "name": "Scarab of Hunted Traitors",
+    "id": "scarab-of-hunted-traitors",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains Hunted Traitors",
+    "dropLevel": 73
+  },
+  {
+    "name": "Scarab of Monstrous Lineage",
+    "id": "scarab-of-monstrous-lineage",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "40% increased Magic Pack Size",
+    "dropLevel": 68
+  },
+  {
+    "name": "Scarab of Radiant Storms",
+    "id": "scarab-of-radiant-storms",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains a Resplendent Tempest",
+    "dropLevel": 78
+  },
+  {
+    "name": "Scarab of Stability",
+    "id": "scarab-of-stability",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Portals to Area have a 50% chance to not be consumed on use",
+    "dropLevel": 78
+  },
+  {
+    "name": "Scarab of Wisps",
+    "id": "scarab-of-wisps",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Monsters in Area have a chance to be Empowered by 2000 Wildwood Wisps",
+    "dropLevel": 73
+  },
+  {
+    "name": "Sulphite Scarab",
+    "id": "sulphite-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains Niko\nMap owner gains 150% more Sulphite",
+    "dropLevel": 68
+  },
+  {
+    "name": "Sulphite Scarab of Fumes",
+    "id": "sulphite-scarab-of-fumes",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Sulphite found in Map Area releases Enraging Fumes\nMonsters affected by Enraging Fumes have 50% increased Item Quantity\nSulphite in your maps is guarded by Monsters from the Azurite Mine",
+    "dropLevel": 73
+  },
+  {
+    "name": "Titanic Scarab",
+    "id": "titanic-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Unique Monsters have 1% increased Toughness, Damage, Rarity and Quantity of items dropped per 1% increased Pack Size of Area",
+    "dropLevel": 68
+  },
+  {
+    "name": "Titanic Scarab of Legend",
+    "id": "titanic-scarab-of-legend",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Unique Monsters in Area have 4 additional Monster Modifiers",
+    "dropLevel": 78
+  },
+  {
+    "name": "Titanic Scarab of Treasures",
+    "id": "titanic-scarab-of-treasures",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Unique Monsters in Area have an additional Reward\nUnique Monsters in Area have 30% increased Toughness",
+    "dropLevel": 73
+  },
+  {
+    "name": "Torment Scarab",
+    "id": "torment-scarab",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area is haunted by 3 additional Tormented Spirits\nTormented Spirits in Area have a 50% chance to\nbe set free when Possessed Monsters are slain",
+    "dropLevel": 68
+  },
+  {
+    "name": "Torment Scarab of Peculiarity",
+    "id": "torment-scarab-of-peculiarity",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Tormented Spirits in Area are replaced with unusual variants",
+    "dropLevel": 73
+  },
+  {
+    "name": "Torment Scarab of Possession",
+    "id": "torment-scarab-of-possession",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Rare Monsters in Area have a quarter chance to be Possessed by up to 3 Tormented Spirits",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ultimatum Scarab",
+    "id": "ultimatum-scarab",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains an Ultimatum Encounter",
+    "dropLevel": 68
+  },
+  {
+    "name": "Ultimatum Scarab of Bribing",
+    "id": "ultimatum-scarab-of-bribing",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Ultimatum Monsters grant 150% increased Experience\nUltimatum Encounters grant rewards as though you completed 2 additional Rounds",
+    "dropLevel": 73
+  },
+  {
+    "name": "Ultimatum Scarab of Catalysing",
+    "id": "ultimatum-scarab-of-catalysing",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Ultimatum Encounters in Area will only offer Catalysts\nas Rewards to the Map Owner",
+    "dropLevel": 78
+  },
+  {
+    "name": "Ultimatum Scarab of Dueling",
+    "id": "ultimatum-scarab-of-dueling",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Ultimatum Encounters in Area will always lead to a Unique Boss if possible",
+    "dropLevel": 78
+  },
+  {
+    "name": "Ultimatum Scarab of Inscription",
+    "id": "ultimatum-scarab-of-inscription",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Ultimatum Encounter rewards in Area offering Catalysts\nwill offer Inscribed Ultimatums to the Map Owner instead",
+    "dropLevel": 73
+  }
+]

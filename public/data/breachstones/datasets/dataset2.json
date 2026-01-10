@@ -1,0 +1,36 @@
+{
+    "name": "Dataset 2",
+    "description": "Dataset 2",
+    "date": "2025-05-11",
+    "patch": "3.25.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
+            "author": "gdmt_"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "tul"
+        }
+    ],
+    "items": [
+        {
+            "id": "xoph",
+            "weight": 18	 
+        },
+        {
+            "id": "esh",
+            "weight": 22	  
+        },
+        {
+            "id": "uul-netol",
+            "weight": 8	  
+        },
+        {
+            "id": "chayula",
+            "weight": 2
+        }
+    ]
+}

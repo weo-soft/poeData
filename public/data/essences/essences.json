@@ -1,0 +1,626 @@
+[
+    {
+        "id": "muttering-essence-of-anger",
+        "name": "Muttering Essence of Anger",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nBow: Adds (14-20) to (29-33) Fire Damage\nTwo Handed Melee Weapon: Adds (14-20) to (29-33) Fire Damage\nOther Weapon: Adds (8-10) to (15-18) Fire Damage\nArmour: +(12-17)% to Fire Resistance\nQuiver: +(12-17)% to Fire Resistance\nBelt: +(12-17)% to Fire Resistance\nOther Jewellery: (11-14)% increased Fire Damage",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-anger",
+        "name": "Weeping Essence of Anger",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nBow: Adds (32-44) to (65-76) Fire Damage\nTwo Handed Melee Weapon: Adds (32-44) to (65-76) Fire Damage\nOther Weapon: Adds (17-24) to (35-41) Fire Damage\nArmour: +(18-23)% to Fire Resistance\nQuiver: +(18-23)% to Fire Resistance\nBelt: +(18-23)% to Fire Resistance\nOther Jewellery: (15-18)% increased Fire Damage",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-anger",
+        "name": "Wailing Essence of Anger",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nBow: Adds (63-85) to (128-148) Fire Damage\nTwo Handed Melee Weapon: Adds (63-85) to (128-148) Fire Damage\nOther Weapon: Adds (34-46) to (68-80) Fire Damage\nArmour: +(24-29)% to Fire Resistance\nQuiver: +(24-29)% to Fire Resistance\nBelt: +(24-29)% to Fire Resistance\nOther Jewellery: (19-22)% increased Fire Damage",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-anger",
+        "name": "Screaming Essence of Anger",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (110-150) to (223-260) Fire Damage\nTwo Handed Melee Weapon: Adds (110-150) to (223-260) Fire Damage\nOther Weapon: Adds (59-81) to (120-140) Fire Damage\nArmour: +(36-41)% to Fire Resistance\nQuiver: +(36-41)% to Fire Resistance\nBelt: +(36-41)% to Fire Resistance\nOther Jewellery: (23-26)% increased Fire Damage",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-anger",
+        "name": "Shrieking Essence of Anger",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (137-188) to (279-325) Fire Damage\nTwo Handed Melee Weapon: Adds (137-188) to (279-325) Fire Damage\nOther Weapon: Adds (74-101) to (150-175) Fire Damage\nArmour: +(42-45)% to Fire Resistance\nQuiver: +(42-45)% to Fire Resistance\nBelt: +(42-45)% to Fire Resistance\nOther Jewellery: (27-30)% increased Fire Damage",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-anger",
+        "name": "Deafening Essence of Anger",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (149-203) to (302-351) Fire Damage\nTwo Handed Melee Weapon: Adds (149-203) to (302-351) Fire Damage\nOther Weapon: Adds (80-109) to (162-189) Fire Damage\nArmour: +(46-48)% to Fire Resistance\nQuiver: +(46-48)% to Fire Resistance\nBelt: +(46-48)% to Fire Resistance\nOther Jewellery: (31-34)% increased Fire Damage",
+        "tier": 7
+    },
+    {
+        "id": "wailing-essence-of-anguish",
+        "name": "Wailing Essence of Anguish",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Adds (24-33) to (48-57) Fire Damage to Spells\nTwo Handed Weapon: Adds (32-44) to (65-76) Fire Damage to Spells\nGloves: Adds (5-7) to (11-13) Fire Damage to Attacks\nBody Armour: (6-7)% chance to Avoid Fire Damage from Hits\nShield: (6-7)% chance to Avoid Fire Damage from Hits\nOther Armour: (43-46)% chance to Avoid being Ignited\nQuiver: Adds (17-22) to (33-38) Fire Damage to Attacks\nBelt: (43-46)% chance to Avoid being Ignited\nOther Jewellery: Adds (11-15) to (23-27) Fire Damage to Attacks",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-anguish",
+        "name": "Screaming Essence of Anguish",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (31-42) to (64-73) Fire Damage to Spells\nTwo Handed Weapon: Adds (42-56) to (85-99) Fire Damage to Spells\nGloves: Adds (7-10) to (15-18) Fire Damage to Attacks\nBody Armour: (7-8)% chance to Avoid Fire Damage from Hits\nShield: (7-8)% chance to Avoid Fire Damage from Hits\nOther Armour: (47-50)% chance to Avoid being Ignited\nQuiver: Adds (27-35) to (53-62) Fire Damage to Attacks\nBelt: (47-50)% chance to Avoid being Ignited\nOther Jewellery: Adds (16-22) to (32-38) Fire Damage to Attacks",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-anguish",
+        "name": "Shrieking Essence of Anguish",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (40-52) to (79-91) Fire Damage to Spells\nTwo Handed Weapon: Adds (53-70) to (107-123) Fire Damage to Spells\nGloves: Adds (9-12) to (19-22) Fire Damage to Attacks\nBody Armour: (8-9)% chance to Avoid Fire Damage from Hits\nShield: (8-9)% chance to Avoid Fire Damage from Hits\nOther Armour: (51-55)% chance to Avoid being Ignited\nQuiver: Adds (37-50) to (74-87) Fire Damage to Attacks\nBelt: (51-55)% chance to Avoid being Ignited\nOther Jewellery: Adds (19-25) to (39-45) Fire Damage to Attacks",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-anguish",
+        "name": "Deafening Essence of Anguish",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (49-66) to (98-115) Fire Damage to Spells\nTwo Handed Weapon: Adds (66-88) to (132-155) Fire Damage to Spells\nGloves: Adds (11-15) to (23-27) Fire Damage to Attacks\nBody Armour: (9-10)% chance to Avoid Fire Damage from Hits\nShield: (9-10)% chance to Avoid Fire Damage from Hits\nOther Armour: (56-60)% chance to Avoid being Ignited\nQuiver: Adds (41-55) to (81-96) Fire Damage to Attacks\nBelt: (56-60)% chance to Avoid being Ignited\nOther Jewellery: Adds (23-27) to (43-48) Fire Damage to Attacks",
+        "tier": 7
+    },
+    {
+        "id": "whispering-essence-of-contempt",
+        "name": "Whispering Essence of Contempt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 35 and below\nOne Handed Weapon: Adds 1 to (2-3) Physical Damage\nTwo Handed Weapon: Adds 2 to (4-5) Physical Damage\nGloves: Adds 1 to 2 Physical Damage to Attacks\nOther Armour: Reflects (1-4) Physical Damage to Melee Attackers\nQuiver: Adds 1 to 2 Physical Damage to Attacks\nBelt: Reflects (1-4) Physical Damage to Melee Attackers\nOther Jewellery: Adds 1 to 2 Physical Damage to Attacks",
+        "tier": 1
+    },
+    {
+        "id": "muttering-essence-of-contempt",
+        "name": "Muttering Essence of Contempt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nOne Handed Weapon: Adds (4-5) to (8-9) Physical Damage\nTwo Handed Weapon: Adds (6-8) to (12-15) Physical Damage\nGloves: Adds (2-3) to (4-5) Physical Damage to Attacks\nOther Armour: Reflects (5-10) Physical Damage to Melee Attackers\nQuiver: Adds (2-3) to (4-5) Physical Damage to Attacks\nBelt: Reflects (5-10) Physical Damage to Melee Attackers\nOther Jewellery: Adds (2-3) to (4-5) Physical Damage to Attacks",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-contempt",
+        "name": "Weeping Essence of Contempt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Adds (6-9) to (13-15) Physical Damage\nTwo Handed Weapon: Adds (10-13) to (21-25) Physical Damage\nGloves: Adds (3-4) to (6-7) Physical Damage to Attacks\nOther Armour: Reflects (11-24) Physical Damage to Melee Attackers\nQuiver: Adds (4-6) to (9-10) Physical Damage to Attacks\nBelt: Reflects (11-24) Physical Damage to Melee Attackers\nOther Jewellery: Adds (4-6) to (9-10) Physical Damage to Attacks",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-contempt",
+        "name": "Wailing Essence of Contempt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Adds (8-12) to (17-20) Physical Damage\nTwo Handed Weapon: Adds (13-17) to (28-32) Physical Damage\nGloves: Adds (3-5) to (7-8) Physical Damage to Attacks\nOther Armour: Reflects (25-50) Physical Damage to Melee Attackers\nQuiver: Adds (6-9) to (13-15) Physical Damage to Attacks\nAmulet: Adds (6-9) to (13-15) Physical Damage to Attacks\nRing: Adds (5-7) to (11-12) Physical Damage to Attacks\nBelt: Reflects (25-50) Physical Damage to Melee Attackers",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-contempt",
+        "name": "Screaming Essence of Contempt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (13-18) to (27-31) Physical Damage\nTwo Handed Weapon: Adds (20-28) to (43-51) Physical Damage\nGloves: Adds (4-5) to (8-9) Physical Damage to Attacks\nOther Armour: Reflects (51-100) Physical Damage to Melee Attackers\nQuiver: Adds (9-12) to (19-22) Physical Damage to Attacks\nAmulet: Adds (9-12) to (19-22) Physical Damage to Attacks\nRing: Adds (6-8) to (12-13) Physical Damage to Attacks\nBelt: Reflects (51-100) Physical Damage to Melee Attackers",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-contempt",
+        "name": "Shrieking Essence of Contempt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (16-21) to (32-38) Physical Damage\nTwo Handed Weapon: Adds (25-33) to (52-61) Physical Damage\nGloves: Adds (5-6) to (9-10) Physical Damage to Attacks\nOther Armour: Reflects (101-150) Physical Damage to Melee Attackers\nQuiver: Adds (11-15) to (22-26) Physical Damage to Attacks\nAmulet: Adds (11-15) to (22-26) Physical Damage to Attacks\nRing: Adds (7-9) to (13-15) Physical Damage to Attacks\nBelt: Reflects (101-150) Physical Damage to Melee Attackers",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-contempt",
+        "name": "Deafening Essence of Contempt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (20-26) to (40-47) Physical Damage\nTwo Handed Weapon: Adds (31-42) to (65-75) Physical Damage\nGloves: Adds (6-7) to (10-11) Physical Damage to Attacks\nOther Armour: Reflects (151-200) Physical Damage to Melee Attackers\nQuiver: Adds (16-18) to (27-30) Physical Damage to Attacks\nAmulet: Adds (16-18) to (27-30) Physical Damage to Attacks\nRing: Adds (10-11) to (16-17) Physical Damage to Attacks\nBelt: Reflects (151-200) Physical Damage to Melee Attackers",
+        "tier": 7
+    },
+    {
+        "id": "essence-of-delirium",
+        "name": "Essence of Delirium",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: Your Hits inflict Decay, dealing 700 Chaos Damage per second for 8 seconds\nGloves: Socketed Gems deal 30% more Damage over Time\nBoots: Cannot be Poisoned\nBody Armour: 25% reduced Chaos Damage taken over time\nHelmet: +2 to Level of Socketed Aura Gems\nShield: +15% Chance to Block Spell Damage while on Low Life\nQuiver: 25% increased Effect of your Marks\nAmulet: (6-7)% Chance to Block Spell Damage\nRing: +(12-15)% to Damage over Time Multiplier\nBelt: +50% to Chaos Resistance during any Flask Effect",
+        "tier": 8
+    },
+    {
+        "id": "weeping-essence-of-doubt",
+        "name": "Weeping Essence of Doubt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nWeapon: +(131-215) to Accuracy Rating\nArmour: +(64-82) to Evasion Rating\nQuiver: +(100-165) to Accuracy Rating\nAmulet: (14-18)% increased Evasion Rating\nOther Jewellery: +(36-60) to Evasion Rating",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-doubt",
+        "name": "Wailing Essence of Doubt",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nWeapon: +(216-325) to Accuracy Rating\nGloves: +(81-90) to Evasion Rating\nBoots: +(81-90) to Evasion Rating\nShield: +(121-150) to Evasion Rating\nOther Armour: +(102-120) to Evasion Rating\nQuiver: +(166-250) to Accuracy Rating\nAmulet: (19-23)% increased Evasion Rating\nOther Jewellery: +(61-80) to Evasion Rating",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-doubt",
+        "name": "Screaming Essence of Doubt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: +(326-455) to Accuracy Rating\nBody Armour: +(151-200) to Evasion Rating\nHelmet: +(121-140) to Evasion Rating\nShield: +(151-225) to Evasion Rating\nOther Armour: +(91-105) to Evasion Rating\nQuiver: +(251-350) to Accuracy Rating\nAmulet: (24-28)% increased Evasion Rating\nOther Jewellery: +(81-120) to Evasion Rating",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-doubt",
+        "name": "Shrieking Essence of Doubt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: +(456-624) to Accuracy Rating\nBody Armour: +(301-400) to Evasion Rating\nHelmet: +(141-160) to Evasion Rating\nShield: +(226-300) to Evasion Rating\nOther Armour: +(106-120) to Evasion Rating\nQuiver: +(351-480) to Accuracy Rating\nAmulet: (29-31)% increased Evasion Rating\nOther Jewellery: +(121-150) to Evasion Rating",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-doubt",
+        "name": "Deafening Essence of Doubt",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: +(625-780) to Accuracy Rating\nBody Armour: +(390-475) to Evasion Rating\nHelmet: +(161-180) to Evasion Rating\nShield: +(301-375) to Evasion Rating\nOther Armour: +(121-135) to Evasion Rating\nQuiver: +(481-600) to Accuracy Rating\nAmulet: (32-33)% increased Evasion Rating\nOther Jewellery: +(151-180) to Evasion Rating",
+        "tier": 7
+    },
+    {
+        "id": "screaming-essence-of-dread",
+        "name": "Screaming Essence of Dread",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (12-16)% increased Impale Effect\nWand: (34-41)% increased Projectile Speed\nBow: +1 to Level of Socketed Bow Gems\nTwo Handed Melee Weapon: (25-29)% increased Impale Effect\nBody Armour: +(151-200) to Armour\nHelmet: +(121-140) to Armour\nShield: +(151-225) to Armour\nOther Armour: +(91-105) to Armour\nQuiver: (34-41)% increased Projectile Speed\nAmulet: (24-28)% increased Armour\nRing: +(80-120) to Armour\nBelt: +(323-400) to Armour",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-dread",
+        "name": "Shrieking Essence of Dread",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (17-21)% increased Impale Effect\nWand: (42-46)% increased Projectile Speed\nBow: +2 to Level of Socketed Bow Gems\nTwo Handed Melee Weapon: (30-34)% increased Impale Effect\nBody Armour: +(301-400) to Armour\nHelmet: +(141-160) to Armour\nShield: +(226-300) to Armour\nOther Armour: +(106-120) to Armour\nQuiver: (42-46)% increased Projectile Speed\nAmulet: (29-31)% increased Armour\nRing: +(121-200) to Armour\nBelt: +(401-460) to Armour",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-dread",
+        "name": "Deafening Essence of Dread",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (22-25)% increased Impale Effect\nWand: (47-52)% increased Projectile Speed\nBow: +2 to Level of Socketed Bow Gems\nTwo Handed Melee Weapon: (35-38)% increased Impale Effect\nBody Armour: +(390-475) to Armour\nHelmet: +(161-180) to Armour\nShield: +(301-375) to Armour\nOther Armour: +(121-135) to Armour\nQuiver: (47-52)% increased Projectile Speed\nAmulet: (32-33)% increased Armour\nRing: +(201-300) to Armour\nBelt: +(481-520) to Armour",
+        "tier": 7
+    },
+    {
+        "id": "screaming-essence-of-envy",
+        "name": "Screaming Essence of Envy",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (37-59) to (79-103) Chaos Damage\nTwo Handed Weapon: Adds (61-103) to (149-193) Chaos Damage\nArmour: +(21-25)% to Chaos Resistance\nQuiver: Adds (11-15) to (27-33) Chaos Damage to Attacks\nBelt: +(21-25)% to Chaos Resistance\nOther Jewellery: (23-26)% increased Chaos Damage",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-envy",
+        "name": "Shrieking Essence of Envy",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (43-67) to (89-113) Chaos Damage\nTwo Handed Weapon: Adds (73-113) to (163-205) Chaos Damage\nArmour: +(26-30)% to Chaos Resistance\nQuiver: Adds (17-21) to (37-43) Chaos Damage to Attacks\nBelt: +(26-30)% to Chaos Resistance\nOther Jewellery: (27-30)% increased Chaos Damage",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-envy",
+        "name": "Deafening Essence of Envy",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (53-79) to (101-131) Chaos Damage\nTwo Handed Weapon: Adds (89-131) to (181-229) Chaos Damage\nArmour: +(31-35)% to Chaos Resistance\nQuiver: Adds (23-37) to (49-61) Chaos Damage to Attacks\nBelt: +(31-35)% to Chaos Resistance\nOther Jewellery: (31-34)% increased Chaos Damage",
+        "tier": 7
+    },
+    {
+        "id": "muttering-essence-of-fear",
+        "name": "Muttering Essence of Fear",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nOne Handed Weapon: Minions deal (20-29)% increased Damage\nTwo Handed Weapon: Minions deal (30-44)% increased Damage\nGloves: Minions deal (13-15)% increased Damage\nHelmet: Minions deal (13-15)% increased Damage\nOther Armour: Minions have (13-15)% increased maximum Life\nQuiver: Minions have (13-15)% increased Movement Speed\nBelt: Minions have (13-15)% increased maximum Life\nOther Jewellery: Minions have (13-15)% increased Movement Speed",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-fear",
+        "name": "Weeping Essence of Fear",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Minions deal (30-39)% increased Damage\nTwo Handed Weapon: Minions deal (45-59)% increased Damage\nGloves: Minions deal (16-18)% increased Damage\nHelmet: Minions deal (16-18)% increased Damage\nOther Armour: Minions have (16-18)% increased maximum Life\nQuiver: Minions have (16-18)% increased Movement Speed\nBelt: Minions have (16-18)% increased maximum Life\nOther Jewellery: Minions have (16-18)% increased Movement Speed",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-fear",
+        "name": "Wailing Essence of Fear",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Minions deal (40-54)% increased Damage\nTwo Handed Weapon: Minions deal (60-84)% increased Damage\nGloves: Minions deal (19-21)% increased Damage\nHelmet: Minions deal (19-21)% increased Damage\nOther Armour: Minions have (19-21)% increased maximum Life\nQuiver: Minions have (19-21)% increased Movement Speed\nBelt: Minions have (19-21)% increased maximum Life\nOther Jewellery: Minions have (19-21)% increased Movement Speed",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-fear",
+        "name": "Screaming Essence of Fear",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Minions deal (50-66)% increased Damage\nTwo Handed Weapon: Minions deal (85-106)% increased Damage\nGloves: Minions deal (22-24)% increased Damage\nHelmet: Minions deal (22-24)% increased Damage\nOther Armour: Minions have (22-24)% increased maximum Life\nQuiver: Minions have (22-24)% increased Movement Speed\nBelt: Minions have (22-24)% increased maximum Life\nOther Jewellery: Minions have (22-24)% increased Movement Speed",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-fear",
+        "name": "Shrieking Essence of Fear",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Minions deal (67-82)% increased Damage\nTwo Handed Weapon: Minions deal (107-122)% increased Damage\nGloves: Minions deal (25-27)% increased Damage\nHelmet: Minions deal (25-27)% increased Damage\nOther Armour: Minions have (25-27)% increased maximum Life\nQuiver: Minions have (25-27)% increased Movement Speed\nBelt: Minions have (25-27)% increased maximum Life\nOther Jewellery: Minions have (25-27)% increased Movement Speed",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-fear",
+        "name": "Deafening Essence of Fear",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Minions deal (83-94)% increased Damage\nTwo Handed Weapon: Minions deal (123-144)% increased Damage\nGloves: Minions deal (28-30)% increased Damage\nHelmet: Minions deal (28-30)% increased Damage\nOther Armour: Minions have (28-30)% increased maximum Life\nQuiver: Minions have (28-30)% increased Movement Speed\nBelt: Minions have (28-30)% increased maximum Life\nOther Jewellery: Minions have (28-30)% increased Movement Speed",
+        "tier": 7
+    },
+    {
+        "id": "whispering-essence-of-greed",
+        "name": "Whispering Essence of Greed",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 35 and below\nWeapon: (2-2.2)% of Physical Attack Damage Leeched as Life\nGloves: +(5-14) to maximum Life\nBoots: +(5-14) to maximum Life\nHelmet: +(5-14) to maximum Life\nOther Armour: +(10-24) to maximum Life\nQuiver: (0.5-0.7)% of Physical Attack Damage Leeched as Life\nBelt: (8-11)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (1-2) Life per second",
+        "tier": 1
+    },
+    {
+        "id": "muttering-essence-of-greed",
+        "name": "Muttering Essence of Greed",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nWeapon: (2.3-2.4)% of Physical Attack Damage Leeched as Life\nGloves: +(15-30) to maximum Life\nBoots: +(15-30) to maximum Life\nHelmet: +(15-30) to maximum Life\nOther Armour: +(40-54) to maximum Life\nQuiver: (0.6-0.8)% of Physical Attack Damage Leeched as Life\nBelt: (12-15)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (2.1-8) Life per second",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-greed",
+        "name": "Weeping Essence of Greed",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nWeapon: (2.5-2.8)% of Physical Attack Damage Leeched as Life\nGloves: +(31-45) to maximum Life\nBoots: +(31-45) to maximum Life\nHelmet: +(31-45) to maximum Life\nOther Armour: +(70-84) to maximum Life\nQuiver: (0.7-0.9)% of Physical Attack Damage Leeched as Life\nBelt: (16-19)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (8.1-16) Life per second",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-greed",
+        "name": "Wailing Essence of Greed",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nWeapon: (2.9-3.2)% of Physical Attack Damage Leeched as Life\nGloves: +(46-60) to maximum Life\nBoots: +(46-60) to maximum Life\nHelmet: +(46-60) to maximum Life\nShield: +(85-99) to maximum Life\nOther Armour: +(100-114) to maximum Life\nQuiver: (0.8-1)% of Physical Attack Damage Leeched as Life\nBelt: (20-23)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (16.1-24) Life per second",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-greed",
+        "name": "Screaming Essence of Greed",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (3.3-3.6)% of Physical Attack Damage Leeched as Life\nGloves: +(61-75) to maximum Life\nBoots: +(61-75) to maximum Life\nHelmet: +(61-75) to maximum Life\nShield: +(100-114) to maximum Life\nOther Armour: +(130-144) to maximum Life\nQuiver: (0.9-1.1)% of Physical Attack Damage Leeched as Life\nBelt: (24-27)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (24.1-32) Life per second",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-greed",
+        "name": "Shrieking Essence of Greed",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (3.7-4)% of Physical Attack Damage Leeched as Life\nGloves: +(76-90) to maximum Life\nBoots: +(76-90) to maximum Life\nHelmet: +(76-90) to maximum Life\nShield: +(115-129) to maximum Life\nOther Armour: +(145-159) to maximum Life\nQuiver: (1-1.2)% of Physical Attack Damage Leeched as Life\nBelt: (28-31)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (32.1-48) Life per second",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-greed",
+        "name": "Deafening Essence of Greed",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (4.1-4.4)% of Physical Attack Damage Leeched as Life\nGloves: +(91-105) to maximum Life\nBoots: +(91-105) to maximum Life\nHelmet: +(91-105) to maximum Life\nShield: +(130-144) to maximum Life\nOther Armour: +(160-174) to maximum Life\nQuiver: (1.1-1.3)% of Physical Attack Damage Leeched as Life\nBelt: (32-35)% increased Flask Life Recovery rate\nOther Jewellery: Regenerate (48.1-64) Life per second",
+        "tier": 7
+    },
+    {
+        "id": "whispering-essence-of-hatred",
+        "name": "Whispering Essence of Hatred",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 35 and below\nBow: Adds (2-3) to (6-7) Cold Damage\nTwo Handed Melee Weapon: Adds (2-3) to (6-7) Cold Damage\nOther Weapon: Adds (1-2) to (3-4) Cold Damage\nArmour: +(6-11)% to Cold Resistance\nQuiver: +(6-11)% to Cold Resistance\nBelt: +(6-11)% to Cold Resistance\nOther Jewellery: (6-10)% increased Cold Damage",
+        "tier": 1
+    },
+    {
+        "id": "muttering-essence-of-hatred",
+        "name": "Muttering Essence of Hatred",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nBow: Adds (12-17) to (26-30) Cold Damage\nTwo Handed Melee Weapon: Adds (12-17) to (26-30) Cold Damage\nOther Weapon: Adds (7-9) to (14-16) Cold Damage\nArmour: +(12-17)% to Cold Resistance\nQuiver: +(12-17)% to Cold Resistance\nBelt: +(12-17)% to Cold Resistance\nOther Jewellery: (11-14)% increased Cold Damage",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-hatred",
+        "name": "Weeping Essence of Hatred",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nBow: Adds (29-40) to (58-68) Cold Damage\nTwo Handed Melee Weapon: Adds (29-40) to (58-68) Cold Damage\nOther Weapon: Adds (16-21) to (31-37) Cold Damage\nArmour: +(18-23)% to Cold Resistance\nQuiver: +(18-23)% to Cold Resistance\nBelt: +(18-23)% to Cold Resistance\nOther Jewellery: (15-18)% increased Cold Damage",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-hatred",
+        "name": "Wailing Essence of Hatred",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nBow: Adds (57-77) to (114-132) Cold Damage\nTwo Handed Melee Weapon: Adds (57-77) to (114-132) Cold Damage\nOther Weapon: Adds (31-42) to (62-71) Cold Damage\nArmour: +(24-29)% to Cold Resistance\nQuiver: +(24-29)% to Cold Resistance\nBelt: +(24-29)% to Cold Resistance\nOther Jewellery: (19-22)% increased Cold Damage",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-hatred",
+        "name": "Screaming Essence of Hatred",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (99-136) to (200-232) Cold Damage\nTwo Handed Melee Weapon: Adds (99-136) to (200-232) Cold Damage\nOther Weapon: Adds (54-74) to (108-126) Cold Damage\nArmour: +(36-41)% to Cold Resistance\nQuiver: +(36-41)% to Cold Resistance\nBelt: +(36-41)% to Cold Resistance\nOther Jewellery: (23-26)% increased Cold Damage",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-hatred",
+        "name": "Shrieking Essence of Hatred",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (124-170) to (250-290) Cold Damage\nTwo Handed Melee Weapon: Adds (124-170) to (250-290) Cold Damage\nOther Weapon: Adds (68-92) to (136-157) Cold Damage\nArmour: +(42-45)% to Cold Resistance\nQuiver: +(42-45)% to Cold Resistance\nBelt: +(42-45)% to Cold Resistance\nOther Jewellery: (27-30)% increased Cold Damage",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-hatred",
+        "name": "Deafening Essence of Hatred",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nBow: Adds (134-184) to (270-313) Cold Damage\nTwo Handed Melee Weapon: Adds (134-184) to (270-313) Cold Damage\nOther Weapon: Adds (73-100) to (147-170) Cold Damage\nArmour: +(46-48)% to Cold Resistance\nQuiver: +(46-48)% to Cold Resistance\nBelt: +(46-48)% to Cold Resistance\nOther Jewellery: (31-34)% increased Cold Damage",
+        "tier": 7
+    },
+    {
+        "id": "essence-of-horror",
+        "name": "Essence of Horror",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: 16% chance to gain a Power, Frenzy or Endurance Charge on Kill\nGloves: Socketed Gems have +3.5% Critical Strike Chance\nBoots: 5% reduced Elemental Damage Taken while stationary\nBody Armour: You take 10% reduced Extra Damage from Critical Strikes per Endurance Charge\nHelmet: Socketed Gems deal 30% more Elemental Damage\nShield: Chill Nearby Enemies when you Block\nQuiver: 8 to 12 Added Cold Damage per Frenzy Charge\nAmulet: (15-25)% chance to Crush on Hit\nRing: 4 to 7 Added Cold Damage per Frenzy Charge\nBelt: Gain Alchemist's Genius when you use a Flask",
+        "tier": 8
+    },
+    {
+        "id": "essence-of-hysteria",
+        "name": "Essence of Hysteria",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: Cast Level 20 Fire Burst on Hit\nGloves: Socketed Gems deal 175 to 225 Added Fire Damage\nBoots: Drops Burning Ground while moving, dealing 2500 Fire Damage per second for 4 seconds\nBody Armour: 25% increased Area of Effect\nHelmet: Socketed Gems deal 30% more Damage while on Low Life\nShield: Adds 60 to 100 Fire Damage if you've Blocked Recently\nQuiver: Gain 15% of Physical Damage as Extra Fire Damage\nAmulet: 150% increased total Recovery per second from Life Leech\nRing: Gain 10% of Physical Damage as Extra Fire Damage\nBelt: Damage Penetrates 5% Elemental Resistances during any Flask Effect",
+        "tier": 8
+    },
+    {
+        "id": "essence-of-insanity",
+        "name": "Essence of Insanity",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: Triggers Level 20 Spectral Spirits when Equipped\n+3 to maximum number of Spectral Spirits\nGloves: Socketed Gems have 16% more Attack and Cast Speed\nBoots: 70% increased Mana Regeneration Rate while Shocked\nBody Armour: You gain Onslaught for 6 seconds when Hit\nHelmet: Socketed Gems gain 50% of Physical Damage as extra Lightning Damage\nShield: 25% chance to gain a Power Charge when you Block\nQuiver: Projectiles Pierce 2 additional Targets\nAmulet: 10% chance to Recover 10% of Mana when you use a Skill\nRing: You and your Minions take 40% reduced Reflected Damage\nBelt: 10% increased Movement Speed during any Flask Effect",
+        "tier": 8
+    },
+    {
+        "id": "wailing-essence-of-loathing",
+        "name": "Wailing Essence of Loathing",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nWeapon: (20-24)% increased Critical Strike Chance\nGloves: (15-17)% increased Global Critical Strike Chance\nBoots: (16-20)% chance to Avoid Elemental Ailments\nShield: (52-57)% increased Chance to Block\nOther Armour: (3-4)% increased Mana Reservation Efficiency of Skills\nQuiver: (25-29)% increased Global Critical Strike Chance\nAmulet: (25-29)% increased Global Critical Strike Chance\nRing: (15-17)% increased Global Critical Strike Chance\nBelt: (21-25)% increased Stun Duration on Enemies",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-loathing",
+        "name": "Screaming Essence of Loathing",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (25-29)% increased Critical Strike Chance\nGloves: (18-20)% increased Global Critical Strike Chance\nBoots: (21-25)% chance to Avoid Elemental Ailments\nShield: (58-63)% increased Chance to Block\nOther Armour: (5-6)% increased Mana Reservation Efficiency of Skills\nQuiver: (30-34)% increased Global Critical Strike Chance\nAmulet: (30-34)% increased Global Critical Strike Chance\nRing: (18-20)% increased Global Critical Strike Chance\nBelt: (26-30)% increased Stun Duration on Enemies",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-loathing",
+        "name": "Shrieking Essence of Loathing",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (30-34)% increased Critical Strike Chance\nGloves: (21-23)% increased Global Critical Strike Chance\nBoots: (26-30)% chance to Avoid Elemental Ailments\nShield: (64-69)% increased Chance to Block\nOther Armour: (7-8)% increased Mana Reservation Efficiency of Skills\nQuiver: (35-38)% increased Global Critical Strike Chance\nAmulet: (35-38)% increased Global Critical Strike Chance\nRing: (21-23)% increased Global Critical Strike Chance\nBelt: (31-35)% increased Stun Duration on Enemies",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-loathing",
+        "name": "Deafening Essence of Loathing",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (35-38)% increased Critical Strike Chance\nGloves: (24-26)% increased Global Critical Strike Chance\nBoots: (31-35)% chance to Avoid Elemental Ailments\nShield: (70-75)% increased Chance to Block\nOther Armour: (9-10)% increased Mana Reservation Efficiency of Skills\nQuiver: (39-42)% increased Global Critical Strike Chance\nAmulet: (39-42)% increased Global Critical Strike Chance\nRing: (24-26)% increased Global Critical Strike Chance\nBelt: (36-39)% increased Stun Duration on Enemies",
+        "tier": 7
+    },
+    {
+        "id": "screaming-essence-of-misery",
+        "name": "Screaming Essence of Misery",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (21-24)% increased Cast Speed\nTwo Handed Weapon: (32-37)% increased Cast Speed\nShield: (50-59)% increased Mana Regeneration Rate\nOther Armour: +(55-59) to maximum Mana\nQuiver: (0.2-0.4)% of Physical Attack Damage Leeched as Mana\nBelt: (11-15)% increased Flask Mana Recovery rate\nOther Jewellery: (50-59)% increased Mana Regeneration Rate",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-misery",
+        "name": "Shrieking Essence of Misery",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (25-28)% increased Cast Speed\nTwo Handed Weapon: (38-43)% increased Cast Speed\nShield: (60-69)% increased Mana Regeneration Rate\nOther Armour: +(65-68) to maximum Mana\nQuiver: (0.6-0.8)% of Physical Attack Damage Leeched as Mana\nBelt: (16-20)% increased Flask Mana Recovery rate\nOther Jewellery: (60-69)% increased Mana Regeneration Rate",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-misery",
+        "name": "Deafening Essence of Misery",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (29-32)% increased Cast Speed\nTwo Handed Weapon: (44-49)% increased Cast Speed\nShield: (70-76)% increased Mana Regeneration Rate\nOther Armour: +(69-77) to maximum Mana\nQuiver: (0.9-1)% of Physical Attack Damage Leeched as Mana\nBelt: (21-25)% increased Flask Mana Recovery rate\nOther Jewellery: (70-76)% increased Mana Regeneration Rate",
+        "tier": 7
+    },
+    {
+        "id": "weeping-essence-of-rage",
+        "name": "Weeping Essence of Rage",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Damage Penetrates 4% Fire Resistance\nTwo Handed Weapon: Damage Penetrates (7-8)% Fire Resistance\nOther Items: +(18-22) to Strength",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-rage",
+        "name": "Wailing Essence of Rage",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Damage Penetrates 5% Fire Resistance\nTwo Handed Weapon: Damage Penetrates (9-10)% Fire Resistance\nOther Items: +(28-32) to Strength",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-rage",
+        "name": "Screaming Essence of Rage",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 6% Fire Resistance\nTwo Handed Weapon: Damage Penetrates (11-12)% Fire Resistance\nOther Items: +(33-37) to Strength",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-rage",
+        "name": "Shrieking Essence of Rage",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 7% Fire Resistance\nTwo Handed Weapon: Damage Penetrates (13-14)% Fire Resistance\nOther Items: +(43-50) to Strength",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-rage",
+        "name": "Deafening Essence of Rage",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 8% Fire Resistance\nTwo Handed Weapon: Damage Penetrates (15-16)% Fire Resistance\nOther Items: +(51-58) to Strength",
+        "tier": 7
+    },
+    {
+        "id": "screaming-essence-of-scorn",
+        "name": "Screaming Essence of Scorn",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (80-99)% increased Spell Critical Strike Chance\nBody Armour: (31-39)% increased Stun Threshold\nShield: (80-99)% increased Spell Critical Strike Chance\nOther Armour: (23-26)% chance to Avoid being Stunned\nQuiver: +(25-29)% to Global Critical Strike Multiplier\nAmulet: +(25-29)% to Global Critical Strike Multiplier\nRing: +(15-17)% to Global Critical Strike Multiplier\nBelt: (12-13)% reduced Enemy Stun Threshold",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-scorn",
+        "name": "Shrieking Essence of Scorn",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (100-109)% increased Spell Critical Strike Chance\nBody Armour: (40-45)% increased Stun Threshold\nShield: (100-109)% increased Spell Critical Strike Chance\nOther Armour: (27-30)% chance to Avoid being Stunned\nQuiver: +(30-34)% to Global Critical Strike Multiplier\nAmulet: +(30-34)% to Global Critical Strike Multiplier\nRing: +(18-20)% to Global Critical Strike Multiplier\nBelt: (14-15)% reduced Enemy Stun Threshold",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-scorn",
+        "name": "Deafening Essence of Scorn",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nWeapon: (110-119)% increased Spell Critical Strike Chance\nBody Armour: (46-60)% increased Stun Threshold\nShield: (110-119)% increased Spell Critical Strike Chance\nOther Armour: (31-44)% chance to Avoid being Stunned\nQuiver: +(35-41)% to Global Critical Strike Multiplier\nAmulet: +(35-41)% to Global Critical Strike Multiplier\nRing: +(21-25)% to Global Critical Strike Multiplier\nBelt: (16-17)% reduced Enemy Stun Threshold",
+        "tier": 7
+    },
+    {
+        "id": "muttering-essence-of-sorrow",
+        "name": "Muttering Essence of Sorrow",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nOne Handed Weapon: Damage Penetrates 3% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (5-6)% Cold Resistance\nOther Items: +(13-17) to Dexterity",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-sorrow",
+        "name": "Weeping Essence of Sorrow",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Damage Penetrates 4% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (7-8)% Cold Resistance\nOther Items: +(18-22) to Dexterity",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-sorrow",
+        "name": "Wailing Essence of Sorrow",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Damage Penetrates 5% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (9-10)% Cold Resistance\nOther Items: +(28-32) to Dexterity",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-sorrow",
+        "name": "Screaming Essence of Sorrow",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 6% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (11-12)% Cold Resistance\nOther Items: +(33-37) to Dexterity",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-sorrow",
+        "name": "Shrieking Essence of Sorrow",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 7% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (13-14)% Cold Resistance\nOther Items: +(43-50) to Dexterity",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-sorrow",
+        "name": "Deafening Essence of Sorrow",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 8% Cold Resistance\nTwo Handed Weapon: Damage Penetrates (15-16)% Cold Resistance\nOther Items: +(51-58) to Dexterity",
+        "tier": 7
+    },
+    {
+        "id": "wailing-essence-of-spite",
+        "name": "Wailing Essence of Spite",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Damage Penetrates 5% Lightning Resistance\nTwo Handed Weapon: Damage Penetrates (9-10)% Lightning Resistance\nOther Items: +(28-32) to Intelligence",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-spite",
+        "name": "Screaming Essence of Spite",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 6% Lightning Resistance\nTwo Handed Weapon: Damage Penetrates (11-12)% Lightning Resistance\nOther Items: +(33-37) to Intelligence",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-spite",
+        "name": "Shrieking Essence of Spite",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 7% Lightning Resistance\nTwo Handed Weapon: Damage Penetrates (13-14)% Lightning Resistance\nOther Items: +(43-50) to Intelligence",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-spite",
+        "name": "Deafening Essence of Spite",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Damage Penetrates 8% Lightning Resistance\nTwo Handed Weapon: Damage Penetrates (15-16)% Lightning Resistance\nOther Items: +(51-58) to Intelligence",
+        "tier": 7
+    },
+    {
+        "id": "weeping-essence-of-suffering",
+        "name": "Weeping Essence of Suffering",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Adds (11-15) to (22-25) Cold Damage to Spells\nTwo Handed Weapon: Adds (16-22) to (33-38) Cold Damage to Spells\nGloves: Adds (3-4) to (7-8) Cold Damage to Attacks\nBody Armour: (5-6)% chance to Avoid Cold Damage from Hits\nShield: (5-6)% chance to Avoid Cold Damage from Hits\nOther Armour: (39-42)% chance to Avoid being Frozen\nQuiver: Adds (10-13) to (19-22) Cold Damage to Attacks\nBelt: (39-42)% chance to Avoid being Frozen\nOther Jewellery: Adds (6-9) to (13-16) Cold Damage to Attacks",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-suffering",
+        "name": "Wailing Essence of Suffering",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Adds (20-26) to (40-46) Cold Damage to Spells\nTwo Handed Weapon: Adds (30-40) to (59-69) Cold Damage to Spells\nGloves: Adds (5-7) to (10-12) Cold Damage to Attacks\nBody Armour: (6-7)% chance to Avoid Cold Damage from Hits\nShield: (6-7)% chance to Avoid Cold Damage from Hits\nOther Armour: (43-46)% chance to Avoid being Frozen\nQuiver: Adds (15-20) to (30-35) Cold Damage to Attacks\nBelt: (43-46)% chance to Avoid being Frozen\nOther Jewellery: Adds (10-13) to (20-24) Cold Damage to Attacks",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-suffering",
+        "name": "Screaming Essence of Suffering",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (26-35) to (51-60) Cold Damage to Spells\nTwo Handed Weapon: Adds (39-52) to (77-90) Cold Damage to Spells\nGloves: Adds (6-9) to (13-16) Cold Damage to Attacks\nBody Armour: (7-8)% chance to Avoid Cold Damage from Hits\nShield: (7-8)% chance to Avoid Cold Damage from Hits\nOther Armour: (47-50)% chance to Avoid being Frozen\nQuiver: Adds (18-24) to (36-42) Cold Damage to Attacks\nBelt: (47-50)% chance to Avoid being Frozen\nOther Jewellery: Adds (12-16) to (24-28) Cold Damage to Attacks",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-suffering",
+        "name": "Shrieking Essence of Suffering",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (33-43) to (64-75) Cold Damage to Spells\nTwo Handed Weapon: Adds (49-64) to (96-113) Cold Damage to Spells\nGloves: Adds (8-11) to (16-19) Cold Damage to Attacks\nBody Armour: (8-9)% chance to Avoid Cold Damage from Hits\nShield: (8-9)% chance to Avoid Cold Damage from Hits\nOther Armour: (51-55)% chance to Avoid being Frozen\nQuiver: Adds (33-45) to (67-78) Cold Damage to Attacks\nBelt: (51-55)% chance to Avoid being Frozen\nOther Jewellery: Adds (17-22) to (34-40) Cold Damage to Attacks",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-suffering",
+        "name": "Deafening Essence of Suffering",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (41-54) to (81-93) Cold Damage to Spells\nTwo Handed Weapon: Adds (61-81) to (120-140) Cold Damage to Spells\nGloves: Adds (10-13) to (20-24) Cold Damage to Attacks\nBody Armour: (9-10)% chance to Avoid Cold Damage from Hits\nShield: (9-10)% chance to Avoid Cold Damage from Hits\nOther Armour: (56-60)% chance to Avoid being Frozen\nQuiver: Adds (36-50) to (74-86) Cold Damage to Attacks\nBelt: (56-60)% chance to Avoid being Frozen\nOther Jewellery: Adds (20-24) to (38-44) Cold Damage to Attacks",
+        "tier": 7
+    },
+    {
+        "id": "muttering-essence-of-torment",
+        "name": "Muttering Essence of Torment",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nOne Handed Weapon: Adds (1-2) to (21-22) Lightning Damage to Spells\nTwo Handed Weapon: Adds (1-3) to (32-34) Lightning Damage to Spells\nGloves: Adds 1 to 5 Lightning Damage to Attacks\nBody Armour: (4-5)% chance to Avoid Lightning Damage from Hits\nShield: (4-5)% chance to Avoid Lightning Damage from Hits\nOther Armour: (35-38)% chance to Avoid being Shocked\nQuiver: Adds 2 to (16-18) Lightning Damage to Attacks\nBelt: (35-38)% chance to Avoid being Shocked\nOther Jewellery: Adds 1 to (14-15) Lightning Damage to Attacks",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-torment",
+        "name": "Weeping Essence of Torment",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Adds (1-4) to (46-48) Lightning Damage to Spells\nTwo Handed Weapon: Adds (2-5) to (69-73) Lightning Damage to Spells\nGloves: Adds 1 to (14-15) Lightning Damage to Attacks\nBody Armour: (5-6)% chance to Avoid Lightning Damage from Hits\nShield: (5-6)% chance to Avoid Lightning Damage from Hits\nOther Armour: (39-42)% chance to Avoid being Shocked\nQuiver: Adds (2-3) to (35-40) Lightning Damage to Attacks\nBelt: (39-42)% chance to Avoid being Shocked\nOther Jewellery: Adds (1-2) to (27-28) Lightning Damage to Attacks",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-torment",
+        "name": "Wailing Essence of Torment",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Adds (2-7) to (84-88) Lightning Damage to Spells\nTwo Handed Weapon: Adds (3-10) to (126-133) Lightning Damage to Spells\nGloves: Adds (1-2) to (22-23) Lightning Damage to Attacks\nBody Armour: (6-7)% chance to Avoid Lightning Damage from Hits\nShield: (6-7)% chance to Avoid Lightning Damage from Hits\nOther Armour: (43-46)% chance to Avoid being Shocked\nQuiver: Adds (2-5) to (56-62) Lightning Damage to Attacks\nBelt: (43-46)% chance to Avoid being Shocked\nOther Jewellery: Adds (1-4) to (40-43) Lightning Damage to Attacks",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-torment",
+        "name": "Screaming Essence of Torment",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (2-9) to (109-115) Lightning Damage to Spells\nTwo Handed Weapon: Adds (5-12) to (164-173) Lightning Damage to Spells\nGloves: Adds (1-2) to (27-28) Lightning Damage to Attacks\nBody Armour: (7-8)% chance to Avoid Lightning Damage from Hits\nShield: (7-8)% chance to Avoid Lightning Damage from Hits\nOther Armour: (47-50)% chance to Avoid being Shocked\nQuiver: Adds (3-8) to (89-99) Lightning Damage to Attacks\nBelt: (47-50)% chance to Avoid being Shocked\nOther Jewellery: Adds (3-6) to (57-61) Lightning Damage to Attacks",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-torment",
+        "name": "Shrieking Essence of Torment",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (4-11) to (136-144) Lightning Damage to Spells\nTwo Handed Weapon: Adds (5-17) to (204-216) Lightning Damage to Spells\nGloves: Adds (1-3) to (33-34) Lightning Damage to Attacks\nBody Armour: (8-9)% chance to Avoid Lightning Damage from Hits\nShield: (8-9)% chance to Avoid Lightning Damage from Hits\nOther Armour: (51-55)% chance to Avoid being Shocked\nQuiver: Adds (5-11) to (124-140) Lightning Damage to Attacks\nBelt: (51-55)% chance to Avoid being Shocked\nOther Jewellery: Adds (3-7) to (68-72) Lightning Damage to Attacks",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-torment",
+        "name": "Deafening Essence of Torment",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (4-14) to (170-179) Lightning Damage to Spells\nTwo Handed Weapon: Adds (7-20) to (255-270) Lightning Damage to Spells\nGloves: Adds (1-4) to (40-43) Lightning Damage to Attacks\nBody Armour: (9-10)% chance to Avoid Lightning Damage from Hits\nShield: (9-10)% chance to Avoid Lightning Damage from Hits\nOther Armour: (56-60)% chance to Avoid being Shocked\nQuiver: Adds (6-13) to (136-155) Lightning Damage to Attacks\nBelt: (56-60)% chance to Avoid being Shocked\nOther Jewellery: Adds (4-8) to (71-76) Lightning Damage to Attacks",
+        "tier": 7
+    },
+    {
+        "id": "whispering-essence-of-woe",
+        "name": "Whispering Essence of Woe",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 35 and below\nOne Handed Weapon: (10-19)% increased Spell Damage\nTwo Handed Weapon: (15-29)% increased Spell Damage\nArmour: +(3-5) to maximum Energy Shield\nQuiver: (5-10)% increased Damage with Bow Skills\nAmulet: (2-4)% increased maximum Energy Shield\nRing: +(1-3) to maximum Energy Shield\nBelt: +(1-3) to maximum Energy Shield",
+        "tier": 1
+    },
+    {
+        "id": "muttering-essence-of-woe",
+        "name": "Muttering Essence of Woe",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 45 and below\nOne Handed Weapon: (20-29)% increased Spell Damage\nTwo Handed Weapon: (30-44)% increased Spell Damage\nArmour: +(6-11) to maximum Energy Shield\nQuiver: (11-20)% increased Damage with Bow Skills\nAmulet: (5-7)% increased maximum Energy Shield\nRing: +(4-8) to maximum Energy Shield\nBelt: +(4-8) to maximum Energy Shield",
+        "tier": 2
+    },
+    {
+        "id": "weeping-essence-of-woe",
+        "name": "Weeping Essence of Woe",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: (30-39)% increased Spell Damage\nTwo Handed Weapon: (45-59)% increased Spell Damage\nArmour: +(17-23) to maximum Energy Shield\nQuiver: (21-25)% increased Damage with Bow Skills\nAmulet: (8-10)% increased maximum Energy Shield\nRing: +(16-19) to maximum Energy Shield\nBelt: +(16-19) to maximum Energy Shield",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-woe",
+        "name": "Wailing Essence of Woe",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: (40-54)% increased Spell Damage\nTwo Handed Weapon: (60-84)% increased Spell Damage\nGloves: +(18-26) to maximum Energy Shield\nBoots: +(18-26) to maximum Energy Shield\nShield: +(39-49) to maximum Energy Shield\nOther Armour: +(31-38) to maximum Energy Shield\nQuiver: (26-30)% increased Damage with Bow Skills\nAmulet: (11-13)% increased maximum Energy Shield\nRing: +(23-26) to maximum Energy Shield\nBelt: +(23-26) to maximum Energy Shield",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-woe",
+        "name": "Screaming Essence of Woe",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (50-66)% increased Spell Damage\nTwo Handed Weapon: (85-106)% increased Spell Damage\nBody Armour: +(50-61) to maximum Energy Shield\nHelmet: +(39-45) to maximum Energy Shield\nShield: +(50-59) to maximum Energy Shield\nOther Armour: +(27-32) to maximum Energy Shield\nQuiver: (31-36)% increased Damage with Bow Skills\nAmulet: (14-16)% increased maximum Energy Shield\nRing: +(27-31) to maximum Energy Shield\nBelt: +(27-31) to maximum Energy Shield",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-woe",
+        "name": "Shrieking Essence of Woe",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (67-82)% increased Spell Damage\nTwo Handed Weapon: (107-122)% increased Spell Damage\nBody Armour: +(77-90) to maximum Energy Shield\nHelmet: +(46-51) to maximum Energy Shield\nShield: +(60-69) to maximum Energy Shield\nOther Armour: +(28-35) to maximum Energy Shield\nQuiver: (37-42)% increased Damage with Bow Skills\nAmulet: (17-18)% increased maximum Energy Shield\nRing: +(38-43) to maximum Energy Shield\nBelt: +(32-37) to maximum Energy Shield",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-woe",
+        "name": "Deafening Essence of Woe",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: (83-94)% increased Spell Damage\nTwo Handed Weapon: (123-144)% increased Spell Damage\nBody Armour: +(88-95) to maximum Energy Shield\nHelmet: +(52-58) to maximum Energy Shield\nShield: +(75-85) to maximum Energy Shield\nOther Armour: +(38-45) to maximum Energy Shield\nQuiver: (43-50)% increased Damage with Bow Skills\nAmulet: (18-19)% increased maximum Energy Shield\nRing: +(44-47) to maximum Energy Shield\nBelt: +(38-43) to maximum Energy Shield",
+        "tier": 7
+    },
+    {
+        "id": "weeping-essence-of-wrath",
+        "name": "Weeping Essence of Wrath",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 60 and below\nOne Handed Weapon: Adds 3 to (57-67) Lightning Damage\nBow: Adds (5-8) to (106-123) Lightning Damage\nTwo Handed Melee Weapon: Adds (5-8) to (106-123) Lightning Damage\nOther Weapon: Adds 3 to (57-67) Lightning Damage\nArmour: +(18-23)% to Lightning Resistance\nQuiver: +(18-23)% to Lightning Resistance\nBelt: +(18-23)% to Lightning Resistance\nOther Jewellery: (13-15)% increased Lightning Damage",
+        "tier": 3
+    },
+    {
+        "id": "wailing-essence-of-wrath",
+        "name": "Wailing Essence of Wrath",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nOne Handed Weapon: Adds (5-8) to (112-131) Lightning Damage\nBow: Adds (11-14) to (208-242) Lightning Damage\nTwo Handed Melee Weapon: Adds (11-14) to (208-242) Lightning Damage\nOther Weapon: Adds (5-8) to (112-131) Lightning Damage\nArmour: +(24-29)% to Lightning Resistance\nQuiver: +(24-29)% to Lightning Resistance\nBelt: +(24-29)% to Lightning Resistance\nOther Jewellery: (16-18)% increased Lightning Damage",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-wrath",
+        "name": "Screaming Essence of Wrath",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (10-14) to (197-229) Lightning Damage\nBow: Adds (19-25) to (366-425) Lightning Damage\nTwo Handed Melee Weapon: Adds (19-25) to (366-425) Lightning Damage\nOther Weapon: Adds (10-14) to (197-229) Lightning Damage\nArmour: +(36-41)% to Lightning Resistance\nQuiver: +(36-41)% to Lightning Resistance\nBelt: +(36-41)% to Lightning Resistance\nOther Jewellery: (23-26)% increased Lightning Damage",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-wrath",
+        "name": "Shrieking Essence of Wrath",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (13-17) to (247-286) Lightning Damage\nBow: Adds (23-32) to (458-531) Lightning Damage\nTwo Handed Melee Weapon: Adds (23-32) to (458-531) Lightning Damage\nOther Weapon: Adds (13-17) to (247-286) Lightning Damage\nArmour: +(42-45)% to Lightning Resistance\nQuiver: +(42-45)% to Lightning Resistance\nBelt: +(42-45)% to Lightning Resistance\nOther Jewellery: (27-30)% increased Lightning Damage",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-wrath",
+        "name": "Deafening Essence of Wrath",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nOne Handed Weapon: Adds (13-19) to (266-310) Lightning Damage\nBow: Adds (25-34) to (494-575) Lightning Damage\nTwo Handed Melee Weapon: Adds (25-34) to (494-575) Lightning Damage\nOther Weapon: Adds (13-19) to (266-310) Lightning Damage\nArmour: +(46-48)% to Lightning Resistance\nQuiver: +(46-48)% to Lightning Resistance\nBelt: +(46-48)% to Lightning Resistance\nOther Jewellery: (31-34)% increased Lightning Damage",
+        "tier": 7
+    },
+    {
+        "id": "wailing-essence-of-zeal",
+        "name": "Wailing Essence of Zeal",
+        "description": "Upgrades a normal item to rare with one guaranteed property\nProperties restricted to level 75 and below\nMelee Weapon: (20-22)% increased Attack Speed\nRanged Weapon: (11-12)% increased Attack Speed\nGloves: (8-10)% increased Attack Speed\nBoots: 20% increased Movement Speed\nBody Armour: (21-25)% increased Totem Placement speed\nHelmet: (15-20)% increased Warcry Speed\nOther Armour: (20-22)% increased Stun and Block Recovery\nQuiver: (6-7)% increased Attack Speed\nAmulet: (5-8)% increased Cast Speed\nRing: (5-8)% increased Cast Speed\nBelt: (7-10)% increased Trap and Mine Throwing Speed",
+        "tier": 4
+    },
+    {
+        "id": "screaming-essence-of-zeal",
+        "name": "Screaming Essence of Zeal",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nMelee Weapon: (23-25)% increased Attack Speed\nRanged Weapon: (13-14)% increased Attack Speed\nGloves: (11-13)% increased Attack Speed\nBoots: 25% increased Movement Speed\nBody Armour: (26-30)% increased Totem Placement speed\nHelmet: (21-25)% increased Warcry Speed\nOther Armour: (23-25)% increased Stun and Block Recovery\nQuiver: (8-9)% increased Attack Speed\nAmulet: (9-12)% increased Cast Speed\nRing: (9-12)% increased Cast Speed\nBelt: (11-13)% increased Trap and Mine Throwing Speed",
+        "tier": 5
+    },
+    {
+        "id": "shrieking-essence-of-zeal",
+        "name": "Shrieking Essence of Zeal",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nMelee Weapon: (26-27)% increased Attack Speed\nRanged Weapon: (15-16)% increased Attack Speed\nGloves: (14-16)% increased Attack Speed\nBoots: 30% increased Movement Speed\nBody Armour: (31-35)% increased Totem Placement speed\nHelmet: (26-30)% increased Warcry Speed\nOther Armour: (26-28)% increased Stun and Block Recovery\nQuiver: (10-12)% increased Attack Speed\nAmulet: (13-16)% increased Cast Speed\nRing: (13-14)% increased Cast Speed\nBelt: (14-17)% increased Trap and Mine Throwing Speed",
+        "tier": 6
+    },
+    {
+        "id": "deafening-essence-of-zeal",
+        "name": "Deafening Essence of Zeal",
+        "description": "Upgrades a normal item to rare or reforges a rare item, guaranteeing one property\nMelee Weapon: (28-30)% increased Attack Speed\nRanged Weapon: (17-18)% increased Attack Speed\nGloves: (17-18)% increased Attack Speed\nBoots: 32% increased Movement Speed\nBody Armour: (36-45)% increased Totem Placement speed\nHelmet: (31-35)% increased Warcry Speed\nOther Armour: (29-34)% increased Stun and Block Recovery\nQuiver: (13-15)% increased Attack Speed\nAmulet: (17-20)% increased Cast Speed\nRing: (15-16)% increased Cast Speed\nBelt: (18-21)% increased Trap and Mine Throwing Speed",
+        "tier": 7
+    }
+]

@@ -1,0 +1,29 @@
+{
+    "name": "Dataset 3",
+    "description": "Dataset 3",
+    "date": "2023-11-26",
+    "patch": "3.22.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+            "author": "aertherel"
+        },
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+            "author": "aertherel"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "armoursmith"
+        }
+    ],
+    "items": [
+        {
+            "id": "abyssal",
+            "weight": 18
+        }
+    ]
+}

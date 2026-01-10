@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Test Scarab",
+    "id": "test-scarab",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Test description for a scarab item",
+    "dropLevel": 68,
+    "dropWeight": 100.0
+  },
+  {
+    "name": "Test Divination Card",
+    "id": "test-divination-card",
+    "dropAreas": ["Test Area"],
+    "dropMonsters": [],
+    "stackSize": 4,
+    "dropLevel": 72,
+    "artFilename": "TestCard",
+    "explicitModifiers": [
+      {
+        "text": "Test modifier",
+        "optional": false
+      }
+    ],
+    "flavourText": "Test flavour text",
+    "detailsId": "test-divination-card",
+    "dropWeight": 200
+  }
+]
+

@@ -1,0 +1,82 @@
+[
+    {
+        "id": "abyssal-delirium-orb",
+        "name": "Abyssal Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Abyss Items reward type"
+    },
+    {
+        "id": "armoursmiths-delirium-orb",
+        "name": "Armoursmith's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Armour reward type"
+    },
+    {
+        "id": "blacksmiths-delirium-orb",
+        "name": "Blacksmith's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Weapons reward type"
+    },
+    {
+        "id": "blighted-delirium-orb",
+        "name": "Blighted Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Blight reward type"
+    },
+    {
+        "id": "cartographers-delirium-orb",
+        "name": "Cartographer's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Map Items reward type"
+    },
+    {
+        "id": "diviners-delirium-orb",
+        "name": "Diviner's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Divination Cards reward type"
+    },
+    {
+        "id": "fine-delirium-orb",
+        "name": "Fine Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Currency Items reward type"
+    },
+    {
+        "id": "foreboding-delirium-orb",
+        "name": "Foreboding Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Harbinger Items reward type"
+    },
+    {
+        "id": "fossilised-delirium-orb",
+        "name": "Fossilised Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Fossils reward type"
+    },
+    {
+        "id": "fragmented-delirium-orb",
+        "name": "Fragmented Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Fragments reward type"
+    },
+    {
+        "id": "jewellers-delirium-orb",
+        "name": "Jeweller's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Trinkets reward type"
+    },
+    {
+        "id": "singular-delirium-orb",
+        "name": "Singular Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Unique Items reward type"
+    },
+    {
+        "id": "skittering-delirium-orb",
+        "name": "Skittering Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Scarabs reward type"
+    },
+    {
+        "id": "thaumaturges-delirium-orb",
+        "name": "Thaumaturge's Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Gems reward type"
+    },
+    {
+        "id": "timeless-delirium-orb",
+        "name": "Timeless Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Legion reward type"
+    },
+    {
+        "id": "whispering-delirium-orb",
+        "name": "Whispering Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Essences reward type"
+    }
+]

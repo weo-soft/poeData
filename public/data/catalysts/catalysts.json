@@ -1,0 +1,79 @@
+[
+    {
+        "id": "abrasive-catalyst",
+        "name": "Abrasive Catalyst",
+        "description": "Adds quality that enhances Attack modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "accelerating-catalyst",
+        "name": "Accelerating Catalyst",
+        "description": "Adds quality that enhances Speed modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "fertile-catalyst",
+        "name": "Fertile Catalyst",
+        "description": "Adds quality that enhances Life and Mana modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "imbued-catalyst",
+        "name": "Imbued Catalyst",
+        "description": "Adds quality that enhances Caster modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "intrinsic-catalyst",
+        "name": "Intrinsic Catalyst",
+        "description": "Adds quality that enhances Attribute modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "noxious-catalyst",
+        "name": "Noxious Catalyst",
+        "description": "Adds quality that enhances Physical and Chaos Damage modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "prismatic-catalyst",
+        "name": "Prismatic Catalyst",
+        "description": "Adds quality that enhances Resistance modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "tainted-catalyst",
+        "name": "Tainted Catalyst",
+        "description": "Applies a random quality type and amount of quality to a Corrupted ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a Corrupted ring, amulet or belt to apply it. The maximum quality is 20%."
+    },
+    {
+        "id": "tempering-catalyst",
+        "name": "Tempering Catalyst",
+        "description": "Adds quality that enhances Defence modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "turbulent-catalyst",
+        "name": "Turbulent Catalyst",
+        "description": "Adds quality that enhances Elemental Damage modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    },
+    {
+        "id": "unstable-catalyst",
+        "name": "Unstable Catalyst",
+        "description": "Adds quality that enhances Critical modifiers on a ring, amulet or belt\nReplaces other quality types",
+        "stackSize": 10,
+        "helpText": "Right click this item then left click a ring, amulet or belt to apply it. Has greater effect on lower item level, non-unique jewellery. The maximum quality is 20%."
+    }
+]

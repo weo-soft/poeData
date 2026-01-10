@@ -1,0 +1,219 @@
+/**
+ * Category view component - Display items in stash tab-style visualization
+ */
+
+import { createElement, clearElement, setLoadingState } from '../utils/dom.js';
+import { loadCategoryData } from '../services/dataLoader.js';
+import { displayError } from '../utils/errors.js';
+import { renderStashTab } from '../visualization/stashTabRenderer.js';
+import { generateCategoryCharts } from '../visualization/chartGenerator.js';
+import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
+
+let currentItems = [];
+
+/**
+ * Render category view
+ * @param {HTMLElement} container - Container element to render into
+ * @param {Object} params - Route parameters
+ * @param {string} params.categoryId - Category identifier
+ */
+export async function renderCategoryView(container, params) {
+  clearElement(container);
+  
+  const categoryId = params.categoryId;
+  
+  const viewSection = createElement('section', { className: 'category-view' });
+  
+  // Loading state
+  const loadingDiv = createElement('div', { className: 'loading', textContent: 'Loading category data...' });
+  viewSection.appendChild(loadingDiv);
+  setLoadingState(loadingDiv, true);
+  
+  container.appendChild(viewSection);
+  
+  try {
+    // Load category data
+    const items = await loadCategoryData(categoryId);
+    currentItems = items;
+    
+    // Clear loading
+    clearElement(viewSection);
+    
+    // Category header
+    const header = createElement('div', { className: 'category-header' });
+    const title = createElement('h1', { 
+      textContent: formatCategoryName(categoryId)
+    });
+    
+    const itemCount = createElement('span', {
+      textContent: `${items.length} items`,
+      className: 'item-count'
+    });
+    
+    header.appendChild(title);
+    header.appendChild(itemCount);
+    viewSection.appendChild(header);
+    
+    // JSON link
+    const jsonLink = createElement('a', {
+      href: `/data/${getCategoryFilename(categoryId)}`,
+      textContent: 'View Raw JSON Data',
+      className: 'json-link',
+      target: '_blank'
+    });
+    viewSection.appendChild(jsonLink);
+    
+    // Statistics charts
+    const chartsContainer = createElement('div', {
+      className: 'charts-container',
+      id: 'charts-container'
+    });
+    viewSection.appendChild(chartsContainer);
+    
+    // Navigation
+    const navLinks = createElement('div', { className: 'nav-links' });
+    const backLink = createElement('a', {
+      href: '#/categories',
+      textContent: '← Back to Categories',
+      className: 'back-link'
+    });
+    const submitLink = createElement('a', {
+      href: `#/submit/${categoryId}`,
+      textContent: 'Submit New Item →',
+      className: 'submit-link'
+    });
+    navLinks.appendChild(backLink);
+    navLinks.appendChild(submitLink);
+    viewSection.appendChild(navLinks);
+    
+    // Handle empty category
+    if (items.length === 0) {
+      const emptyMessage = createElement('div', {
+        className: 'empty-state',
+        innerHTML: `
+          <h2>No Items Found</h2>
+          <p>This category currently has no items.</p>
+          <a href="#/submit/${categoryId}" class="primary-link">Submit the First Item</a>
+        `
+      });
+      viewSection.appendChild(emptyMessage);
+    } else {
+      // Render visualizations based on category type
+      if (categoryId === 'divination-cards') {
+        // Render divination card grid
+        const cardsGrid = createElement('div', {
+          className: 'divination-cards-grid',
+          id: 'divination-cards-grid'
+        });
+        viewSection.insertBefore(cardsGrid, chartsContainer);
+        await renderDivinationCardGrid(cardsGrid, items);
+      } else {
+        // Render stash tab visualization for other categories
+        const stashContainer = createElement('div', { 
+          className: 'stash-tab-container',
+          id: 'stash-tab-canvas-container'
+        });
+        const canvas = createElement('canvas', {
+          id: 'stash-tab-canvas',
+          className: 'stash-tab-canvas'
+        });
+        stashContainer.appendChild(canvas);
+        viewSection.insertBefore(stashContainer, chartsContainer);
+        await renderStashTab(canvas, items, categoryId);
+      }
+      generateCategoryCharts(chartsContainer, items, categoryId);
+    }
+    
+  } catch (error) {
+    clearElement(viewSection);
+    displayError(viewSection, `Failed to load category: ${error.message}`);
+    
+    const backLink = createElement('a', {
+      href: '#/categories',
+      textContent: '← Back to Categories',
+      className: 'back-link'
+    });
+    viewSection.appendChild(backLink);
+  }
+}
+
+/**
+ * Format category name for display
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Formatted name
+ */
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
+ * Get category filename
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Filename
+ */
+function getCategoryFilename(categoryId) {
+  const parts = categoryId.split('-');
+  const baseName = parts.map((part, index) => {
+    if (index === 0) {
+      // Remove trailing 's' if present (scarabs -> scarab)
+      return part.replace(/s$/, '');
+    }
+    // For subsequent parts, capitalize first letter and remove trailing 's' if present
+    // "cards" -> "Card"
+    const capitalized = part.charAt(0).toUpperCase() + part.slice(1);
+    return capitalized.replace(/s$/, '');
+  }).join('');
+  // Keep first letter lowercase to match actual filenames
+  return `${baseName}Details.json`;
+}
+
+/**
+ * Render grid of miniature divination cards
+ * @param {HTMLElement} container - Container element to render into
+ * @param {Array} items - Array of divination card items
+ */
+async function renderDivinationCardGrid(container, items) {
+  // Clear container
+  clearElement(container);
+  
+  // Render each card as a miniature
+  const cardWidth = 150; // Miniature size (reduced from 180)
+  const promises = items.map(async (card) => {
+    const cardWrapper = createElement('div', {
+      className: 'divination-card-mini-wrapper'
+    });
+    
+    const cardLink = createElement('a', {
+      href: `#/category/divination-cards/item/${card.id}`,
+      className: 'divination-card-mini-link'
+    });
+    
+    const cardContainer = createElement('div', {
+      className: 'divination-card-mini-container'
+    });
+    
+    // Render the card with miniature size
+    await renderDivinationCard(cardContainer, card, {
+      width: cardWidth,
+      responsive: false
+    });
+    
+    cardLink.appendChild(cardContainer);
+    cardWrapper.appendChild(cardLink);
+    container.appendChild(cardWrapper);
+  });
+  
+  await Promise.all(promises);
+}
+
+/**
+ * Get current items (for external access)
+ * @returns {Array} Current items
+ */
+export function getCurrentItems() {
+  return currentItems;
+}
+

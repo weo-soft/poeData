@@ -1,0 +1,64 @@
+{
+    "name": "Dataset 1",
+    "description": "Dataset 1",
+    "date": "2023-04-03",
+    "patch": "3.25.0",
+    "sources": [
+        
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+            "author": "pedrolopa"
+        },
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+            "author": "kubuxu"
+        }
+    ],
+    "inputItems": [
+       
+    ],
+    "items": [
+        {
+            "id": "intrisic",
+            "weight": 97.66
+        },
+        {
+            "id": "turbulent",
+            "weight": 50.30
+        },
+        {
+            "id": "noxious",
+            "weight": 48.03
+        },
+        {
+            "id": "abrasive",
+            "weight": 47.36
+        },
+        {
+            "id": "imbued",
+            "weight": 46.15
+        },
+        {
+            "id": "prismatic",
+            "weight": 11.70
+        },
+        {
+            "id": "fertile",
+            "weight": 11.65
+        },
+        {
+            "id": "tempering",
+            "weight": 11.61
+        },
+        {
+            "id": "unstable",
+            "weight": 5.30
+        },
+        {
+            "id": "accelerating",
+            "weight": 5.00
+        }
+    ]
+}

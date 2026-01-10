@@ -1,0 +1,1365 @@
+/* Path of Exile Item Data Browser - Main Styles */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* PoE-inspired color palette */
+  --poe-dark-bg: #1a1a1a;
+  --poe-darker-bg: #0f0f0f;
+  --poe-border: #3a3a3a;
+  --poe-text: #d4d4d4;
+  --poe-text-dim: #888888;
+  --poe-accent: #af6025;
+  --poe-accent-hover: #c77a3a;
+  --poe-rare: #ffff77;
+  --poe-unique: #af6025;
+  --poe-magic: #8888ff;
+  --poe-normal: #c8c8c8;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--poe-darker-bg);
+  color: var(--poe-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation */
+nav.global-nav {
+  background-color: var(--poe-dark-bg);
+  border-bottom: 2px solid var(--poe-border);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav.global-nav .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+nav.global-nav .nav-link {
+  color: var(--poe-text);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+nav.global-nav .nav-link:hover {
+  color: var(--poe-accent);
+}
+
+nav.global-nav .nav-link.active {
+  color: var(--poe-accent);
+}
+
+nav.global-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--poe-accent);
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Loading States */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+}
+
+.error {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff6666;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+/* Buttons */
+button {
+  background-color: var(--poe-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: var(--poe-accent-hover);
+}
+
+button:disabled {
+  background-color: var(--poe-border);
+  cursor: not-allowed;
+}
+
+/* Links */
+a {
+  color: var(--poe-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Forms */
+input, textarea, select {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  color: var(--poe-text);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--poe-accent);
+  outline-offset: 2px;
+}
+
+/* Homepage Styles */
+.home {
+  text-align: center;
+  padding: 2rem;
+}
+
+.home h1 {
+  color: var(--poe-accent);
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: var(--poe-text-dim);
+  margin-bottom: 3rem;
+}
+
+.categories-preview {
+  margin: 3rem 0;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.category-card {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.category-card:hover {
+  border-color: var(--poe-accent);
+  transform: translateY(-2px);
+}
+
+.category-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.category-link h3 {
+  color: var(--poe-text);
+  margin-bottom: 0.5rem;
+}
+
+.item-count {
+  display: inline-block;
+  background-color: var(--poe-accent);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.nav-links {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.item-detail .nav-links {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.primary-link {
+  display: inline-block;
+  background-color: var(--poe-accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.primary-link:hover {
+  background-color: var(--poe-accent-hover);
+  text-decoration: none;
+}
+
+/* Category List Styles */
+.category-list h1 {
+  margin-bottom: 2rem;
+}
+
+.category-description {
+  color: var(--poe-text-dim);
+  margin: 0.5rem 0;
+}
+
+.back-link {
+  display: inline-block;
+  color: var(--poe-text);
+  text-decoration: none;
+}
+
+.nav-links .back-link {
+  margin-top: 0;
+}
+
+.back-link:hover {
+  color: var(--poe-accent);
+}
+
+/* Category View Styles */
+.category-view {
+  padding: 2rem;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--poe-border);
+}
+
+.category-header h1 {
+  color: var(--poe-accent);
+  margin: 0;
+}
+
+.json-link {
+  display: inline-block;
+  margin: 1rem 0;
+  color: var(--poe-accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.json-link:hover {
+  text-decoration: underline;
+}
+
+.stash-tab-container {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 2rem 0;
+  overflow: auto;
+}
+
+.stash-tab-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.charts-container {
+  margin: 2rem 0;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.chart-container {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1rem;
+  height: 300px;
+}
+
+.chart-container canvas {
+  max-height: 100%;
+}
+
+/* Item Detail Styles */
+.item-detail {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.item-header h1 {
+  color: var(--poe-accent);
+  margin-bottom: 1rem;
+}
+
+.item-details-container {
+  margin: 2rem 0;
+}
+
+.item-section {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.item-section h2 {
+  color: var(--poe-accent);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.attribute-list {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.attribute-list dt {
+  font-weight: bold;
+  color: var(--poe-text-dim);
+}
+
+.attribute-list dd {
+  margin: 0;
+  color: var(--poe-text);
+}
+
+.description-text,
+.flavour-text {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.modifiers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modifiers-list li {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background-color: var(--poe-darker-bg);
+  border-left: 3px solid var(--poe-accent);
+}
+
+.optional-modifier {
+  opacity: 0.7;
+}
+
+/* Submission Form Styles */
+.submission {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.submission h1 {
+  margin-bottom: 2rem;
+}
+
+.category-selector {
+  margin: 2rem 0;
+}
+
+.category-selector label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.category-selector select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.submission-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--poe-border);
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  color: var(--poe-text-dim);
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  color: var(--poe-text);
+}
+
+.tab-button.active {
+  color: var(--poe-accent);
+  border-bottom-color: var(--poe-accent);
+}
+
+.tab-content {
+  margin: 2rem 0;
+}
+
+/* Guided Form Styles */
+.guided-form {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.form-progress {
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--poe-darker-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--poe-accent);
+  transition: width 0.3s;
+}
+
+.progress-text {
+  text-align: center;
+  color: var(--poe-text-dim);
+  font-size: 0.9rem;
+}
+
+.form-step-container {
+  min-height: 300px;
+  margin: 2rem 0;
+}
+
+.form-step {
+  padding: 1rem 0;
+}
+
+.form-step h2 {
+  color: var(--poe-accent);
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  color: var(--poe-text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--poe-text);
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  color: var(--poe-text);
+  border-radius: 4px;
+}
+
+.form-field input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-field.has-error input,
+.form-field.has-error textarea {
+  border-color: #ff6666;
+}
+
+.field-error {
+  color: #ff6666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.form-nav-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--poe-border);
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--poe-accent);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--poe-accent-hover);
+}
+
+.btn-primary:disabled {
+  background-color: var(--poe-border);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--poe-text);
+  border: 1px solid var(--poe-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--poe-accent);
+  color: var(--poe-accent);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success-message {
+  background-color: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  color: #66ff66;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.success-message h2 {
+  color: #66ff66;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  background-color: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff6666;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.error-message h2 {
+  color: #ff6666;
+  margin-bottom: 1rem;
+}
+
+.validation-errors {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.validation-errors li {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-left: 3px solid #ff6666;
+}
+
+/* Item Selection Styles */
+.search-container {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  color: var(--poe-text);
+  border-radius: 4px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--poe-accent);
+}
+
+.item-list-container {
+  max-height: 600px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.item-card {
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.item-card:hover {
+  border-color: var(--poe-accent);
+  background-color: rgba(175, 96, 37, 0.1);
+  transform: translateY(-2px);
+}
+
+.item-name {
+  font-weight: bold;
+  color: var(--poe-text);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.item-id {
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.item-weight {
+  font-size: 0.9rem;
+  color: var(--poe-accent);
+  margin-top: 0.5rem;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+}
+
+.selected-item-info {
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.selected-item-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--poe-accent);
+  margin-bottom: 0.5rem;
+}
+
+.selected-item-id {
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.current-weight {
+  font-size: 1rem;
+  color: var(--poe-text);
+  margin-top: 0.5rem;
+}
+
+.form-description {
+  color: var(--poe-text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+}
+
+/* Import Form Styles */
+.import-form {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.import-description {
+  color: var(--poe-text-dim);
+  margin-bottom: 2rem;
+}
+
+.file-input-container {
+  margin: 2rem 0;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--poe-accent);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1rem;
+}
+
+.file-label:hover {
+  background-color: var(--poe-accent-hover);
+}
+
+.file-input {
+  display: none;
+}
+
+.info-message {
+  background-color: rgba(175, 96, 37, 0.1);
+  border: 1px solid rgba(175, 96, 37, 0.3);
+  color: var(--poe-accent);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.import-progress {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+}
+
+.warning-text {
+  color: var(--poe-rare);
+  margin-top: 1rem;
+}
+
+.import-details {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: var(--poe-darker-bg);
+  border-radius: 4px;
+}
+
+.import-details summary {
+  cursor: pointer;
+  color: var(--poe-accent);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.import-details summary:hover {
+  color: var(--poe-accent-hover);
+}
+
+.validation-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.validation-details-list > li {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.error-list {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+}
+
+.error-list li {
+  color: #ff6666;
+  font-size: 0.9rem;
+}
+
+/* Empty State Styles */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.empty-state h2 {
+  color: var(--poe-text-dim);
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: var(--poe-text-dim);
+  margin-bottom: 2rem;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+  font-style: italic;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+/* Divination Card Styles */
+.divination-card-side-by-side {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.divination-card-side-by-side .divination-card-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+.divination-card-side-by-side .div-card-preview {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.divination-card-side-by-side .base-attributes {
+  flex: 1;
+  min-width: 300px;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  align-self: flex-start;
+}
+
+.divination-card-side-by-side .item-section {
+  margin: 0 !important;
+  padding: 1.5rem !important;
+  padding-top: 0 !important;
+}
+
+.divination-card-side-by-side .item-section h2 {
+  margin-top: 0 !important;
+  margin-bottom: 1rem;
+}
+
+.divination-card-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.div-card-preview {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.div-card-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.div-card-text-base {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+.div-card-art {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 9%;
+  height: 44%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.div-card-separator {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  object-fit: contain;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.8;
+  /* top position is set dynamically via inline style based on line count */
+}
+
+.div-card-stack {
+  position: absolute;
+  top: 46.5%;
+  left: 13%;
+  width: 8.5%;
+  height: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 4;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.8);
+}
+
+.div-card-reward {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  text-align: center;
+  color: #d7a14d;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 3;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.6), 0 -1px 0 rgba(255,255,255,0.15);
+  white-space: normal;
+  line-height: 1.2;
+  transform: translateY(-2%);
+  /* top position is set dynamically via inline style based on line count */
+}
+
+.div-card-reward br {
+  display: block;
+  content: "";
+  margin: 0;
+}
+
+.div-card-flavour {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  text-align: center;
+  color: #d4a46a;
+  font-style: italic;
+  line-height: 1.3;
+  z-index: 3;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  /* top position is set dynamically via inline style based on line count */
+}
+
+.div-card-title {
+  position: absolute;
+  top: 3%;
+  left: 8%;
+  right: 8%;
+  text-align: center;
+  color: #1a1a1a;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 4;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4), 0 -1px 0 rgba(0,0,0,0.3);
+}
+
+/* Path of Exile styling metadata classes */
+.div-card-reward .poe-style-uniqueitem {
+  color: #ff8c42 !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-rareitem {
+  color: #ffeb3b !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-magicitem {
+  color: #8888ff !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-whiteitem {
+  color: #ffffff !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-currencyitem {
+  color: #d7a14d !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-gemitem {
+  color: #1ba29b !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-divination {
+  color: #5fb3d3 !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-default {
+  color: #888888 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+.div-card-reward .poe-style-normal {
+  color: #888888 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+.div-card-reward .poe-style-augmented {
+  color: #a080ff !important;
+  font-weight: 400 !important;
+  text-transform: uppercase !important;
+}
+
+.div-card-reward .poe-style-corrupted {
+  color: #e00000 !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.div-card-reward .poe-style-fractured {
+  color: #b8860b !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+.div-card-reward .poe-style-enchanted {
+  color: #888888 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+/* Size modifiers - calculated as (sizeValue / 32) relative to parent font size */
+.div-card-reward .poe-style-size-24 {
+  font-size: calc(24 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-25 {
+  font-size: calc(25 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-26 {
+  font-size: calc(26 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-27 {
+  font-size: calc(27 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-28 {
+  font-size: calc(28 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-29 {
+  font-size: calc(29 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-30 {
+  font-size: calc(30 / 32 * 1em) !important;
+}
+
+.div-card-reward .poe-style-size-31 {
+  font-size: calc(31 / 32 * 1em) !important;
+}
+
+/* Divination Card Grid (Category View) */
+.divination-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  row-gap: 0.1rem;
+  column-gap: 0.1rem;
+  margin: 0.5rem 0;
+  padding: 0.1rem;
+  background-color: var(--poe-dark-bg, #1a1a1a);
+  border: 2px solid var(--poe-border, #3a3a3a);
+  border-radius: 8px;
+}
+
+.divination-card-mini-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divination-card-mini-link {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.2s, filter 0.2s;
+  cursor: pointer;
+}
+
+.divination-card-mini-link:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.divination-card-mini-link:active {
+  transform: scale(1.02);
+}
+
+.divination-card-mini-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Divination Card Dynamic Scaling Controls */
+.div-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.div-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.div-card-zoom-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  background-color: var(--poe-accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.div-card-zoom-btn:hover {
+  background-color: var(--poe-accent-hover);
+}
+
+.div-card-zoom-btn:active {
+  transform: scale(0.95);
+}
+
+.div-card-reset-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: var(--poe-border);
+  color: var(--poe-text);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.div-card-reset-btn:hover {
+  background-color: var(--poe-accent);
+  color: white;
+  border-color: var(--poe-accent);
+}
+
+.div-card-size-display {
+  min-width: 70px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--poe-text);
+  font-size: 0.9rem;
+}
+
+.div-card-size-slider {
+  width: 200px;
+  height: 6px;
+  background: var(--poe-darker-bg);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.div-card-size-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--poe-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.div-card-size-slider::-webkit-slider-thumb:hover {
+  background: var(--poe-accent-hover);
+}
+
+.div-card-size-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--poe-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.div-card-size-slider::-moz-range-thumb:hover {
+  background: var(--poe-accent-hover);
+}
+
+.div-card-responsive-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--poe-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.div-card-responsive-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--poe-accent);
+}
+
+@media (max-width: 768px) {
+  .div-card-controls {
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .div-card-size-slider {
+    width: 100%;
+  }
+  
+  .div-card-controls > * {
+    width: 100%;
+  }
+  
+  .div-card-zoom-btn {
+    flex: 1;
+  }
+}
+

@@ -1,0 +1,97 @@
+{
+    "name": "Dataset 2",
+    "description": "Dataset 2",
+    "date": "2023-11-26",
+    "patch": "3.22.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+            "author": "aertherel"
+        },
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+            "author": "aertherel"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "blacksmith"
+        }
+    ],
+    "items": [
+        {
+            "id": "abyssal",
+            "weight": 18
+        },
+        {
+            "id": "amorphous",
+            "weight": 34
+        },
+        {
+            "id": "armoursmith",
+            "weight": 121
+        },
+        {
+            "id": "blighted",
+            "weight": 27
+        },
+        {
+            "id": "cartographer",
+            "weight": 28
+        },
+        {
+            "id": "diviner",
+            "weight": 61
+        },
+        {
+            "id": "fine",
+            "weight": 142
+        },
+        {
+            "id": "foreboding",
+            "weight": 51
+        },
+        {
+            "id": "fossilied",
+            "weight": 26
+        },
+        {
+            "id": "fragmented",
+            "weight": 33
+        },
+        {
+            "id": "imperial",
+            "weight": 62
+        },
+        {
+            "id": "jeweller",
+            "weight": 121
+        },
+        {
+            "id": "obscured",
+            "weight": 18
+        },
+        {
+            "id": "singular",
+            "weight": 30
+        },
+        {
+            "id": "skittering",
+            "weight": 22
+        },
+        {
+            "id": "thaumaturge",
+            "weight": 30
+        },
+        {
+            "id": "timeless",
+            "weight": 30
+        },
+        {
+            "id": "whispering",
+            "weight": 45
+        }
+    ]
+}

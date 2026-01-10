@@ -1,0 +1,27 @@
+[
+    {
+        "id": "timeless-eternal-emblem",
+        "name": "Timeless Eternal Emblem",
+        "helpText": "Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once."
+    },
+    {
+        "id": "timeless-karui-emblem",
+        "name": "Timeless Karui Emblem",
+        "helpText": "Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once."
+    },
+    {
+        "id": "timeless-vaal-emblem",
+        "name": "Timeless Vaal Emblem",
+        "helpText": "Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once."
+    },
+    {
+        "id": "timeless-templar-emblem",
+        "name": "Timeless Templar Emblem",
+        "helpText": "Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once."
+    },
+    {
+        "id": "timeless-maraketh-emblem",
+        "name": "Timeless Maraketh Emblem",
+        "helpText": "Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once."
+    }
+]

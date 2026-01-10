@@ -1,0 +1,36 @@
+{
+    "name": "Dataset 3",
+    "description": "Dataset 3",
+    "date": "2025-09-02",
+    "patch": "3.26.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+            "author": "cardpender"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "xoph"
+        }
+    ],
+    "items": [
+        {
+            "id": "esh",
+            "weight": 2040   
+        },
+        {
+            "id": "tul",
+            "weight": 1986     
+        },
+        {
+            "id": "uul-netol",
+            "weight": 801    
+        },
+        {
+            "id": "chayula",
+            "weight": 427
+        }
+    ]
+}

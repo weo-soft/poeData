@@ -1,0 +1,121 @@
+{
+    "name": "Dataset 1",
+    "description": "Dataset 1",
+    "date": "2022-09-14",
+    "patch": "3.19.0",
+    "sources": [
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+            "author": "Lextra"
+        },
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+            "author": "FallenAng3L"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "abberant"
+        }
+    ],
+    "items": [
+        {
+            "id": "jagged",
+            "weight": 129
+        },
+        {
+            "id": "dense",
+            "weight": 112
+        },
+        {
+            "id": "frigid",
+            "weight": 122
+        },
+        {
+            "id": "scorched",
+            "weight": 123
+        },
+        {
+            "id": "metalic",
+            "weight": 133
+        },
+        {
+            "id": "pristine",
+            "weight": 122
+        },
+        {
+            "id": "bound",
+            "weight": 25
+        },
+        {
+            "id": "corroded",
+            "weight": 20
+        },
+        {
+            "id": "perfect",
+            "weight": 24
+        },
+        {
+            "id": "prismatic",
+            "weight": 20
+        },
+        {
+            "id": "deft",
+            "weight": 36
+        },
+        {
+            "id": "aetheric",
+            "weight": 25
+        },
+        {
+            "id": "lucent",
+            "weight": 17
+        },
+        {
+            "id": "serrated",
+            "weight": 29
+        },
+        {
+            "id": "shuddering",
+            "weight": 29
+        },
+        {
+            "id": "gilded",
+            "weight": 2
+        },
+        {
+            "id": "fundamental",
+            "weight": 24
+        },
+        {
+            "id": "sanctified",
+            "weight": 1
+        },
+        {
+            "id": "faceted",
+            "weight": 1
+        },
+        {
+            "id": "fractured",
+            "weight": 1
+        },
+        {
+            "id": "hollow",
+            "weight": 0
+        },
+        {
+            "id": "glyphic",
+            "weight": 3
+        },
+        {
+            "id": "bloodstained",
+            "weight": 0
+        },
+        {
+            "id": "tangled",
+            "weight": 2
+        }
+    ]
+}

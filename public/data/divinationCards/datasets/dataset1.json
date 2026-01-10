@@ -1,0 +1,1708 @@
+{
+    "name": "Dataset 1",
+    "description": "Dataset 1",
+    "date": "2025-12-21",
+    "patch": "3.27.0",
+    "sources": [
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1PmGES_e1on6K7O5ghHuoorEjruAVb7dQ5m7PGrW7t80/edit?gid=272334906#gid=272334906",
+            "author": "nerdyjoe"
+        },
+        {
+            "name": "divicards-site.pages.dev",
+            "url": "https://divicards-site.pages.dev/weights",
+            "author": "SHONYA3"
+        }
+    ],
+    "items": [
+        {
+            "id": "a-chilling-wind",
+            "weight": 286
+        },
+        {
+            "id": "a-dab-of-ink",
+            "weight": 533
+        },
+        {
+            "id": "a-dusty-memory",
+            "weight": 250
+        },
+        {
+            "id": "a-fate-worse-than-death",
+            "weight": 26
+        },
+        {
+            "id": "a-modest-request",
+            "weight": 110
+        },
+        {
+            "id": "a-mothers-parting-gift",
+            "weight": 1045
+        },
+        {
+            "id": "a-note-in-the-wind",
+            "weight": 194
+        },
+        {
+            "id": "a-sea-of-blue",
+            "weight": 7360
+        },
+        {
+            "id": "a-stone-perfected",
+            "weight": 106
+        },
+        {
+            "id": "abandoned-wealth",
+            "weight": 390
+        },
+        {
+            "id": "acclimatisation",
+            "weight": 4235
+        },
+        {
+            "id": "akils-prophecy",
+            "weight": 88
+        },
+        {
+            "id": "alivias-grace",
+            "weight": 1978
+        },
+        {
+            "id": "alluring-bounty",
+            "weight": 227
+        },
+        {
+            "id": "alone-in-the-darkness",
+            "weight": 5995
+        },
+        {
+            "id": "altered-perception",
+            "weight": 26
+        },
+        {
+            "id": "ambitious-obsession",
+            "weight": 7
+        },
+        {
+            "id": "arrogance-of-the-vaal",
+            "weight": 792
+        },
+        {
+            "id": "assassins-favour",
+            "weight": 10357
+        },
+        {
+            "id": "assassins-gift",
+            "weight": 39
+        },
+        {
+            "id": "astral-protection",
+            "weight": 626
+        },
+        {
+            "id": "atziris-arsenal",
+            "weight": 1259
+        },
+        {
+            "id": "audacity",
+            "weight": 65
+        },
+        {
+            "id": "auspicious-ambitions",
+            "weight": 15
+        },
+        {
+            "id": "avian-pursuit",
+            "weight": 124
+        },
+        {
+            "id": "azure-rage",
+            "weight": 3226
+        },
+        {
+            "id": "azyrans-reward",
+            "weight": 427
+        },
+        {
+            "id": "baited-expectations",
+            "weight": 324
+        },
+        {
+            "id": "beauty-through-death",
+            "weight": 18
+        },
+        {
+            "id": "bijoux",
+            "weight": 227
+        },
+        {
+            "id": "blind-venture",
+            "weight": 2143
+        },
+        {
+            "id": "boon-of-justice",
+            "weight": 7073
+        },
+        {
+            "id": "boon-of-the-first-ones",
+            "weight": 756
+        },
+        {
+            "id": "bound-by-flame",
+            "weight": 0
+        },
+        {
+            "id": "boundless-realms",
+            "weight": 5495
+        },
+        {
+            "id": "bowyers-dream",
+            "weight": 152
+        },
+        {
+            "id": "broken-promises",
+            "weight": 44
+        },
+        {
+            "id": "broken-truce",
+            "weight": 1487
+        },
+        {
+            "id": "brotherhood-in-exile",
+            "weight": 174
+        },
+        {
+            "id": "brush-paint-and-palette",
+            "weight": 675
+        },
+        {
+            "id": "buried-treasure",
+            "weight": 642
+        },
+        {
+            "id": "call-to-the-first-ones",
+            "weight": 1638
+        },
+        {
+            "id": "camerias-cut",
+            "weight": 4695
+        },
+        {
+            "id": "cartographers-delight",
+            "weight": 4265
+        },
+        {
+            "id": "chaotic-disposition",
+            "weight": 4205
+        },
+        {
+            "id": "chasing-risk",
+            "weight": 203
+        },
+        {
+            "id": "checkmate",
+            "weight": 238
+        },
+        {
+            "id": "choking-guilt",
+            "weight": 34
+        },
+        {
+            "id": "costly-curio",
+            "weight": 501
+        },
+        {
+            "id": "council-of-cats",
+            "weight": 132
+        },
+        {
+            "id": "coveted-possession",
+            "weight": 3226
+        },
+        {
+            "id": "cursed-words",
+            "weight": 3449
+        },
+        {
+            "id": "damnation",
+            "weight": 0
+        },
+        {
+            "id": "dark-dreams",
+            "weight": 124
+        },
+        {
+            "id": "dark-temptation",
+            "weight": 9596
+        },
+        {
+            "id": "darker-half",
+            "weight": 37
+        },
+        {
+            "id": "deadly-joy",
+            "weight": 25
+        },
+        {
+            "id": "death",
+            "weight": 1341
+        },
+        {
+            "id": "deathly-designs",
+            "weight": 162
+        },
+        {
+            "id": "dementophobia",
+            "weight": 80
+        },
+        {
+            "id": "demigods-wager",
+            "weight": 775
+        },
+        {
+            "id": "desecrated-virtue",
+            "weight": 31
+        },
+        {
+            "id": "desperate-crusade",
+            "weight": 162
+        },
+        {
+            "id": "destined-to-crumble",
+            "weight": 45014
+        },
+        {
+            "id": "diallas-subjugation",
+            "weight": 1551
+        },
+        {
+            "id": "disdain",
+            "weight": 324
+        },
+        {
+            "id": "divine-beauty",
+            "weight": 390
+        },
+        {
+            "id": "divine-justice",
+            "weight": 39
+        },
+        {
+            "id": "doedres-madness",
+            "weight": 12753
+        },
+        {
+            "id": "doryanis-epiphany",
+            "weight": 114
+        },
+        {
+            "id": "draped-in-dreams",
+            "weight": 31
+        },
+        {
+            "id": "duality",
+            "weight": 16
+        },
+        {
+            "id": "dying-anguish",
+            "weight": 2463
+        },
+        {
+            "id": "dying-light",
+            "weight": 38
+        },
+        {
+            "id": "earth-drinker",
+            "weight": 1508
+        },
+        {
+            "id": "echoes-of-love",
+            "weight": 350
+        },
+        {
+            "id": "eldritch-perfection",
+            "weight": 32
+        },
+        {
+            "id": "emperor-of-purity",
+            "weight": 2096
+        },
+        {
+            "id": "emperors-luck",
+            "weight": 49384
+        },
+        {
+            "id": "endless-night",
+            "weight": 350
+        },
+        {
+            "id": "etched-in-blood",
+            "weight": 50
+        },
+        {
+            "id": "eternal-bonds",
+            "weight": 44
+        },
+        {
+            "id": "ever-changing",
+            "weight": 1423
+        },
+        {
+            "id": "fathers-love",
+            "weight": 0
+        },
+        {
+            "id": "fire-of-unknown-origin",
+            "weight": 15
+        },
+        {
+            "id": "forbidden-power",
+            "weight": 1954
+        },
+        {
+            "id": "friendship",
+            "weight": 0
+        },
+        {
+            "id": "from-bone-to-ashes",
+            "weight": 183
+        },
+        {
+            "id": "gemcutters-mercy",
+            "weight": 133
+        },
+        {
+            "id": "gemcutters-promise",
+            "weight": 7799
+        },
+        {
+            "id": "gift-of-asenath",
+            "weight": 194
+        },
+        {
+            "id": "gift-of-the-gemling-queen",
+            "weight": 2048
+        },
+        {
+            "id": "glimmer-of-hope",
+            "weight": 9636
+        },
+        {
+            "id": "grave-knowledge",
+            "weight": 2513
+        },
+        {
+            "id": "guardians-challenge",
+            "weight": 1572
+        },
+        {
+            "id": "harmony-of-souls",
+            "weight": 227
+        },
+        {
+            "id": "haunting-shadows",
+            "weight": 610
+        },
+        {
+            "id": "her-mask",
+            "weight": 10034
+        },
+        {
+            "id": "heterochromia",
+            "weight": 1749
+        },
+        {
+            "id": "history",
+            "weight": 39
+        },
+        {
+            "id": "home",
+            "weight": 44
+        },
+        {
+            "id": "hope",
+            "weight": 2096
+        },
+        {
+            "id": "house-of-mirrors",
+            "weight": 14
+        },
+        {
+            "id": "hubris",
+            "weight": 6474
+        },
+        {
+            "id": "humility",
+            "weight": 2718
+        },
+        {
+            "id": "hunters-resolve",
+            "weight": 8473
+        },
+        {
+            "id": "hunters-reward",
+            "weight": 227
+        },
+        {
+            "id": "i-see-brothers",
+            "weight": 50
+        },
+        {
+            "id": "immortal-resolve",
+            "weight": 792
+        },
+        {
+            "id": "imperfect-memories",
+            "weight": 20
+        },
+        {
+            "id": "imperial-legacy",
+            "weight": 10930
+        },
+        {
+            "id": "jack-in-the-box",
+            "weight": 4540
+        },
+        {
+            "id": "justified-ambition",
+            "weight": 417
+        },
+        {
+            "id": "keepers-corruption",
+            "weight": 20
+        },
+        {
+            "id": "lachrymal-necrosis",
+            "weight": 675
+        },
+        {
+            "id": "lantadors-lost-love",
+            "weight": 16480
+        },
+        {
+            "id": "last-hope",
+            "weight": 6096
+        },
+        {
+            "id": "left-to-fate",
+            "weight": 3090
+        },
+        {
+            "id": "lethean-temptation",
+            "weight": 48
+        },
+        {
+            "id": "light-and-truth",
+            "weight": 758
+        },
+        {
+            "id": "lingering-remnants",
+            "weight": 1423
+        },
+        {
+            "id": "lonely-warrior",
+            "weight": 15
+        },
+        {
+            "id": "lost-worlds",
+            "weight": 7799
+        },
+        {
+            "id": "love-through-ice",
+            "weight": 14
+        },
+        {
+            "id": "loyalty",
+            "weight": 35154
+        },
+        {
+            "id": "lucky-connections",
+            "weight": 7360
+        },
+        {
+            "id": "lucky-deck",
+            "weight": 183
+        },
+        {
+            "id": "luminous-trove",
+            "weight": 81
+        },
+        {
+            "id": "lysahs-respite",
+            "weight": 1978
+        },
+        {
+            "id": "magnum-opus",
+            "weight": 44
+        },
+        {
+            "id": "man-with-bear",
+            "weight": 707
+        },
+        {
+            "id": "matryoshka",
+            "weight": 18
+        },
+        {
+            "id": "mawr-blaidd",
+            "weight": 205
+        },
+        {
+            "id": "might-is-right",
+            "weight": 2488
+        },
+        {
+            "id": "misery-in-darkness",
+            "weight": 91
+        },
+        {
+            "id": "mitts",
+            "weight": 6029
+        },
+        {
+            "id": "monochrome",
+            "weight": 564
+        },
+        {
+            "id": "more-is-never-enough",
+            "weight": 23270
+        },
+        {
+            "id": "no-traces",
+            "weight": 2096
+        },
+        {
+            "id": "nooks-crown",
+            "weight": 15
+        },
+        {
+            "id": "one-last-score",
+            "weight": 0
+        },
+        {
+            "id": "outfoxed",
+            "weight": 0
+        },
+        {
+            "id": "parasitic-passengers",
+            "weight": 417
+        },
+        {
+            "id": "peaceful-moments",
+            "weight": 124
+        },
+        {
+            "id": "perfection",
+            "weight": 31
+        },
+        {
+            "id": "poisoned-faith",
+            "weight": 72
+        },
+        {
+            "id": "prejudice",
+            "weight": 2096
+        },
+        {
+            "id": "pride-before-the-fall",
+            "weight": 124
+        },
+        {
+            "id": "prometheus-armoury",
+            "weight": 36
+        },
+        {
+            "id": "prosperity",
+            "weight": 12928
+        },
+        {
+            "id": "rain-of-chaos",
+            "weight": 121466
+        },
+        {
+            "id": "rain-tempter",
+            "weight": 15310
+        },
+        {
+            "id": "rats",
+            "weight": 14441
+        },
+        {
+            "id": "rebirth",
+            "weight": 84
+        },
+        {
+            "id": "rebirth-and-renewal",
+            "weight": 724
+        },
+        {
+            "id": "reckless-ambition",
+            "weight": 410
+        },
+        {
+            "id": "remembrance",
+            "weight": 42
+        },
+        {
+            "id": "runic-luck",
+            "weight": 2096
+        },
+        {
+            "id": "sambodhis-vow",
+            "weight": 4509
+        },
+        {
+            "id": "sambodhis-wisdom",
+            "weight": 65
+        },
+        {
+            "id": "scholar-of-the-seas",
+            "weight": 2388
+        },
+        {
+            "id": "seven-years-bad-luck",
+            "weight": 37
+        },
+        {
+            "id": "shard-of-fate",
+            "weight": 4946
+        },
+        {
+            "id": "societys-remorse",
+            "weight": 3117
+        },
+        {
+            "id": "something-dark",
+            "weight": 431
+        },
+        {
+            "id": "squandered-prosperity",
+            "weight": 0
+        },
+        {
+            "id": "struck-by-lightning",
+            "weight": 7180
+        },
+        {
+            "id": "succor-of-the-sinless",
+            "weight": 21
+        },
+        {
+            "id": "temperance",
+            "weight": 0
+        },
+        {
+            "id": "terrible-secret-of-space",
+            "weight": 39
+        },
+        {
+            "id": "the-academic",
+            "weight": 114
+        },
+        {
+            "id": "the-admirer",
+            "weight": 1592
+        },
+        {
+            "id": "the-adventuring-spirit",
+            "weight": 9954
+        },
+        {
+            "id": "the-aesthete",
+            "weight": 5106
+        },
+        {
+            "id": "the-apothecary",
+            "weight": 7
+        },
+        {
+            "id": "the-archmages-right-hand",
+            "weight": 1885
+        },
+        {
+            "id": "the-arena-champion",
+            "weight": 12407
+        },
+        {
+            "id": "the-army-of-blood",
+            "weight": 8321
+        },
+        {
+            "id": "the-artist",
+            "weight": 26
+        },
+        {
+            "id": "the-aspirant",
+            "weight": 26
+        },
+        {
+            "id": "the-astromancer",
+            "weight": 8
+        },
+        {
+            "id": "the-avenger",
+            "weight": 97
+        },
+        {
+            "id": "the-awakened",
+            "weight": 20
+        },
+        {
+            "id": "the-battle-born",
+            "weight": 5927
+        },
+        {
+            "id": "the-bear-woman",
+            "weight": 989
+        },
+        {
+            "id": "the-beast",
+            "weight": 1749
+        },
+        {
+            "id": "the-betrayal",
+            "weight": 2692
+        },
+        {
+            "id": "the-bitter-blossom",
+            "weight": 124
+        },
+        {
+            "id": "the-blazing-fire",
+            "weight": 10807
+        },
+        {
+            "id": "the-blessing-of-moosh",
+            "weight": 216
+        },
+        {
+            "id": "the-body",
+            "weight": 3705
+        },
+        {
+            "id": "the-bones",
+            "weight": 417
+        },
+        {
+            "id": "the-brawny-battle-mage",
+            "weight": 72
+        },
+        {
+            "id": "the-brittle-emperor",
+            "weight": 88
+        },
+        {
+            "id": "the-cache",
+            "weight": 6267
+        },
+        {
+            "id": "the-cacophony",
+            "weight": 227
+        },
+        {
+            "id": "the-calling",
+            "weight": 3821
+        },
+        {
+            "id": "the-card-sharp",
+            "weight": 403
+        },
+        {
+            "id": "the-carrion-crow",
+            "weight": 25099
+        },
+        {
+            "id": "the-cartographer",
+            "weight": 489
+        },
+        {
+            "id": "the-cataclysm",
+            "weight": 2240
+        },
+        {
+            "id": "the-catalyst",
+            "weight": 22899
+        },
+        {
+            "id": "the-celestial-justicar",
+            "weight": 610
+        },
+        {
+            "id": "the-celestial-stone",
+            "weight": 44
+        },
+        {
+            "id": "the-chains-that-bind",
+            "weight": 8701
+        },
+        {
+            "id": "the-cheater",
+            "weight": 7
+        },
+        {
+            "id": "the-chosen",
+            "weight": 5
+        },
+        {
+            "id": "the-coming-storm",
+            "weight": 1978
+        },
+        {
+            "id": "the-conduit",
+            "weight": 489
+        },
+        {
+            "id": "the-craving",
+            "weight": 44
+        },
+        {
+            "id": "the-cursed-king",
+            "weight": 579
+        },
+        {
+            "id": "the-damned",
+            "weight": 25
+        },
+        {
+            "id": "the-dapper-prodigy",
+            "weight": 2338
+        },
+        {
+            "id": "the-dark-mage",
+            "weight": 809
+        },
+        {
+            "id": "the-darkest-dream",
+            "weight": 324
+        },
+        {
+            "id": "the-deal",
+            "weight": 1300
+        },
+        {
+            "id": "the-deceiver",
+            "weight": 1704
+        },
+        {
+            "id": "the-deep-ones",
+            "weight": 72
+        },
+        {
+            "id": "the-demon",
+            "weight": 39
+        },
+        {
+            "id": "the-demoness",
+            "weight": 9126
+        },
+        {
+            "id": "the-destination",
+            "weight": 19
+        },
+        {
+            "id": "the-doctor",
+            "weight": 15
+        },
+        {
+            "id": "the-doppelganger",
+            "weight": 18607
+        },
+        {
+            "id": "the-dragon",
+            "weight": 5693
+        },
+        {
+            "id": "the-dragons-heart",
+            "weight": 44
+        },
+        {
+            "id": "the-dreamland",
+            "weight": 1341
+        },
+        {
+            "id": "the-drunken-aristocrat",
+            "weight": 2289
+        },
+        {
+            "id": "the-dungeon-master",
+            "weight": 299
+        },
+        {
+            "id": "the-easy-stroll",
+            "weight": 1749
+        },
+        {
+            "id": "the-eldritch-decay",
+            "weight": 453
+        },
+        {
+            "id": "the-emptiness",
+            "weight": 15
+        },
+        {
+            "id": "the-encroaching-darkness",
+            "weight": 1026
+        },
+        {
+            "id": "the-endless-darkness",
+            "weight": 11
+        },
+        {
+            "id": "the-endurance",
+            "weight": 5202
+        },
+        {
+            "id": "the-enforcer",
+            "weight": 14
+        },
+        {
+            "id": "the-enlightened",
+            "weight": 72
+        },
+        {
+            "id": "the-enthusiasts",
+            "weight": 250
+        },
+        {
+            "id": "the-escape",
+            "weight": 658
+        },
+        {
+            "id": "the-eternal-war",
+            "weight": 39
+        },
+        {
+            "id": "the-ethereal",
+            "weight": 474
+        },
+        {
+            "id": "the-explorer",
+            "weight": 7144
+        },
+        {
+            "id": "the-eye-of-terror",
+            "weight": 10
+        },
+        {
+            "id": "the-eye-of-the-dragon",
+            "weight": 50
+        },
+        {
+            "id": "the-fathomless-depths",
+            "weight": 1161
+        },
+        {
+            "id": "the-feast",
+            "weight": 2143
+        },
+        {
+            "id": "the-fiend",
+            "weight": 7
+        },
+        {
+            "id": "the-finishing-touch",
+            "weight": 286
+        },
+        {
+            "id": "the-fishmonger",
+            "weight": 39
+        },
+        {
+            "id": "the-fletcher",
+            "weight": 2539
+        },
+        {
+            "id": "the-floras-gift",
+            "weight": 26585
+        },
+        {
+            "id": "the-fool",
+            "weight": 3365
+        },
+        {
+            "id": "the-forgotten-treasure",
+            "weight": 277
+        },
+        {
+            "id": "the-formless-sea",
+            "weight": 14
+        },
+        {
+            "id": "the-forsaken",
+            "weight": 1862
+        },
+        {
+            "id": "the-fortunate",
+            "weight": 1239
+        },
+        {
+            "id": "the-forward-gaze",
+            "weight": 1279
+        },
+        {
+            "id": "the-fox",
+            "weight": 2096
+        },
+        {
+            "id": "the-fox-in-the-brambles",
+            "weight": 610
+        },
+        {
+            "id": "the-gambler",
+            "weight": 4265
+        },
+        {
+            "id": "the-garish-power",
+            "weight": 44
+        },
+        {
+            "id": "the-gemcutter",
+            "weight": 4978
+        },
+        {
+            "id": "the-gentleman",
+            "weight": 1423
+        },
+        {
+            "id": "the-gladiator",
+            "weight": 5760
+        },
+        {
+            "id": "the-golden-era",
+            "weight": 1026
+        },
+        {
+            "id": "the-greatest-intentions",
+            "weight": 6
+        },
+        {
+            "id": "the-harvester",
+            "weight": 15821
+        },
+        {
+            "id": "the-hermit",
+            "weight": 18656
+        },
+        {
+            "id": "the-heroic-shot",
+            "weight": 1978
+        },
+        {
+            "id": "the-hoarder",
+            "weight": 2413
+        },
+        {
+            "id": "the-hook",
+            "weight": 57
+        },
+        {
+            "id": "the-hunger",
+            "weight": 579
+        },
+        {
+            "id": "the-immortal",
+            "weight": 37
+        },
+        {
+            "id": "the-incantation",
+            "weight": 1064
+        },
+        {
+            "id": "the-innocent",
+            "weight": 337
+        },
+        {
+            "id": "the-inoculated",
+            "weight": 6930
+        },
+        {
+            "id": "the-insane-cat",
+            "weight": 0
+        },
+        {
+            "id": "the-insatiable",
+            "weight": 1794
+        },
+        {
+            "id": "the-inventor",
+            "weight": 6439
+        },
+        {
+            "id": "the-jester",
+            "weight": 431
+        },
+        {
+            "id": "the-jewellers-boon",
+            "weight": 3763
+        },
+        {
+            "id": "the-journalist",
+            "weight": 12971
+        },
+        {
+            "id": "the-journey",
+            "weight": 626
+        },
+        {
+            "id": "the-kings-blade",
+            "weight": 42003
+        },
+        {
+            "id": "the-kings-heart",
+            "weight": 503
+        },
+        {
+            "id": "the-lake",
+            "weight": 0
+        },
+        {
+            "id": "the-landing",
+            "weight": 775
+        },
+        {
+            "id": "the-last-laugh",
+            "weight": 0
+        },
+        {
+            "id": "the-last-one-standing",
+            "weight": 18
+        },
+        {
+            "id": "the-last-supper",
+            "weight": 26
+        },
+        {
+            "id": "the-leviathan",
+            "weight": 27
+        },
+        {
+            "id": "the-lich",
+            "weight": 5010
+        },
+        {
+            "id": "the-life-thief",
+            "weight": 44
+        },
+        {
+            "id": "the-lion",
+            "weight": 3254
+        },
+        {
+            "id": "the-long-con",
+            "weight": 52
+        },
+        {
+            "id": "the-long-watch",
+            "weight": 20
+        },
+        {
+            "id": "the-lord-in-black",
+            "weight": 916
+        },
+        {
+            "id": "the-lord-of-celebration",
+            "weight": 758
+        },
+        {
+            "id": "the-lover",
+            "weight": 65892
+        },
+        {
+            "id": "the-lunaris-priestess",
+            "weight": 7579
+        },
+        {
+            "id": "the-mad-king",
+            "weight": 524
+        },
+        {
+            "id": "the-magma-crab",
+            "weight": 503
+        },
+        {
+            "id": "the-master-artisan",
+            "weight": 2902
+        },
+        {
+            "id": "the-mayor",
+            "weight": 0
+        },
+        {
+            "id": "the-mercenary",
+            "weight": 1572
+        },
+        {
+            "id": "the-messenger",
+            "weight": 1281
+        },
+        {
+            "id": "the-metalsmiths-gift",
+            "weight": 38245
+        },
+        {
+            "id": "the-minds-eyes",
+            "weight": 489
+        },
+        {
+            "id": "the-mountain",
+            "weight": 5429
+        },
+        {
+            "id": "the-nurse",
+            "weight": 88
+        },
+        {
+            "id": "the-oath",
+            "weight": 2338
+        },
+        {
+            "id": "the-obscured",
+            "weight": 216
+        },
+        {
+            "id": "the-offering",
+            "weight": 518
+        },
+        {
+            "id": "the-offspring",
+            "weight": 286
+        },
+        {
+            "id": "the-old-man",
+            "weight": 7
+        },
+        {
+            "id": "the-one-with-all",
+            "weight": 2615
+        },
+        {
+            "id": "the-opulent",
+            "weight": 10848
+        },
+        {
+            "id": "the-pack-leader",
+            "weight": 1594
+        },
+        {
+            "id": "the-pact",
+            "weight": 337
+        },
+        {
+            "id": "the-patient",
+            "weight": 741
+        },
+        {
+            "id": "the-penitent",
+            "weight": 4695
+        },
+        {
+            "id": "the-poet",
+            "weight": 2289
+        },
+        {
+            "id": "the-polymath",
+            "weight": 114
+        },
+        {
+            "id": "the-porcupine",
+            "weight": 4356
+        },
+        {
+            "id": "the-price-of-devotion",
+            "weight": 0
+        },
+        {
+            "id": "the-price-of-prescience",
+            "weight": 114
+        },
+        {
+            "id": "the-price-of-protection",
+            "weight": 1341
+        },
+        {
+            "id": "the-primordial",
+            "weight": 1160
+        },
+        {
+            "id": "the-prince-of-darkness",
+            "weight": 194
+        },
+        {
+            "id": "the-professor",
+            "weight": 114
+        },
+        {
+            "id": "the-progeny-of-lunaris",
+            "weight": 25
+        },
+        {
+            "id": "the-queen",
+            "weight": 141
+        },
+        {
+            "id": "the-rabbits-foot",
+            "weight": 74
+        },
+        {
+            "id": "the-rabid-rhoa",
+            "weight": 5397
+        },
+        {
+            "id": "the-realm",
+            "weight": 1102
+        },
+        {
+            "id": "the-return-of-the-rat",
+            "weight": 1026
+        },
+        {
+            "id": "the-risk",
+            "weight": 5202
+        },
+        {
+            "id": "the-rite-of-elements",
+            "weight": 2048
+        },
+        {
+            "id": "the-road-to-power",
+            "weight": 216
+        },
+        {
+            "id": "the-rusted-bard",
+            "weight": 72
+        },
+        {
+            "id": "the-ruthless-ceinture",
+            "weight": 3309
+        },
+        {
+            "id": "the-saints-treasure",
+            "weight": 1300
+        },
+        {
+            "id": "the-samurais-eye",
+            "weight": 81
+        },
+        {
+            "id": "the-scarred-meadow",
+            "weight": 18263
+        },
+        {
+            "id": "the-scavenger",
+            "weight": 1908
+        },
+        {
+            "id": "the-scholar",
+            "weight": 45744
+        },
+        {
+            "id": "the-scout",
+            "weight": 143
+        },
+        {
+            "id": "the-seeker",
+            "weight": 216
+        },
+        {
+            "id": "the-sephirot",
+            "weight": 350
+        },
+        {
+            "id": "the-shepherds-sandals",
+            "weight": 162
+        },
+        {
+            "id": "the-shieldbearer",
+            "weight": 15
+        },
+        {
+            "id": "the-shortcut",
+            "weight": 162
+        },
+        {
+            "id": "the-side-quest",
+            "weight": 675
+        },
+        {
+            "id": "the-sigil",
+            "weight": 6824
+        },
+        {
+            "id": "the-siren",
+            "weight": 460
+        },
+        {
+            "id": "the-skeleton",
+            "weight": 5364
+        },
+        {
+            "id": "the-soul",
+            "weight": 15
+        },
+        {
+            "id": "the-spark-and-the-flame",
+            "weight": 489
+        },
+        {
+            "id": "the-spoiled-prince",
+            "weight": 691
+        },
+        {
+            "id": "the-standoff",
+            "weight": 5726
+        },
+        {
+            "id": "the-stormcaller",
+            "weight": 5010
+        },
+        {
+            "id": "the-strategist",
+            "weight": 31
+        },
+        {
+            "id": "the-summoner",
+            "weight": 5495
+        },
+        {
+            "id": "the-sun",
+            "weight": 10642
+        },
+        {
+            "id": "the-surgeon",
+            "weight": 4602
+        },
+        {
+            "id": "the-surveyor",
+            "weight": 4448
+        },
+        {
+            "id": "the-survivalist",
+            "weight": 6718
+        },
+        {
+            "id": "the-sword-kings-salute",
+            "weight": 14942
+        },
+        {
+            "id": "the-thaumaturgist",
+            "weight": 80
+        },
+        {
+            "id": "the-tinkerers-table",
+            "weight": 216
+        },
+        {
+            "id": "the-tireless-extractor",
+            "weight": 9126
+        },
+        {
+            "id": "the-tower",
+            "weight": 5594
+        },
+        {
+            "id": "the-traitor",
+            "weight": 1160
+        },
+        {
+            "id": "the-transformation",
+            "weight": 205
+        },
+        {
+            "id": "the-trial",
+            "weight": 5826
+        },
+        {
+            "id": "the-twilight-moon",
+            "weight": 417
+        },
+        {
+            "id": "the-twins",
+            "weight": 5138
+        },
+        {
+            "id": "the-tyrant",
+            "weight": 337
+        },
+        {
+            "id": "the-undaunted",
+            "weight": 989
+        },
+        {
+            "id": "the-unexpected-prize",
+            "weight": 298
+        },
+        {
+            "id": "the-union",
+            "weight": 1279
+        },
+        {
+            "id": "the-valkyrie",
+            "weight": 3505
+        },
+        {
+            "id": "the-vast",
+            "weight": 14
+        },
+        {
+            "id": "the-visionary",
+            "weight": 8970
+        },
+        {
+            "id": "the-void",
+            "weight": 10029
+        },
+        {
+            "id": "the-warden",
+            "weight": 7910
+        },
+        {
+            "id": "the-warlord",
+            "weight": 675
+        },
+        {
+            "id": "the-watcher",
+            "weight": 3449
+        },
+        {
+            "id": "the-web",
+            "weight": 7910
+        },
+        {
+            "id": "the-wedding-gift",
+            "weight": 57
+        },
+        {
+            "id": "the-white-knight",
+            "weight": 37
+        },
+        {
+            "id": "the-whiteout",
+            "weight": 460
+        },
+        {
+            "id": "the-wilted-rose",
+            "weight": 2314
+        },
+        {
+            "id": "the-wind",
+            "weight": 376
+        },
+        {
+            "id": "the-witch",
+            "weight": 16008
+        },
+        {
+            "id": "the-wolf",
+            "weight": 4851
+        },
+        {
+            "id": "the-wolfs-legacy",
+            "weight": 262
+        },
+        {
+            "id": "the-wolfs-shadow",
+            "weight": 3967
+        },
+        {
+            "id": "the-wolven-kings-bite",
+            "weight": 376
+        },
+        {
+            "id": "the-wolverine",
+            "weight": 916
+        },
+        {
+            "id": "the-wrath",
+            "weight": 7001
+        },
+        {
+            "id": "the-wretched",
+            "weight": 3763
+        },
+        {
+            "id": "thirst-for-knowledge",
+            "weight": 7910
+        },
+        {
+            "id": "three-faces-in-the-dark",
+            "weight": 22530
+        },
+        {
+            "id": "three-voices",
+            "weight": 11936
+        },
+        {
+            "id": "thunderous-skies",
+            "weight": 10317
+        },
+        {
+            "id": "time-lost-relic",
+            "weight": 6474
+        },
+        {
+            "id": "toxic-tidings",
+            "weight": 143
+        },
+        {
+            "id": "tranquillity",
+            "weight": 7
+        },
+        {
+            "id": "treasure-hunter",
+            "weight": 106
+        },
+        {
+            "id": "triskaidekaphobia",
+            "weight": 1300
+        },
+        {
+            "id": "turn-the-other-cheek",
+            "weight": 579
+        },
+        {
+            "id": "unchained",
+            "weight": 350
+        },
+        {
+            "id": "underground-forest",
+            "weight": 97
+        },
+        {
+            "id": "unrequited-love",
+            "weight": 11
+        },
+        {
+            "id": "vanity",
+            "weight": 691
+        },
+        {
+            "id": "vile-power",
+            "weight": 1444
+        },
+        {
+            "id": "vinias-token",
+            "weight": 4820
+        },
+        {
+            "id": "void-of-the-elements",
+            "weight": 7
+        },
+        {
+            "id": "volatile-power",
+            "weight": 6301
+        },
+        {
+            "id": "wealth-and-power",
+            "weight": 26
+        },
+        {
+            "id": "when-currents-blaze",
+            "weight": 162
+        },
+        {
+            "id": "winters-embrace",
+            "weight": 36
+        }
+    ]
+}

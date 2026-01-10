@@ -1,0 +1,36 @@
+{
+    "name": "Dataset 3",
+    "description": "Dataset 3",
+    "date": "2025-05-11",
+    "patch": "3.25.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+            "author": "gdmt_"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "vaal"
+        }
+    ],
+    "items": [
+        {
+            "id": "eternal-empire",
+            "weight": 391			 
+        },
+        {
+            "id": "karui",
+            "weight": 373			
+        },
+        {
+            "id": "templar",
+            "weight": 153			  
+        },
+        {
+            "id": "maraketh",
+            "weight": 83			  
+        }
+    ]
+}

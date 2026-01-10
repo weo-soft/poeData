@@ -1,0 +1,32 @@
+[
+    {
+        "id": "timeless-eternal-empire-splinter",
+        "name": "Timeless Eternal Empire Splinter",
+        "stackSize": 100,
+        "helpText": "Combine 100 Splinters to create a Timeless Eternal Emblem"
+    },
+    {
+        "id": "timeless-karui-splinter",
+        "name": "Timeless Karui Splinter",
+        "stackSize": 100,
+        "helpText": "Combine 100 Splinters to create a Timeless Karui Emblem"
+    },
+    {
+        "id": "timeless-vaal-splinter",
+        "name": "Timeless Vaal Splinter",
+        "stackSize": 100,
+        "helpText": "Combine 100 Splinters to create a Timeless Vaal Emblem"
+    },
+    {
+        "id": "timeless-templar-splinter",
+        "name": "Timeless Templar Splinter",
+        "stackSize": 100,
+        "helpText": "Combine 100 Splinters to create a Timeless Templar Emblem"
+    },
+    {
+        "id": "timeless-maraketh-splinter",
+        "name": "Timeless Maraketh Splinter",
+        "stackSize": 100,
+        "helpText": "Combine 100 Splinters to create a Timeless Maraketh Emblem"
+    }
+]

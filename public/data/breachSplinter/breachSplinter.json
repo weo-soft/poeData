@@ -1,0 +1,32 @@
+[
+    {
+        "id": "splinter-of-chayula",
+        "name": "Splinter of Chayula",
+        "stackSize": 100,
+        "helpText": "Combine 100 splinters to create Chayula's Breachstone."
+    },
+    {
+        "id": "splinter-of-esh",
+        "name": "Splinter of Esh",
+        "stackSize": 100,
+        "helpText": "Combine 100 splinters to create Esh's Breachstone."
+    },
+    {
+        "id": "splinter-of-tul",
+        "name": "Splinter of Tul",
+        "stackSize": 100,
+        "helpText": "Combine 100 splinters to create Tul's Breachstone."
+    },
+    {
+        "id": "splinter-of-uul-netol",
+        "name": "Splinter of Uul-Netol",
+        "stackSize": 100,
+        "helpText": "Combine 100 splinters to create Uul-Netol's Breachstone."
+    },
+    {
+        "id": "splinter-of-xoph",
+        "name": "Splinter of Xoph",
+        "stackSize": 100,
+        "helpText": "Combine 100 splinters to create Xoph's Breachstone."
+    }
+]

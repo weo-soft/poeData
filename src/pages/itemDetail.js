@@ -1,0 +1,135 @@
+/**
+ * Item detail view component - Display detailed information about a specific item
+ */
+
+import { createElement, clearElement, setLoadingState } from '../utils/dom.js';
+import { getItemById } from '../services/dataLoader.js';
+import { displayError } from '../utils/errors.js';
+import { renderItemDetails } from '../visualization/itemRenderer.js';
+import { hideTooltip } from '../utils/tooltip.js';
+
+/**
+ * Render item detail view
+ * @param {HTMLElement} container - Container element to render into
+ * @param {Object} params - Route parameters
+ * @param {string} params.categoryId - Category identifier
+ * @param {string} params.itemId - Item identifier
+ */
+export async function renderItemDetail(container, params) {
+  clearElement(container);
+  // Hide any visible tooltips when navigating to detail page
+  hideTooltip();
+  
+  const { categoryId, itemId } = params;
+  
+  const detailSection = createElement('section', { className: 'item-detail' });
+  
+  // Loading state
+  const loadingDiv = createElement('div', { className: 'loading', textContent: 'Loading item details...' });
+  detailSection.appendChild(loadingDiv);
+  setLoadingState(loadingDiv, true);
+  
+  container.appendChild(detailSection);
+  
+  try {
+    // Load item data
+    const item = await getItemById(categoryId, itemId);
+    
+    if (!item) {
+      // Show 404-style error
+      const notFoundDiv = createElement('div', {
+        className: 'error',
+        innerHTML: `
+          <h2>Item Not Found</h2>
+          <p>Item "${itemId}" was not found in category "${formatCategoryName(categoryId)}".</p>
+          <p>The item may have been removed or the ID may be incorrect.</p>
+        `
+      });
+      detailSection.appendChild(notFoundDiv);
+      return;
+    }
+    
+    // Clear loading
+    clearElement(detailSection);
+    
+    // Navigation at the top
+    const navLinks = createElement('div', { className: 'nav-links' });
+    const backLink = createElement('a', {
+      href: `#/category/${categoryId}`,
+      textContent: `← Back to ${formatCategoryName(categoryId)}`,
+      className: 'back-link'
+    });
+    navLinks.appendChild(backLink);
+    detailSection.appendChild(navLinks);
+    
+    // Item header
+    const header = createElement('div', { className: 'item-header' });
+    const title = createElement('h1', { textContent: item.name });
+    header.appendChild(title);
+    detailSection.appendChild(header);
+    
+    // JSON link
+    const jsonLink = createElement('a', {
+      href: `/data/${getCategoryFilename(categoryId)}#item:${itemId}`,
+      textContent: 'View Raw JSON Data',
+      className: 'json-link',
+      target: '_blank'
+    });
+    detailSection.appendChild(jsonLink);
+    
+    // Item details
+    const detailsContainer = createElement('div', {
+      className: 'item-details-container',
+      id: 'item-details-container'
+    });
+    detailSection.appendChild(detailsContainer);
+    
+    // Render item details
+    await renderItemDetails(detailsContainer, item, categoryId);
+    
+  } catch (error) {
+    clearElement(detailSection);
+    displayError(detailSection, `Failed to load item: ${error.message}`);
+    
+    const backLink = createElement('a', {
+      href: `#/category/${categoryId}`,
+      textContent: `← Back to ${formatCategoryName(categoryId)}`,
+      className: 'back-link'
+    });
+    detailSection.appendChild(backLink);
+  }
+}
+
+/**
+ * Format category name for display
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Formatted name
+ */
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
+ * Get category filename
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Filename
+ */
+function getCategoryFilename(categoryId) {
+  const parts = categoryId.split('-');
+  const baseName = parts.map((part, index) => {
+    if (index === 0) {
+      // Remove trailing 's' if present (scarabs -> scarab)
+      return part.replace(/s$/, '');
+    }
+    // For subsequent parts, capitalize first letter and remove trailing 's' if present
+    // "cards" -> "Card"
+    const capitalized = part.charAt(0).toUpperCase() + part.slice(1);
+    return capitalized.replace(/s$/, '');
+  }).join('');
+  // Keep first letter lowercase to match actual filenames
+  return `${baseName}Details.json`;
+}
+

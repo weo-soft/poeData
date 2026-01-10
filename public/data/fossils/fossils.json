@@ -1,0 +1,152 @@
+[
+    {
+        "id": "aberrant-fossil",
+        "name": "Aberrant Fossil",
+        "description": "More Chaos modifiers\nNo Lightning modifiers",
+        "dropRestrictions": "Found in Fungal Caverns and Abyssal Depths biomes in the Azurite Mine."
+    },
+    {
+        "id": "aetheric-fossil",
+        "name": "Aetheric Fossil",
+        "description": "More Caster modifiers\nFewer Attack modifiers",
+        "dropRestrictions": "Found in Mines and Sulphur Vents biomes in the Azurite Mine."
+    },
+    {
+        "id": "bloodstained-fossil",
+        "name": "Bloodstained Fossil",
+        "description": "Corrupted\nHas a Corrupted implicit modifier",
+        "dropRestrictions": "Drops from completing a Stonewood Hollow node in Petrified Forest biomes in the Azurite Mine."
+    },
+    {
+        "id": "bound-fossil",
+        "name": "Bound Fossil",
+        "description": "More Minion, Aura or Curse modifiers",
+        "dropRestrictions": "Found in Petrified Forest and Abyssal Depths biomes in the Azurite Mine."
+    },
+    {
+        "id": "corroded-fossil",
+        "name": "Corroded Fossil",
+        "description": "More Physical Ailment or Chaos Ailment modifiers\nNo Elemental modifiers",
+        "dropRestrictions": "Found in Fungal Caverns and Petrified Forest biomes in the Azurite Mine."
+    },
+    {
+        "id": "deft-fossil",
+        "name": "Deft Fossil",
+        "description": "More Critical modifiers\nNo Attribute modifiers",
+        "dropRestrictions": "Found in Magma Fissure biomes in the Azurite Mine."
+    },
+    {
+        "id": "dense-fossil",
+        "name": "Dense Fossil",
+        "description": "More Defence modifiers\nNo Life Modifiers",
+        "dropRestrictions": "Found in Fungal Caverns and Petrified Forest biomes in the Azurite Mine."
+    },
+    {
+        "id": "faceted-fossil",
+        "name": "Faceted Fossil",
+        "description": "More Gem modifiers",
+        "dropRestrictions": "Drops from completing a Molten Cavity node in Magma Fissure biomes in the Azurite Mine."
+    },
+    {
+        "id": "fractured-fossil",
+        "name": "Fractured Fossil",
+        "description": "Creates a split copy\nCannot be used to split Influenced,\nEnchanted, Fractured, or Synthesised items",
+        "dropRestrictions": "Drops from completing a Humid Fissure node in Sulphur Vents biomes in the Azurite Mine."
+    },
+    {
+        "id": "frigid-fossil",
+        "name": "Frigid Fossil",
+        "description": "More Cold modifiers\nNo Fire modifiers",
+        "dropRestrictions": "Found in Frozen Hollow biomes in the Azurite Mine."
+    },
+    {
+        "id": "fundamental-fossil",
+        "name": "Fundamental Fossil",
+        "description": "More Attribute modifiers\nNo Critical modifiers",
+        "dropRestrictions": "Found in Magma Fissure and Sulphur Vents biomes in the Azurite Mine."
+    },
+    {
+        "id": "gilded-fossil",
+        "name": "Gilded Fossil",
+        "description": "Item is overvalued by vendors",
+        "dropRestrictions": "Found in Fungal Caverns and Abyssal Depths biomes in the Azurite Mine."
+    },
+    {
+        "id": "glyphic-fossil",
+        "name": "Glyphic Fossil",
+        "description": "Has a Corrupt Essence modifier",
+        "dropRestrictions": "Drops from completing a Time-Lost Cavern node in Frozen Hollow biomes in the Azurite Mine."
+    },
+    {
+        "id": "hollow-fossil",
+        "name": "Hollow Fossil",
+        "description": "Has an Abyssal socket",
+        "dropRestrictions": "Drops from completing a Crystal Spire node in Abyssal Depths biomes in the Azurite Mine."
+    },
+    {
+        "id": "jagged-fossil",
+        "name": "Jagged Fossil",
+        "description": "More Physical modifiers\nNo Chaos modifiers",
+        "dropRestrictions": "Found in Petrified Forest biomes in the Azurite Mine."
+    },
+    {
+        "id": "lucent-fossil",
+        "name": "Lucent Fossil",
+        "description": "More Mana modifiers\nNo Speed modifiers",
+        "dropRestrictions": "Found in Abyssal Depths biomes in the Azurite Mine."
+    },
+    {
+        "id": "metallic-fossil",
+        "name": "Metallic Fossil",
+        "description": "More Lightning modifiers\nNo Physical modifiers",
+        "dropRestrictions": "Found in Mines and Sulphur Vents biomes in the Azurite Mine."
+    },
+    {
+        "id": "opulent-fossil",
+        "name": "Opulent Fossil",
+        "description": "More Drop modifiers\nNo Tagless modifiers",
+        "dropRestrictions": "Found in Fungal Caverns and Sulphur Vents biomes in the Azurite Mine."
+    },
+    {
+        "id": "prismatic-fossil",
+        "name": "Prismatic Fossil",
+        "description": "More Elemental modifiers\nNo Physical Ailment or Chaos Ailment modifiers",
+        "dropRestrictions": "Found in Magma Fissure and Frozen Hollow biomes in the Azurite Mine."
+    },
+    {
+        "id": "pristine-fossil",
+        "name": "Pristine Fossil",
+        "description": "More Life modifiers\nNo Defence modifiers",
+        "dropRestrictions": "Found in Mines and Magma Fissure biomes in the Azurite Mine."
+    },
+    {
+        "id": "sanctified-fossil",
+        "name": "Sanctified Fossil",
+        "description": "Numeric modifier values are lucky\nHigh Level modifiers are more common",
+        "dropRestrictions": "Found in Frozen Hollow and Petrified Forest biomes in the Azurite Mine."
+    },
+    {
+        "id": "scorched-fossil",
+        "name": "Scorched Fossil",
+        "description": "More Fire modifiers\nNo Cold modifiers",
+        "dropRestrictions": "Found in Magma Fissure biomes in the Azurite Mine."
+    },
+    {
+        "id": "serrated-fossil",
+        "name": "Serrated Fossil",
+        "description": "More Attack modifiers\nFewer Caster modifiers",
+        "dropRestrictions": "Found in Mines and Frozen Hollow biomes in the Azurite Mine."
+    },
+    {
+        "id": "shuddering-fossil",
+        "name": "Shuddering Fossil",
+        "description": "More Speed modifiers\nNo Mana modifiers",
+        "dropRestrictions": "Found in Frozen Hollow biomes in the Azurite Mine."
+    },
+    {
+        "id": "tangled-fossil",
+        "name": "Tangled Fossil",
+        "description": "Makes a random modifier type much more likely and prevents \nanother random modifier type\nEffects revealed once resonator is fully socketed",
+        "dropRestrictions": "Drops from completing a Haunted Tomb node in Fungal Caverns biomes in the Azurite Mine."
+    }
+]
