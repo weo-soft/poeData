@@ -9,6 +9,7 @@ import { renderCategoryList } from './pages/categoryList.js';
 import { renderCategoryView } from './pages/categoryView.js';
 import { renderItemDetail } from './pages/itemDetail.js';
 import { renderSubmission } from './pages/submission.js';
+import { renderDatasetView } from './pages/datasetView.js';
 import { createNavigation, updateActiveLink } from './components/navigation.js';
 
 // Get app container
@@ -38,13 +39,18 @@ if (!app) {
     updateActiveLink(navigation);
   });
   
-  router.on('/category/:categoryId', (params) => {
-    renderCategoryView(mainContent, params);
+  router.on('/category/:categoryId', (params, query) => {
+    renderCategoryView(mainContent, { ...params, query });
     updateActiveLink(navigation);
   });
   
   router.on('/category/:categoryId/item/:itemId', (params) => {
     renderItemDetail(mainContent, params);
+    updateActiveLink(navigation);
+  });
+  
+  router.on('/category/:categoryId/dataset/:datasetNumber', (params) => {
+    renderDatasetView(mainContent, params);
     updateActiveLink(navigation);
   });
   
