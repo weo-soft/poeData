@@ -12,6 +12,8 @@ import { renderListView } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
 import { renderDatasetList } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
+import { renderWeightDisplay } from '../components/weightDisplay.js';
+import { estimateItemWeights } from '../services/weightCalculator.js';
 import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
 
@@ -335,12 +337,13 @@ async function renderDatasetsView(container, categoryId) {
   // Create detail container (right side, 3/4 width)
   const detailContainer = createElement('div', { className: 'datasets-detail-container' });
   
-  // Show empty state initially
-  const emptyState = createElement('div', {
-    className: 'dataset-detail-empty',
-    textContent: 'Select a dataset from the list to view details'
+  // Show loading state initially (will be replaced with weights)
+  const initialLoading = createElement('div', {
+    className: 'loading',
+    textContent: 'Calculating weights...'
   });
-  detailContainer.appendChild(emptyState);
+  detailContainer.appendChild(initialLoading);
+  setLoadingState(initialLoading, true);
   
   wrapper.appendChild(listContainer);
   wrapper.appendChild(detailContainer);
@@ -355,29 +358,102 @@ async function renderDatasetsView(container, categoryId) {
   setLoadingState(loadingDiv, true);
   
   let selectedDatasetNumber = null;
+  let calculatedWeights = null;
+  let categoryItems = null;
+  let allDatasets = null; // Store datasets for weight calculation
+  let weightsListItem = null; // Reference to the weights list item
+  
+  // Function to show weights view
+  const showWeightsView = async (datasetsForCalculation = null) => {
+    try {
+      clearElement(detailContainer);
+      
+      if (!calculatedWeights) {
+        // Use provided datasets or discover if not provided
+        const datasets = datasetsForCalculation || allDatasets || await discoverDatasetsParallel(categoryId);
+        
+        if (!datasets || datasets.length === 0) {
+          const emptyState = createElement('div', {
+            className: 'dataset-detail-empty',
+            textContent: 'No datasets available for weight calculation'
+          });
+          detailContainer.appendChild(emptyState);
+          return;
+        }
+        
+        // Load all full datasets
+        const loadingDiv = createElement('div', {
+          className: 'loading',
+          textContent: 'Calculating weights...'
+        });
+        detailContainer.appendChild(loadingDiv);
+        setLoadingState(loadingDiv, true);
+        
+        const fullDatasets = await Promise.all(
+          datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
+        );
+        
+        // Calculate weights
+        calculatedWeights = estimateItemWeights(fullDatasets);
+        
+        // Load category items
+        categoryItems = await loadCategoryData(categoryId);
+        
+        clearElement(detailContainer);
+      }
+      
+      // Display weights
+      renderWeightDisplay(detailContainer, calculatedWeights, categoryId, categoryItems);
+      
+      // Mark weights list item as active
+      if (weightsListItem) {
+        weightsListItem.classList.add('active');
+      }
+    } catch (error) {
+      clearElement(detailContainer);
+      displayError(detailContainer, `Failed to calculate weights: ${error.message}`);
+    }
+  };
+  
+  // Function to handle weights list item selection
+  const handleWeightsSelect = async () => {
+    // Clear dataset selection
+    selectedDatasetNumber = null;
+    
+    // Remove active class from all dataset list items
+    listContainer.querySelectorAll('.dataset-list-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    
+    // Show weights view
+    await showWeightsView();
+  };
   
   // Function to handle dataset selection
   const handleDatasetSelect = async (dataset) => {
     const datasetNumber = dataset.datasetNumber;
     
-    // If same dataset is clicked, clear selection
+    // If same dataset is clicked, clear selection and return to weights view
     if (selectedDatasetNumber === datasetNumber) {
       selectedDatasetNumber = null;
-      // Remove active class from all list items
+      // Remove active class from all list items (including weights item)
       listContainer.querySelectorAll('.dataset-list-item').forEach(item => {
         item.classList.remove('active');
       });
-      // Clear detail container and show empty state
-      clearElement(detailContainer);
-      const emptyState = createElement('div', {
-        className: 'dataset-detail-empty',
-        textContent: 'Select a dataset from the list to view details'
-      });
-      detailContainer.appendChild(emptyState);
+      if (weightsListItem) {
+        weightsListItem.classList.remove('active');
+      }
+      // Return to weights view
+      await showWeightsView();
       return;
     }
     
     selectedDatasetNumber = datasetNumber;
+    
+    // Remove active class from weights item
+    if (weightsListItem) {
+      weightsListItem.classList.remove('active');
+    }
     
     // Add active class to selected item
     listContainer.querySelectorAll('.dataset-list-item').forEach((item) => {
@@ -433,6 +509,7 @@ async function renderDatasetsView(container, categoryId) {
     );
     
     const datasets = await Promise.race([discoveryPromise, timeoutPromise]);
+    allDatasets = datasets; // Store for weight calculation
     
     console.log(`[CategoryView] Discovered ${datasets ? datasets.length : 0} datasets for ${categoryId}`);
     
@@ -443,10 +520,16 @@ async function renderDatasetsView(container, categoryId) {
     if (!datasets || datasets.length === 0) {
       console.warn(`[CategoryView] No datasets found for category: ${categoryId}`);
       renderDatasetList(listContainer, [], null, null);
+      clearElement(detailContainer);
+      const emptyState = createElement('div', {
+        className: 'dataset-detail-empty',
+        textContent: 'No datasets available for weight calculation'
+      });
+      detailContainer.appendChild(emptyState);
       return;
     }
     
-    // Render dataset list
+    // Render dataset list first (it will create its own container)
     renderDatasetList(listContainer, datasets, handleDatasetSelect, async (dataset) => {
       // Handle download with error handling
       try {
@@ -469,11 +552,43 @@ async function renderDatasetsView(container, categoryId) {
       }
     });
     
-    // Automatically select the first dataset
-    if (datasets && datasets.length > 0) {
-      const firstDataset = datasets[0];
-      await handleDatasetSelect(firstDataset);
+    // Find the dataset-list-container created by renderDatasetList
+    const datasetListContainer = listContainer.querySelector('.dataset-list-container');
+    
+    // Create and add "Weights" list item at the first position
+    weightsListItem = createElement('div', {
+      className: 'dataset-list-item weights-list-item active', // Active by default since weights are shown initially
+      'data-item-type': 'weights'
+    });
+    
+    const weightsContent = createElement('div', {
+      className: 'dataset-list-item-content',
+      style: 'cursor: pointer;'
+    });
+    
+    const weightsName = createElement('span', {
+      className: 'dataset-list-item-name',
+      textContent: 'Calculated Weights'
+    });
+    weightsContent.appendChild(weightsName);
+    
+    weightsContent.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleWeightsSelect();
+    });
+    
+    weightsListItem.appendChild(weightsContent);
+    
+    // Insert weights item at the beginning of the dataset list container
+    if (datasetListContainer && datasetListContainer.firstChild) {
+      datasetListContainer.insertBefore(weightsListItem, datasetListContainer.firstChild);
+    } else if (datasetListContainer) {
+      datasetListContainer.appendChild(weightsListItem);
     }
+    
+    // Calculate and display weights by default (instead of first dataset)
+    await showWeightsView(datasets);
   } catch (error) {
     clearElement(listContainer);
     

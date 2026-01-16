@@ -1828,3 +1828,169 @@ input:focus, textarea:focus, select:focus {
     margin-top: 0;
   }
 }
+
+/* Weight Display Styles */
+.weight-display {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.weight-display-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--poe-border);
+  padding-bottom: 0.5rem;
+}
+
+.weight-display-header h2 {
+  color: var(--poe-accent);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.weight-display-empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--poe-text-dim);
+  font-size: 1.1rem;
+}
+
+/* Weight Table Styles (consistent with items-table) */
+.weight-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.weight-table thead {
+  background-color: var(--poe-darker-bg);
+}
+
+.weight-table th {
+  padding: 0.75rem;
+  text-align: left;
+  color: var(--poe-accent);
+  border-bottom: 2px solid var(--poe-border);
+  font-weight: 600;
+}
+
+.weight-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--poe-border);
+  color: var(--poe-text);
+}
+
+.weight-table tbody tr:hover {
+  background-color: var(--poe-darker-bg);
+}
+
+.weight-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Weight Table Cell Styles */
+.weight-rank-cell {
+  width: 60px;
+  text-align: center;
+}
+
+.weight-rank {
+  display: inline-block;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  color: var(--poe-accent);
+  min-width: 2rem;
+  text-align: center;
+}
+
+.weight-name-cell {
+  min-width: 200px;
+}
+
+.weight-item-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weight-item-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+.weight-item-name {
+  color: var(--poe-text);
+  font-weight: 500;
+}
+
+.weight-value-cell {
+  width: 120px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.weight-value {
+  color: var(--poe-accent);
+}
+
+.weight-percentage {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+}
+
+.weight-bar-cell {
+  width: 200px;
+  min-width: 150px;
+}
+
+.weight-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--poe-border);
+}
+
+.weight-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+/* Responsive Design for Weight Display */
+@media (max-width: 768px) {
+  .weight-display {
+    padding: 1.5rem;
+  }
+
+  .weight-table {
+    font-size: 0.9rem;
+  }
+
+  .weight-table th,
+  .weight-table td {
+    padding: 0.5rem;
+  }
+
+  .weight-bar-cell {
+    width: 100px;
+    min-width: 80px;
+  }
+
+  .weight-value-cell {
+    width: 100px;
+  }
+}
