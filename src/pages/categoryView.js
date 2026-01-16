@@ -9,8 +9,13 @@ import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
 import { renderListView } from '../visualization/listViewRenderer.js';
+import { discoverDatasetsParallel } from '../services/datasetLoader.js';
+import { renderDatasetList } from '../components/datasetList.js';
+import { downloadDataset } from '../utils/download.js';
+import { router } from '../services/router.js';
 
 let currentItems = [];
+let currentCategoryId = null;
 
 /**
  * Render category view
@@ -22,6 +27,11 @@ export async function renderCategoryView(container, params) {
   clearElement(container);
   
   const categoryId = params.categoryId;
+  currentCategoryId = categoryId;
+  
+  // Check if we should show datasets view (from query param)
+  const query = params.query || {};
+  const viewType = query && query.view === 'datasets' ? 'datasets' : 'items';
   
   const viewSection = createElement('section', { className: 'category-view' });
   
@@ -55,23 +65,43 @@ export async function renderCategoryView(container, params) {
     header.appendChild(itemCount);
     viewSection.appendChild(header);
     
-    // JSON link
-    const jsonLink = createElement('a', {
-      href: `/data/${getCategoryFilename(categoryId)}`,
-      textContent: 'View Raw JSON Data',
-      className: 'json-link',
-      target: '_blank'
+    // Tabs for Items/Datasets
+    const tabsContainer = createElement('div', { className: 'category-tabs' });
+    const itemsTab = createElement('button', {
+      className: `tab-button ${viewType === 'items' ? 'active' : ''}`,
+      textContent: 'Items',
+      'data-tab': 'items'
     });
-    viewSection.appendChild(jsonLink);
-    
-    // Statistics charts
-    const chartsContainer = createElement('div', {
-      className: 'charts-container',
-      id: 'charts-container'
+    const datasetsTab = createElement('button', {
+      className: `tab-button ${viewType === 'datasets' ? 'active' : ''}`,
+      textContent: 'Datasets',
+      'data-tab': 'datasets'
     });
-    viewSection.appendChild(chartsContainer);
     
-    // Navigation
+    itemsTab.addEventListener('click', () => {
+      router.navigate(`/category/${categoryId}?view=items`);
+    });
+    
+    datasetsTab.addEventListener('click', () => {
+      router.navigate(`/category/${categoryId}?view=datasets`);
+    });
+    
+    tabsContainer.appendChild(itemsTab);
+    tabsContainer.appendChild(datasetsTab);
+    viewSection.appendChild(tabsContainer);
+    
+    // Content area
+    const contentArea = createElement('div', { className: 'category-content' });
+    viewSection.appendChild(contentArea);
+    
+    // Render based on view type
+    if (viewType === 'datasets') {
+      await renderDatasetsView(contentArea, categoryId);
+    } else {
+      await renderItemsView(contentArea, categoryId, items);
+    }
+    
+    // Navigation (outside content area)
     const navLinks = createElement('div', { className: 'nav-links' });
     const backLink = createElement('a', {
       href: '#/categories',
@@ -86,52 +116,6 @@ export async function renderCategoryView(container, params) {
     navLinks.appendChild(backLink);
     navLinks.appendChild(submitLink);
     viewSection.appendChild(navLinks);
-    
-    // Handle empty category
-    if (items.length === 0) {
-      const emptyMessage = createElement('div', {
-        className: 'empty-state',
-        innerHTML: `
-          <h2>No Items Found</h2>
-          <p>This category currently has no items.</p>
-          <a href="#/submit/${categoryId}" class="primary-link">Submit the First Item</a>
-        `
-      });
-      viewSection.appendChild(emptyMessage);
-    } else {
-      // Render visualizations based on category type
-      if (categoryId === 'divination-cards') {
-        // Render divination card grid
-        const cardsGrid = createElement('div', {
-          className: 'divination-cards-grid',
-          id: 'divination-cards-grid'
-        });
-        viewSection.insertBefore(cardsGrid, chartsContainer);
-        await renderDivinationCardGrid(cardsGrid, items);
-      } else if (isNewCategory(categoryId)) {
-        // Render list view for new categories
-        const listContainer = createElement('div', {
-          className: 'list-view-container',
-          id: 'list-view-container'
-        });
-        viewSection.insertBefore(listContainer, chartsContainer);
-        await renderListView(listContainer, items, categoryId);
-      } else {
-        // Render stash tab visualization for other categories
-        const stashContainer = createElement('div', { 
-          className: 'stash-tab-container',
-          id: 'stash-tab-canvas-container'
-        });
-        const canvas = createElement('canvas', {
-          id: 'stash-tab-canvas',
-          className: 'stash-tab-canvas'
-        });
-        stashContainer.appendChild(canvas);
-        viewSection.insertBefore(stashContainer, chartsContainer);
-        await renderStashTab(canvas, items, categoryId);
-      }
-      generateCategoryCharts(chartsContainer, items, categoryId);
-    }
     
   } catch (error) {
     clearElement(viewSection);
@@ -257,6 +241,165 @@ async function renderDivinationCardGrid(container, items) {
   });
   
   await Promise.all(promises);
+}
+
+/**
+ * Render items view
+ * @param {HTMLElement} container - Container element
+ * @param {string} categoryId - Category identifier
+ * @param {Array} items - Array of items
+ */
+async function renderItemsView(container, categoryId, items) {
+  clearElement(container);
+  
+  // JSON link
+  const jsonLink = createElement('a', {
+    href: `/data/${getCategoryFilename(categoryId)}`,
+    textContent: 'View Raw JSON Data',
+    className: 'json-link',
+    target: '_blank'
+  });
+  container.appendChild(jsonLink);
+  
+  // Statistics charts
+  const chartsContainer = createElement('div', {
+    className: 'charts-container',
+    id: 'charts-container'
+  });
+  container.appendChild(chartsContainer);
+  
+  // Handle empty category
+  if (items.length === 0) {
+    const emptyMessage = createElement('div', {
+      className: 'empty-state',
+      innerHTML: `
+        <h2>No Items Found</h2>
+        <p>This category currently has no items.</p>
+        <a href="#/submit/${categoryId}" class="primary-link">Submit the First Item</a>
+      `
+    });
+    container.appendChild(emptyMessage);
+  } else {
+    // Render visualizations based on category type
+    if (categoryId === 'divination-cards') {
+      // Render divination card grid
+      const cardsGrid = createElement('div', {
+        className: 'divination-cards-grid',
+        id: 'divination-cards-grid'
+      });
+      container.insertBefore(cardsGrid, chartsContainer);
+      await renderDivinationCardGrid(cardsGrid, items);
+    } else if (isNewCategory(categoryId)) {
+      // Render list view for new categories
+      const listContainer = createElement('div', {
+        className: 'list-view-container',
+        id: 'list-view-container'
+      });
+      container.insertBefore(listContainer, chartsContainer);
+      await renderListView(listContainer, items, categoryId);
+    } else {
+      // Render stash tab visualization for other categories
+      const stashContainer = createElement('div', { 
+        className: 'stash-tab-container',
+        id: 'stash-tab-canvas-container'
+      });
+      const canvas = createElement('canvas', {
+        id: 'stash-tab-canvas',
+        className: 'stash-tab-canvas'
+      });
+      stashContainer.appendChild(canvas);
+      container.insertBefore(stashContainer, chartsContainer);
+      await renderStashTab(canvas, items, categoryId);
+    }
+    generateCategoryCharts(chartsContainer, items, categoryId);
+  }
+}
+
+/**
+ * Render datasets view
+ * @param {HTMLElement} container - Container element
+ * @param {string} categoryId - Category identifier
+ */
+async function renderDatasetsView(container, categoryId) {
+  clearElement(container);
+  
+  console.log(`[CategoryView] Rendering datasets view for category: ${categoryId}`);
+  
+  // Loading state for datasets
+  const loadingDiv = createElement('div', { 
+    className: 'loading', 
+    textContent: 'Loading datasets...' 
+  });
+  container.appendChild(loadingDiv);
+  setLoadingState(loadingDiv, true);
+  
+  try {
+    // Discover datasets with timeout protection
+    const discoveryPromise = discoverDatasetsParallel(categoryId);
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Dataset discovery timeout')), 30000)
+    );
+    
+    const datasets = await Promise.race([discoveryPromise, timeoutPromise]);
+    
+    console.log(`[CategoryView] Discovered ${datasets ? datasets.length : 0} datasets for ${categoryId}`);
+    
+    // Clear loading
+    clearElement(container);
+    
+    // Handle empty datasets
+    if (!datasets || datasets.length === 0) {
+      console.warn(`[CategoryView] No datasets found for category: ${categoryId}`);
+      renderDatasetList(container, [], null, null);
+      return;
+    }
+    
+    // Render dataset list
+    renderDatasetList(container, datasets, (dataset) => {
+      // Navigate to dataset detail view
+      router.navigate(`/category/${categoryId}/dataset/${dataset.datasetNumber}`);
+    }, async (dataset) => {
+      // Handle download with error handling
+      try {
+        await downloadDataset(categoryId, dataset.datasetNumber);
+      } catch (error) {
+        // Show user-friendly error message
+        const errorMsg = createElement('div', {
+          className: 'error-message',
+          style: 'margin-top: 1rem; padding: 1rem; background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 4px; color: #ff6666;',
+          textContent: `Download failed: ${error.message}`
+        });
+        container.appendChild(errorMsg);
+        
+        // Remove error message after 5 seconds
+        setTimeout(() => {
+          if (errorMsg.parentNode) {
+            errorMsg.parentNode.removeChild(errorMsg);
+          }
+        }, 5000);
+      }
+    });
+  } catch (error) {
+    clearElement(container);
+    
+    // Handle specific error types
+    if (error.message.includes('timeout')) {
+      displayError(container, 'Loading datasets took too long. Please try again.');
+    } else {
+      displayError(container, `Failed to load datasets: ${error.message}`);
+    }
+    
+    // Add retry button
+    const retryButton = createElement('button', {
+      className: 'btn btn-primary',
+      textContent: 'Retry',
+      style: 'margin-top: 1rem;'
+    });
+    retryButton.addEventListener('click', () => {
+      renderDatasetsView(container, categoryId);
+    });
+    container.appendChild(retryButton);
+  }
 }
 
 /**

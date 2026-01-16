@@ -4,7 +4,6 @@
     "date": "2023-04-03",
     "patch": "3.25.0",
     "sources": [
-        
         {
             "name": "Google Sheet",
             "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
@@ -16,49 +15,47 @@
             "author": "kubuxu"
         }
     ],
-    "inputItems": [
-       
-    ],
+    "inputItems": [],
     "items": [
         {
             "id": "intrisic",
-            "weight": 97.66
+            "count": 97.66
         },
         {
             "id": "turbulent",
-            "weight": 50.30
+            "count": 50.3
         },
         {
             "id": "noxious",
-            "weight": 48.03
+            "count": 48.03
         },
         {
             "id": "abrasive",
-            "weight": 47.36
+            "count": 47.36
         },
         {
             "id": "imbued",
-            "weight": 46.15
+            "count": 46.15
         },
         {
             "id": "prismatic",
-            "weight": 11.70
+            "count": 11.7
         },
         {
             "id": "fertile",
-            "weight": 11.65
+            "count": 11.65
         },
         {
             "id": "tempering",
-            "weight": 11.61
+            "count": 11.61
         },
         {
             "id": "unstable",
-            "weight": 5.30
+            "count": 5.3
         },
         {
             "id": "accelerating",
-            "weight": 5.00
+            "count": 5
         }
     ]
 }

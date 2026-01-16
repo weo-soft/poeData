@@ -85,8 +85,8 @@ async function mergeScarabWeights(items) {
     const weightMap = new Map();
     if (dataset.items && Array.isArray(dataset.items)) {
       dataset.items.forEach(item => {
-        if (item.id && item.weight !== undefined) {
-          weightMap.set(item.id, item.weight);
+        if (item.id && item.count !== undefined) {
+          weightMap.set(item.id, item.count);
         }
       });
     }
@@ -126,8 +126,8 @@ async function mergeDivinationCardWeights(items) {
     const weightMap = new Map();
     if (dataset.items && Array.isArray(dataset.items)) {
       dataset.items.forEach(item => {
-        if (item.id && item.weight !== undefined) {
-          weightMap.set(item.id, item.weight);
+        if (item.id && item.count !== undefined) {
+          weightMap.set(item.id, item.count);
         }
       });
     }

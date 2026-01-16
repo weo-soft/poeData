@@ -44,14 +44,9 @@ export async function renderHome(container) {
       
       const categoryName = createElement('h3', { textContent: category.name });
       const categoryDesc = createElement('p', { textContent: category.description || '' });
-      const itemCount = createElement('span', { 
-        textContent: `${category.itemCount} items`,
-        className: 'item-count'
-      });
       
       categoryLink.appendChild(categoryName);
       categoryLink.appendChild(categoryDesc);
-      categoryLink.appendChild(itemCount);
       categoryCard.appendChild(categoryLink);
       categoriesList.appendChild(categoryCard);
     });

@@ -18,19 +18,19 @@
     "items": [
         {
             "id": "esh",
-            "weight": 2040   
+            "count": 2040
         },
         {
             "id": "tul",
-            "weight": 1986     
+            "count": 1986
         },
         {
             "id": "uul-netol",
-            "weight": 801    
+            "count": 801
         },
         {
             "id": "chayula",
-            "weight": 427
+            "count": 427
         }
     ]
 }
