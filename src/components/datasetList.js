@@ -24,17 +24,17 @@ export function renderDatasetList(container, datasets, onDatasetSelect, onDownlo
   }
   
   // Create dataset list container
-  const listContainer = createElement('div', { className: 'dataset-list' });
+  const listContainer = createElement('div', { className: 'dataset-list-container' });
   
-  // Render each dataset as a card
+  // Render each dataset as a list item
   datasets.forEach((dataset, index) => {
     console.log(`[DatasetList] Rendering dataset ${index + 1}:`, dataset.name || `Dataset ${dataset.datasetNumber}`);
-    const card = renderDatasetCard(dataset, onDatasetSelect, onDownload);
-    listContainer.appendChild(card);
+    const listItem = renderDatasetListItem(dataset, onDatasetSelect, onDownload);
+    listContainer.appendChild(listItem);
   });
   
   container.appendChild(listContainer);
-  console.log(`[DatasetList] Successfully rendered ${datasets.length} dataset cards`);
+  console.log(`[DatasetList] Successfully rendered ${datasets.length} dataset list items`);
 }
 
 /**
@@ -54,101 +54,56 @@ function renderEmptyState(container) {
 }
 
 /**
- * Render dataset card
+ * Render dataset list item
  * @param {Object} dataset - DatasetMetadata object
  * @param {Function} onSelect - Callback when dataset is selected
  * @param {Function} onDownload - Callback when download is requested
- * @returns {HTMLElement} Dataset card element
+ * @returns {HTMLElement} Dataset list item element
  */
-function renderDatasetCard(dataset, onSelect, onDownload) {
-  const card = createElement('div', { className: 'dataset-card' });
+function renderDatasetListItem(dataset, onSelect, onDownload) {
+  const listItem = createElement('div', { 
+    className: 'dataset-list-item',
+    'data-dataset-number': dataset.datasetNumber
+  });
   
-  // Dataset header
-  const header = createElement('div', { className: 'dataset-card-header' });
-  const name = createElement('h3', { 
-    className: 'dataset-name',
+  // Main content area (clickable)
+  const content = createElement('div', { className: 'dataset-list-item-content' });
+  
+  // Dataset name
+  const name = createElement('span', { 
+    className: 'dataset-list-item-name',
     textContent: dataset.name || `Dataset ${dataset.datasetNumber}`
   });
-  header.appendChild(name);
+  content.appendChild(name);
   
-  // Metadata section
-  const metadata = createElement('div', { className: 'dataset-metadata' });
-  
-  if (dataset.date) {
-    const dateEl = createElement('span', {
-      className: 'dataset-date',
-      textContent: `Date: ${dataset.date}`
-    });
-    metadata.appendChild(dateEl);
-  }
-  
+  // Patch version
   if (dataset.patch) {
     const patchEl = createElement('span', {
       className: 'dataset-patch',
-      textContent: `Patch: ${dataset.patch}`
+      textContent: dataset.patch
     });
-    metadata.appendChild(patchEl);
+    content.appendChild(patchEl);
   }
   
-  if (dataset.itemCount !== undefined) {
-    const itemCountEl = createElement('span', {
-      className: 'dataset-item-count',
-      textContent: `${dataset.itemCount} items`
-    });
-    metadata.appendChild(itemCountEl);
-  }
-  
-  if (dataset.description) {
-    const descEl = createElement('p', {
-      className: 'dataset-description',
-      textContent: dataset.description
-    });
-    metadata.appendChild(descEl);
-  }
-  
-  // Indicators
-  const indicators = createElement('div', { className: 'dataset-indicators' });
-  
-  if (dataset.hasSources) {
-    const sourceIndicator = createElement('span', {
-      className: 'indicator indicator-sources',
-      textContent: 'Has sources',
-      title: 'This dataset has source information'
-    });
-    indicators.appendChild(sourceIndicator);
-  }
-  
-  if (dataset.hasInputItems) {
-    const inputIndicator = createElement('span', {
-      className: 'indicator indicator-inputs',
-      textContent: 'Has input items',
-      title: 'This dataset has input items'
-    });
-    indicators.appendChild(inputIndicator);
-  }
-  
-  // Actions
-  const actions = createElement('div', { className: 'dataset-actions' });
-  
+  // Make content clickable
   if (onSelect) {
-    const viewButton = createElement('button', {
-      className: 'btn btn-primary',
-      textContent: 'View Details'
-    });
-    viewButton.addEventListener('click', (e) => {
+    content.style.cursor = 'pointer';
+    content.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       onSelect(dataset);
     });
-    actions.appendChild(viewButton);
   }
   
+  // Download button (separate from click action)
   if (onDownload) {
     const downloadButton = createElement('button', {
-      className: 'btn btn-secondary',
+      className: 'btn btn-secondary btn-small',
       textContent: 'Download'
     });
     downloadButton.addEventListener('click', async (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const originalText = downloadButton.textContent;
       downloadButton.disabled = true;
       downloadButton.textContent = 'Downloading...';
@@ -169,16 +124,10 @@ function renderDatasetCard(dataset, onSelect, onDownload) {
         console.error('Download failed:', error);
       }
     });
-    actions.appendChild(downloadButton);
+    content.appendChild(downloadButton);
   }
   
-  // Assemble card
-  card.appendChild(header);
-  card.appendChild(metadata);
-  if (indicators.children.length > 0) {
-    card.appendChild(indicators);
-  }
-  card.appendChild(actions);
+  listItem.appendChild(content);
   
-  return card;
+  return listItem;
 }

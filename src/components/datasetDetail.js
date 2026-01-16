@@ -116,53 +116,71 @@ export function renderDatasetDetail(container, dataset, categoryId, onBack, onDo
  */
 function renderMetadataSection(dataset) {
   const section = createElement('section', { className: 'dataset-detail-section' });
-  const title = createElement('h2', { 
-    className: 'section-title',
-    textContent: 'Metadata'
-  });
-  section.appendChild(title);
   
-  const metadataList = createElement('dl', { className: 'dataset-metadata-list' });
+  // Build title with inline metadata
+  const title = createElement('h2', { className: 'section-title' });
+  
+  // Collect metadata parts to display inline
+  const metadataParts = [];
   
   // Name
-  const nameDt = createElement('dt', { textContent: 'Name' });
-  const nameDd = createElement('dd', { textContent: dataset.name || 'N/A' });
-  metadataList.appendChild(nameDt);
-  metadataList.appendChild(nameDd);
-  
-  // Description
-  if (dataset.description) {
-    const descDt = createElement('dt', { textContent: 'Description' });
-    const descDd = createElement('dd', { textContent: dataset.description });
-    metadataList.appendChild(descDt);
-    metadataList.appendChild(descDd);
+  if (dataset.name) {
+    metadataParts.push(createElement('span', { 
+      className: 'metadata-inline-item',
+      textContent: dataset.name
+    }));
   }
   
   // Date
   if (dataset.date) {
-    const dateDt = createElement('dt', { textContent: 'Date' });
-    const dateDd = createElement('dd', { textContent: dataset.date });
-    metadataList.appendChild(dateDt);
-    metadataList.appendChild(dateDd);
+    metadataParts.push(createElement('span', { 
+      className: 'metadata-inline-item',
+      textContent: dataset.date
+    }));
   }
   
-  // Patch
+  // Patch Version
   if (dataset.patch) {
-    const patchDt = createElement('dt', { textContent: 'Patch Version' });
-    const patchDd = createElement('dd', { textContent: dataset.patch });
-    metadataList.appendChild(patchDt);
-    metadataList.appendChild(patchDd);
+    metadataParts.push(createElement('span', { 
+      className: 'metadata-inline-item',
+      textContent: dataset.patch
+    }));
   }
   
   // Item count
   if (dataset.items && Array.isArray(dataset.items)) {
-    const countDt = createElement('dt', { textContent: 'Item Count' });
-    const countDd = createElement('dd', { textContent: `${dataset.items.length} items` });
-    metadataList.appendChild(countDt);
-    metadataList.appendChild(countDd);
+    metadataParts.push(createElement('span', { 
+      className: 'metadata-inline-item',
+      textContent: `${dataset.items.length} items`
+    }));
   }
   
-  section.appendChild(metadataList);
+  // Add separators and append metadata parts
+  if (metadataParts.length > 0) {
+    metadataParts.forEach((part, index) => {
+      title.appendChild(part);
+      if (index < metadataParts.length - 1) {
+        const sep = createElement('span', { 
+          className: 'metadata-separator',
+          textContent: ' | '
+        });
+        title.appendChild(sep);
+      }
+    });
+  }
+  
+  section.appendChild(title);
+  
+  // Description (kept separate as it wasn't mentioned in the merge request)
+  if (dataset.description) {
+    const metadataList = createElement('dl', { className: 'dataset-metadata-list' });
+    const descDt = createElement('dt', { textContent: 'Description' });
+    const descDd = createElement('dd', { textContent: dataset.description });
+    metadataList.appendChild(descDt);
+    metadataList.appendChild(descDd);
+    section.appendChild(metadataList);
+  }
+  
   return section;
 }
 
@@ -331,7 +349,7 @@ function renderItemsSection(items) {
             textContent: item.id || 'Unknown'
           });
           const countCell = createElement('td', { 
-            className: 'item-count',
+            className: 'dataset-item-count-cell',
             textContent: item.count !== undefined ? item.count.toString() : 'N/A'
           });
           row.appendChild(idCell);
@@ -350,7 +368,7 @@ function renderItemsSection(items) {
             textContent: item.id || 'Unknown'
           });
           const countCell = createElement('td', { 
-            className: 'item-count',
+            className: 'dataset-item-count-cell',
             textContent: item.count !== undefined ? item.count.toString() : 'N/A'
           });
           row.appendChild(idCell);

@@ -9,8 +9,9 @@ import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
 import { renderListView } from '../visualization/listViewRenderer.js';
-import { discoverDatasetsParallel } from '../services/datasetLoader.js';
+import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
 import { renderDatasetList } from '../components/datasetList.js';
+import { renderDatasetDetail } from '../components/datasetDetail.js';
 import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
 
@@ -325,13 +326,104 @@ async function renderDatasetsView(container, categoryId) {
   
   console.log(`[CategoryView] Rendering datasets view for category: ${categoryId}`);
   
+  // Create wrapper for list and detail view (side by side)
+  const wrapper = createElement('div', { className: 'datasets-view-wrapper' });
+  
+  // Create list container (left side, 1/4 width)
+  const listContainer = createElement('div', { className: 'datasets-list-container' });
+  
+  // Create detail container (right side, 3/4 width)
+  const detailContainer = createElement('div', { className: 'datasets-detail-container' });
+  
+  // Show empty state initially
+  const emptyState = createElement('div', {
+    className: 'dataset-detail-empty',
+    textContent: 'Select a dataset from the list to view details'
+  });
+  detailContainer.appendChild(emptyState);
+  
+  wrapper.appendChild(listContainer);
+  wrapper.appendChild(detailContainer);
+  container.appendChild(wrapper);
+  
   // Loading state for datasets
   const loadingDiv = createElement('div', { 
     className: 'loading', 
     textContent: 'Loading datasets...' 
   });
-  container.appendChild(loadingDiv);
+  listContainer.appendChild(loadingDiv);
   setLoadingState(loadingDiv, true);
+  
+  let selectedDatasetNumber = null;
+  
+  // Function to handle dataset selection
+  const handleDatasetSelect = async (dataset) => {
+    const datasetNumber = dataset.datasetNumber;
+    
+    // If same dataset is clicked, clear selection
+    if (selectedDatasetNumber === datasetNumber) {
+      selectedDatasetNumber = null;
+      // Remove active class from all list items
+      listContainer.querySelectorAll('.dataset-list-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      // Clear detail container and show empty state
+      clearElement(detailContainer);
+      const emptyState = createElement('div', {
+        className: 'dataset-detail-empty',
+        textContent: 'Select a dataset from the list to view details'
+      });
+      detailContainer.appendChild(emptyState);
+      return;
+    }
+    
+    selectedDatasetNumber = datasetNumber;
+    
+    // Add active class to selected item
+    listContainer.querySelectorAll('.dataset-list-item').forEach((item) => {
+      item.classList.remove('active');
+      // Find the item that matches this dataset number
+      const itemDatasetNumber = parseInt(item.getAttribute('data-dataset-number'), 10);
+      if (itemDatasetNumber === datasetNumber) {
+        item.classList.add('active');
+      }
+    });
+    
+    // Clear and show loading
+    clearElement(detailContainer);
+    const detailLoading = createElement('div', {
+      className: 'loading',
+      textContent: 'Loading dataset details...'
+    });
+    detailContainer.appendChild(detailLoading);
+    setLoadingState(detailLoading, true);
+    
+    try {
+      // Load full dataset
+      const fullDataset = await loadDataset(categoryId, datasetNumber);
+      
+      // Clear loading and render detail
+      clearElement(detailContainer);
+      
+      // Render dataset detail inline (without back button)
+      renderDatasetDetail(
+        detailContainer,
+        fullDataset,
+        categoryId,
+        null, // No back button needed
+        async (dataset, categoryId) => {
+          try {
+            await downloadDataset(categoryId, datasetNumber, dataset);
+          } catch (error) {
+            displayError(detailContainer, `Failed to download dataset: ${error.message}`);
+          }
+        }
+      );
+    } catch (error) {
+      clearElement(detailContainer);
+      displayError(detailContainer, `Failed to load dataset: ${error.message}`);
+    }
+  };
   
   try {
     // Discover datasets with timeout protection
@@ -345,20 +437,17 @@ async function renderDatasetsView(container, categoryId) {
     console.log(`[CategoryView] Discovered ${datasets ? datasets.length : 0} datasets for ${categoryId}`);
     
     // Clear loading
-    clearElement(container);
+    clearElement(listContainer);
     
     // Handle empty datasets
     if (!datasets || datasets.length === 0) {
       console.warn(`[CategoryView] No datasets found for category: ${categoryId}`);
-      renderDatasetList(container, [], null, null);
+      renderDatasetList(listContainer, [], null, null);
       return;
     }
     
     // Render dataset list
-    renderDatasetList(container, datasets, (dataset) => {
-      // Navigate to dataset detail view
-      router.navigate(`/category/${categoryId}/dataset/${dataset.datasetNumber}`);
-    }, async (dataset) => {
+    renderDatasetList(listContainer, datasets, handleDatasetSelect, async (dataset) => {
       // Handle download with error handling
       try {
         await downloadDataset(categoryId, dataset.datasetNumber);
@@ -369,7 +458,7 @@ async function renderDatasetsView(container, categoryId) {
           style: 'margin-top: 1rem; padding: 1rem; background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 4px; color: #ff6666;',
           textContent: `Download failed: ${error.message}`
         });
-        container.appendChild(errorMsg);
+        listContainer.appendChild(errorMsg);
         
         // Remove error message after 5 seconds
         setTimeout(() => {
@@ -379,14 +468,20 @@ async function renderDatasetsView(container, categoryId) {
         }, 5000);
       }
     });
+    
+    // Automatically select the first dataset
+    if (datasets && datasets.length > 0) {
+      const firstDataset = datasets[0];
+      await handleDatasetSelect(firstDataset);
+    }
   } catch (error) {
-    clearElement(container);
+    clearElement(listContainer);
     
     // Handle specific error types
     if (error.message.includes('timeout')) {
-      displayError(container, 'Loading datasets took too long. Please try again.');
+      displayError(listContainer, 'Loading datasets took too long. Please try again.');
     } else {
-      displayError(container, `Failed to load datasets: ${error.message}`);
+      displayError(listContainer, `Failed to load datasets: ${error.message}`);
     }
     
     // Add retry button
@@ -398,7 +493,7 @@ async function renderDatasetsView(container, categoryId) {
     retryButton.addEventListener('click', () => {
       renderDatasetsView(container, categoryId);
     });
-    container.appendChild(retryButton);
+    listContainer.appendChild(retryButton);
   }
 }
 
