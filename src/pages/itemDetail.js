@@ -130,14 +130,12 @@ function getCategoryFilename(categoryId) {
   
   // Special handling for new categories with subdirectory structure
   const categoryFileMap = {
-    'breach-splinters': 'breachSplinter/breachSplinter.json', // Note: singular "Splinter"
-    'breachstones': 'breachstones/breachStones.json',
+    'breach': 'breachstones/breachStones.json', // Merged category - handled in dataLoader
     'catalysts': 'catalysts/catalysts.json',
     'delirium-orbs': 'deliriumOrbs/deliriumOrbs.json',
     'essences': 'essences/essences.json',
     'fossils': 'fossils/fossils.json',
-    'legion-emblems': 'legionEmblems/legionEmblems.json',
-    'legion-splinters': 'legionSplinters/legionSplinters.json',
+    'legion': 'legionSplinters/legionSplinters.json', // Merged category - handled in dataLoader
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
   };

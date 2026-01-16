@@ -136,16 +136,10 @@ export async function renderCategoryView(container, params) {
  * @returns {boolean} True if category uses list view
  */
 function isNewCategory(categoryId) {
+  // Categories that use grid views: breach, catalysts, delirium-orbs, essences,
+  // fossils, legion, oils
+  // These are now handled by renderStashTab with grid configurations
   const newCategories = [
-    'breach-splinters',
-    'breachstones',
-    'catalysts',
-    'delirium-orbs',
-    'essences',
-    'fossils',
-    'legion-emblems',
-    'legion-splinters',
-    'oils',
     'tattoos'
   ];
   return newCategories.includes(categoryId);
@@ -181,14 +175,12 @@ function getCategoryFilename(categoryId) {
   
   // Special handling for new categories with subdirectory structure
   const categoryFileMap = {
-    'breach-splinters': 'breachSplinter/breachSplinter.json', // Note: singular "Splinter"
-    'breachstones': 'breachstones/breachStones.json',
+    'breach': 'breachstones/breachStones.json', // Merged category - handled in dataLoader
     'catalysts': 'catalysts/catalysts.json',
     'delirium-orbs': 'deliriumOrbs/deliriumOrbs.json',
     'essences': 'essences/essences.json',
     'fossils': 'fossils/fossils.json',
-    'legion-emblems': 'legionEmblems/legionEmblems.json',
-    'legion-splinters': 'legionSplinters/legionSplinters.json',
+    'legion': 'legionSplinters/legionSplinters.json', // Merged category - handled in dataLoader
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
   };

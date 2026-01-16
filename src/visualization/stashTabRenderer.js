@@ -5,15 +5,55 @@
  */
 
 import { loadImage, clearCanvas, drawCellHighlight, drawCellBorder } from '../utils/canvasUtils.js';
-import { createCellsFromGroups, getCellAtPosition, IMAGE_DIMENSIONS, CELL_SIZE, SCARAB_ORDER_CONFIG } from '../config/gridConfig.js';
+import { 
+  createCellsFromGroups, 
+  createCellsFromGroupsForCategory,
+  getCellAtPosition, 
+  IMAGE_DIMENSIONS, 
+  SCARAB_ORDER_CONFIG,
+  getGridConfig,
+  getCategoryTabImage,
+  getCategoryImageDirectory
+} from '../config/gridConfig.js';
+
+/**
+ * Get list of image directories to try for a category
+ * For merged categories, returns multiple directories
+ * @param {string} categoryId - Category identifier
+ * @returns {Array<string>} Array of directory paths to try
+ */
+function getImageDirectoriesForCategory(categoryId) {
+  const baseDir = getCategoryImageDirectory(categoryId);
+  if (!baseDir) {
+    return [];
+  }
+  
+  // For merged categories, try multiple subdirectories
+  if (categoryId === 'breach') {
+    return [
+      '/assets/images/breachstones/',
+      '/assets/images/breachSplinters/'
+    ];
+  }
+  
+  if (categoryId === 'legion') {
+    return [
+      '/assets/images/legionSplinters/',
+      '/assets/images/legionEmblems/'
+    ];
+  }
+  
+  // For other categories, just return the base directory
+  return [baseDir];
+}
 import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
 
 let baseImage = null;
-let itemImageCache = new Map();
+const tabImageCache = new Map(); // Cache for tab background images by category ID
+const itemImageCache = new Map();
 let cellDefinitions = [];
-let cellToItemMap = new Map();
-let itemToCellMap = new Map();
-let currentCanvas = null;
+const cellToItemMap = new Map();
+const itemToCellMap = new Map();
 let highlightedItemId = null;
 
 /**
@@ -22,15 +62,26 @@ let highlightedItemId = null;
  * @param {Array} items - Array of item objects
  * @param {string} categoryId - Category identifier
  */
+/**
+ * Render stash tab with items
+ * @param {HTMLCanvasElement} canvas - Canvas element to render into
+ * @param {Array} items - Array of item objects
+ * @param {string} categoryId - Category identifier
+ */
 export async function renderStashTab(canvas, items, categoryId) {
-  currentCanvas = canvas;
-  
-  // For scarabs, use the grid-based approach with base image
+  // For scarabs, use the grid-based approach with base image (backward compatibility)
   if (categoryId === 'scarabs') {
     await renderScarabGrid(canvas, items);
   } else {
-    // For other categories, use simple grid layout
-    await renderSimpleGrid(canvas, items, categoryId);
+    // Check if category has grid configuration
+    const gridConfig = getGridConfig(categoryId);
+    if (gridConfig) {
+      // Use category-specific grid rendering
+      await renderCategoryGrid(canvas, items, categoryId, gridConfig);
+    } else {
+      // For categories without grid config, use simple grid layout
+      await renderSimpleGrid(canvas, items, categoryId);
+    }
   }
 }
 
@@ -57,22 +108,86 @@ async function renderScarabGrid(canvas, items) {
     // Create cell definitions
     cellDefinitions = createCellsFromGroups();
     
-    // Map items to cells
-    mapItemsToCells(items);
+    // Map items to cells (using SCARAB_ORDER_CONFIG)
+    const scarabGridConfig = {
+      itemOrderConfig: SCARAB_ORDER_CONFIG
+    };
+    mapItemsToCells(items, scarabGridConfig, 'scarabs');
     
     // Preload item images
-    await preloadItemImages(items);
+    await preloadItemImages(items, 'scarabs');
     
     // Render grid
-    renderGrid(canvas, items);
+    renderGrid(canvas, items, 'scarabs');
     
     // Setup event handlers
-    setupEventHandlers(canvas, items);
+    setupEventHandlers(canvas, items, 'scarabs');
     
   } catch (error) {
     console.error('Error rendering scarab grid:', error);
     // Fallback to simple grid if base image fails
     await renderSimpleGrid(canvas, items, 'scarabs');
+  }
+}
+
+/**
+ * Render category grid with base image and cell overlay (generic version)
+ * @param {HTMLCanvasElement} canvas - Canvas element
+ * @param {Array} items - Array of items
+ * @param {string} categoryId - Category identifier
+ * @param {Object} gridConfig - Grid configuration object
+ */
+async function renderCategoryGrid(canvas, items, categoryId, gridConfig) {
+  try {
+    // Load tab image with caching
+    let tabImage = null;
+    if (tabImageCache.has(categoryId)) {
+      tabImage = tabImageCache.get(categoryId);
+      baseImage = tabImage;
+    } else {
+      // Load base image - try public first, then src
+      const tabImagePath = getCategoryTabImage(categoryId);
+      if (!tabImagePath) {
+        throw new Error(`No tab image path found for category: ${categoryId}`);
+      }
+      
+      let baseImagePath = tabImagePath;
+      try {
+        tabImage = await loadImage(baseImagePath);
+      } catch (e) {
+        // Fallback to src path
+        baseImagePath = tabImagePath.replace('/assets/', '/src/assets/');
+        tabImage = await loadImage(baseImagePath);
+      }
+      
+      // Cache the loaded image
+      tabImageCache.set(categoryId, tabImage);
+      baseImage = tabImage;
+    }
+    
+    // Setup canvas to match image dimensions
+    const imageDimensions = gridConfig.imageDimensions || { width: tabImage.width, height: tabImage.height };
+    setupCanvas(canvas, imageDimensions.width, imageDimensions.height);
+    
+    // Create cell definitions from grid config
+    cellDefinitions = createCellsFromGroupsForCategory(gridConfig);
+    
+    // Map items to cells
+    mapItemsToCells(items, gridConfig, categoryId);
+    
+    // Preload item images
+    await preloadItemImages(items, categoryId);
+    
+    // Render grid
+    renderGrid(canvas, items, categoryId);
+    
+    // Setup event handlers
+    setupEventHandlers(canvas, items, categoryId);
+    
+  } catch (error) {
+    console.error(`Error rendering grid for category ${categoryId}:`, error);
+    // Fallback to simple grid if tab image fails to load
+    await renderSimpleGrid(canvas, items, categoryId);
   }
 }
 
@@ -99,8 +214,10 @@ function setupCanvas(canvas, width, height) {
 /**
  * Map items to cells based on type
  * @param {Array} items - Array of items
+ * @param {Object} gridConfig - Grid configuration object
+ * @param {string} categoryId - Category identifier
  */
-function mapItemsToCells(items) {
+function mapItemsToCells(items, gridConfig, categoryId) {
   cellToItemMap.clear();
   itemToCellMap.clear();
   
@@ -126,7 +243,7 @@ function mapItemsToCells(items) {
   // Group items by type
   const itemsByType = new Map();
   items.forEach(item => {
-    const itemType = getItemType(item);
+    const itemType = getItemType(item, gridConfig, categoryId);
     if (itemType) {
       if (!itemsByType.has(itemType)) {
         itemsByType.set(itemType, []);
@@ -135,12 +252,15 @@ function mapItemsToCells(items) {
     }
   });
   
+  // Get item order config from grid config or fallback to SCARAB_ORDER_CONFIG
+  const orderConfig = gridConfig?.itemOrderConfig || SCARAB_ORDER_CONFIG;
+  
   // Sort items within each type
   // Use explicit order if configured, otherwise sort by drop weight (low to high)
   itemsByType.forEach((typeItems, type) => {
-    const explicitOrder = SCARAB_ORDER_CONFIG[type];
+    const explicitOrder = orderConfig[type];
     
-    if (explicitOrder && Array.isArray(explicitOrder)) {
+    if (explicitOrder && Array.isArray(explicitOrder) && explicitOrder.length > 0) {
       // Use explicit ordering
       typeItems.sort((a, b) => {
         const indexA = explicitOrder.indexOf(a.id);
@@ -168,90 +288,330 @@ function mapItemsToCells(items) {
     }
   });
   
-  // Map items to cells
-  cellsByType.forEach((cells, type) => {
-    const typeItems = itemsByType.get(type) || [];
-    const maxAssignments = Math.min(cells.length, typeItems.length);
-    
-    for (let i = 0; i < maxAssignments; i++) {
-      const cell = cells[i];
-      const item = typeItems[i];
-      
-      if (cell && item) {
-        cellToItemMap.set(cell.id, item);
-        itemToCellMap.set(item.id, cell.id);
+  // Special handling for essences
+  if (categoryId === 'essences' && (cellsByType.has('essence') || cellsByType.has('essence-right') || cellsByType.has('essence-special'))) {
+    // Combine all essence cells (left-expanding, right-expanding, and special)
+    const essenceCells = [
+      ...(cellsByType.get('essence') || []), 
+      ...(cellsByType.get('essence-right') || []),
+      ...(cellsByType.get('essence-special') || [])
+    ];
+    // Get all essence items (they may be under 'essence', 'essence-right', or 'essence-special' type)
+    const essenceItems = [
+      ...(itemsByType.get('essence') || []), 
+      ...(itemsByType.get('essence-right') || []),
+      ...(itemsByType.get('essence-special') || [])
+    ];
+    // Also check if items are grouped under other types but are actually essences
+    itemsByType.forEach((items, type) => {
+      if (type !== 'essence' && type !== 'essence-right' && type !== 'essence-special') {
+        items.forEach(item => {
+          if (item.id && item.id.toLowerCase().includes('essence')) {
+            essenceItems.push(item);
+          }
+        });
       }
-    }
-  });
+    });
+    
+    // Group essences by essence type (extract from ID: "of-{type}")
+    const essencesByType = new Map();
+    essenceItems.forEach(item => {
+      // Extract essence type from ID (e.g., "muttering-essence-of-anger" -> "anger")
+      // Handle special cases like "essence-of-delirium" (no prefix)
+      let essenceType = null;
+      const idLower = item.id.toLowerCase();
+      const ofMatch = idLower.match(/-of-([^-]+)$/);
+      if (ofMatch) {
+        essenceType = ofMatch[1];
+      } else if (idLower.startsWith('essence-of-')) {
+        essenceType = idLower.replace('essence-of-', '');
+      }
+      
+      if (essenceType) {
+        if (!essencesByType.has(essenceType)) {
+          essencesByType.set(essenceType, []);
+        }
+        essencesByType.get(essenceType).push(item);
+      }
+    });
+    
+    // Sort essences within each type by tier (ascending: tier1=lowest, tier7=highest)
+    essencesByType.forEach((essences, essenceType) => {
+      essences.sort((a, b) => {
+        const tierA = a.tier || 0;
+        const tierB = b.tier || 0;
+        return tierA - tierB;
+      });
+      // Don't reverse here - we'll handle ordering based on cell type
+    });
+    
+    // Group cells by row and by type (essence vs essence-right)
+    const cellsByRow = new Map();
+    const cellTypeByRow = new Map(); // Track whether row is left-expanding or right-expanding
+    essenceCells.forEach(cell => {
+      if (!cellsByRow.has(cell.row)) {
+        cellsByRow.set(cell.row, []);
+      }
+      cellsByRow.get(cell.row).push(cell);
+      // Determine cell type from the first cell in the row
+      if (!cellTypeByRow.has(cell.row)) {
+        cellTypeByRow.set(cell.row, cell.groupType);
+      }
+    });
+    
+    // Sort cells within each row by x position (left to right)
+    cellsByRow.forEach((cells, row) => {
+      cells.sort((a, b) => a.x - b.x);
+    });
+    
+    // Map essence types to rows in the specified order
+    // Left-expanding rows (0-11): Greed, Contempt, Hatred, Woe, Fear, Anger, Torment, Sorrow, Rage, Suffering, Wrath, Doubt
+    // Right-expanding rows (12-19): Loathing, Zeal, Anguish, Spite, Scorn, Envy, Misery, Dread
+    const leftExpandingOrder = ['greed', 'contempt', 'hatred', 'woe', 'fear', 'anger', 'torment', 'sorrow', 'rage', 'suffering', 'wrath', 'doubt'];
+    const rightExpandingOrder = ['loathing', 'zeal', 'anguish', 'spite', 'scorn', 'envy', 'misery', 'dread'];
+    const rows = Array.from(cellsByRow.keys()).sort((a, b) => a - b);
+    
+    // Separate rows into left-expanding, right-expanding, and special
+    const leftExpandingRows = [];
+    const rightExpandingRows = [];
+    const specialEssenceRows = [];
+    rows.forEach(row => {
+      const cellType = cellTypeByRow.get(row);
+      if (cellType === 'essence-right') {
+        rightExpandingRows.push(row);
+      } else if (cellType === 'essence-special') {
+        specialEssenceRows.push(row);
+      } else {
+        leftExpandingRows.push(row);
+      }
+    });
+    
+    // Map left-expanding essence types
+    const leftExpandingTypes = Array.from(essencesByType.keys()).filter(type => 
+      leftExpandingOrder.includes(type.toLowerCase())
+    ).sort((a, b) => {
+      const indexA = leftExpandingOrder.indexOf(a.toLowerCase());
+      const indexB = leftExpandingOrder.indexOf(b.toLowerCase());
+      return indexA - indexB;
+    });
+    
+    leftExpandingTypes.forEach((essenceType, index) => {
+      if (index < leftExpandingRows.length) {
+        const row = leftExpandingRows[index];
+        const rowCells = cellsByRow.get(row);
+        const allTypeEssences = essencesByType.get(essenceType);
+        
+        // For left-expanding: reverse so highest tier is at cell-0 (leftmost)
+        const typeEssences = [...allTypeEssences].reverse();
+        
+        const maxAssignments = Math.min(rowCells.length, typeEssences.length);
+        for (let i = 0; i < maxAssignments; i++) {
+          const cell = rowCells[i];
+          const item = typeEssences[i];
+          
+          if (cell && item) {
+            cellToItemMap.set(cell.id, item);
+            itemToCellMap.set(item.id, cell.id);
+          }
+        }
+      }
+    });
+    
+    // Map right-expanding essence types
+    const rightExpandingTypes = Array.from(essencesByType.keys()).filter(type => 
+      rightExpandingOrder.includes(type.toLowerCase())
+    ).sort((a, b) => {
+      const indexA = rightExpandingOrder.indexOf(a.toLowerCase());
+      const indexB = rightExpandingOrder.indexOf(b.toLowerCase());
+      return indexA - indexB;
+    });
+    
+    rightExpandingTypes.forEach((essenceType, index) => {
+      if (index < rightExpandingRows.length) {
+        const row = rightExpandingRows[index];
+        const rowCells = cellsByRow.get(row);
+        const allTypeEssences = essencesByType.get(essenceType);
+        
+        // For right-expanding: keep sorted order (lowest tier first, highest tier last)
+        // cell-0 (leftmost) = lowest tier, rightmost cell = highest tier
+        const typeEssences = allTypeEssences;
+        
+        const maxAssignments = Math.min(rowCells.length, typeEssences.length);
+        for (let i = 0; i < maxAssignments; i++) {
+          const cell = rowCells[i];
+          const item = typeEssences[i];
+          
+          if (cell && item) {
+            cellToItemMap.set(cell.id, item);
+            itemToCellMap.set(item.id, cell.id);
+          }
+        }
+      }
+    });
+    
+    // Map special essences (each in their own row, same column)
+    // Order: Insanity, Horror, Delirium, Hysteria
+    const specialEssenceOrder = ['insanity', 'horror', 'delirium', 'hysteria'];
+    
+    specialEssenceOrder.forEach((essenceType, index) => {
+      if (index < specialEssenceRows.length) {
+        const row = specialEssenceRows[index];
+        const rowCells = cellsByRow.get(row);
+        const allTypeEssences = essencesByType.get(essenceType);
+        
+        // Special essences are single-cell rows, just map the first (and only) essence
+        if (rowCells.length > 0 && allTypeEssences && allTypeEssences.length > 0) {
+          const cell = rowCells[0];
+          const item = allTypeEssences[0]; // Special essences typically have only one tier (tier 8)
+          
+          if (cell && item) {
+            cellToItemMap.set(cell.id, item);
+            itemToCellMap.set(item.id, cell.id);
+          }
+        }
+      }
+    });
+  } else {
+    // Map items to cells (default behavior for other categories)
+    cellsByType.forEach((cells, type) => {
+      const typeItems = itemsByType.get(type) || [];
+      const maxAssignments = Math.min(cells.length, typeItems.length);
+      
+      for (let i = 0; i < maxAssignments; i++) {
+        const cell = cells[i];
+        const item = typeItems[i];
+        
+        if (cell && item) {
+          cellToItemMap.set(cell.id, item);
+          itemToCellMap.set(item.id, cell.id);
+        }
+      }
+    });
+  }
 }
 
 /**
  * Get item type from item ID or name
  * @param {Object} item - Item object
+ * @param {Object} gridConfig - Grid configuration object
+ * @param {string} categoryId - Category identifier
  * @returns {string|null} Item type or null
  */
-function getItemType(item) {
+function getItemType(item, gridConfig, categoryId) {
   if (!item || !item.id) return null;
   
   const idLower = item.id.toLowerCase();
   
-  // Special handling for misc and misc2 groups (IDs start with "scarab-of-")
-  // Check misc2 first (more specific)
-  const misc2Order = SCARAB_ORDER_CONFIG['misc2'] || [];
-  if (misc2Order.includes(item.id)) {
-    return 'misc2';
-  }
+  // Get order config from grid config or fallback to SCARAB_ORDER_CONFIG
+  const orderConfig = gridConfig?.itemOrderConfig || SCARAB_ORDER_CONFIG;
   
-  // Check misc group
-  const miscOrder = SCARAB_ORDER_CONFIG['misc'] || [];
-  if (miscOrder.includes(item.id)) {
-    return 'misc';
-  }
-  
-  // Special handling for horned scarabs - distinguish between horned and horned2
-  const horned2Order = SCARAB_ORDER_CONFIG['horned2'] || [];
-  if (horned2Order.includes(item.id)) {
-    return 'horned2';
-  }
-  
-  const hornedOrder = SCARAB_ORDER_CONFIG['horned'] || [];
-  if (hornedOrder.includes(item.id)) {
-    return 'horned';
-  }
-  
-  // Extract type from ID pattern: "{type}-scarab" or "{type}-scarab-of-..."
-  // Example: "abyss-scarab" -> "abyss", "titanic-scarab-of-x" -> "titanic"
-  const match = idLower.match(/^([^-]+)-scarab/);
-  if (match) {
-    const extractedType = match[1];
+  // Special handling for scarabs (backward compatibility)
+  if (categoryId === 'scarabs') {
+    // Special handling for misc and misc2 groups (IDs start with "scarab-of-")
+    // Check misc2 first (more specific)
+    const misc2Order = SCARAB_ORDER_CONFIG['misc2'] || [];
+    if (misc2Order.includes(item.id)) {
+      return 'misc2';
+    }
     
-    // Get all group types
+    // Check misc group
+    const miscOrder = SCARAB_ORDER_CONFIG['misc'] || [];
+    if (miscOrder.includes(item.id)) {
+      return 'misc';
+    }
+    
+    // Special handling for horned scarabs - distinguish between horned and horned2
+    const horned2Order = SCARAB_ORDER_CONFIG['horned2'] || [];
+    if (horned2Order.includes(item.id)) {
+      return 'horned2';
+    }
+    
+    const hornedOrder = SCARAB_ORDER_CONFIG['horned'] || [];
+    if (hornedOrder.includes(item.id)) {
+      return 'horned';
+    }
+    
+    // Extract type from ID pattern: "{type}-scarab" or "{type}-scarab-of-..."
+    const match = idLower.match(/^([^-]+)-scarab/);
+    if (match) {
+      const extractedType = match[1];
+      
+      // Get all group types
+      const groupTypes = cellDefinitions
+        .map(c => c.groupType)
+        .filter(t => t);
+      
+      // Try exact match first
+      if (groupTypes.includes(extractedType)) {
+        return extractedType;
+      }
+      
+      // Try partial match
+      for (const type of groupTypes) {
+        if (extractedType.includes(type.toLowerCase()) || type.toLowerCase().includes(extractedType)) {
+          return type;
+        }
+      }
+    }
+  } else {
+    // For essences, check if it's a special, right-expanding, or left-expanding type
+    if (categoryId === 'essences') {
+      const rightExpandingTypes = ['loathing', 'zeal', 'anguish', 'spite', 'scorn', 'envy', 'misery', 'dread'];
+      const specialEssenceTypes = ['insanity', 'horror', 'delirium', 'hysteria'];
+      const idLower = item.id.toLowerCase();
+      
+      // Check for special essences first (they have format "essence-of-{type}")
+      if (idLower.startsWith('essence-of-')) {
+        const essenceType = idLower.replace('essence-of-', '');
+        if (specialEssenceTypes.includes(essenceType)) {
+          return 'essence-special';
+        }
+      }
+      
+      // Check for right-expanding types
+      const ofMatch = idLower.match(/-of-([^-]+)$/);
+      if (ofMatch) {
+        const essenceType = ofMatch[1];
+        if (rightExpandingTypes.includes(essenceType)) {
+          return 'essence-right';
+        }
+      } else if (idLower.startsWith('essence-of-')) {
+        const essenceType = idLower.replace('essence-of-', '');
+        if (rightExpandingTypes.includes(essenceType)) {
+          return 'essence-right';
+        }
+      }
+      
+      // Default to 'essence' for left-expanding types
+      if (idLower.includes('essence')) {
+        return 'essence';
+      }
+    }
+    
+    // For other categories, try to match item ID/name to group types
+    // Get all group types from cell definitions
     const groupTypes = cellDefinitions
       .map(c => c.groupType)
       .filter(t => t);
     
-    // Try exact match first
-    if (groupTypes.includes(extractedType)) {
-      return extractedType;
-    }
-    
-    // Try partial match (e.g., "kalguuran" might match "kalguuran" in ID)
+    // Check if item ID matches any group type
     for (const type of groupTypes) {
-      if (extractedType.includes(type.toLowerCase()) || type.toLowerCase().includes(extractedType)) {
+      if (idLower.includes(type.toLowerCase()) || type.toLowerCase().includes(idLower)) {
         return type;
       }
     }
-  }
-  
-  // Fallback: check name for type keywords
-  const nameLower = (item.name || '').toLowerCase();
-  const groupTypes = cellDefinitions
-    .map(c => c.groupType)
-    .filter(t => t);
-  
-  for (const type of groupTypes) {
-    if (nameLower.includes(type.toLowerCase())) {
-      return type;
+    
+    // Check if item name contains group type
+    const nameLower = (item.name || '').toLowerCase();
+    for (const type of groupTypes) {
+      if (nameLower.includes(type.toLowerCase())) {
+        return type;
+      }
+    }
+    
+    // If only one group type exists, use it as default
+    if (groupTypes.length === 1) {
+      return groupTypes[0];
     }
   }
   
@@ -262,42 +622,81 @@ function getItemType(item) {
 /**
  * Preload item images
  * @param {Array} items - Array of items
+ * @param {string} categoryId - Category identifier
  */
-async function preloadItemImages(items) {
+async function preloadItemImages(items, categoryId) {
   const itemsToLoad = Array.from(cellToItemMap.values());
-  const loadPromises = itemsToLoad.map(item => loadItemImage(item));
+  const loadPromises = itemsToLoad.map(item => loadItemImage(item, categoryId));
   await Promise.allSettled(loadPromises);
 }
 
 /**
  * Load item image
  * @param {Object} item - Item object
+ * @param {string} categoryId - Category identifier
  * @returns {Promise<HTMLImageElement|null>} Loaded image or null
  */
-async function loadItemImage(item) {
+async function loadItemImage(item, categoryId) {
   if (!item || !item.id) return null;
   
-  // Check cache
-  if (itemImageCache.has(item.id)) {
-    return itemImageCache.get(item.id);
+  // Check cache (key includes category to avoid conflicts)
+  const cacheKey = `${categoryId}:${item.id}`;
+  if (itemImageCache.has(cacheKey)) {
+    return itemImageCache.get(cacheKey);
   }
   
   try {
-    // Try public path first, then src path
-    let imagePath = `/assets/images/scarabs/${item.id}.png`;
-    let image;
-    try {
-      image = await loadImage(imagePath);
-    } catch (e) {
-      // Fallback to src path
-      imagePath = `/src/assets/images/scarabs/${item.id}.png`;
-      image = await loadImage(imagePath);
+    // Get category-specific image directory
+    const imageDir = getCategoryImageDirectory(categoryId);
+    if (!imageDir) {
+      // Fallback to scarabs for backward compatibility
+      const fallbackPath = `/assets/images/scarabs/${item.id}.png`;
+      try {
+        const image = await loadImage(fallbackPath);
+        itemImageCache.set(cacheKey, image);
+        return image;
+      } catch (e) {
+        // Try src path
+        const srcPath = `/src/assets/images/scarabs/${item.id}.png`;
+        const image = await loadImage(srcPath);
+        itemImageCache.set(cacheKey, image);
+        return image;
+      }
     }
-    itemImageCache.set(item.id, image);
-    return image;
+    
+    // For merged categories, try multiple directories
+    const directoriesToTry = getImageDirectoriesForCategory(categoryId);
+    
+    for (const dir of directoriesToTry) {
+      // Try public path first, then src path
+      let imagePath = `${dir}${item.id}.png`;
+      let image;
+      try {
+        image = await loadImage(imagePath);
+        itemImageCache.set(cacheKey, image);
+        return image;
+      } catch (e) {
+        // Try src path
+        const srcImageDir = dir.replace('/assets/', '/src/assets/');
+        imagePath = `${srcImageDir}${item.id}.png`;
+        try {
+          image = await loadImage(imagePath);
+          itemImageCache.set(cacheKey, image);
+          return image;
+        } catch (e2) {
+          // Continue to next directory
+          continue;
+        }
+      }
+    }
+    
+    // If all directories failed, return null
+    console.warn(`Failed to load image for item ${item.id} in category ${categoryId} from any directory`);
+    itemImageCache.set(cacheKey, null);
+    return null;
   } catch (error) {
-    console.warn(`Failed to load image for item ${item.id}:`, error);
-    itemImageCache.set(item.id, null);
+    console.warn(`Failed to load image for item ${item.id} in category ${categoryId}:`, error);
+    itemImageCache.set(cacheKey, null);
     return null;
   }
 }
@@ -306,8 +705,9 @@ async function loadItemImage(item) {
  * Render the grid
  * @param {HTMLCanvasElement} canvas - Canvas element
  * @param {Array} items - Array of items
+ * @param {string} categoryId - Category identifier
  */
-function renderGrid(canvas, items) {
+function renderGrid(canvas, items, categoryId) {
   const ctx = canvas.getContext('2d');
   const displayWidth = baseImage ? baseImage.width : IMAGE_DIMENSIONS.width;
   const displayHeight = baseImage ? baseImage.height : IMAGE_DIMENSIONS.height;
@@ -324,11 +724,16 @@ function renderGrid(canvas, items) {
     ctx.fillRect(0, 0, displayWidth, displayHeight);
   }
   
+  // Draw cell IDs for debugging
+  cellDefinitions.forEach(cell => {
+    drawCellId(ctx, cell);
+  });
+  
   // Draw item overlays
   cellDefinitions.forEach(cell => {
     const item = cellToItemMap.get(cell.id);
     if (item) {
-      drawCellOverlay(ctx, cell, item);
+      drawCellOverlay(ctx, cell, item, categoryId);
       
       // Draw highlight if this item is highlighted
       if (highlightedItemId === item.id) {
@@ -340,14 +745,48 @@ function renderGrid(canvas, items) {
 }
 
 /**
+ * Draw cell ID for debugging
+ * @param {CanvasRenderingContext2D} ctx - Canvas context
+ * @param {Object} cell - Cell definition
+ */
+function drawCellId(ctx, cell) {
+  ctx.save();
+  ctx.font = '10px monospace';
+  ctx.fillStyle = '#ffff00'; // Yellow text for visibility
+  ctx.strokeStyle = '#000000'; // Black outline for contrast
+  ctx.lineWidth = 2;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  
+  // Draw cell ID in top-left corner with black outline for readability
+  const text = cell.id;
+  const x = cell.x + 2;
+  const y = cell.y + 2;
+  
+  // Draw text with outline
+  ctx.strokeText(text, x, y);
+  ctx.fillText(text, x, y);
+  
+  // Also draw row and col info
+  const infoText = `R${cell.row}C${cell.col}`;
+  ctx.font = '8px monospace';
+  ctx.strokeText(infoText, x, y + 12);
+  ctx.fillText(infoText, x, y + 12);
+  
+  ctx.restore();
+}
+
+/**
  * Draw cell overlay with item image
  * @param {CanvasRenderingContext2D} ctx - Canvas context
  * @param {Object} cell - Cell definition
  * @param {Object} item - Item object
+ * @param {string} categoryId - Category identifier
  */
-function drawCellOverlay(ctx, cell, item) {
-  // Draw item image
-  const itemImage = itemImageCache.get(item.id);
+function drawCellOverlay(ctx, cell, item, categoryId) {
+  // Draw item image using category-aware cache key
+  const cacheKey = `${categoryId}:${item.id}`;
+  const itemImage = itemImageCache.get(cacheKey);
   if (itemImage) {
     const padding = 2;
     const imageX = cell.x + padding;
@@ -363,8 +802,9 @@ function drawCellOverlay(ctx, cell, item) {
  * Setup event handlers for canvas
  * @param {HTMLCanvasElement} canvas - Canvas element
  * @param {Array} items - Array of items
+ * @param {string} categoryId - Category identifier
  */
-function setupEventHandlers(canvas, items) {
+function setupEventHandlers(canvas, items, categoryId) {
   let currentItem = null;
   
   // Get canvas coordinates
@@ -385,6 +825,9 @@ function setupEventHandlers(canvas, items) {
     const cell = getCellAtPosition(cellDefinitions, x, y);
     const item = cell ? cellToItemMap.get(cell.id) : null;
     
+    // Update cursor based on whether hovering over an item
+    canvas.style.cursor = item ? 'pointer' : 'default';
+    
     // Update tooltip position
     if (currentItem) {
       updateTooltipPosition(e.clientX, e.clientY);
@@ -395,12 +838,12 @@ function setupEventHandlers(canvas, items) {
       currentItem = item;
       highlightedItemId = item.id;
       showTooltip(item, e.clientX, e.clientY);
-      renderGrid(canvas, items);
+      renderGrid(canvas, items, categoryId);
     } else if (!item && currentItem) {
       currentItem = null;
       highlightedItemId = null;
       hideTooltip();
-      renderGrid(canvas, items);
+      renderGrid(canvas, items, categoryId);
     }
   });
   
@@ -409,7 +852,7 @@ function setupEventHandlers(canvas, items) {
     currentItem = null;
     highlightedItemId = null;
     hideTooltip();
-    renderGrid(canvas, items);
+    renderGrid(canvas, items, categoryId);
   });
   
   // Click handler
@@ -421,11 +864,12 @@ function setupEventHandlers(canvas, items) {
     if (item) {
       // Hide tooltip before navigating
       hideTooltip();
-      window.location.hash = `#/category/scarabs/item/${item.id}`;
+      window.location.hash = `#/category/${categoryId}/item/${item.id}`;
     }
   });
   
-  canvas.style.cursor = 'pointer';
+  // Set cursor style - will be updated dynamically based on hover
+  canvas.style.cursor = 'default';
 }
 
 /**
