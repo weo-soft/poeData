@@ -92,7 +92,7 @@ export async function discoverDatasets(categoryId) {
           
           if (fallbackResponse.ok) {
             found = true;
-            basePath = `/data/${categoryId}/datasets/`; // Switch to plural directory
+            basePath = `/data/${dirName}/datasets/`; // Switch to plural directory
             const dataset = await fallbackResponse.json();
             const metadata = extractMetadata(categoryId, i, filename, dataset);
             if (metadata) {
@@ -130,99 +130,201 @@ export async function discoverDatasets(categoryId) {
  * @returns {Promise<Array>} Array of DatasetMetadata objects
  */
 export async function discoverDatasetsParallel(categoryId) {
-  // Check cache first
+  // Check cache first (but log it)
   if (discoveryCache.has(categoryId)) {
-    return discoveryCache.get(categoryId);
+    const cached = discoveryCache.get(categoryId);
+    console.log(`[DatasetLoader] Using cached datasets for ${categoryId}: ${cached.length} datasets`);
+    return cached;
   }
 
   try {
-    const maxDatasets = 100;
-    const maxConcurrent = 10; // Fetch up to 10 datasets in parallel
-    
     // Get actual directory name from category ID
     const dirName = getCategoryDirectory(categoryId);
+    console.log(`[DatasetLoader] Discovering datasets for category: ${categoryId} -> directory: ${dirName}`);
     
-    // Try both directory patterns
+    // Try both directory patterns to find index.json
     const basePaths = [
       `/data/${dirName}/dataset/`,
       `/data/${dirName}/datasets/`
     ];
     
     let foundPath = null;
-    const datasets = [];
+    let indexData = null;
     
-    // First, try to find which directory exists by checking dataset1.json
+    // First, try to load index.json from either directory
     for (const basePath of basePaths) {
       try {
-        const response = await fetch(`${basePath}dataset1.json`);
+        const indexUrl = `${basePath}index.json`;
+        console.log(`[DatasetLoader] Trying to load index from: ${indexUrl}`);
+        const response = await fetch(indexUrl);
+        
         if (response.ok) {
-          foundPath = basePath;
-          break;
+          // Verify it's JSON
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            try {
+              const text = await response.text();
+              indexData = JSON.parse(text);
+              foundPath = basePath;
+              console.log(`[DatasetLoader] Found index.json at: ${foundPath} with ${indexData.datasets?.length || 0} datasets`);
+              break;
+            } catch (parseError) {
+              console.warn(`[DatasetLoader] Failed to parse index.json from ${indexUrl}:`, parseError);
+              continue;
+            }
+          }
         }
       } catch (error) {
-        // Continue to next path
+        console.warn(`[DatasetLoader] Error loading index from ${basePath}:`, error);
         continue;
       }
     }
     
-    if (!foundPath) {
-      // No datasets found
-      discoveryCache.set(categoryId, []);
-      return [];
+    // If no index found, fall back to old sequential discovery
+    if (!indexData || !indexData.datasets || indexData.datasets.length === 0) {
+      console.warn(`[DatasetLoader] No index.json found, falling back to sequential discovery`);
+      return await discoverDatasetsSequential(categoryId, dirName, basePaths);
     }
     
-    // Discover datasets in batches
-    for (let start = 1; start <= maxDatasets; start += maxConcurrent) {
-      const batch = [];
-      const end = Math.min(start + maxConcurrent - 1, maxDatasets);
-      
-      // Create fetch promises for this batch
-      const fetchPromises = [];
-      for (let i = start; i <= end; i++) {
-        const filename = `dataset${i}.json`;
-        const url = `${foundPath}${filename}`;
-        fetchPromises.push(
-          fetch(url)
-            .then(response => response.ok ? response.json().then(data => ({ i, data, success: true })) : { i, success: false, status: response.status })
-            .catch(error => ({ i, success: false, error }))
-        );
-      }
-      
-      // Wait for batch to complete
-      const results = await Promise.all(fetchPromises);
-      
-      // Process results
-      let foundAny = false;
-      for (const result of results) {
-        if (result.success && result.data) {
-          foundAny = true;
-          const metadata = extractMetadata(categoryId, result.i, `dataset${result.i}.json`, result.data);
-          if (metadata) {
-            datasets.push(metadata);
-          }
-        } else if (result.status === 404 && !foundAny) {
-          // Reached end of datasets
-          break;
+    // Load datasets from index in parallel
+    const datasets = [];
+    const fetchPromises = indexData.datasets.map(async (datasetInfo) => {
+      const url = `${foundPath}${datasetInfo.filename}`;
+      try {
+        console.log(`[DatasetLoader] Loading dataset ${datasetInfo.number} from: ${url}`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          console.warn(`[DatasetLoader] Failed to load ${url}: ${response.status}`);
+          return null;
         }
+        
+        // Check content type
+        const contentType = response.headers.get('content-type');
+        if (contentType && !contentType.includes('application/json')) {
+          console.warn(`[DatasetLoader] Response from ${url} is not JSON (content-type: ${contentType})`);
+          return null;
+        }
+        
+        const text = await response.text();
+        const data = JSON.parse(text);
+        const metadata = extractMetadata(categoryId, datasetInfo.number, datasetInfo.filename, data);
+        
+        if (metadata) {
+          console.log(`[DatasetLoader] Loaded dataset ${datasetInfo.number}: ${metadata.name}`);
+          return metadata;
+        } else {
+          console.warn(`[DatasetLoader] Failed to extract metadata for dataset ${datasetInfo.number}`);
+          return null;
+        }
+      } catch (error) {
+        console.error(`[DatasetLoader] Error loading dataset ${datasetInfo.number} from ${url}:`, error);
+        return null;
       }
-      
-      // If no datasets found in this batch, stop
-      if (!foundAny) {
-        break;
+    });
+    
+    const results = await Promise.all(fetchPromises);
+    results.forEach(metadata => {
+      if (metadata) {
+        datasets.push(metadata);
       }
-    }
+    });
     
     // Sort by dataset number
     datasets.sort((a, b) => a.datasetNumber - b.datasetNumber);
+    
+    console.log(`[DatasetLoader] Discovered ${datasets.length} datasets for category: ${categoryId}`);
     
     // Cache the results
     discoveryCache.set(categoryId, datasets);
     
     return datasets;
   } catch (error) {
-    console.error(`Error discovering datasets in parallel for ${categoryId}:`, error);
+    console.error(`[DatasetLoader] Error discovering datasets for ${categoryId}:`, error);
     return [];
   }
+}
+
+/**
+ * Fallback: Discover datasets sequentially (used when index.json is not available)
+ * @param {string} categoryId - Category identifier
+ * @param {string} dirName - Directory name
+ * @param {Array<string>} basePaths - Array of base paths to try
+ * @returns {Promise<Array>} Array of DatasetMetadata objects
+ */
+async function discoverDatasetsSequential(categoryId, dirName, basePaths) {
+  let foundPath = null;
+  const datasets = [];
+  const maxDatasets = 100;
+  const maxConsecutive404s = 3;
+  
+  // Find which directory exists
+  for (const basePath of basePaths) {
+    try {
+      const testUrl = `${basePath}dataset1.json`;
+      const response = await fetch(testUrl);
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          foundPath = basePath;
+          break;
+        }
+      }
+    } catch (error) {
+      continue;
+    }
+  }
+  
+  if (!foundPath) {
+    discoveryCache.set(categoryId, []);
+    return [];
+  }
+  
+  // Discover datasets sequentially
+  let consecutive404s = 0;
+  for (let i = 1; i <= maxDatasets; i++) {
+    const filename = `dataset${i}.json`;
+    const url = `${foundPath}${filename}`;
+    
+    try {
+      const response = await fetch(url);
+      
+      if (response.status === 404) {
+        consecutive404s++;
+        if (consecutive404s >= maxConsecutive404s) {
+          break;
+        }
+        continue;
+      }
+      
+      consecutive404s = 0;
+      
+      if (!response.ok) {
+        continue;
+      }
+      
+      const contentType = response.headers.get('content-type');
+      if (contentType && !contentType.includes('application/json')) {
+        continue;
+      }
+      
+      const text = await response.text();
+      const data = JSON.parse(text);
+      const metadata = extractMetadata(categoryId, i, filename, data);
+      if (metadata) {
+        datasets.push(metadata);
+      }
+    } catch (error) {
+      consecutive404s++;
+      if (consecutive404s >= maxConsecutive404s) {
+        break;
+      }
+    }
+  }
+  
+  datasets.sort((a, b) => a.datasetNumber - b.datasetNumber);
+  discoveryCache.set(categoryId, datasets);
+  return datasets;
 }
 
 /**
@@ -296,28 +398,68 @@ export async function loadDataset(categoryId, datasetNumber) {
     // Get actual directory name from category ID
     const dirName = getCategoryDirectory(categoryId);
     
-    // Try dataset/ directory first (singular)
-    let url = `/data/${dirName}/dataset/dataset${datasetNumber}.json`;
-    let response = await fetch(url);
+    // Try both directory patterns
+    const basePaths = [
+      `/data/${dirName}/dataset/`,
+      `/data/${dirName}/datasets/`
+    ];
     
-    // If not found, try datasets/ directory (plural)
-    if (!response.ok && response.status === 404) {
-      url = `/data/${dirName}/datasets/dataset${datasetNumber}.json`;
-      response = await fetch(url);
-    }
+    let dataset = null;
+    let lastError = null;
     
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error(`Dataset ${datasetNumber} not found for category ${categoryId}`);
+    // Try each path until we find a valid JSON response
+    for (const basePath of basePaths) {
+      const url = `${basePath}dataset${datasetNumber}.json`;
+      try {
+        console.log(`[DatasetLoader] Loading dataset from: ${url}`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            console.log(`[DatasetLoader] Dataset not found at: ${url}`);
+            continue; // Try next path
+          }
+          throw new Error(`Failed to load dataset: ${response.statusText}`);
+        }
+        
+        // Check content type to ensure it's JSON
+        const contentType = response.headers.get('content-type');
+        if (contentType && !contentType.includes('application/json')) {
+          console.warn(`[DatasetLoader] Response from ${url} is not JSON (content-type: ${contentType})`);
+          continue; // Try next path
+        }
+        
+        // Parse JSON with error handling
+        try {
+          const text = await response.text();
+          dataset = JSON.parse(text);
+          
+          // Validate basic structure
+          if (!dataset || !dataset.name || !Array.isArray(dataset.items)) {
+            console.warn(`[DatasetLoader] Invalid dataset structure at ${url}`);
+            continue; // Try next path
+          }
+          
+          // Successfully loaded valid dataset
+          console.log(`[DatasetLoader] Successfully loaded dataset ${datasetNumber} from: ${url}`);
+          break;
+        } catch (parseError) {
+          console.error(`[DatasetLoader] JSON parse error for ${url}:`, parseError);
+          lastError = new Error(`Invalid JSON in dataset file: ${parseError.message}`);
+          continue; // Try next path
+        }
+      } catch (fetchError) {
+        console.warn(`[DatasetLoader] Error fetching ${url}:`, fetchError);
+        lastError = fetchError;
+        continue; // Try next path
       }
-      throw new Error(`Failed to load dataset: ${response.statusText}`);
     }
     
-    const dataset = await response.json();
-    
-    // Validate basic structure
-    if (!dataset || !dataset.name || !Array.isArray(dataset.items)) {
-      throw new Error(`Invalid dataset structure for dataset${datasetNumber}.json`);
+    if (!dataset) {
+      if (lastError) {
+        throw lastError;
+      }
+      throw new Error(`Dataset ${datasetNumber} not found for category ${categoryId}`);
     }
     
     // Cache the dataset
@@ -325,7 +467,7 @@ export async function loadDataset(categoryId, datasetNumber) {
     
     return dataset;
   } catch (error) {
-    console.error(`Error loading dataset ${datasetNumber} for ${categoryId}:`, error);
+    console.error(`[DatasetLoader] Error loading dataset ${datasetNumber} for ${categoryId}:`, error);
     throw error;
   }
 }

@@ -23,79 +23,79 @@
     "items": [
         {
             "id": "abyssal",
-            "weight": 38
+            "count": 38
         },
         {
             "id": "amorphous",
-            "weight": 31
+            "count": 31
         },
         {
             "id": "armoursmith",
-            "weight": 147
+            "count": 147
         },
         {
             "id": "blacksmith",
-            "weight": 138
+            "count": 138
         },
         {
             "id": "blighted",
-            "weight": 42
+            "count": 42
         },
         {
             "id": "cartographer",
-            "weight": 27
+            "count": 27
         },
         {
             "id": "diviner",
-            "weight": 61
+            "count": 61
         },
         {
             "id": "fine",
-            "weight": 128
+            "count": 128
         },
         {
             "id": "foreboding",
-            "weight": 52
+            "count": 52
         },
         {
             "id": "fossilied",
-            "weight": 28
+            "count": 28
         },
         {
             "id": "fragmented",
-            "weight": 29
+            "count": 29
         },
         {
             "id": "imperial",
-            "weight": 56
+            "count": 56
         },
         {
             "id": "jeweller",
-            "weight": 0
+            "count": 0
         },
         {
             "id": "obscured",
-            "weight": 14
+            "count": 14
         },
         {
             "id": "singular",
-            "weight": 22
+            "count": 22
         },
         {
             "id": "skittering",
-            "weight": 35
+            "count": 35
         },
         {
             "id": "thaumaturge",
-            "weight": 33
+            "count": 33
         },
         {
             "id": "timeless",
-            "weight": 29
+            "count": 29
         },
         {
             "id": "whispering",
-            "weight": 50
+            "count": 50
         }
     ]
 }

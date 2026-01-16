@@ -43,14 +43,9 @@ export async function renderCategoryList(container) {
           textContent: category.description || '',
           className: 'category-description'
         });
-        const itemCount = createElement('div', {
-          textContent: `${category.itemCount} items`,
-          className: 'item-count'
-        });
         
         categoryLink.appendChild(categoryName);
         categoryLink.appendChild(categoryDesc);
-        categoryLink.appendChild(itemCount);
         categoryCard.appendChild(categoryLink);
         categoriesGrid.appendChild(categoryCard);
       });

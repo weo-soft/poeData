@@ -1,0 +1,10 @@
+{
+  "category": "divinationCards",
+  "lastUpdated": "2026-01-16T20:24:21.047Z",
+  "datasets": [
+    {
+      "number": 1,
+      "filename": "dataset1.json"
+    }
+  ]
+}

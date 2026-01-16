@@ -63,58 +63,99 @@ export async function downloadDataset(categoryId, datasetNumber, datasetData = n
   window._activeDownloads.add(downloadKey);
   
   try {
-    let dataset = datasetData;
+    let jsonString = null;
+    let filename = null;
     
-    // If dataset not provided, fetch it
-    if (!dataset) {
-      // Get actual directory name from category ID
+    // If dataset data is provided, use it directly (no validation - download raw)
+    if (datasetData) {
+      // Generate filename from provided data
+      filename = generateFilename(categoryId, datasetNumber, datasetData);
+      // Convert to JSON string (raw, as-is)
+      jsonString = JSON.stringify(datasetData, null, 2);
+    } else {
+      // If not provided, fetch the raw file directly
       const dirName = getCategoryDirectory(categoryId);
       
-      // Try dataset/ directory first (singular)
-      let url = `/data/${dirName}/dataset/dataset${datasetNumber}.json`;
-      let response = await fetch(url);
+      // Try both directory patterns
+      const basePaths = [
+        `/data/${dirName}/dataset/`,
+        `/data/${dirName}/datasets/`
+      ];
       
-      // If not found, try datasets/ directory (plural)
-      if (!response.ok && response.status === 404) {
-        url = `/data/${dirName}/datasets/dataset${datasetNumber}.json`;
-        response = await fetch(url);
+      let rawText = null;
+      let lastError = null;
+      
+      // Try each path until we find a valid JSON file
+      for (const basePath of basePaths) {
+        const url = `${basePath}dataset${datasetNumber}.json`;
+        try {
+          console.log(`[Download] Fetching raw dataset from: ${url}`);
+          const response = await fetch(url);
+          
+          if (!response.ok) {
+            if (response.status === 404) {
+              console.log(`[Download] Dataset not found at: ${url}`);
+              continue; // Try next path
+            }
+            throw new Error(`Failed to fetch dataset: ${response.statusText}`);
+          }
+          
+          // Check content type to ensure it's JSON
+          const contentType = response.headers.get('content-type');
+          if (contentType && !contentType.includes('application/json')) {
+            console.warn(`[Download] Response from ${url} is not JSON (content-type: ${contentType})`);
+            continue; // Try next path
+          }
+          
+          // Get raw text (no parsing/validation - just download as-is)
+          rawText = await response.text();
+          
+          // Basic check: try to parse to ensure it's valid JSON (but don't validate structure)
+          try {
+            JSON.parse(rawText);
+            console.log(`[Download] Successfully fetched raw dataset ${datasetNumber} from: ${url}`);
+            
+            // Extract filename from URL or generate it
+            // Try to parse just enough to get the date for filename
+            try {
+              const tempData = JSON.parse(rawText);
+              filename = generateFilename(categoryId, datasetNumber, tempData);
+            } catch {
+              // If parsing fails for filename, use default
+              filename = generateFilename(categoryId, datasetNumber, null);
+            }
+            
+            break;
+          } catch (parseError) {
+            console.error(`[Download] Invalid JSON at ${url}:`, parseError);
+            lastError = new Error(`Invalid JSON in dataset file: ${parseError.message}`);
+            continue; // Try next path
+          }
+        } catch (fetchError) {
+          console.warn(`[Download] Error fetching ${url}:`, fetchError);
+          lastError = fetchError;
+          continue; // Try next path
+        }
       }
       
-      if (!response.ok) {
-        throw new Error(`Failed to fetch dataset: ${response.statusText}`);
+      if (!rawText) {
+        if (lastError) {
+          throw lastError;
+        }
+        throw new Error(`Dataset ${datasetNumber} not found for category ${categoryId}`);
       }
       
-      const jsonString = await response.text();
-      
-      // Validate JSON structure before download
-      const validation = parseDataset(jsonString);
-      if (!validation.valid) {
-        throw new Error(`Dataset validation failed: ${validation.error}`);
-      }
-      
-      dataset = validation.data;
-    } else {
-      // Validate provided dataset
-      const validation = validateDataset(dataset);
-      if (!validation.valid) {
-        throw new Error(`Dataset validation failed: ${validation.error}`);
-      }
+      jsonString = rawText;
     }
     
-    // Generate filename
-    const filename = generateFilename(categoryId, datasetNumber, dataset);
-    
-    // Convert dataset to JSON string
-    const jsonString = JSON.stringify(dataset, null, 2);
-    
-    // Create blob
+    // Create blob with raw JSON string
     const blob = new Blob([jsonString], { type: 'application/json' });
     const blobUrl = URL.createObjectURL(blob);
     
     // Create download link
     const link = document.createElement('a');
     link.href = blobUrl;
-    link.download = filename;
+    link.download = filename || `${categoryId}-dataset${datasetNumber}.json`;
     link.style.display = 'none';
     
     // Trigger download

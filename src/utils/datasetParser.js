@@ -96,17 +96,17 @@ export function validateDataset(dataset) {
       };
     }
     
-    if (item.weight === undefined || typeof item.weight !== 'number') {
+    if (item.count === undefined || typeof item.count !== 'number') {
       return {
         valid: false,
-        error: `Invalid item at index ${i}: missing required field "weight" (must be a number)`
+        error: `Invalid item at index ${i}: missing required field "count" (must be a number)`
       };
     }
     
-    if (item.weight <= 0) {
+    if (item.count <= 0) {
       return {
         valid: false,
-        error: `Invalid item at index ${i}: field "weight" must be a positive number`
+        error: `Invalid item at index ${i}: field "count" must be a positive number`
       };
     }
   }

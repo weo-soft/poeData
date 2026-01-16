@@ -211,12 +211,20 @@ input:focus, textarea:focus, select:focus {
 
 .item-count {
   display: inline-block;
-  background-color: var(--poe-accent);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
+  background: linear-gradient(135deg, var(--poe-accent) 0%, var(--poe-accent-hover) 100%);
+  color: #ffffff !important;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 0.75rem;
+  text-align: center;
+  min-width: 90px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
 .nav-links {
@@ -751,10 +759,54 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 0.25rem;
 }
 
-.item-weight {
+.item-count {
   font-size: 0.9rem;
   color: var(--poe-accent);
   margin-top: 0.5rem;
+}
+
+/* Dataset detail table styles */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.items-table thead {
+  background-color: var(--poe-darker-bg);
+}
+
+.items-table th {
+  padding: 0.75rem;
+  text-align: left;
+  color: var(--poe-accent);
+  border-bottom: 2px solid var(--poe-border);
+  font-weight: 600;
+}
+
+.items-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--poe-border);
+}
+
+.items-table tbody tr:hover {
+  background-color: var(--poe-darker-bg);
+}
+
+.item-id {
+  color: var(--poe-text);
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+/* Dataset detail table - item count cells */
+.dataset-item-count-cell {
+  color: var(--poe-text-dim);
+  text-align: right;
+  font-family: monospace;
+  font-size: 0.9rem;
+  background-color: transparent !important;
+  padding: 0.75rem;
 }
 
 .no-results {

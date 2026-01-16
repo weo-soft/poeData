@@ -323,6 +323,8 @@ async function renderItemsView(container, categoryId, items) {
 async function renderDatasetsView(container, categoryId) {
   clearElement(container);
   
+  console.log(`[CategoryView] Rendering datasets view for category: ${categoryId}`);
+  
   // Loading state for datasets
   const loadingDiv = createElement('div', { 
     className: 'loading', 
@@ -340,11 +342,14 @@ async function renderDatasetsView(container, categoryId) {
     
     const datasets = await Promise.race([discoveryPromise, timeoutPromise]);
     
+    console.log(`[CategoryView] Discovered ${datasets ? datasets.length : 0} datasets for ${categoryId}`);
+    
     // Clear loading
     clearElement(container);
     
     // Handle empty datasets
     if (!datasets || datasets.length === 0) {
+      console.warn(`[CategoryView] No datasets found for category: ${categoryId}`);
       renderDatasetList(container, [], null, null);
       return;
     }

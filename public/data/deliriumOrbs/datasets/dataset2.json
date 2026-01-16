@@ -23,75 +23,75 @@
     "items": [
         {
             "id": "abyssal",
-            "weight": 18
+            "count": 18
         },
         {
             "id": "amorphous",
-            "weight": 34
+            "count": 34
         },
         {
             "id": "armoursmith",
-            "weight": 121
+            "count": 121
         },
         {
             "id": "blighted",
-            "weight": 27
+            "count": 27
         },
         {
             "id": "cartographer",
-            "weight": 28
+            "count": 28
         },
         {
             "id": "diviner",
-            "weight": 61
+            "count": 61
         },
         {
             "id": "fine",
-            "weight": 142
+            "count": 142
         },
         {
             "id": "foreboding",
-            "weight": 51
+            "count": 51
         },
         {
             "id": "fossilied",
-            "weight": 26
+            "count": 26
         },
         {
             "id": "fragmented",
-            "weight": 33
+            "count": 33
         },
         {
             "id": "imperial",
-            "weight": 62
+            "count": 62
         },
         {
             "id": "jeweller",
-            "weight": 121
+            "count": 121
         },
         {
             "id": "obscured",
-            "weight": 18
+            "count": 18
         },
         {
             "id": "singular",
-            "weight": 30
+            "count": 30
         },
         {
             "id": "skittering",
-            "weight": 22
+            "count": 22
         },
         {
             "id": "thaumaturge",
-            "weight": 30
+            "count": 30
         },
         {
             "id": "timeless",
-            "weight": 30
+            "count": 30
         },
         {
             "id": "whispering",
-            "weight": 45
+            "count": 45
         }
     ]
 }

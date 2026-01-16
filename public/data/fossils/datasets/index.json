@@ -1,0 +1,42 @@
+{
+  "category": "fossils",
+  "lastUpdated": "2026-01-16T20:24:21.049Z",
+  "datasets": [
+    {
+      "number": 1,
+      "filename": "dataset1.json"
+    },
+    {
+      "number": 2,
+      "filename": "dataset2.json"
+    },
+    {
+      "number": 3,
+      "filename": "dataset3.json"
+    },
+    {
+      "number": 4,
+      "filename": "dataset4.json"
+    },
+    {
+      "number": 5,
+      "filename": "dataset5.json"
+    },
+    {
+      "number": 6,
+      "filename": "dataset6.json"
+    },
+    {
+      "number": 7,
+      "filename": "dataset7.json"
+    },
+    {
+      "number": 8,
+      "filename": "dataset8.json"
+    },
+    {
+      "number": 9,
+      "filename": "dataset9.json"
+    }
+  ]
+}

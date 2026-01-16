@@ -23,99 +23,99 @@
     "items": [
         {
             "id": "jagged",
-            "weight": 66
+            "count": 66
         },
         {
             "id": "dense",
-            "weight": 56
+            "count": 56
         },
         {
             "id": "frigid",
-            "weight": 63
+            "count": 63
         },
         {
             "id": "abberant",
-            "weight": 50
+            "count": 50
         },
         {
             "id": "scorched",
-            "weight": 71
+            "count": 71
         },
         {
             "id": "pristine",
-            "weight": 62
+            "count": 62
         },
         {
             "id": "bound",
-            "weight": 10
+            "count": 10
         },
         {
             "id": "corroded",
-            "weight": 19
+            "count": 19
         },
         {
             "id": "perfect",
-            "weight": 9
+            "count": 9
         },
         {
             "id": "prismatic",
-            "weight": 13
+            "count": 13
         },
         {
             "id": "deft",
-            "weight": 12
+            "count": 12
         },
         {
             "id": "aetheric",
-            "weight": 14
+            "count": 14
         },
         {
             "id": "lucent",
-            "weight": 11
+            "count": 11
         },
         {
             "id": "serrated",
-            "weight": 18
+            "count": 18
         },
         {
             "id": "shuddering",
-            "weight": 14
+            "count": 14
         },
         {
             "id": "gilded",
-            "weight": 1
+            "count": 1
         },
         {
             "id": "fundamental",
-            "weight": 8
+            "count": 8
         },
         {
             "id": "sanctified",
-            "weight": 0
+            "count": 0
         },
         {
             "id": "faceted",
-            "weight": 0
+            "count": 0
         },
         {
             "id": "fractured",
-            "weight": 0
+            "count": 0
         },
         {
             "id": "hollow",
-            "weight": 1
+            "count": 1
         },
         {
             "id": "glyphic",
-            "weight": 1
+            "count": 1
         },
         {
             "id": "bloodstained",
-            "weight": 1
+            "count": 1
         },
         {
             "id": "tangled",
-            "weight": 0
+            "count": 0
         }
     ]
 }

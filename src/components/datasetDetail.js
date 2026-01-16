@@ -284,9 +284,9 @@ function renderItemsSection(items) {
   const thead = createElement('thead');
   const headerRow = createElement('tr');
   const idHeader = createElement('th', { textContent: 'Item ID' });
-  const weightHeader = createElement('th', { textContent: 'Weight' });
+  const countHeader = createElement('th', { textContent: 'Count' });
   headerRow.appendChild(idHeader);
-  headerRow.appendChild(weightHeader);
+  headerRow.appendChild(countHeader);
   thead.appendChild(headerRow);
   itemsTable.appendChild(thead);
   
@@ -298,12 +298,12 @@ function renderItemsSection(items) {
       className: 'item-id',
       textContent: item.id || 'Unknown'
     });
-    const weightCell = createElement('td', { 
-      className: 'item-weight',
-      textContent: item.weight !== undefined ? item.weight.toString() : 'N/A'
+    const countCell = createElement('td', { 
+      className: 'dataset-item-count-cell',
+      textContent: item.count !== undefined ? item.count.toString() : 'N/A'
     });
     row.appendChild(idCell);
-    row.appendChild(weightCell);
+    row.appendChild(countCell);
     tbody.appendChild(row);
   });
   itemsTable.appendChild(tbody);
@@ -330,12 +330,12 @@ function renderItemsSection(items) {
             className: 'item-id',
             textContent: item.id || 'Unknown'
           });
-          const weightCell = createElement('td', { 
-            className: 'item-weight',
-            textContent: item.weight !== undefined ? item.weight.toString() : 'N/A'
+          const countCell = createElement('td', { 
+            className: 'item-count',
+            textContent: item.count !== undefined ? item.count.toString() : 'N/A'
           });
           row.appendChild(idCell);
-          row.appendChild(weightCell);
+          row.appendChild(countCell);
           tbody.appendChild(row);
         });
         showMoreButton.textContent = 'Show Less';
@@ -349,12 +349,12 @@ function renderItemsSection(items) {
             className: 'item-id',
             textContent: item.id || 'Unknown'
           });
-          const weightCell = createElement('td', { 
-            className: 'item-weight',
-            textContent: item.weight !== undefined ? item.weight.toString() : 'N/A'
+          const countCell = createElement('td', { 
+            className: 'item-count',
+            textContent: item.count !== undefined ? item.count.toString() : 'N/A'
           });
           row.appendChild(idCell);
-          row.appendChild(weightCell);
+          row.appendChild(countCell);
           tbody.appendChild(row);
         });
         showMoreButton.textContent = `Show All ${items.length} Items`;

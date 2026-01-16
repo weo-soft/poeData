@@ -18,19 +18,19 @@
     "items": [
         {
             "id": "karui",
-            "weight": 398	 
+            "count": 398
         },
         {
             "id": "vaal",
-            "weight": 349	
+            "count": 349
         },
         {
             "id": "templar",
-            "weight": 167	  
+            "count": 167
         },
         {
             "id": "maraketh",
-            "weight": 86	  
+            "count": 86
         }
     ]
 }

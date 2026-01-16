@@ -1,0 +1,26 @@
+{
+  "category": "legionSplinters",
+  "lastUpdated": "2026-01-16T20:24:21.050Z",
+  "datasets": [
+    {
+      "number": 1,
+      "filename": "dataset1.json"
+    },
+    {
+      "number": 2,
+      "filename": "dataset2.json"
+    },
+    {
+      "number": 3,
+      "filename": "dataset3.json"
+    },
+    {
+      "number": 4,
+      "filename": "dataset4.json"
+    },
+    {
+      "number": 5,
+      "filename": "dataset5.json"
+    }
+  ]
+}

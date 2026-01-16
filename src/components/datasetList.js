@@ -14,8 +14,11 @@ import { createElement, clearElement } from '../utils/dom.js';
 export function renderDatasetList(container, datasets, onDatasetSelect, onDownload) {
   clearElement(container);
   
+  console.log(`[DatasetList] Rendering ${datasets ? datasets.length : 0} datasets`);
+  
   // Handle empty state
   if (!datasets || datasets.length === 0) {
+    console.warn('[DatasetList] No datasets to render, showing empty state');
     renderEmptyState(container);
     return;
   }
@@ -24,12 +27,14 @@ export function renderDatasetList(container, datasets, onDatasetSelect, onDownlo
   const listContainer = createElement('div', { className: 'dataset-list' });
   
   // Render each dataset as a card
-  datasets.forEach(dataset => {
+  datasets.forEach((dataset, index) => {
+    console.log(`[DatasetList] Rendering dataset ${index + 1}:`, dataset.name || `Dataset ${dataset.datasetNumber}`);
     const card = renderDatasetCard(dataset, onDatasetSelect, onDownload);
     listContainer.appendChild(card);
   });
   
   container.appendChild(listContainer);
+  console.log(`[DatasetList] Successfully rendered ${datasets.length} dataset cards`);
 }
 
 /**

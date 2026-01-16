@@ -18,19 +18,19 @@
     "items": [
         {
             "id": "eternal-empire",
-            "weight": 413		 
+            "count": 413
         },
         {
             "id": "vaal",
-            "weight": 338		
+            "count": 338
         },
         {
             "id": "templar",
-            "weight": 167		  
+            "count": 167
         },
         {
             "id": "maraketh",
-            "weight": 82		  
+            "count": 82
         }
     ]
 }
