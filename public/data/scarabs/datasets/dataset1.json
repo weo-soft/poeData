@@ -15,6 +15,20 @@
             "author": "Lextra"
         }
     ],
+    "inputItems": [
+        {
+            "id": "influencing-scarab-of-the-elder"
+        },
+        {
+            "id": "influencing-scarab-of-the-shaper"
+        },
+        {
+            "id": "ultimatum-scarab"
+        },
+        {
+            "id": "harvest-scarab"
+        }
+    ],
     "items": [
         {
             "id": "abyss-scarab",
