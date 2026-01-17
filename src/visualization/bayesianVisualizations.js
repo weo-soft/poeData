@@ -496,16 +496,34 @@ export function renderRankedProbabilityChart(container, summaryStatistics, items
   // Add visual indicators for credible intervals (as annotations on bars)
   // This is a simplified approach - full implementation would use annotation plugin
   setTimeout(() => {
-    const bars = chart.getDatasetMeta(0).data;
-    bars.forEach((bar, index) => {
-      const entry = entries[index];
-      const barElement = bar.element;
-      // Store interval data for potential hover effects
-      barElement._interval = {
-        lower: entry.lower,
-        upper: entry.upper
-      };
-    });
+    try {
+      const datasetMeta = chart.getDatasetMeta(0);
+      if (!datasetMeta || !datasetMeta.data) {
+        return; // Chart not ready yet
+      }
+      
+      const bars = datasetMeta.data;
+      bars.forEach((bar, index) => {
+        if (!bar || !bar.element || index >= entries.length) {
+          return; // Skip invalid bars or entries
+        }
+        
+        const entry = entries[index];
+        if (!entry) {
+          return; // Skip missing entries
+        }
+        
+        const barElement = bar.element;
+        // Store interval data for potential hover effects
+        barElement._interval = {
+          lower: entry.lower,
+          upper: entry.upper
+        };
+      });
+    } catch (error) {
+      // Silently fail - interval annotations are optional
+      console.warn('[BayesianVisualizations] Failed to add interval annotations:', error);
+    }
   }, 100);
 
   return chart;
