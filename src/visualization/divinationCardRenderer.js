@@ -14,7 +14,7 @@ const DEFAULT_WIDTH = 300;
 const ZOOM_STEP = 25;
 
 // Store card state for dynamic updates
-let cardState = {
+const cardState = {
   container: null,
   card: null,
   currentWidth: DEFAULT_WIDTH,

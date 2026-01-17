@@ -1,6 +1,6 @@
 {
-    "name": "Dataset 1",
-    "description": "Dataset 1",
+    "name": "Dataset 5",
+    "description": "Dataset 5",
     "date": "2023-04-03",
     "patch": "3.25.0",
     "sources": [
@@ -17,45 +17,45 @@
     ],
     "inputItems": [
         {
-            "id": "intrisic"
+            "id": "imbued"
         }
     ],
     "items": [
         {
+            "id": "intrinsic",
+            "count": 1142
+        },
+        {
             "id": "turbulent",
-            "count": 799
+            "count": 569
         },
         {
             "id": "abrasive",
-            "count": 698
+            "count": 558
         },
         {
             "id": "noxious",
-            "count": 727
-        },
-        {
-            "id": "imbued",
-            "count": 686
+            "count": 568
         },
         {
             "id": "tempering",
-            "count": 190
+            "count": 119
         },
         {
             "id": "fertile",
-            "count": 150
+            "count": 152
         },
         {
             "id": "prismatic",
-            "count": 148
+            "count": 133
         },
         {
             "id": "unstable",
-            "count": 77
+            "count": 65
         },
         {
             "id": "accelerating",
-            "count": 75
+            "count": 54
         }
     ]
 }

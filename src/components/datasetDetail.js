@@ -294,7 +294,7 @@ function renderItemsSection(items) {
   // Show first 20 items by default, with "show more" option
   const previewCount = 20;
   const showAll = items.length <= previewCount;
-  let displayItems = showAll ? items : items.slice(0, previewCount);
+  const displayItems = showAll ? items : items.slice(0, previewCount);
   
   const itemsTable = createElement('table', { className: 'items-table' });
   
