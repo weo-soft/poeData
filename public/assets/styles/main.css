@@ -1848,6 +1848,120 @@ input:focus, textarea:focus, select:focus {
   color: var(--poe-accent);
   font-size: 1.5rem;
   margin: 0;
+  margin-bottom: 1rem;
+}
+
+/* Visualization Tabs */
+.visualization-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-bottom: 2px solid var(--poe-border);
+}
+
+.visualization-tab {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--poe-text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -2px;
+  font-size: 1rem;
+}
+
+.visualization-tab:hover {
+  color: var(--poe-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.visualization-tab.active {
+  color: var(--poe-accent);
+  border-bottom-color: var(--poe-accent);
+}
+
+.weight-visualization-content {
+  margin-top: 1.5rem;
+  min-height: 400px;
+}
+
+.weight-chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+/* Heatmap Styles */
+.weight-heatmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.weight-heatmap-cell {
+  padding: 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+  min-height: 60px;
+}
+
+.weight-heatmap-cell:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.weight-heatmap-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.weight-heatmap-name {
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.weight-heatmap-value {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+}
+
+.weight-heatmap-icon {
+  flex-shrink: 0;
+}
+
+/* Responsive design for visualizations */
+@media (max-width: 768px) {
+  .weight-chart-container {
+    height: 300px;
+  }
+
+  .weight-heatmap {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 6px;
+  }
+
+  .visualization-tabs {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .visualization-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+.visualization-placeholder {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--poe-text-dim);
+  font-size: 1.1rem;
 }
 
 .weight-display-empty {
