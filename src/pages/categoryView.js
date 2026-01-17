@@ -16,6 +16,7 @@ import { renderWeightDisplay } from '../components/weightDisplay.js';
 import { estimateItemWeights } from '../services/weightCalculator.js';
 import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
+import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 
 let currentItems = [];
 let currentCategoryId = null;
@@ -158,6 +159,42 @@ function formatCategoryName(categoryId) {
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+}
+
+/**
+ * Get category directory name from category ID
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Directory name
+ */
+function getCategoryDirectory(categoryId) {
+  // Map category IDs to directory names (matching dataLoader.js pattern)
+  const categoryDirMap = {
+    'scarabs': 'scarabs',
+    'divination-cards': 'divinationCards',
+    'breach-splinters': 'breachSplinter', // Note: singular "Splinter"
+    'breachstones': 'breachstones',
+    'catalysts': 'catalysts',
+    'delirium-orbs': 'deliriumOrbs',
+    'essences': 'essences',
+    'fossils': 'fossils',
+    'legion-emblems': 'legionEmblems',
+    'legion-splinters': 'legionSplinters',
+    'oils': 'oils',
+    'tattoos': 'tattoos'
+  };
+  
+  if (categoryDirMap[categoryId]) {
+    return categoryDirMap[categoryId];
+  }
+  
+  // Fallback: Convert kebab-case to camelCase
+  const parts = categoryId.split('-');
+  return parts.map((part, index) => {
+    if (index === 0) {
+      return part;
+    }
+    return part.charAt(0).toUpperCase() + part.slice(1);
+  }).join('');
 }
 
 /**
@@ -364,10 +401,50 @@ async function renderDatasetsView(container, categoryId) {
   let fullDatasetsForWeights = null; // Store full datasets for Bayesian calculation
   let weightsListItem = null; // Reference to the weights list item
   
+  /**
+   * Load index.json data for a category
+   * @param {string} categoryId - Category identifier
+   * @returns {Promise<Object|null>} Index data or null if unavailable
+   */
+  const loadIndexData = async (categoryId) => {
+    try {
+      const dirName = getCategoryDirectory(categoryId);
+      const basePaths = [
+        `/data/${dirName}/dataset/`,
+        `/data/${dirName}/datasets/`
+      ];
+      
+      for (const basePath of basePaths) {
+        try {
+          const indexUrl = `${basePath}index.json`;
+          const response = await fetch(indexUrl);
+          
+          if (response.ok) {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              return await response.json();
+            }
+          }
+        } catch (error) {
+          continue;
+        }
+      }
+      
+      return null;
+    } catch (error) {
+      console.warn(`[CategoryView] Failed to load index.json for ${categoryId}:`, error);
+      return null;
+    }
+  };
+  
   // Function to show weights view
   const showWeightsView = async (datasetsForCalculation = null) => {
     try {
       clearElement(detailContainer);
+      
+      // Initialize variables that may be needed later
+      let indexData = null;
+      let normalizedDatasets = null;
       
       if (!calculatedWeights) {
         // Use provided datasets or discover if not provided
@@ -382,34 +459,95 @@ async function renderDatasetsView(container, categoryId) {
           return;
         }
         
-        // Load all full datasets
-        const loadingDiv = createElement('div', {
-          className: 'loading',
-          textContent: 'Calculating weights...'
-        });
-        detailContainer.appendChild(loadingDiv);
-        setLoadingState(loadingDiv, true);
+        // Load index.json data for cache validation
+        indexData = await loadIndexData(categoryId);
         
-        const fullDatasets = await Promise.all(
-          datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
-        );
+        // Normalize datasets to match index.json structure (number, filename)
+        // discoverDatasetsParallel returns objects with datasetNumber, but cache expects number
+        normalizedDatasets = datasets.map(ds => ({
+          number: ds.datasetNumber,
+          filename: ds.filename
+        }));
         
-        // Store full datasets for Bayesian calculation
-        fullDatasetsForWeights = fullDatasets;
+        // Try to get cached weights first
+        if (indexData) {
+          const cachedWeights = await getCachedWeights(
+            categoryId,
+            normalizedDatasets,
+            'mle',
+            indexData
+          );
+          
+          if (cachedWeights) {
+            // Cache hit - use cached weights
+            calculatedWeights = cachedWeights;
+            // Still need to load category items and full datasets for display
+            categoryItems = await loadCategoryData(categoryId);
+            fullDatasetsForWeights = await Promise.all(
+              datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
+            );
+            clearElement(detailContainer);
+          }
+        }
         
-        // Calculate weights
-        calculatedWeights = estimateItemWeights(fullDatasets);
+        // If no cached weights, calculate them
+        if (!calculatedWeights) {
+          // Load all full datasets
+          const loadingDiv = createElement('div', {
+            className: 'loading',
+            textContent: 'Calculating weights...'
+          });
+          detailContainer.appendChild(loadingDiv);
+          setLoadingState(loadingDiv, true);
+          
+          const fullDatasets = await Promise.all(
+            datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
+          );
+          
+          // Store full datasets for Bayesian calculation
+          fullDatasetsForWeights = fullDatasets;
+          
+          // Calculate weights
+          calculatedWeights = estimateItemWeights(fullDatasets);
+          
+          // Cache the calculated weights
+          if (indexData) {
+            await setCachedWeights(
+              categoryId,
+              normalizedDatasets,
+              'mle',
+              calculatedWeights,
+              indexData
+            );
+          }
+          
+          // Load category items
+          categoryItems = await loadCategoryData(categoryId);
+          
+          clearElement(detailContainer);
+        }
+      } else {
+        // If calculatedWeights already exists, we still need indexData and normalizedDatasets
+        // for Bayesian cache, so load them if not already available
+        if (!indexData) {
+          indexData = await loadIndexData(categoryId);
+        }
         
-        // Load category items
-        categoryItems = await loadCategoryData(categoryId);
-        
-        clearElement(detailContainer);
+        // Get normalized datasets from allDatasets if available
+        if (!normalizedDatasets && allDatasets) {
+          normalizedDatasets = allDatasets.map(ds => ({
+            number: ds.datasetNumber,
+            filename: ds.filename
+          }));
+        }
       }
       
       // Display weights with datasets for Bayesian toggle (use stored fullDatasetsForWeights)
       const datasetsForDisplay = fullDatasetsForWeights || [];
       renderWeightDisplay(detailContainer, calculatedWeights, categoryId, categoryItems, {
-        datasets: datasetsForDisplay
+        datasets: datasetsForDisplay,
+        indexData: indexData, // Pass indexData for Bayesian cache (may be null)
+        normalizedDatasets: normalizedDatasets // Pass normalized datasets for Bayesian cache (may be null)
       });
       
       // Mark weights list item as active

@@ -102,7 +102,11 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
       // Render Bayesian view
       clearElement(container);
       try {
-        await renderBayesianWeightDisplay(container, options.datasets, categoryId, items, options);
+        await renderBayesianWeightDisplay(container, options.datasets, categoryId, items, {
+          ...options,
+          indexData: options.indexData,
+          normalizedDatasets: options.normalizedDatasets
+        });
       } catch (error) {
         displayError(container, `Failed to load Bayesian estimates: ${error.message}`);
       }
@@ -411,6 +415,41 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
     // Get Bayesian results (use cached if available, otherwise compute)
     let bayesianResult = getCurrentBayesianResult();
     
+    // If no cached result and we have indexData, try to get from cache
+    if (!bayesianResult && options.indexData && options.normalizedDatasets) {
+      const { getCachedWeights } = await import('../services/weightCache.js');
+      const cachedData = await getCachedWeights(
+        categoryId,
+        options.normalizedDatasets,
+        'bayesian',
+        options.indexData
+      );
+      
+      if (cachedData) {
+        // Check if we have full result with posterior samples
+        if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
+          // Full result available
+          bayesianResult = {
+            posteriorSamples: cachedData.posteriorSamples,
+            summaryStatistics: cachedData.summaryStatistics,
+            convergenceDiagnostics: cachedData.convergenceDiagnostics,
+            modelAssumptions: cachedData.modelAssumptions
+          };
+        } else {
+          // Legacy cache format - reconstruct summaryStatistics
+          const summaryStatistics = {};
+          for (const [itemId, median] of Object.entries(cachedData)) {
+            summaryStatistics[itemId] = {
+              median: median,
+              map: median,
+              credibleInterval: { lower: median * 0.9, upper: median * 1.1 }
+            };
+          }
+          bayesianResult = { summaryStatistics };
+        }
+      }
+    }
+    
     if (!bayesianResult) {
       // Execute JAGS inference
       const result = await inferWeights(datasets, options.jagsOptions || {});
@@ -425,6 +464,19 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
         ...result,
         summaryStatistics
       };
+      
+      // Cache the full Bayesian result (including posterior samples)
+      if (options.indexData && options.normalizedDatasets && bayesianResult) {
+        const { setCachedWeights } = await import('../services/weightCache.js');
+        // Store full result including posterior samples
+        await setCachedWeights(
+          categoryId,
+          options.normalizedDatasets,
+          'bayesian',
+          bayesianResult, // Store full result object
+          options.indexData
+        );
+      }
     }
 
     clearElement(comparisonDiv);

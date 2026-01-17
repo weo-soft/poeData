@@ -7,12 +7,16 @@ import { createElement, clearElement } from '../utils/dom.js';
 import { inferWeights } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 import { renderDensityPlot, renderRankedProbabilityChart } from '../visualization/bayesianVisualizations.js';
+import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 
 // Module-level state
 let currentBayesianResult = null;
 let currentItems = null;
 let currentContentArea = null;
 let currentChartInstance = null;
+let currentDatasets = null; // Store datasets for potential recalculation
+let currentCategoryId = null; // Store categoryId for recalculation
+let currentOptions = null; // Store options for recalculation
 let isLoading = false;
 
 /**
@@ -86,13 +90,98 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
   }, 100);
 
   try {
-    // Execute client-side MCMC inference
-    const result = await inferWeights(datasets, {
-      ...(options.jagsOptions || {}),
-      onProgress: (progress) => {
-        currentProgress = progress;
+    // Check cache first if indexData and normalizedDatasets are provided
+    let result = null;
+    let cachedWeights = null;
+    let isFromCache = false;
+    
+    if (options.indexData && options.normalizedDatasets) {
+      const cachedData = await getCachedWeights(
+        categoryId,
+        options.normalizedDatasets,
+        'bayesian',
+        options.indexData
+      );
+      
+      if (cachedData) {
+        // Cache hit
+        console.log('[BayesianWeightDisplay] Cache hit for Bayesian weights');
+        isFromCache = true;
+        
+        // Check if we have full result with posterior samples
+        if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
+          // Full result with posterior samples - use directly
+          result = {
+            posteriorSamples: cachedData.posteriorSamples,
+            summaryStatistics: cachedData.summaryStatistics,
+            convergenceDiagnostics: cachedData.convergenceDiagnostics,
+            modelAssumptions: cachedData.modelAssumptions,
+            metadata: {
+              ...cachedData.metadata,
+              cached: true
+            }
+          };
+        } else {
+          // Legacy cache format - only median weights, reconstruct summaryStatistics
+          const summaryStatistics = {};
+          for (const [itemId, median] of Object.entries(cachedData)) {
+            summaryStatistics[itemId] = {
+              median: median,
+              map: median, // Use median as MAP approximation
+              credibleInterval: { lower: median * 0.9, upper: median * 1.1 } // Approximate interval
+            };
+          }
+          
+          // Create minimal result structure (no posterior samples)
+          result = {
+            summaryStatistics,
+            posteriorSamples: {}, // Not available in legacy cache
+            metadata: {
+              cached: true,
+              numItems: Object.keys(cachedData).length,
+              numDatasets: datasets.length
+            }
+          };
+        }
+        
+        // Store datasets and options for potential recalculation (if needed)
+        currentDatasets = datasets;
+        currentCategoryId = categoryId;
+        currentOptions = options;
+        
+        // Skip loading state for cache hits
+        isLoading = false;
+        if (progressInterval) {
+          clearInterval(progressInterval);
+        }
+        currentProgress = 100;
+        progressFill.style.width = '100%';
+        clearElement(bayesianDisplay);
       }
-    });
+    }
+    
+    // If no cache hit, calculate Bayesian weights
+    if (!result) {
+      // Execute client-side MCMC inference
+      result = await inferWeights(datasets, {
+        ...(options.jagsOptions || {}),
+        onProgress: (progress) => {
+          currentProgress = progress;
+        }
+      });
+      
+      // Cache the full Bayesian result (including posterior samples for density plot)
+      if (options.indexData && options.normalizedDatasets && result.summaryStatistics) {
+        // Store full result including posterior samples
+        await setCachedWeights(
+          categoryId,
+          options.normalizedDatasets,
+          'bayesian',
+          result, // Store full result object
+          options.indexData
+        );
+      }
+    }
 
     // Compute summary statistics if not already computed
     let summaryStatistics = result.summaryStatistics;
@@ -116,8 +205,11 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     // Rebuild header
     bayesianDisplay.appendChild(header);
 
-    // Store items and result for visualization switching
-    currentItems = items;
+      // Store items, datasets, and result for visualization switching
+      currentItems = items;
+      currentDatasets = datasets;
+      currentCategoryId = categoryId;
+      currentOptions = options;
 
     // Create visualization tabs
     const tabsContainer = createBayesianVisualizationTabs(currentBayesianResult, items);
@@ -509,14 +601,22 @@ function renderBayesianVisualization(container, viewType, result, items) {
       renderBayesianResults(container, result, items);
       break;
     case 'density': {
-      if (result.posteriorSamples) {
+      // Check if posteriorSamples exist and are not empty
+      const hasPosteriorSamples = result.posteriorSamples && 
+                                   Object.keys(result.posteriorSamples).length > 0;
+      
+      if (hasPosteriorSamples) {
         currentChartInstance = renderDensityPlot(container, result.posteriorSamples, items, {
           summaryStatistics: result.summaryStatistics
         });
       } else {
+        // No posterior samples available (legacy cache or missing data)
         const emptyState = createElement('div', {
           className: 'visualization-placeholder',
-          textContent: 'No posterior samples available for density plot'
+          style: 'padding: 20px; text-align: center;',
+          textContent: result.metadata?.cached 
+            ? 'Density plot requires full posterior samples. Please recalculate Bayesian weights to view the density plot.'
+            : 'No posterior samples available for density plot'
         });
         container.appendChild(emptyState);
       }
