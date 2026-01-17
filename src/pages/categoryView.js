@@ -361,6 +361,7 @@ async function renderDatasetsView(container, categoryId) {
   let calculatedWeights = null;
   let categoryItems = null;
   let allDatasets = null; // Store datasets for weight calculation
+  let fullDatasetsForWeights = null; // Store full datasets for Bayesian calculation
   let weightsListItem = null; // Reference to the weights list item
   
   // Function to show weights view
@@ -393,6 +394,9 @@ async function renderDatasetsView(container, categoryId) {
           datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
         );
         
+        // Store full datasets for Bayesian calculation
+        fullDatasetsForWeights = fullDatasets;
+        
         // Calculate weights
         calculatedWeights = estimateItemWeights(fullDatasets);
         
@@ -402,8 +406,11 @@ async function renderDatasetsView(container, categoryId) {
         clearElement(detailContainer);
       }
       
-      // Display weights
-      renderWeightDisplay(detailContainer, calculatedWeights, categoryId, categoryItems);
+      // Display weights with datasets for Bayesian toggle (use stored fullDatasetsForWeights)
+      const datasetsForDisplay = fullDatasetsForWeights || [];
+      renderWeightDisplay(detailContainer, calculatedWeights, categoryId, categoryItems, {
+        datasets: datasetsForDisplay
+      });
       
       // Mark weights list item as active
       if (weightsListItem) {

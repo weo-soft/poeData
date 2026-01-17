@@ -1,0 +1,22 @@
+{
+  "name": "poe-data-bayesian-backend",
+  "version": "1.0.0",
+  "description": "Backend service for Bayesian JAGS weight calculations",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "jags",
+    "bayesian",
+    "mcmc",
+    "weight-calculation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

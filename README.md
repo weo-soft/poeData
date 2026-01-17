@@ -13,6 +13,8 @@ A static web application that provides detailed data and visualizations for Path
 - **Data Submission**: Submit new items via guided form or bulk import
 - **Dataset Access**: Browse and download datasets for each category, view dataset metadata and sources
 - **Dataset Details**: View comprehensive dataset information including metadata, sources, input items, and output items
+- **Weight Calculations**: Calculate item weights using Maximum Likelihood Estimation (MLE)
+- **Bayesian Weight Estimates**: View Bayesian MCMC-based weight estimates with uncertainty quantification (posterior distributions, credible intervals) - runs entirely client-side
 
 ## Tech Stack
 
@@ -21,11 +23,14 @@ A static web application that provides detailed data and visualizations for Path
 - **Visualizations**: Chart.js (statistics), HTML5 Canvas (stash tabs)
 - **Form Submissions**: EmailJS
 - **Testing**: Vitest (unit tests), Playwright (E2E tests)
+- **Bayesian Inference**: Client-side MCMC (Metropolis-Hastings) sampler for Bayesian inference - no backend or JAGS required
+- **Statistics**: simple-statistics library for posterior statistics computation
 
 ## Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+ and npm (for development)
 - Modern web browser (Chrome, Firefox, Safari, Edge - latest 2 versions)
+- **No additional dependencies required** - Bayesian inference runs entirely in the browser
 
 ## Setup
 
@@ -39,7 +44,7 @@ A static web application that provides detailed data and visualizations for Path
    - Create email service and templates
    - Copy `.env.example` to `.env.local` and fill in your EmailJS credentials
 
-3. **Start Development Server**:
+3. **Start Frontend Development Server**:
    ```bash
    npm run dev
    ```

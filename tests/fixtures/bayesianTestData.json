@@ -1,0 +1,43 @@
+{
+  "exclusionConstraintTest": {
+    "description": "Test data to verify exclusion constraint (input item cannot be returned)",
+    "datasets": [
+      {
+        "inputItems": [{ "id": "esh" }],
+        "items": [
+          { "id": "tul", "count": 100 },
+          { "id": "xoph", "count": 80 },
+          { "id": "uul-netol", "count": 60 },
+          { "id": "chayula", "count": 40 }
+        ]
+      }
+    ],
+    "expectedBehavior": "Posterior samples for 'esh' should be zero or near-zero when 'esh' is the input item"
+  },
+  "multipleInputsTest": {
+    "description": "Test data with multiple known input items",
+    "datasets": [
+      {
+        "inputItems": [{ "id": "tul" }, { "id": "xoph" }],
+        "items": [
+          { "id": "esh", "count": 50 },
+          { "id": "uul-netol", "count": 30 }
+        ]
+      }
+    ],
+    "expectedBehavior": "Model should handle multiple inputs appropriately"
+  },
+  "unknownInputsTest": {
+    "description": "Test data with unknown/random inputs",
+    "datasets": [
+      {
+        "inputItems": [],
+        "items": [
+          { "id": "tul", "count": 100 },
+          { "id": "xoph", "count": 80 }
+        ]
+      }
+    ],
+    "expectedBehavior": "Model should use uniform prior over possible inputs"
+  }
+}
