@@ -526,19 +526,44 @@ input:focus, textarea:focus, select:focus {
 }
 
 .category-selector {
-  margin: 2rem 0;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
 }
 
 .category-selector label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
+  color: var(--poe-text);
 }
 
 .category-selector select {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  color: var(--poe-text);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.category-selector select:hover {
+  border-color: var(--poe-accent);
+}
+
+.category-selection-message {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  text-align: center;
+  color: var(--poe-text-dim);
+  font-style: italic;
 }
 
 .submission-tabs {
@@ -2754,5 +2779,294 @@ input:focus, textarea:focus, select:focus {
   .weight-comparison-table th,
   .weight-comparison-table td {
     padding: 0.5rem;
+  }
+}
+
+/* Dataset Submission Form - Compact Layout Styles */
+.dataset-submission-form {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.dataset-submission-form .form-section {
+  margin-bottom: 1.5rem;
+}
+
+.dataset-submission-form .form-section.compact-section {
+  margin-bottom: 1rem;
+}
+
+.dataset-submission-form .form-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--poe-accent);
+}
+
+.dataset-submission-form .section-help {
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+  margin-bottom: 0.75rem;
+}
+
+.dataset-submission-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.dataset-submission-form .form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dataset-submission-form .form-input,
+.dataset-submission-form .form-textarea,
+.dataset-submission-form select {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  color: var(--poe-text);
+  border-radius: 4px;
+}
+
+.dataset-submission-form .form-input-compact {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.dataset-submission-form .field-help {
+  font-size: 0.85rem;
+  color: var(--poe-text-dim);
+  margin-top: 0.3rem;
+}
+
+.dataset-submission-form .field-error {
+  font-size: 0.85rem;
+  color: #ff6666;
+  margin-top: 0.3rem;
+}
+
+.dataset-submission-form .compact-error {
+  font-size: 0.8rem;
+}
+
+/* Input Items - Dropdown and Tags */
+.input-items-select-container {
+  margin-bottom: 0.75rem;
+}
+
+.input-items-select {
+  margin-bottom: 0.75rem;
+}
+
+.selected-input-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0.5rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+}
+
+.selected-input-items .empty-selection {
+  color: var(--poe-text-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.input-item-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  background-color: var(--poe-accent);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.input-item-tag .tag-text {
+  flex: 1;
+}
+
+.input-item-tag .tag-remove {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+.input-item-tag .tag-remove:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Sources - Compact Layout */
+.sources-section .compact-list {
+  margin-bottom: 0.75rem;
+}
+
+.sources-section .empty-sources {
+  padding: 0.75rem;
+  color: var(--poe-text-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  background-color: var(--poe-darker-bg);
+  border-radius: 4px;
+}
+
+.source-entry.compact-entry {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background-color: var(--poe-darker-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+}
+
+.source-input-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr auto;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.source-input-row .btn-icon {
+  padding: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-danger.btn-small {
+  padding: 0.5rem 0.75rem;
+}
+
+/* Output Items - Compact Table */
+.items-table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+}
+
+.items-count-table.compact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.items-count-table.compact-table thead {
+  position: sticky;
+  top: 0;
+  background-color: var(--poe-dark-bg);
+  z-index: 10;
+}
+
+.items-count-table.compact-table th {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--poe-border);
+  background-color: var(--poe-dark-bg);
+}
+
+.items-count-table.compact-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--poe-border);
+}
+
+.items-count-table.compact-table tbody tr:hover {
+  background-color: var(--poe-darker-bg);
+}
+
+.items-count-table.compact-table .count-input {
+  width: 100px;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.items-count-table.compact-table .input-item-row {
+  background-color: rgba(175, 96, 37, 0.1);
+}
+
+.items-count-table.compact-table .input-badge {
+  color: var(--poe-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.items-count-table.compact-table .error-cell {
+  padding: 0.3rem 0.75rem;
+}
+
+/* Validation and Messages */
+.validation-errors-container {
+  margin-top: 1rem;
+}
+
+.validation-errors {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.validation-errors li {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background-color: rgba(255, 102, 102, 0.1);
+  border-left: 3px solid #ff6666;
+  color: #ff6666;
+  font-size: 0.9rem;
+}
+
+.submission-messages {
+  margin-top: 1rem;
+}
+
+.submission-messages .success-message {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+.submission-messages .error-message {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .source-input-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  
+  .items-table-container {
+    max-height: 300px;
   }
 }

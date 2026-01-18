@@ -11,6 +11,7 @@ A static web application that provides detailed data and visualizations for Path
 - **Statistics Charts**: View data trends and distributions using Chart.js
 - **Raw JSON Access**: Direct links to JSON data for programmatic access
 - **Data Submission**: Submit new items via guided form or bulk import
+- **Dataset Submission Wizard**: Submit new datasets with name, description, sources, date, input items, and item counts through an intuitive form interface
 - **Dataset Access**: Browse and download datasets for each category, view dataset metadata and sources
 - **Dataset Details**: View comprehensive dataset information including metadata, sources, input items, and output items
 - **Weight Calculations**: Calculate item weights using Maximum Likelihood Estimation (MLE)

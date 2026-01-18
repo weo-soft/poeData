@@ -8,6 +8,7 @@ import emailjs from '@emailjs/browser';
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID_FORM = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_FORM;
 const EMAILJS_TEMPLATE_ID_IMPORT = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_IMPORT;
+const EMAILJS_TEMPLATE_ID_DATASET = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_DATASET;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 // Initialize EmailJS if public key is available
@@ -21,7 +22,7 @@ if (EMAILJS_PUBLIC_KEY) {
  */
 export function isEmailJSConfigured() {
   return !!(EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && 
-           (EMAILJS_TEMPLATE_ID_FORM || EMAILJS_TEMPLATE_ID_IMPORT));
+           (EMAILJS_TEMPLATE_ID_FORM || EMAILJS_TEMPLATE_ID_IMPORT || EMAILJS_TEMPLATE_ID_DATASET));
 }
 
 /**
@@ -98,6 +99,47 @@ export async function sendImportSubmission(submissionData) {
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID_IMPORT,
+      templateParams
+    );
+
+    return {
+      success: true,
+      messageId: response.text,
+      status: response.status
+    };
+  } catch (error) {
+    console.error('EmailJS send error:', error);
+    throw new Error(`Failed to send email: ${error.text || error.message}`);
+  }
+}
+
+/**
+ * Send dataset submission via EmailJS
+ * @param {Object} submissionData - Submission data
+ * @param {string} submissionData.categoryId - Category identifier
+ * @param {Object} submissionData.dataset - Dataset object with name, description, date, sources, inputItems, items
+ * @param {Object} submissionData.validationResult - Validation result object
+ * @param {string} [submissionData.userEmail] - User email (optional)
+ * @returns {Promise<Object>} EmailJS response
+ */
+export async function sendDatasetSubmission(submissionData) {
+  if (!isEmailJSConfigured() || !EMAILJS_TEMPLATE_ID_DATASET) {
+    throw new Error('EmailJS is not configured. Please set up EmailJS credentials in .env.local');
+  }
+
+  try {
+    const templateParams = {
+      submission_type: 'dataset',
+      category_id: submissionData.categoryId,
+      timestamp: new Date().toISOString(),
+      dataset_data: JSON.stringify(submissionData.dataset, null, 2),
+      validation_result: JSON.stringify(submissionData.validationResult, null, 2),
+      user_email: submissionData.userEmail || 'Not provided'
+    };
+
+    const response = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID_DATASET,
       templateParams
     );
 
