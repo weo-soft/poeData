@@ -69,14 +69,21 @@ export function computeKDE(samples, numPoints = 100, bandwidth = null) {
  * @param {Array<Object>} items - Item metadata array
  * @param {Object} options - Chart configuration options
  * @param {Object} options.summaryStatistics - Optional summary statistics (if not provided, will compute)
- * @returns {Chart|null} Chart.js instance or null if rendering failed
+ * @param {Function} options.onProgress - Optional progress callback (progress: number 0-100)
+ * @returns {Promise<Chart|null>} Chart.js instance or null if rendering failed
  */
-export function renderDensityPlot(container, posteriorSamples, items = [], options = {}) {
+export async function renderDensityPlot(container, posteriorSamples, items = [], options = {}) {
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
   }
 
   if (!posteriorSamples || Object.keys(posteriorSamples).length === 0) {
+    // Clear any loading indicator
+    const loadingIndicator = container.querySelector('.bayesian-density-loading');
+    if (loadingIndicator) {
+      loadingIndicator.remove();
+    }
+    clearElement(container);
     const emptyState = createElement('div', {
       className: 'visualization-placeholder',
       textContent: 'No posterior samples available for density plot'
@@ -84,8 +91,6 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
     container.appendChild(emptyState);
     return null;
   }
-
-  clearElement(container);
 
   // Compute summary statistics if not provided
   let summaryStats = options.summaryStatistics;
@@ -112,14 +117,27 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
   const itemData = [];
   let colorIndex = 0;
   
-  for (const [itemId, samples] of Object.entries(posteriorSamples)) {
-    if (samples.length === 0) continue;
-
+  // Get all item entries for progress tracking
+  const itemEntries = Object.entries(posteriorSamples).filter(([_, samples]) => samples.length > 0);
+  const totalItems = itemEntries.length;
+  let processedItems = 0;
+  
+  // Process items with progress updates
+  for (const [itemId, samples] of itemEntries) {
     const item = items.find(i => i.id === itemId);
     const itemName = item?.name || itemId;
 
+    // Compute KDE - this is the expensive operation
     const kdePoints = computeKDE(samples, 100);
-    if (kdePoints.length === 0) continue;
+    if (kdePoints.length === 0) {
+      processedItems++;
+      if (options.onProgress) {
+        options.onProgress(Math.min(95, Math.round((processedItems / totalItems) * 90)));
+      }
+      // Yield to browser to update UI
+      await new Promise(resolve => setTimeout(resolve, 0));
+      continue;
+    }
 
     const color = colors[colorIndex % colors.length];
     // Ensure data is in correct format for Chart.js with x,y coordinates
@@ -158,9 +176,22 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
     }
 
     colorIndex++;
+    processedItems++;
+    
+    // Update progress (90% for KDE computation, 10% for chart rendering)
+    if (options.onProgress) {
+      options.onProgress(Math.min(90, Math.round((processedItems / totalItems) * 90)));
+    }
+    
+    // Yield to browser periodically to keep UI responsive
+    if (processedItems % 10 === 0) {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
   }
 
   if (datasets.length === 0) {
+    // Clear any loading indicator
+    clearElement(container);
     const emptyState = createElement('div', {
       className: 'visualization-placeholder',
       textContent: 'No valid posterior samples for density plot'
@@ -168,6 +199,20 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
     container.appendChild(emptyState);
     return null;
   }
+
+  // Clear loading indicator before rendering chart
+  const loadingIndicator = container.querySelector('.bayesian-density-loading');
+  if (loadingIndicator) {
+    loadingIndicator.remove();
+  }
+  
+  // Update progress to 95% (chart setup)
+  if (options.onProgress) {
+    options.onProgress(95);
+  }
+  
+  // Yield to browser before chart rendering
+  await new Promise(resolve => setTimeout(resolve, 0));
 
   // Create wrapper for chart
   const chartWrapper = createElement('div', { 
@@ -560,6 +605,12 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
   };
   
   container.appendChild(chartWrapper);
+  
+  // Update progress to 100% (complete)
+  if (options.onProgress) {
+    options.onProgress(100);
+  }
+  
   return chart;
 }
 

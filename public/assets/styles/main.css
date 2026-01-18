@@ -3070,3 +3070,338 @@ input:focus, textarea:focus, select:focus {
     max-height: 300px;
   }
 }
+
+/* Flexible Submission Dialog Styles */
+.flexible-submission-overlay {
+  /* Reuses datasets-overlay styles */
+}
+
+.flexible-submission-content {
+  max-width: 800px;
+  width: 90%;
+}
+
+.flexible-submission-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  gap: 1.5rem;
+}
+
+.flexible-submission-method-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flexible-submission-section-title {
+  color: var(--poe-accent);
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.flexible-submission-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.flexible-submission-method-button {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.flexible-submission-method-button:hover {
+  border-color: var(--poe-accent);
+  box-shadow: 0 4px 8px rgba(175, 96, 37, 0.2);
+  transform: translateY(-2px);
+}
+
+.flexible-submission-method-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.flexible-submission-method-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--poe-text);
+}
+
+.flexible-submission-method-description {
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+  line-height: 1.4;
+}
+
+.flexible-submission-method-switcher {
+  margin-bottom: 1rem;
+}
+
+.flexible-submission-switch-method {
+  background: none;
+  border: none;
+  color: var(--poe-accent);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  padding: 0.25rem 0;
+}
+
+.flexible-submission-switch-method:hover {
+  color: var(--poe-text);
+}
+
+/* File Upload Section */
+.flexible-submission-file-section,
+.flexible-submission-link-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flexible-submission-file-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flexible-submission-file-input {
+  display: none;
+}
+
+.flexible-submission-file-label {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 6px;
+  color: var(--poe-text);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.flexible-submission-file-label:hover {
+  border-color: var(--poe-accent);
+  background-color: rgba(175, 96, 37, 0.1);
+}
+
+.flexible-submission-file-info {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flexible-submission-file-name {
+  font-weight: 600;
+  color: var(--poe-text);
+}
+
+.flexible-submission-file-size,
+.flexible-submission-file-type {
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+}
+
+/* Link Submission Section */
+.flexible-submission-url-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flexible-submission-url-input-container label {
+  color: var(--poe-text);
+  font-weight: 500;
+}
+
+.flexible-submission-url-input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 6px;
+  color: var(--poe-text);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.flexible-submission-url-input:focus {
+  outline: none;
+  border-color: var(--poe-accent);
+}
+
+.flexible-submission-link-type {
+  padding: 0.5rem 1rem;
+  background-color: rgba(175, 96, 37, 0.1);
+  border: 1px solid var(--poe-accent);
+  border-radius: 4px;
+  color: var(--poe-accent);
+  font-size: 0.9rem;
+}
+
+/* Description Section */
+.flexible-submission-description-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flexible-submission-description-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.flexible-submission-description-input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 6px;
+  color: var(--poe-text);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.flexible-submission-description-input:focus {
+  outline: none;
+  border-color: var(--poe-accent);
+}
+
+.flexible-submission-char-count {
+  font-size: 0.85rem;
+  color: var(--poe-text-dim);
+  text-align: right;
+  padding-right: 0.25rem;
+}
+
+.flexible-submission-char-count.warning {
+  color: var(--poe-accent);
+  font-weight: 600;
+}
+
+/* Guidance Text */
+.flexible-submission-guidance {
+  padding: 0.75rem;
+  background-color: rgba(175, 96, 37, 0.05);
+  border: 1px solid var(--poe-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--poe-text-dim);
+}
+
+.flexible-submission-guidance p {
+  margin: 0.25rem 0;
+}
+
+.flexible-submission-guidance p:first-child {
+  margin-top: 0;
+}
+
+.flexible-submission-guidance p:last-child {
+  margin-bottom: 0;
+}
+
+/* Error Display */
+.flexible-submission-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.flexible-submission-error {
+  padding: 0.75rem 1rem;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 6px;
+  color: #ff6b6b;
+  font-size: 0.9rem;
+}
+
+/* Success Display */
+.flexible-submission-success {
+  padding: 1rem;
+  background-color: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: 6px;
+  color: #51cf66;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Loading Indicator */
+.flexible-submission-loading {
+  padding: 1rem;
+  background-color: rgba(175, 96, 37, 0.1);
+  border: 1px solid var(--poe-accent);
+  border-radius: 6px;
+  color: var(--poe-accent);
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.flexible-submission-retry {
+  margin-top: 1rem;
+}
+
+/* Footer */
+.flexible-submission-footer {
+  padding: 1.5rem;
+  border-top: 2px solid var(--poe-border);
+  flex-shrink: 0;
+}
+
+.flexible-submission-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.flexible-submission-cancel,
+.flexible-submission-submit {
+  min-width: 100px;
+}
+
+/* Responsive adjustments for flexible submission */
+@media (max-width: 768px) {
+  .flexible-submission-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .flexible-submission-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .flexible-submission-buttons {
+    flex-direction: column-reverse;
+  }
+
+  .flexible-submission-cancel,
+  .flexible-submission-submit {
+    width: 100%;
+  }
+}
