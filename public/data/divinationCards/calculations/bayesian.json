@@ -1,0 +1,1708 @@
+{
+    "name": "Calculated Weights for Divination Cards",
+    "description": "Calculated item weights for Divination Cards using BAYESIAN method from 1 dataset",
+    "date": "2026-01-18",
+    "patch": "3.27.0",
+    "sources": [
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1PmGES_e1on6K7O5ghHuoorEjruAVb7dQ5m7PGrW7t80/edit?gid=272334906#gid=272334906",
+        "author": "nerdyjoe"
+      },
+      {
+        "name": "divicards-site.pages.dev",
+        "url": "https://divicards-site.pages.dev/weights",
+        "author": "SHONYA3"
+      }
+    ],
+    "items": [
+      {
+        "id": "rain-of-chaos",
+        "weight": 0.08113977567885755
+      },
+      {
+        "id": "the-lover",
+        "weight": 0.0428224207414787
+      },
+      {
+        "id": "emperors-luck",
+        "weight": 0.031964068820872334
+      },
+      {
+        "id": "destined-to-crumble",
+        "weight": 0.028734812536043847
+      },
+      {
+        "id": "the-scholar",
+        "weight": 0.0285738453241972
+      },
+      {
+        "id": "the-kings-blade",
+        "weight": 0.025625426053355417
+      },
+      {
+        "id": "loyalty",
+        "weight": 0.024796503975711395
+      },
+      {
+        "id": "the-metalsmiths-gift",
+        "weight": 0.023027305996765852
+      },
+      {
+        "id": "three-faces-in-the-dark",
+        "weight": 0.016074080139719463
+      },
+      {
+        "id": "more-is-never-enough",
+        "weight": 0.015369241881290954
+      },
+      {
+        "id": "the-carrion-crow",
+        "weight": 0.014511634783761274
+      },
+      {
+        "id": "the-floras-gift",
+        "weight": 0.014484470718421967
+      },
+      {
+        "id": "the-catalyst",
+        "weight": 0.014197228274519958
+      },
+      {
+        "id": "the-hermit",
+        "weight": 0.01158919581759194
+      },
+      {
+        "id": "the-scarred-meadow",
+        "weight": 0.011424399891425751
+      },
+      {
+        "id": "lantadors-lost-love",
+        "weight": 0.01043929388593441
+      },
+      {
+        "id": "the-witch",
+        "weight": 0.010211639506013129
+      },
+      {
+        "id": "the-doppelganger",
+        "weight": 0.009882114389029525
+      },
+      {
+        "id": "rain-tempter",
+        "weight": 0.009304796438986797
+      },
+      {
+        "id": "the-harvester",
+        "weight": 0.008677566051470836
+      },
+      {
+        "id": "the-sword-kings-salute",
+        "weight": 0.00847497889324175
+      },
+      {
+        "id": "rats",
+        "weight": 0.008468221661390076
+      },
+      {
+        "id": "dark-temptation",
+        "weight": 0.006666966716025179
+      },
+      {
+        "id": "the-sun",
+        "weight": 0.006541125176196943
+      },
+      {
+        "id": "the-void",
+        "weight": 0.006345221497977006
+      },
+      {
+        "id": "the-opulent",
+        "weight": 0.006029297923497463
+      },
+      {
+        "id": "the-journalist",
+        "weight": 0.006024083648309296
+      },
+      {
+        "id": "the-blazing-fire",
+        "weight": 0.005667027687812057
+      },
+      {
+        "id": "hunters-resolve",
+        "weight": 0.005345304944421245
+      },
+      {
+        "id": "prosperity",
+        "weight": 0.005242511834782667
+      },
+      {
+        "id": "thunderous-skies",
+        "weight": 0.005238250663799114
+      },
+      {
+        "id": "assassins-favour",
+        "weight": 0.005003717901610102
+      },
+      {
+        "id": "the-summoner",
+        "weight": 0.004943111510301766
+      },
+      {
+        "id": "the-adventuring-spirit",
+        "weight": 0.004812094957333562
+      },
+      {
+        "id": "doedres-madness",
+        "weight": 0.0047047026701325535
+      },
+      {
+        "id": "her-mask",
+        "weight": 0.00432565694115968
+      },
+      {
+        "id": "the-gemcutter",
+        "weight": 0.004237868185894202
+      },
+      {
+        "id": "imperial-legacy",
+        "weight": 0.004026432794403106
+      },
+      {
+        "id": "the-arena-champion",
+        "weight": 0.0039703110320178925
+      },
+      {
+        "id": "alone-in-the-darkness",
+        "weight": 0.0038076499792919242
+      },
+      {
+        "id": "the-rabid-rhoa",
+        "weight": 0.0037726363781306416
+      },
+      {
+        "id": "the-wretched",
+        "weight": 0.003641111425375524
+      },
+      {
+        "id": "the-tireless-extractor",
+        "weight": 0.003615025681678901
+      },
+      {
+        "id": "the-penitent",
+        "weight": 0.0036026744211384975
+      },
+      {
+        "id": "the-army-of-blood",
+        "weight": 0.0035888491190557395
+      },
+      {
+        "id": "the-skeleton",
+        "weight": 0.00339873712679938
+      },
+      {
+        "id": "lucky-connections",
+        "weight": 0.003298844914119695
+      },
+      {
+        "id": "the-web",
+        "weight": 0.003293136745652875
+      },
+      {
+        "id": "the-lunaris-priestess",
+        "weight": 0.003292777961052235
+      },
+      {
+        "id": "boon-of-justice",
+        "weight": 0.0032664392174997807
+      },
+      {
+        "id": "the-endurance",
+        "weight": 0.0032478448441377954
+      },
+      {
+        "id": "volatile-power",
+        "weight": 0.003213192752679335
+      },
+      {
+        "id": "glimmer-of-hope",
+        "weight": 0.0031260671499778203
+      },
+      {
+        "id": "jack-in-the-box",
+        "weight": 0.0031236201288353076
+      },
+      {
+        "id": "the-survivalist",
+        "weight": 0.0030269156322058352
+      },
+      {
+        "id": "the-inoculated",
+        "weight": 0.0029915962767976196
+      },
+      {
+        "id": "humility",
+        "weight": 0.0029156749096236096
+      },
+      {
+        "id": "the-escape",
+        "weight": 0.0028389020613661126
+      },
+      {
+        "id": "the-chains-that-bind",
+        "weight": 0.002835457058489736
+      },
+      {
+        "id": "the-inventor",
+        "weight": 0.002820757384513716
+      },
+      {
+        "id": "the-trial",
+        "weight": 0.0027511960324694204
+      },
+      {
+        "id": "the-tower",
+        "weight": 0.0027424404808355438
+      },
+      {
+        "id": "the-visionary",
+        "weight": 0.0027267921744071337
+      },
+      {
+        "id": "the-wrath",
+        "weight": 0.0026120764343255647
+      },
+      {
+        "id": "sambodhis-vow",
+        "weight": 0.0025214083638098917
+      },
+      {
+        "id": "the-dragon",
+        "weight": 0.002517519815258454
+      },
+      {
+        "id": "the-twins",
+        "weight": 0.002493115387800833
+      },
+      {
+        "id": "three-voices",
+        "weight": 0.002401618471697714
+      },
+      {
+        "id": "a-mothers-parting-gift",
+        "weight": 0.0023978283038701264
+      },
+      {
+        "id": "the-body",
+        "weight": 0.0023382865075171257
+      },
+      {
+        "id": "the-primordial",
+        "weight": 0.002333080517047875
+      },
+      {
+        "id": "the-cache",
+        "weight": 0.002307211754972968
+      },
+      {
+        "id": "heterochromia",
+        "weight": 0.0022685957050148733
+      },
+      {
+        "id": "lost-worlds",
+        "weight": 0.002257396080280401
+      },
+      {
+        "id": "house-of-mirrors",
+        "weight": 0.002180078557672745
+      },
+      {
+        "id": "gemcutters-promise",
+        "weight": 0.002176207255775589
+      },
+      {
+        "id": "acclimatisation",
+        "weight": 0.0021580578910258517
+      },
+      {
+        "id": "a-sea-of-blue",
+        "weight": 0.002137057733402604
+      },
+      {
+        "id": "left-to-fate",
+        "weight": 0.0021318997168055997
+      },
+      {
+        "id": "poisoned-faith",
+        "weight": 0.002111461785101757
+      },
+      {
+        "id": "the-risk",
+        "weight": 0.0020899851256431165
+      },
+      {
+        "id": "camerias-cut",
+        "weight": 0.0020811153262469723
+      },
+      {
+        "id": "the-endless-darkness",
+        "weight": 0.0020407805432859734
+      },
+      {
+        "id": "the-heroic-shot",
+        "weight": 0.001985962320975815
+      },
+      {
+        "id": "triskaidekaphobia",
+        "weight": 0.0019790346178832526
+      },
+      {
+        "id": "a-fate-worse-than-death",
+        "weight": 0.0019590693569831513
+      },
+      {
+        "id": "no-traces",
+        "weight": 0.0019370643797588824
+      },
+      {
+        "id": "shard-of-fate",
+        "weight": 0.0019227191949620886
+      },
+      {
+        "id": "the-pack-leader",
+        "weight": 0.0019137147640180493
+      },
+      {
+        "id": "last-hope",
+        "weight": 0.0018811012785166076
+      },
+      {
+        "id": "the-wolfs-legacy",
+        "weight": 0.0018718223505023567
+      },
+      {
+        "id": "the-demoness",
+        "weight": 0.0018474447194492378
+      },
+      {
+        "id": "boundless-realms",
+        "weight": 0.0018396927840116566
+      },
+      {
+        "id": "the-mountain",
+        "weight": 0.0018076206353742925
+      },
+      {
+        "id": "divine-beauty",
+        "weight": 0.0017989448083457424
+      },
+      {
+        "id": "the-master-artisan",
+        "weight": 0.0017819380732432596
+      },
+      {
+        "id": "rebirth-and-renewal",
+        "weight": 0.0017668847900624127
+      },
+      {
+        "id": "the-battle-born",
+        "weight": 0.001762934998212658
+      },
+      {
+        "id": "the-kings-heart",
+        "weight": 0.0017172226776534455
+      },
+      {
+        "id": "the-tinkerers-table",
+        "weight": 0.0017138932845985528
+      },
+      {
+        "id": "the-deal",
+        "weight": 0.0016856593557049817
+      },
+      {
+        "id": "the-beast",
+        "weight": 0.0016312901243944462
+      },
+      {
+        "id": "beauty-through-death",
+        "weight": 0.0016309096769714121
+      },
+      {
+        "id": "sambodhis-wisdom",
+        "weight": 0.0016302819578802798
+      },
+      {
+        "id": "struck-by-lightning",
+        "weight": 0.0016170946325382454
+      },
+      {
+        "id": "vanity",
+        "weight": 0.0016006556054112922
+      },
+      {
+        "id": "the-drunken-aristocrat",
+        "weight": 0.0015830121938931127
+      },
+      {
+        "id": "the-surgeon",
+        "weight": 0.0015755851079801706
+      },
+      {
+        "id": "the-gladiator",
+        "weight": 0.0015609429899321504
+      },
+      {
+        "id": "societys-remorse",
+        "weight": 0.001551871884570602
+      },
+      {
+        "id": "the-coming-storm",
+        "weight": 0.0015291472745578008
+      },
+      {
+        "id": "baited-expectations",
+        "weight": 0.0015263686796485438
+      },
+      {
+        "id": "the-explorer",
+        "weight": 0.0015254597893053822
+      },
+      {
+        "id": "the-shortcut",
+        "weight": 0.0015148716776740168
+      },
+      {
+        "id": "duality",
+        "weight": 0.0014958319324260476
+      },
+      {
+        "id": "the-wolfs-shadow",
+        "weight": 0.0014675809914727993
+      },
+      {
+        "id": "unchained",
+        "weight": 0.0014528168558786165
+      },
+      {
+        "id": "coveted-possession",
+        "weight": 0.0014284152380583093
+      },
+      {
+        "id": "thirst-for-knowledge",
+        "weight": 0.001425659377603877
+      },
+      {
+        "id": "the-finishing-touch",
+        "weight": 0.0014057782091918111
+      },
+      {
+        "id": "the-traitor",
+        "weight": 0.0014056861107038993
+      },
+      {
+        "id": "the-wolf",
+        "weight": 0.001391048807202513
+      },
+      {
+        "id": "the-garish-power",
+        "weight": 0.001380287987107607
+      },
+      {
+        "id": "the-forgotten-treasure",
+        "weight": 0.0013722174693361622
+      },
+      {
+        "id": "the-warlord",
+        "weight": 0.0013545730743649666
+      },
+      {
+        "id": "the-poet",
+        "weight": 0.001342849572251002
+      },
+      {
+        "id": "the-sigil",
+        "weight": 0.0013380920589081509
+      },
+      {
+        "id": "the-porcupine",
+        "weight": 0.0013256397211912842
+      },
+      {
+        "id": "brush-paint-and-palette",
+        "weight": 0.001303090460634583
+      },
+      {
+        "id": "the-cataclysm",
+        "weight": 0.001291762245360678
+      },
+      {
+        "id": "runic-luck",
+        "weight": 0.001288357325335867
+      },
+      {
+        "id": "the-vast",
+        "weight": 0.001283980760129231
+      },
+      {
+        "id": "the-lord-of-celebration",
+        "weight": 0.0012695495804919644
+      },
+      {
+        "id": "lysahs-respite",
+        "weight": 0.001239121399378948
+      },
+      {
+        "id": "void-of-the-elements",
+        "weight": 0.0012374345167541453
+      },
+      {
+        "id": "the-forsaken",
+        "weight": 0.0012100777344394198
+      },
+      {
+        "id": "the-ruthless-ceinture",
+        "weight": 0.0012042955847552225
+      },
+      {
+        "id": "the-saints-treasure",
+        "weight": 0.0011930985694929826
+      },
+      {
+        "id": "the-blessing-of-moosh",
+        "weight": 0.0011924417075581013
+      },
+      {
+        "id": "call-to-the-first-ones",
+        "weight": 0.00119226807711444
+      },
+      {
+        "id": "vinias-token",
+        "weight": 0.001169874712316693
+      },
+      {
+        "id": "hubris",
+        "weight": 0.0011431523285751186
+      },
+      {
+        "id": "the-standoff",
+        "weight": 0.0011413779815253335
+      },
+      {
+        "id": "the-lion",
+        "weight": 0.0011400529111323813
+      },
+      {
+        "id": "the-jewellers-boon",
+        "weight": 0.0011209807098089396
+      },
+      {
+        "id": "the-warden",
+        "weight": 0.0011082954908809757
+      },
+      {
+        "id": "the-oath",
+        "weight": 0.0010774917928019557
+      },
+      {
+        "id": "the-one-with-all",
+        "weight": 0.0010581248127879842
+      },
+      {
+        "id": "seven-years-bad-luck",
+        "weight": 0.0010393015966684107
+      },
+      {
+        "id": "tranquillity",
+        "weight": 0.0010320350468608342
+      },
+      {
+        "id": "might-is-right",
+        "weight": 0.0010269650830212645
+      },
+      {
+        "id": "council-of-cats",
+        "weight": 0.0010266741408227918
+      },
+      {
+        "id": "the-shepherds-sandals",
+        "weight": 0.0010241906104092383
+      },
+      {
+        "id": "man-with-bear",
+        "weight": 0.0010013212434782201
+      },
+      {
+        "id": "the-stormcaller",
+        "weight": 0.001000872961539982
+      },
+      {
+        "id": "the-cacophony",
+        "weight": 0.0010003724640306893
+      },
+      {
+        "id": "lethean-temptation",
+        "weight": 0.0010001483688833704
+      },
+      {
+        "id": "the-greatest-intentions",
+        "weight": 0.0009845178880866215
+      },
+      {
+        "id": "matryoshka",
+        "weight": 0.000978788459306769
+      },
+      {
+        "id": "prejudice",
+        "weight": 0.0009787403660005002
+      },
+      {
+        "id": "the-mayor",
+        "weight": 0.0009685539273006109
+      },
+      {
+        "id": "broken-truce",
+        "weight": 0.0009679576298337984
+      },
+      {
+        "id": "emperor-of-purity",
+        "weight": 0.0009661865497516568
+      },
+      {
+        "id": "monochrome",
+        "weight": 0.0009600814811588569
+      },
+      {
+        "id": "the-demon",
+        "weight": 0.0009590066234096321
+      },
+      {
+        "id": "etched-in-blood",
+        "weight": 0.0009511830200271691
+      },
+      {
+        "id": "imperfect-memories",
+        "weight": 0.000950688963565408
+      },
+      {
+        "id": "the-craving",
+        "weight": 0.0009486869397855165
+      },
+      {
+        "id": "the-cursed-king",
+        "weight": 0.0009464287756867874
+      },
+      {
+        "id": "the-long-con",
+        "weight": 0.0009429775067141304
+      },
+      {
+        "id": "mitts",
+        "weight": 0.0009380717135822513
+      },
+      {
+        "id": "the-encroaching-darkness",
+        "weight": 0.0009359008977446327
+      },
+      {
+        "id": "the-lich",
+        "weight": 0.0009342039908466666
+      },
+      {
+        "id": "a-stone-perfected",
+        "weight": 0.0009181126112308977
+      },
+      {
+        "id": "avian-pursuit",
+        "weight": 0.0009176245873203274
+      },
+      {
+        "id": "the-scavenger",
+        "weight": 0.0009081327835151679
+      },
+      {
+        "id": "the-valkyrie",
+        "weight": 0.0008942514235395841
+      },
+      {
+        "id": "the-unexpected-prize",
+        "weight": 0.0008929716593391521
+      },
+      {
+        "id": "the-realm",
+        "weight": 0.0008893381750825995
+      },
+      {
+        "id": "disdain",
+        "weight": 0.0008854391803825107
+      },
+      {
+        "id": "the-bones",
+        "weight": 0.0008802844880899376
+      },
+      {
+        "id": "mawr-blaidd",
+        "weight": 0.000877980504066382
+      },
+      {
+        "id": "buried-treasure",
+        "weight": 0.0008757715625623656
+      },
+      {
+        "id": "forbidden-power",
+        "weight": 0.0008740001650806026
+      },
+      {
+        "id": "the-fiend",
+        "weight": 0.0008689893799380889
+      },
+      {
+        "id": "the-wilted-rose",
+        "weight": 0.0008673593701416896
+      },
+      {
+        "id": "the-magma-crab",
+        "weight": 0.0008565475978335478
+      },
+      {
+        "id": "remembrance",
+        "weight": 0.0008527392483149055
+      },
+      {
+        "id": "blind-venture",
+        "weight": 0.0008410235665841857
+      },
+      {
+        "id": "light-and-truth",
+        "weight": 0.0008195341503392364
+      },
+      {
+        "id": "the-surveyor",
+        "weight": 0.000818103356174381
+      },
+      {
+        "id": "gift-of-the-gemling-queen",
+        "weight": 0.0007961550627700703
+      },
+      {
+        "id": "the-golden-era",
+        "weight": 0.0007958819167981047
+      },
+      {
+        "id": "the-celestial-justicar",
+        "weight": 0.0007811969762979494
+      },
+      {
+        "id": "the-professor",
+        "weight": 0.0007763747590547617
+      },
+      {
+        "id": "demigods-wager",
+        "weight": 0.0007707601622262445
+      },
+      {
+        "id": "atziris-arsenal",
+        "weight": 0.0007635310512122103
+      },
+      {
+        "id": "ambitious-obsession",
+        "weight": 0.0007634261793297683
+      },
+      {
+        "id": "the-eldritch-decay",
+        "weight": 0.0007592061556945097
+      },
+      {
+        "id": "the-strategist",
+        "weight": 0.000754322835936633
+      },
+      {
+        "id": "the-last-supper",
+        "weight": 0.0007429941281199964
+      },
+      {
+        "id": "the-betrayal",
+        "weight": 0.0007343340160016981
+      },
+      {
+        "id": "the-long-watch",
+        "weight": 0.0007324281611900298
+      },
+      {
+        "id": "the-fathomless-depths",
+        "weight": 0.0007153222302683991
+      },
+      {
+        "id": "the-hoarder",
+        "weight": 0.0007125031634943418
+      },
+      {
+        "id": "the-conduit",
+        "weight": 0.0007123836573584915
+      },
+      {
+        "id": "hope",
+        "weight": 0.0007104552113065119
+      },
+      {
+        "id": "the-shieldbearer",
+        "weight": 0.0007023154254277507
+      },
+      {
+        "id": "the-fool",
+        "weight": 0.0006976882556016608
+      },
+      {
+        "id": "time-lost-relic",
+        "weight": 0.000689277951729675
+      },
+      {
+        "id": "the-nurse",
+        "weight": 0.0006892318494906383
+      },
+      {
+        "id": "the-emptiness",
+        "weight": 0.0006890127657083156
+      },
+      {
+        "id": "the-mercenary",
+        "weight": 0.0006858235895328739
+      },
+      {
+        "id": "gift-of-asenath",
+        "weight": 0.0006765769676737167
+      },
+      {
+        "id": "the-whiteout",
+        "weight": 0.0006640571227221664
+      },
+      {
+        "id": "azure-rage",
+        "weight": 0.0006629527544233223
+      },
+      {
+        "id": "the-union",
+        "weight": 0.0006560726181341673
+      },
+      {
+        "id": "the-darkest-dream",
+        "weight": 0.0006513635799869776
+      },
+      {
+        "id": "the-progeny-of-lunaris",
+        "weight": 0.0006504956174980307
+      },
+      {
+        "id": "prometheus-armoury",
+        "weight": 0.0006460099332544923
+      },
+      {
+        "id": "the-dapper-prodigy",
+        "weight": 0.0006413635140540771
+      },
+      {
+        "id": "the-price-of-devotion",
+        "weight": 0.0006386852637996364
+      },
+      {
+        "id": "alivias-grace",
+        "weight": 0.0006275565373514496
+      },
+      {
+        "id": "keepers-corruption",
+        "weight": 0.0006275033268994014
+      },
+      {
+        "id": "the-transformation",
+        "weight": 0.000625884052543572
+      },
+      {
+        "id": "unrequited-love",
+        "weight": 0.0006258188391457236
+      },
+      {
+        "id": "perfection",
+        "weight": 0.0006240654337813381
+      },
+      {
+        "id": "the-easy-stroll",
+        "weight": 0.0006215886850558765
+      },
+      {
+        "id": "love-through-ice",
+        "weight": 0.0006184888031827768
+      },
+      {
+        "id": "the-innocent",
+        "weight": 0.0006162859750182804
+      },
+      {
+        "id": "grave-knowledge",
+        "weight": 0.0006140992219041371
+      },
+      {
+        "id": "the-mad-king",
+        "weight": 0.0006135817088577266
+      },
+      {
+        "id": "the-avenger",
+        "weight": 0.0006104966662621852
+      },
+      {
+        "id": "astral-protection",
+        "weight": 0.0006078574007918536
+      },
+      {
+        "id": "the-tyrant",
+        "weight": 0.0006044230034424524
+      },
+      {
+        "id": "misery-in-darkness",
+        "weight": 0.0006018721015615662
+      },
+      {
+        "id": "abandoned-wealth",
+        "weight": 0.0005985931607424379
+      },
+      {
+        "id": "the-return-of-the-rat",
+        "weight": 0.0005888249663638475
+      },
+      {
+        "id": "cartographers-delight",
+        "weight": 0.0005799552876699557
+      },
+      {
+        "id": "the-artist",
+        "weight": 0.0005788579483924097
+      },
+      {
+        "id": "a-chilling-wind",
+        "weight": 0.0005673509712809552
+      },
+      {
+        "id": "the-enforcer",
+        "weight": 0.0005656292809186961
+      },
+      {
+        "id": "the-messenger",
+        "weight": 0.0005628895453551995
+      },
+      {
+        "id": "the-journey",
+        "weight": 0.0005584959196077895
+      },
+      {
+        "id": "the-pact",
+        "weight": 0.0005461098658496362
+      },
+      {
+        "id": "ever-changing",
+        "weight": 0.0005427555165566701
+      },
+      {
+        "id": "the-rite-of-elements",
+        "weight": 0.0005328145400386338
+      },
+      {
+        "id": "the-insane-cat",
+        "weight": 0.00053243487247057
+      },
+      {
+        "id": "the-deep-ones",
+        "weight": 0.0005183116243118668
+      },
+      {
+        "id": "the-minds-eyes",
+        "weight": 0.0005119601057774199
+      },
+      {
+        "id": "magnum-opus",
+        "weight": 0.0005044253663902416
+      },
+      {
+        "id": "boon-of-the-first-ones",
+        "weight": 0.0005014216188945205
+      },
+      {
+        "id": "the-watcher",
+        "weight": 0.0004938778401957307
+      },
+      {
+        "id": "the-last-one-standing",
+        "weight": 0.0004839787131209488
+      },
+      {
+        "id": "audacity",
+        "weight": 0.0004815111422212227
+      },
+      {
+        "id": "history",
+        "weight": 0.00047928126853665024
+      },
+      {
+        "id": "the-fletcher",
+        "weight": 0.00047597488580292845
+      },
+      {
+        "id": "the-seeker",
+        "weight": 0.0004684308926086283
+      },
+      {
+        "id": "the-spoiled-prince",
+        "weight": 0.00046648435605971435
+      },
+      {
+        "id": "the-fishmonger",
+        "weight": 0.00046087440250391795
+      },
+      {
+        "id": "the-patient",
+        "weight": 0.0004568094256293018
+      },
+      {
+        "id": "the-leviathan",
+        "weight": 0.0004561899706588738
+      },
+      {
+        "id": "lingering-remnants",
+        "weight": 0.0004480623161046515
+      },
+      {
+        "id": "cursed-words",
+        "weight": 0.0004469327236270228
+      },
+      {
+        "id": "eternal-bonds",
+        "weight": 0.0004464723910684527
+      },
+      {
+        "id": "dying-light",
+        "weight": 0.00044482866415061155
+      },
+      {
+        "id": "the-immortal",
+        "weight": 0.0004393530671711223
+      },
+      {
+        "id": "immortal-resolve",
+        "weight": 0.00043602292319620096
+      },
+      {
+        "id": "the-white-knight",
+        "weight": 0.00043399143564830763
+      },
+      {
+        "id": "peaceful-moments",
+        "weight": 0.0004334793296091512
+      },
+      {
+        "id": "rebirth",
+        "weight": 0.0004324514551131054
+      },
+      {
+        "id": "the-soul",
+        "weight": 0.0004212529949337977
+      },
+      {
+        "id": "doryanis-epiphany",
+        "weight": 0.0004203571928666002
+      },
+      {
+        "id": "the-lord-in-black",
+        "weight": 0.00041882280748890296
+      },
+      {
+        "id": "the-card-sharp",
+        "weight": 0.00041501113601759553
+      },
+      {
+        "id": "guardians-challenge",
+        "weight": 0.0004113191678031111
+      },
+      {
+        "id": "the-old-man",
+        "weight": 0.00040970927725144545
+      },
+      {
+        "id": "the-brittle-emperor",
+        "weight": 0.00040883313546434183
+      },
+      {
+        "id": "the-celestial-stone",
+        "weight": 0.0004072600257550822
+      },
+      {
+        "id": "the-fortunate",
+        "weight": 0.0004065719650255921
+      },
+      {
+        "id": "the-apothecary",
+        "weight": 0.00040535826382039167
+      },
+      {
+        "id": "desecrated-virtue",
+        "weight": 0.0004035946461659181
+      },
+      {
+        "id": "the-jester",
+        "weight": 0.0003986304443166907
+      },
+      {
+        "id": "the-side-quest",
+        "weight": 0.0003770093055828683
+      },
+      {
+        "id": "brotherhood-in-exile",
+        "weight": 0.00037533958773759083
+      },
+      {
+        "id": "scholar-of-the-seas",
+        "weight": 0.00037152844212303364
+      },
+      {
+        "id": "deadly-joy",
+        "weight": 0.00037148923351893967
+      },
+      {
+        "id": "the-sephirot",
+        "weight": 0.00037128343821206644
+      },
+      {
+        "id": "fathers-love",
+        "weight": 0.00037115494432702587
+      },
+      {
+        "id": "parasitic-passengers",
+        "weight": 0.0003711481082090322
+      },
+      {
+        "id": "the-academic",
+        "weight": 0.0003704415029220015
+      },
+      {
+        "id": "nooks-crown",
+        "weight": 0.0003636866063439239
+      },
+      {
+        "id": "endless-night",
+        "weight": 0.0003618144970462771
+      },
+      {
+        "id": "draped-in-dreams",
+        "weight": 0.0003600091554052926
+      },
+      {
+        "id": "friendship",
+        "weight": 0.00035950973042249944
+      },
+      {
+        "id": "the-eternal-war",
+        "weight": 0.00035837573042652777
+      },
+      {
+        "id": "the-awakened",
+        "weight": 0.0003515845181382487
+      },
+      {
+        "id": "the-damned",
+        "weight": 0.0003502359356964565
+      },
+      {
+        "id": "the-rusted-bard",
+        "weight": 0.00034766588450879676
+      },
+      {
+        "id": "earth-drinker",
+        "weight": 0.00034518051385675895
+      },
+      {
+        "id": "wealth-and-power",
+        "weight": 0.00033978082599910286
+      },
+      {
+        "id": "the-calling",
+        "weight": 0.0003397000948675982
+      },
+      {
+        "id": "one-last-score",
+        "weight": 0.0003371582311750868
+      },
+      {
+        "id": "the-eye-of-terror",
+        "weight": 0.0003369686062299777
+      },
+      {
+        "id": "when-currents-blaze",
+        "weight": 0.00033590556641431416
+      },
+      {
+        "id": "the-brawny-battle-mage",
+        "weight": 0.00033124008336946656
+      },
+      {
+        "id": "the-dreamland",
+        "weight": 0.0003310711188240483
+      },
+      {
+        "id": "lucky-deck",
+        "weight": 0.00032758256406403694
+      },
+      {
+        "id": "the-prince-of-darkness",
+        "weight": 0.000326142747863766
+      },
+      {
+        "id": "the-polymath",
+        "weight": 0.00032491577107517414
+      },
+      {
+        "id": "the-road-to-power",
+        "weight": 0.00032396662285400434
+      },
+      {
+        "id": "the-thaumaturgist",
+        "weight": 0.0003208666331330031
+      },
+      {
+        "id": "the-dragons-heart",
+        "weight": 0.00031597122519368023
+      },
+      {
+        "id": "reckless-ambition",
+        "weight": 0.00031554441032584927
+      },
+      {
+        "id": "chaotic-disposition",
+        "weight": 0.0003143078418683541
+      },
+      {
+        "id": "auspicious-ambitions",
+        "weight": 0.0003134149613669555
+      },
+      {
+        "id": "the-fox",
+        "weight": 0.00030449007539545104
+      },
+      {
+        "id": "the-twilight-moon",
+        "weight": 0.0002984285171193027
+      },
+      {
+        "id": "justified-ambition",
+        "weight": 0.00029763091172476774
+      },
+      {
+        "id": "pride-before-the-fall",
+        "weight": 0.0002957126976008288
+      },
+      {
+        "id": "the-deceiver",
+        "weight": 0.0002945345173852634
+      },
+      {
+        "id": "the-aesthete",
+        "weight": 0.00029430828733411246
+      },
+      {
+        "id": "the-hunger",
+        "weight": 0.0002916843040866376
+      },
+      {
+        "id": "desperate-crusade",
+        "weight": 0.00029092085689542025
+      },
+      {
+        "id": "the-landing",
+        "weight": 0.00029024626232128023
+      },
+      {
+        "id": "home",
+        "weight": 0.0002875073325015398
+      },
+      {
+        "id": "the-astromancer",
+        "weight": 0.0002768108462604012
+      },
+      {
+        "id": "the-doctor",
+        "weight": 0.00027578063925685914
+      },
+      {
+        "id": "winters-embrace",
+        "weight": 0.0002741924516920229
+      },
+      {
+        "id": "assassins-gift",
+        "weight": 0.000273963288177164
+      },
+      {
+        "id": "the-insatiable",
+        "weight": 0.00027161719944024306
+      },
+      {
+        "id": "chasing-risk",
+        "weight": 0.0002618939953793408
+      },
+      {
+        "id": "a-modest-request",
+        "weight": 0.0002603754369301656
+      },
+      {
+        "id": "costly-curio",
+        "weight": 0.00025942820531749534
+      },
+      {
+        "id": "the-admirer",
+        "weight": 0.0002583827089509411
+      },
+      {
+        "id": "the-rabbits-foot",
+        "weight": 0.00025783530526153213
+      },
+      {
+        "id": "bowyers-dream",
+        "weight": 0.0002561786780264809
+      },
+      {
+        "id": "eldritch-perfection",
+        "weight": 0.00025582365598922536
+      },
+      {
+        "id": "the-spark-and-the-flame",
+        "weight": 0.0002538497184857907
+      },
+      {
+        "id": "luminous-trove",
+        "weight": 0.0002516673852213171
+      },
+      {
+        "id": "diallas-subjugation",
+        "weight": 0.00024895272585103063
+      },
+      {
+        "id": "the-hook",
+        "weight": 0.00024892093726879954
+      },
+      {
+        "id": "the-enthusiasts",
+        "weight": 0.00024474842227061575
+      },
+      {
+        "id": "echoes-of-love",
+        "weight": 0.0002428085602325325
+      },
+      {
+        "id": "fire-of-unknown-origin",
+        "weight": 0.00024153198650582783
+      },
+      {
+        "id": "a-dusty-memory",
+        "weight": 0.0002372429053748337
+      },
+      {
+        "id": "the-fox-in-the-brambles",
+        "weight": 0.0002369026713671954
+      },
+      {
+        "id": "dying-anguish",
+        "weight": 0.00023555273893762128
+      },
+      {
+        "id": "checkmate",
+        "weight": 0.00022959850264380575
+      },
+      {
+        "id": "a-dab-of-ink",
+        "weight": 0.00022916654850551154
+      },
+      {
+        "id": "the-eye-of-the-dragon",
+        "weight": 0.0002246563553976149
+      },
+      {
+        "id": "the-enlightened",
+        "weight": 0.0002235755478422957
+      },
+      {
+        "id": "the-scout",
+        "weight": 0.00021385720848352238
+      },
+      {
+        "id": "bijoux",
+        "weight": 0.00021124366125330166
+      },
+      {
+        "id": "the-ethereal",
+        "weight": 0.0002030827995633115
+      },
+      {
+        "id": "underground-forest",
+        "weight": 0.00019920555359811905
+      },
+      {
+        "id": "gemcutters-mercy",
+        "weight": 0.00019907734791195668
+      },
+      {
+        "id": "akils-prophecy",
+        "weight": 0.00019843463667164346
+      },
+      {
+        "id": "the-incantation",
+        "weight": 0.00019749267499363467
+      },
+      {
+        "id": "toxic-tidings",
+        "weight": 0.0001971810560243158
+      },
+      {
+        "id": "the-formless-sea",
+        "weight": 0.00019584481838780666
+      },
+      {
+        "id": "a-note-in-the-wind",
+        "weight": 0.0001948185344964612
+      },
+      {
+        "id": "the-forward-gaze",
+        "weight": 0.00019439492786625762
+      },
+      {
+        "id": "the-life-thief",
+        "weight": 0.000192742098029281
+      },
+      {
+        "id": "the-gambler",
+        "weight": 0.00018928424813749198
+      },
+      {
+        "id": "choking-guilt",
+        "weight": 0.00018903606647567347
+      },
+      {
+        "id": "the-price-of-protection",
+        "weight": 0.00018854546847933993
+      },
+      {
+        "id": "something-dark",
+        "weight": 0.00018743068608624016
+      },
+      {
+        "id": "the-undaunted",
+        "weight": 0.00018718409866009468
+      },
+      {
+        "id": "from-bone-to-ashes",
+        "weight": 0.00018398604526700002
+      },
+      {
+        "id": "the-dungeon-master",
+        "weight": 0.00017926540330389713
+      },
+      {
+        "id": "the-destination",
+        "weight": 0.00017896480044096426
+      },
+      {
+        "id": "lachrymal-necrosis",
+        "weight": 0.00017648775738735774
+      },
+      {
+        "id": "vile-power",
+        "weight": 0.00017315989903328623
+      },
+      {
+        "id": "the-last-laugh",
+        "weight": 0.00016671146148813926
+      },
+      {
+        "id": "hunters-reward",
+        "weight": 0.00016187770678346622
+      },
+      {
+        "id": "squandered-prosperity",
+        "weight": 0.0001596651868988861
+      },
+      {
+        "id": "the-chosen",
+        "weight": 0.00015931031577710723
+      },
+      {
+        "id": "the-wolverine",
+        "weight": 0.00015672968077065852
+      },
+      {
+        "id": "succor-of-the-sinless",
+        "weight": 0.0001549606439996503
+      },
+      {
+        "id": "the-bear-woman",
+        "weight": 0.0001540729371000653
+      },
+      {
+        "id": "the-queen",
+        "weight": 0.0001471010703211108
+      },
+      {
+        "id": "altered-perception",
+        "weight": 0.00014137805251391463
+      },
+      {
+        "id": "the-wind",
+        "weight": 0.0001376550367282705
+      },
+      {
+        "id": "the-wedding-gift",
+        "weight": 0.00013616788632123824
+      },
+      {
+        "id": "the-offering",
+        "weight": 0.0001288108538140392
+      },
+      {
+        "id": "the-archmages-right-hand",
+        "weight": 0.00012383426040657583
+      },
+      {
+        "id": "the-dark-mage",
+        "weight": 0.00012312698274168497
+      },
+      {
+        "id": "the-bitter-blossom",
+        "weight": 0.0001185724781331009
+      },
+      {
+        "id": "damnation",
+        "weight": 0.00011853718580223308
+      },
+      {
+        "id": "turn-the-other-cheek",
+        "weight": 0.00011718022013544558
+      },
+      {
+        "id": "the-wolven-kings-bite",
+        "weight": 0.000116044449614857
+      },
+      {
+        "id": "deathly-designs",
+        "weight": 0.00011361096666136936
+      },
+      {
+        "id": "the-siren",
+        "weight": 0.00011010746660627968
+      },
+      {
+        "id": "darker-half",
+        "weight": 0.00010908537595022113
+      },
+      {
+        "id": "the-gentleman",
+        "weight": 0.00010851524624653693
+      },
+      {
+        "id": "azyrans-reward",
+        "weight": 0.00010400021184418971
+      },
+      {
+        "id": "harmony-of-souls",
+        "weight": 0.00010248696591873835
+      },
+      {
+        "id": "treasure-hunter",
+        "weight": 0.00009988397119846835
+      },
+      {
+        "id": "the-price-of-prescience",
+        "weight": 0.0000924536314837146
+      },
+      {
+        "id": "the-offspring",
+        "weight": 0.00009031547956862031
+      },
+      {
+        "id": "terrible-secret-of-space",
+        "weight": 0.00008806856616128663
+      },
+      {
+        "id": "broken-promises",
+        "weight": 0.00008781117758264483
+      },
+      {
+        "id": "the-feast",
+        "weight": 0.00008628788395844626
+      },
+      {
+        "id": "outfoxed",
+        "weight": 0.00008305755252766585
+      },
+      {
+        "id": "dementophobia",
+        "weight": 0.00008053218890736448
+      },
+      {
+        "id": "alluring-bounty",
+        "weight": 0.00006633675413579157
+      },
+      {
+        "id": "bound-by-flame",
+        "weight": 0.00006331181588006291
+      },
+      {
+        "id": "the-cartographer",
+        "weight": 0.00006201308659439637
+      },
+      {
+        "id": "divine-justice",
+        "weight": 0.00006026325670580145
+      },
+      {
+        "id": "arrogance-of-the-vaal",
+        "weight": 0.00005850217472663175
+      },
+      {
+        "id": "the-obscured",
+        "weight": 0.000058010003682744405
+      },
+      {
+        "id": "the-samurais-eye",
+        "weight": 0.00005699714838965725
+      },
+      {
+        "id": "temperance",
+        "weight": 0.00005416564612177267
+      },
+      {
+        "id": "the-cheater",
+        "weight": 0.000053428428989638725
+      },
+      {
+        "id": "dark-dreams",
+        "weight": 0.00005000523048996004
+      },
+      {
+        "id": "the-aspirant",
+        "weight": 0.00004018043622615011
+      },
+      {
+        "id": "haunting-shadows",
+        "weight": 0.00004015542014285297
+      },
+      {
+        "id": "lonely-warrior",
+        "weight": 0.000040122330377861305
+      },
+      {
+        "id": "death",
+        "weight": 0.000025152604496747766
+      },
+      {
+        "id": "the-lake",
+        "weight": 0.00001936243753465384
+      },
+      {
+        "id": "i-see-brothers",
+        "weight": 0.00001860914153290403
+      }
+    ]
+  }

@@ -13,7 +13,7 @@ Chart.register(...registerables);
  * @param {Array} items - Array of item objects
  * @param {string} categoryId - Category identifier
  */
-export function generateCategoryCharts(container, items, _categoryId) {
+export function generateCategoryCharts(container, items, categoryId) {
   // Clear container
   container.innerHTML = '';
   
@@ -22,6 +22,12 @@ export function generateCategoryCharts(container, items, _categoryId) {
     emptyMessage.textContent = 'No items to display charts for.';
     emptyMessage.className = 'empty-message';
     container.appendChild(emptyMessage);
+    return;
+  }
+  
+  // Skip drop weight distribution chart for specific categories
+  const categoriesWithoutDropWeightChart = ['scarabs', 'divination-cards'];
+  if (categoriesWithoutDropWeightChart.includes(categoryId)) {
     return;
   }
   

@@ -9,6 +9,7 @@ import { computeStatistics } from '../utils/posteriorStats.js';
 import { renderDensityPlot, renderRankedProbabilityChart } from '../visualization/bayesianVisualizations.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 import { renderWeightDisplay } from './weightDisplay.js';
+import { router } from '../services/router.js';
 
 // Module-level state
 let currentBayesianResult = null;
@@ -57,36 +58,40 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
 
   const bayesianDisplay = createElement('div', { className: 'bayesian-weight-display' });
 
-  // Create header with clear "Bayesian" labeling
-  const header = createElement('div', { className: 'bayesian-weight-display-header' });
-  
-  // Add back button if deterministic weights are available
-  if (currentDeterministicWeights) {
-    const backButton = createElement('button', {
-      className: 'back-to-weights-btn',
-      textContent: '← Back to Calculated Item Weights'
-    });
-    backButton.addEventListener('click', () => {
-      // Restore deterministic view with method toggle buttons
-      renderWeightDisplay(container, currentDeterministicWeights, categoryId, items, {
-        ...options,
-        datasets: datasets,
-        method: 'deterministic'
+  // Only create header if skipHeader is not set (for persistent button mode)
+  let header = null;
+  if (!options.skipHeader) {
+    // Create header with clear "Bayesian" labeling
+    header = createElement('div', { className: 'bayesian-weight-display-header' });
+    
+    // Add back button if deterministic weights are available
+    if (currentDeterministicWeights) {
+      const backButton = createElement('button', {
+        className: 'back-to-weights-btn',
+        textContent: '← Back to Calculated Item Weights'
       });
+      backButton.addEventListener('click', () => {
+        // Restore deterministic view with method toggle buttons
+        renderWeightDisplay(container, currentDeterministicWeights, categoryId, items, {
+          ...options,
+          datasets: datasets,
+          method: 'deterministic'
+        });
+      });
+      header.appendChild(backButton);
+    }
+    
+    const title = createElement('h2', {
+      textContent: 'Bayesian Weight Estimates'
     });
-    header.appendChild(backButton);
+    const subtitle = createElement('p', {
+      className: 'bayesian-label',
+      textContent: 'MCMC-derived estimates with uncertainty quantification (client-side computation)'
+    });
+    header.appendChild(title);
+    header.appendChild(subtitle);
+    bayesianDisplay.appendChild(header);
   }
-  
-  const title = createElement('h2', {
-    textContent: 'Bayesian Weight Estimates'
-  });
-  const subtitle = createElement('p', {
-    className: 'bayesian-label',
-    textContent: 'MCMC-derived estimates with uncertainty quantification (client-side computation)'
-  });
-  header.appendChild(title);
-  header.appendChild(subtitle);
-  bayesianDisplay.appendChild(header);
 
   // Show loading state with progress indication
   const loadingDiv = createElement('div', {
@@ -230,8 +235,10 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     progressFill.style.width = '100%';
     clearElement(bayesianDisplay);
 
-    // Rebuild header
-    bayesianDisplay.appendChild(header);
+    // Rebuild header if it exists
+    if (header) {
+      bayesianDisplay.appendChild(header);
+    }
 
       // Store items, datasets, and result for visualization switching
       currentItems = items;
@@ -249,7 +256,7 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     currentContentArea = contentArea; // Store reference for tab switching
 
     // Display default view (table with statistics)
-    renderBayesianResults(contentArea, currentBayesianResult, items);
+    renderBayesianResults(contentArea, currentBayesianResult, items, categoryId);
 
     // Display convergence diagnostics if available
     if (result.convergenceDiagnostics) {
@@ -270,7 +277,9 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
       clearInterval(progressInterval);
     }
     clearElement(bayesianDisplay);
-    bayesianDisplay.appendChild(header);
+    if (header) {
+      bayesianDisplay.appendChild(header);
+    }
 
     // Provide comprehensive error messages
     let errorMessage = `Bayesian inference failed: ${error.message}`;
@@ -306,12 +315,60 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
 }
 
 /**
+ * Map dataset item ID to category item ID
+ * For categories like breach-splinters, dataset IDs are short (e.g., "xoph")
+ * but category item IDs are full (e.g., "splinter-of-xoph")
+ * @param {string} datasetItemId - Item ID from dataset
+ * @param {Array<Object>} categoryItems - Category items array
+ * @returns {string|null} Category item ID or null if not found
+ */
+function mapDatasetIdToCategoryId(datasetItemId, categoryItems) {
+  // First try exact match
+  const exactMatch = categoryItems.find(i => i.id === datasetItemId);
+  if (exactMatch) {
+    return exactMatch.id;
+  }
+  
+  // Try to find category item whose ID contains the dataset ID
+  // This handles cases like "xoph" -> "splinter-of-xoph"
+  // Use word boundary matching to avoid false positives (e.g., "xoph" shouldn't match "xoph-something")
+  const datasetIdLower = datasetItemId.toLowerCase();
+  const partialMatch = categoryItems.find(item => {
+    const categoryId = item.id.toLowerCase();
+    // Check if category ID contains dataset ID as a whole word or at the end
+    // Examples: "splinter-of-xoph" contains "xoph", "splinter-of-esh" contains "esh"
+    return categoryId.includes(datasetIdLower) && 
+           (categoryId.endsWith(datasetIdLower) || 
+            categoryId.includes(`-${datasetIdLower}`) ||
+            categoryId.includes(`-of-${datasetIdLower}`));
+  });
+  
+  if (partialMatch) {
+    return partialMatch.id;
+  }
+  
+  // Try matching by name (case-insensitive)
+  const nameMatch = categoryItems.find(item => {
+    const itemName = (item.name || '').toLowerCase();
+    return itemName.includes(datasetIdLower);
+  });
+  
+  if (nameMatch) {
+    return nameMatch.id;
+  }
+  
+  // If no match found, return the original dataset ID
+  return datasetItemId;
+}
+
+/**
  * Render Bayesian results (summary statistics)
  * @param {HTMLElement} container - Container element
  * @param {Object} result - Bayesian result object
  * @param {Array<Object>} items - Item metadata
+ * @param {string} categoryId - Category identifier
  */
-function renderBayesianResults(container, result, items) {
+function renderBayesianResults(container, result, items, categoryId) {
   const { summaryStatistics } = result;
 
   if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
@@ -352,9 +409,14 @@ function renderBayesianResults(container, result, items) {
   // Convert to array and sort by median
   const entries = Object.entries(summaryStatistics)
     .map(([itemId, stats]) => {
-      const item = items.find(i => i.id === itemId);
+      // Map dataset item ID to category item ID
+      const categoryItemId = mapDatasetIdToCategoryId(itemId, items);
+      
+      // Find item metadata using the mapped category item ID
+      const item = items.find(i => i.id === categoryItemId);
       return {
-        itemId,
+        itemId: categoryItemId, // Use category item ID for navigation
+        datasetItemId: itemId, // Keep original for reference
         stats,
         name: item?.name || itemId,
         icon: item?.icon
@@ -364,9 +426,17 @@ function renderBayesianResults(container, result, items) {
 
   entries.forEach((entry) => {
     const row = createElement('tr', {
-      className: 'bayesian-result-row',
+      className: 'bayesian-result-row clickable-row',
       'data-item-id': entry.itemId
     });
+    
+    // Add click handler to navigate to item detail
+    if (categoryId) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}/item/${entry.itemId}`);
+      });
+    }
 
     // Item name
     const nameCell = createElement('td', { className: 'bayesian-item-name' });
@@ -626,7 +696,7 @@ function renderBayesianVisualization(container, viewType, result, items) {
 
   switch (viewType) {
     case 'table':
-      renderBayesianResults(container, result, items);
+      renderBayesianResults(container, result, items, currentCategoryId);
       break;
     case 'density': {
       // Check if posteriorSamples exist and are not empty
@@ -663,7 +733,7 @@ function renderBayesianVisualization(container, viewType, result, items) {
       break;
     }
     default:
-      renderBayesianResults(container, result, items);
+      renderBayesianResults(container, result, items, currentCategoryId);
   }
 }
 

@@ -247,3 +247,143 @@ export async function downloadDatasetFromUrl(url, filename) {
     throw error;
   }
 }
+
+/**
+ * Generate JSON structure for calculated weights, similar to input dataset format
+ * @param {Object} weights - Map of item IDs to weight values { [itemId: string]: number }
+ * @param {string} categoryId - Category identifier
+ * @param {string} categoryName - Category display name
+ * @param {string} calculationType - Type of calculation: 'mle' or 'bayesian'
+ * @param {Array<Object>} [datasets] - Optional array of datasets used in calculation
+ * @param {Array<Object>} [items] - Optional array of item metadata
+ * @returns {Object} JSON structure similar to input dataset
+ */
+export function generateWeightsJson(weights, categoryId, categoryName, calculationType = 'mle', datasets = null, items = null) {
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+  
+  // Extract patch from datasets if available, otherwise use current date as fallback
+  let patch = null;
+  if (datasets && datasets.length > 0) {
+    // Try to get patch from first dataset
+    const firstDataset = datasets[0];
+    if (firstDataset && firstDataset.patch) {
+      patch = firstDataset.patch;
+    }
+  }
+  
+  // Build sources array from datasets
+  const sources = [];
+  if (datasets && datasets.length > 0) {
+    datasets.forEach((ds, index) => {
+      if (ds.sources && Array.isArray(ds.sources)) {
+        sources.push(...ds.sources);
+      } else if (ds.name) {
+        // If no sources, create a reference to the dataset
+        sources.push({
+          name: `Dataset ${ds.name || index + 1}`,
+          url: '',
+          author: ''
+        });
+      }
+    });
+  }
+  
+  // If no sources found, add a generic source
+  if (sources.length === 0) {
+    sources.push({
+      name: 'Calculated Weights',
+      url: '',
+      author: ''
+    });
+  }
+  
+  // Build items array from weights
+  const itemsArray = [];
+  if (weights && typeof weights === 'object') {
+    // Sort items by weight (descending) for consistency
+    const sortedEntries = Object.entries(weights)
+      .map(([id, weight]) => ({ id, weight }))
+      .sort((a, b) => b.weight - a.weight);
+    
+    itemsArray.push(...sortedEntries);
+  }
+  
+  // Build the JSON structure
+  const result = {
+    name: `Calculated Weights for ${categoryName}`,
+    description: `Calculated item weights for ${categoryName} using ${calculationType.toUpperCase()} method${datasets ? ` from ${datasets.length} dataset${datasets.length !== 1 ? 's' : ''}` : ''}`,
+    date: dateStr,
+    patch: patch || 'N/A',
+    sources: sources,
+    items: itemsArray
+  };
+  
+  // Add inputItems if available from datasets
+  if (datasets && datasets.length > 0) {
+    const inputItemsSet = new Set();
+    datasets.forEach(ds => {
+      if (ds.inputItems && Array.isArray(ds.inputItems)) {
+        ds.inputItems.forEach(input => {
+          if (input && input.id) {
+            inputItemsSet.add(input.id);
+          }
+        });
+      }
+    });
+    
+    if (inputItemsSet.size > 0) {
+      result.inputItems = Array.from(inputItemsSet).map(id => ({ id }));
+    }
+  }
+  
+  return result;
+}
+
+/**
+ * Download calculated weights as JSON file
+ * @param {Object} weights - Map of item IDs to weight values { [itemId: string]: number }
+ * @param {string} categoryId - Category identifier
+ * @param {string} categoryName - Category display name
+ * @param {string} calculationType - Type of calculation: 'mle' or 'bayesian'
+ * @param {Array<Object>} [datasets] - Optional array of datasets used in calculation
+ * @param {Array<Object>} [items] - Optional array of item metadata
+ * @returns {Promise<void>}
+ */
+export async function downloadCalculatedWeights(weights, categoryId, categoryName, calculationType = 'mle', datasets = null, items = null) {
+  try {
+    // Generate JSON structure
+    const weightsJson = generateWeightsJson(weights, categoryId, categoryName, calculationType, datasets, items);
+    
+    // Convert to JSON string
+    const jsonString = JSON.stringify(weightsJson, null, 2);
+    
+    // Generate filename
+    const sanitizedCategory = sanitizeFilename(categoryId);
+    const dateStr = new Date().toISOString().split('T')[0];
+    const filename = `${sanitizedCategory}-calculated-weights-${dateStr}.json`;
+    
+    // Create blob and download
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const blobUrl = URL.createObjectURL(blob);
+    
+    // Create download link
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    link.style.display = 'none';
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    }, 100);
+  } catch (error) {
+    console.error('Error downloading calculated weights:', error);
+    throw error;
+  }
+}

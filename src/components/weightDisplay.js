@@ -8,12 +8,22 @@ import { renderBayesianWeightDisplay, getCurrentBayesianResult } from './bayesia
 import { displayError } from '../utils/errors.js';
 import { inferWeights } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
+import { router } from '../services/router.js';
+import { downloadCalculatedWeights } from '../utils/download.js';
+import { getAvailableCategories } from '../services/dataLoader.js';
+import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUrls.js';
 
 // Module-level state for chart instance management
 let currentChartInstance = null;
 let currentWeights = null;
 let currentItems = null;
 let currentCategoryId = null;
+let persistentButtonsContainer = null; // Store persistent buttons container
+let persistentContentContainer = null; // Store persistent content container
+let currentOptions = null; // Store current options for view switching
+let renderDeterministicFn = null; // Store deterministic render function
+let renderBayesianFn = null; // Store Bayesian render function
+let renderComparisonFn = null; // Store comparison render function
 
 /**
  * Render weight display in container with visualization switching
@@ -25,7 +35,14 @@ let currentCategoryId = null;
  * @param {string} options.defaultView - Default visualization type ('table' | 'bar' | 'log' | 'cdf' | 'heatmap')
  */
 export function renderWeightDisplay(container, weights, categoryId, items = [], options = {}) {
-  clearElement(container);
+  // Check if we need to preserve buttons container (for view switching)
+  const isViewSwitch = persistentButtonsContainer && persistentButtonsContainer.parentNode === container;
+  
+  if (!isViewSwitch) {
+    clearElement(container);
+    persistentButtonsContainer = null;
+    persistentContentContainer = null;
+  }
 
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
@@ -56,88 +73,249 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
 
   // Create header
   const header = createElement('div', { className: 'weight-display-header' });
+  const titleContainer = createElement('div', { 
+    className: 'weight-display-title-container',
+    style: 'display: flex; justify-content: space-between; align-items: center; width: 100%;'
+  });
   const title = createElement('h2', {
     textContent: 'Calculated Item Weights'
   });
-  header.appendChild(title);
+  titleContainer.appendChild(title);
+  
+  // Add download links container
+  const downloadLinksContainer = createElement('div', {
+    style: 'display: flex; gap: 0.5rem; margin-left: 1rem;'
+  });
+  
+  // MLE calculation link
+  const mleUrl = getMleCalculationUrl(categoryId);
+  const mleLink = createElement('a', {
+    className: 'download-weights-link',
+    href: mleUrl,
+    download: 'mle.json',
+    textContent: 'Download MLE',
+    title: 'Direct link to MLE calculation JSON file',
+    style: 'padding: 0.5rem 1rem; background-color: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; display: inline-block;'
+  });
+  downloadLinksContainer.appendChild(mleLink);
+  
+  // Bayesian calculation link (if datasets are available)
+  if (options.datasets && options.datasets.length > 0) {
+    const bayesianUrl = getBayesianCalculationUrl(categoryId);
+    const bayesianLink = createElement('a', {
+      className: 'download-weights-link',
+      href: bayesianUrl,
+      download: 'bayesian.json',
+      textContent: 'Download Bayesian',
+      title: 'Direct link to Bayesian calculation JSON file',
+      style: 'padding: 0.5rem 1rem; background-color: #8e44ad; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; display: inline-block;'
+    });
+    downloadLinksContainer.appendChild(bayesianLink);
+  }
+  
+  titleContainer.appendChild(downloadLinksContainer);
+  
+  // Add "View Datasets" button if onOpenDatasets callback is provided
+  if (options.onOpenDatasets) {
+    const datasetsBtn = createElement('button', {
+      className: 'view-datasets-btn',
+      textContent: 'View Datasets',
+      title: 'Open datasets list',
+      style: 'padding: 0.5rem 1rem; background-color: #af6025; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-left: 0.5rem;'
+    });
+    
+    datasetsBtn.addEventListener('click', () => {
+      options.onOpenDatasets();
+    });
+    
+    titleContainer.appendChild(datasetsBtn);
+  }
+  
+  header.appendChild(titleContainer);
 
+  // Create or reuse persistent buttons container
+  let toggleContainer = null;
+  let deterministicBtn = null;
+  let bayesianBtn = null;
+  let comparisonBtn = null;
+  
   // Add method toggle buttons if datasets are provided (for Bayesian comparison)
   if (options.datasets && options.datasets.length > 0) {
-    const toggleContainer = createElement('div', { className: 'weight-method-toggle' });
-    const deterministicBtn = createElement('button', {
-      className: 'method-toggle-btn active',
-      'data-method': 'deterministic',
-      textContent: 'Deterministic (MLE)'
-    });
-    const bayesianBtn = createElement('button', {
-      className: 'method-toggle-btn',
-      'data-method': 'bayesian',
-      textContent: 'Bayesian (MCMC)'
-    });
-    const comparisonBtn = createElement('button', {
-      className: 'method-toggle-btn',
-      'data-method': 'comparison',
-      textContent: 'Comparison'
-    });
+    if (persistentButtonsContainer && isViewSwitch) {
+      // Reuse existing buttons container
+      toggleContainer = persistentButtonsContainer;
+      deterministicBtn = toggleContainer.querySelector('[data-method="deterministic"]');
+      bayesianBtn = toggleContainer.querySelector('[data-method="bayesian"]');
+      comparisonBtn = toggleContainer.querySelector('[data-method="comparison"]');
+    } else {
+      // Create new buttons container
+      toggleContainer = createElement('div', { className: 'weight-method-toggle' });
+      deterministicBtn = createElement('button', {
+        className: 'method-toggle-btn active',
+        'data-method': 'deterministic',
+        textContent: 'Deterministic (MLE)'
+      });
+      bayesianBtn = createElement('button', {
+        className: 'method-toggle-btn',
+        'data-method': 'bayesian',
+        textContent: 'Bayesian (MCMC)'
+      });
+      comparisonBtn = createElement('button', {
+        className: 'method-toggle-btn',
+        'data-method': 'comparison',
+        textContent: 'Comparison'
+      });
+
+      toggleContainer.appendChild(deterministicBtn);
+      toggleContainer.appendChild(bayesianBtn);
+      toggleContainer.appendChild(comparisonBtn);
+      
+      // Store reference to persistent buttons container
+      persistentButtonsContainer = toggleContainer;
+    }
 
     const updateActiveButton = (activeMethod) => {
       [deterministicBtn, bayesianBtn, comparisonBtn].forEach(btn => {
-        if (btn.dataset.method === activeMethod) {
+        if (btn && btn.dataset.method === activeMethod) {
           btn.classList.add('active');
-        } else {
+        } else if (btn) {
           btn.classList.remove('active');
         }
       });
     };
 
-    deterministicBtn.addEventListener('click', () => {
-      updateActiveButton('deterministic');
-      // Re-render deterministic view
-      clearElement(container);
-      renderWeightDisplay(container, weights, categoryId, items, { ...options, method: 'deterministic' });
-    });
-
-    bayesianBtn.addEventListener('click', async () => {
-      updateActiveButton('bayesian');
-      // Render Bayesian view
-      clearElement(container);
+    // Store current options for view switching
+    currentOptions = { ...options, weights, categoryId, items };
+    
+    // Define content rendering functions (store in module-level state)
+    renderDeterministicFn = () => {
+      if (!persistentContentContainer) return;
+      clearElement(persistentContentContainer);
+      
+      // Create visualization tabs
+      const tabsContainer = createVisualizationTabs(weights, items, categoryId, options.defaultView || 'table');
+      const contentWrapper = createElement('div');
+      contentWrapper.appendChild(tabsContainer);
+      
+      // Create content area for visualizations
+      const contentArea = createElement('div', { className: 'weight-visualization-content' });
+      contentWrapper.appendChild(contentArea);
+      
+      persistentContentContainer.appendChild(contentWrapper);
+      
+      // Store current data for tab switching
+      currentWeights = weights;
+      currentItems = items;
+      currentCategoryId = categoryId;
+      
+      // Render default visualization
+      const defaultView = options.defaultView || 'table';
+      renderVisualization(contentArea, defaultView, weights, items, categoryId);
+    };
+    
+    renderBayesianFn = async () => {
+      if (!persistentContentContainer) return;
+      clearElement(persistentContentContainer);
+      
+      // Add a small title for context when buttons are persistent
+      const titleDiv = createElement('div', { 
+        className: 'bayesian-view-title',
+        style: 'margin-bottom: 1rem;'
+      });
+      const title = createElement('h3', {
+        textContent: 'Bayesian Weight Estimates'
+      });
+      const subtitle = createElement('p', {
+        className: 'bayesian-label',
+        style: 'margin-top: 0.5rem; color: #888;',
+        textContent: 'MCMC-derived estimates with uncertainty quantification (client-side computation)'
+      });
+      titleDiv.appendChild(title);
+      titleDiv.appendChild(subtitle);
+      persistentContentContainer.appendChild(titleDiv);
+      
       try {
-        await renderBayesianWeightDisplay(container, options.datasets, categoryId, items, {
+        await renderBayesianWeightDisplay(persistentContentContainer, options.datasets, categoryId, items, {
           ...options,
           indexData: options.indexData,
           normalizedDatasets: options.normalizedDatasets,
-          deterministicWeights: weights // Pass deterministic weights for navigation back
+          deterministicWeights: weights,
+          skipHeader: true // Skip header since buttons are persistent
         });
       } catch (error) {
-        displayError(container, `Failed to load Bayesian estimates: ${error.message}`);
+        displayError(persistentContentContainer, `Failed to load Bayesian estimates: ${error.message}`);
       }
-    });
-
-    comparisonBtn.addEventListener('click', async () => {
-      updateActiveButton('comparison');
-      // Render comparison view
-      clearElement(container);
+    };
+    
+    renderComparisonFn = async () => {
+      if (!persistentContentContainer) return;
+      clearElement(persistentContentContainer);
+      
+      // Add a small title for context when buttons are persistent
+      const titleDiv = createElement('div', { 
+        className: 'comparison-view-title',
+        style: 'margin-bottom: 1rem;'
+      });
+      const title = createElement('h3', {
+        textContent: 'Weight Calculation Comparison'
+      });
+      const subtitle = createElement('p', {
+        className: 'comparison-subtitle',
+        style: 'margin-top: 0.5rem; color: #888;',
+        textContent: 'Comparing Deterministic (MLE) vs Bayesian (MCMC) estimates'
+      });
+      titleDiv.appendChild(title);
+      titleDiv.appendChild(subtitle);
+      persistentContentContainer.appendChild(titleDiv);
+      
       try {
-        await renderComparisonView(container, weights, options.datasets, categoryId, items, options);
+        await renderComparisonView(persistentContentContainer, weights, options.datasets, categoryId, items, {
+          ...options,
+          skipHeader: true // Skip header since buttons are persistent
+        });
       } catch (error) {
-        displayError(container, `Failed to load comparison view: ${error.message}`);
+        displayError(persistentContentContainer, `Failed to load comparison view: ${error.message}`);
       }
-    });
+    };
+    
+    // Attach event listeners only if buttons are new (not reusing)
+    if (!isViewSwitch) {
+      deterministicBtn.addEventListener('click', () => {
+        updateActiveButton('deterministic');
+        if (renderDeterministicFn) renderDeterministicFn();
+      });
 
-    toggleContainer.appendChild(deterministicBtn);
-    toggleContainer.appendChild(bayesianBtn);
-    toggleContainer.appendChild(comparisonBtn);
+      bayesianBtn.addEventListener('click', async () => {
+        updateActiveButton('bayesian');
+        if (renderBayesianFn) await renderBayesianFn();
+      });
+
+      comparisonBtn.addEventListener('click', async () => {
+        updateActiveButton('comparison');
+        if (renderComparisonFn) await renderComparisonFn();
+      });
+    }
+
     header.appendChild(toggleContainer);
   }
 
-  // Create visualization tabs
+  // Create content container (persistent or new)
+  if (!persistentContentContainer || !isViewSwitch) {
+    persistentContentContainer = createElement('div', { className: 'weight-method-content' });
+  } else {
+    clearElement(persistentContentContainer);
+  }
+
+  // Create visualization tabs for deterministic view
   const tabsContainer = createVisualizationTabs(weights, items, categoryId, options.defaultView || 'table');
-  header.appendChild(tabsContainer);
-  weightDisplay.appendChild(header);
+  const contentWrapper = createElement('div');
+  contentWrapper.appendChild(tabsContainer);
 
   // Create content area for visualizations
   const contentArea = createElement('div', { className: 'weight-visualization-content' });
-  weightDisplay.appendChild(contentArea);
+  contentWrapper.appendChild(contentArea);
+  
+  persistentContentContainer.appendChild(contentWrapper);
 
   // Store current data for tab switching
   currentWeights = weights;
@@ -148,6 +326,8 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
   const defaultView = options.defaultView || 'table';
   renderVisualization(contentArea, defaultView, weights, items, categoryId);
 
+  weightDisplay.appendChild(header);
+  weightDisplay.appendChild(persistentContentContainer);
   container.appendChild(weightDisplay);
 }
 
@@ -228,7 +408,7 @@ function renderVisualization(container, viewType, weights, items, categoryId) {
 
   switch (viewType) {
     case 'table':
-      renderTableView(container, weights, items);
+      renderTableView(container, weights, items, categoryId);
       break;
     case 'bar': {
       currentChartInstance = renderRankedBarChart(container, weights, items);
@@ -247,8 +427,55 @@ function renderVisualization(container, viewType, weights, items, categoryId) {
       break;
     }
     default:
-      renderTableView(container, weights, items);
+      renderTableView(container, weights, items, categoryId);
   }
+}
+
+/**
+ * Map dataset item ID to category item ID
+ * For categories like breach-splinters, dataset IDs are short (e.g., "xoph")
+ * but category item IDs are full (e.g., "splinter-of-xoph")
+ * @param {string} datasetItemId - Item ID from dataset
+ * @param {Array<Object>} categoryItems - Category items array
+ * @returns {string|null} Category item ID or null if not found
+ */
+function mapDatasetIdToCategoryId(datasetItemId, categoryItems) {
+  // First try exact match
+  const exactMatch = categoryItems.find(i => i.id === datasetItemId);
+  if (exactMatch) {
+    return exactMatch.id;
+  }
+  
+  // Try to find category item whose ID contains the dataset ID
+  // This handles cases like "xoph" -> "splinter-of-xoph"
+  // Use word boundary matching to avoid false positives (e.g., "xoph" shouldn't match "xoph-something")
+  const datasetIdLower = datasetItemId.toLowerCase();
+  const partialMatch = categoryItems.find(item => {
+    const categoryId = item.id.toLowerCase();
+    // Check if category ID contains dataset ID as a whole word or at the end
+    // Examples: "splinter-of-xoph" contains "xoph", "splinter-of-esh" contains "esh"
+    return categoryId.includes(datasetIdLower) && 
+           (categoryId.endsWith(datasetIdLower) || 
+            categoryId.includes(`-${datasetIdLower}`) ||
+            categoryId.includes(`-of-${datasetIdLower}`));
+  });
+  
+  if (partialMatch) {
+    return partialMatch.id;
+  }
+  
+  // Try matching by name (case-insensitive)
+  const nameMatch = categoryItems.find(item => {
+    const itemName = (item.name || '').toLowerCase();
+    return itemName.includes(datasetIdLower);
+  });
+  
+  if (nameMatch) {
+    return nameMatch.id;
+  }
+  
+  // If no match found, return the original dataset ID
+  return datasetItemId;
 }
 
 /**
@@ -256,15 +483,20 @@ function renderVisualization(container, viewType, weights, items, categoryId) {
  * @param {HTMLElement} container - Container element
  * @param {Object} weights - Weight data
  * @param {Array<Object>} items - Item metadata
+ * @param {string} categoryId - Category identifier
  */
-function renderTableView(container, weights, items) {
+function renderTableView(container, weights, items, categoryId) {
   // Convert weights to array and sort by weight (highest to lowest)
   const weightEntries = Object.entries(weights)
     .map(([itemId, weight]) => {
-      // Find item metadata if available
-      const item = items.find(i => i.id === itemId);
+      // Map dataset item ID to category item ID
+      const categoryItemId = mapDatasetIdToCategoryId(itemId, items);
+      
+      // Find item metadata using the mapped category item ID
+      const item = items.find(i => i.id === categoryItemId);
       return {
-        itemId,
+        itemId: categoryItemId, // Use category item ID for navigation
+        datasetItemId: itemId, // Keep original for reference
         weight,
         name: item?.name || itemId,
         icon: item?.icon
@@ -310,10 +542,19 @@ function renderTableView(container, weights, items) {
   // Render each weight item as a table row
   weightEntries.forEach((entry, index) => {
     const row = createElement('tr', { 
-      className: 'weight-item',
+      className: 'weight-item clickable-row',
       'data-weight': entry.weight,
-      'data-rank': index + 1
+      'data-rank': index + 1,
+      'data-item-id': entry.itemId
     });
+    
+    // Add click handler to navigate to item detail
+    if (categoryId) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}/item/${entry.itemId}`);
+      });
+    }
 
     // Rank/position cell
     const rankCell = createElement('td', { className: 'weight-rank-cell' });
@@ -391,34 +632,38 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
 
   const comparisonDiv = createElement('div', { className: 'weight-comparison-view' });
 
-  // Header
-  const header = createElement('div', { className: 'comparison-header' });
-  
-  // Add back button to return to deterministic view
-  const backButton = createElement('button', {
-    className: 'back-to-weights-btn',
-    textContent: '← Back to Calculated Item Weights'
-  });
-  backButton.addEventListener('click', () => {
-    // Restore deterministic view with method toggle buttons
-    renderWeightDisplay(container, deterministicWeights, categoryId, items, {
-      ...options,
-      datasets: datasets,
-      method: 'deterministic'
+  // Only create header if skipHeader is not set (for persistent button mode)
+  let header = null;
+  if (!options.skipHeader) {
+    // Header
+    header = createElement('div', { className: 'comparison-header' });
+    
+    // Add back button to return to deterministic view
+    const backButton = createElement('button', {
+      className: 'back-to-weights-btn',
+      textContent: '← Back to Calculated Item Weights'
     });
-  });
-  header.appendChild(backButton);
-  
-  const title = createElement('h2', {
-    textContent: 'Weight Calculation Comparison'
-  });
-  header.appendChild(title);
-  const subtitle = createElement('p', {
-    className: 'comparison-subtitle',
-    textContent: 'Comparing Deterministic (MLE) vs Bayesian (MCMC) estimates'
-  });
-  header.appendChild(subtitle);
-  comparisonDiv.appendChild(header);
+    backButton.addEventListener('click', () => {
+      // Restore deterministic view with method toggle buttons
+      renderWeightDisplay(container, deterministicWeights, categoryId, items, {
+        ...options,
+        datasets: datasets,
+        method: 'deterministic'
+      });
+    });
+    header.appendChild(backButton);
+    
+    const title = createElement('h2', {
+      textContent: 'Weight Calculation Comparison'
+    });
+    header.appendChild(title);
+    const subtitle = createElement('p', {
+      className: 'comparison-subtitle',
+      textContent: 'Comparing Deterministic (MLE) vs Bayesian (MCMC) estimates'
+    });
+    header.appendChild(subtitle);
+    comparisonDiv.appendChild(header);
+  }
 
   // Show loading state
   const loadingDiv = createElement('div', {
@@ -497,14 +742,18 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
     }
 
     clearElement(comparisonDiv);
-    comparisonDiv.appendChild(header);
+    if (!options.skipHeader) {
+      comparisonDiv.appendChild(header);
+    }
 
     // Create comparison table
-    renderComparisonTable(comparisonDiv, deterministicWeights, bayesianResult, items);
+    renderComparisonTable(comparisonDiv, deterministicWeights, bayesianResult, items, categoryId);
 
   } catch (error) {
     clearElement(comparisonDiv);
-    comparisonDiv.appendChild(header);
+    if (!options.skipHeader) {
+      comparisonDiv.appendChild(header);
+    }
     displayError(comparisonDiv, `Failed to load comparison: ${error.message}`);
   }
 }
@@ -515,8 +764,9 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
  * @param {Object} deterministicWeights - Deterministic weights
  * @param {Object} bayesianResult - Bayesian result with summary statistics
  * @param {Array<Object>} items - Item metadata
+ * @param {string} categoryId - Category identifier
  */
-function renderComparisonTable(container, deterministicWeights, bayesianResult, items) {
+function renderComparisonTable(container, deterministicWeights, bayesianResult, items, categoryId) {
   const { summaryStatistics } = bayesianResult;
 
   if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
@@ -565,12 +815,19 @@ function renderComparisonTable(container, deterministicWeights, bayesianResult, 
   // Convert to array and sort by deterministic weight (or Bayesian median if deterministic not available)
   const entries = Array.from(allItemIds)
     .map(itemId => {
-      const item = items.find(i => i.id === itemId);
+      // Map dataset item ID to category item ID
+      const categoryItemId = mapDatasetIdToCategoryId(itemId, items);
+      
+      // Find item metadata using the mapped category item ID
+      const item = items.find(i => i.id === categoryItemId);
+      
+      // Use mapped IDs for looking up weights
       const deterministic = deterministicWeights[itemId] || null;
       const bayesian = summaryStatistics[itemId] || null;
 
       return {
-        itemId,
+        itemId: categoryItemId, // Use category item ID for navigation
+        datasetItemId: itemId, // Keep original for reference
         name: item?.name || itemId,
         icon: item?.icon,
         deterministic,
@@ -590,9 +847,17 @@ function renderComparisonTable(container, deterministicWeights, bayesianResult, 
 
   entries.forEach(entry => {
     const row = createElement('tr', {
-      className: 'comparison-row',
+      className: 'comparison-row clickable-row',
       'data-item-id': entry.itemId
     });
+    
+    // Add click handler to navigate to item detail
+    if (categoryId) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}/item/${entry.itemId}`);
+      });
+    }
 
     // Item name
     const nameCell = createElement('td', { className: 'comparison-item-name' });

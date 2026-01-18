@@ -10,7 +10,7 @@ import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
 import { renderListView } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
-import { renderDatasetList } from '../components/datasetList.js';
+import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
 import { renderWeightDisplay } from '../components/weightDisplay.js';
 import { estimateItemWeights } from '../services/weightCalculator.js';
@@ -63,84 +63,87 @@ export async function renderCategoryView(container, params) {
     header.appendChild(title);
     viewSection.appendChild(header);
     
-    // Tabs for Items/Datasets
-    const tabsContainer = createElement('div', { className: 'category-tabs' });
-    const itemsTab = createElement('button', {
-      className: `tab-button ${viewType === 'items' ? 'active' : ''}`,
-      textContent: 'Items',
-      'data-tab': 'items'
-    });
-    
-    itemsTab.addEventListener('click', () => {
-      router.navigate(`/category/${categoryId}?view=items`);
-    });
-    
-    tabsContainer.appendChild(itemsTab);
-    
-    // For breach category, show two separate dataset tabs
-    if (categoryId === 'breach') {
-      const subcategory = query.subcategory || 'breach-splinters';
-      const splintersTab = createElement('button', {
-        className: `tab-button ${viewType === 'datasets' && subcategory === 'breach-splinters' ? 'active' : ''}`,
-        textContent: 'Breach Splinters Datasets',
-        'data-tab': 'datasets-splinters'
-      });
-      const stonesTab = createElement('button', {
-        className: `tab-button ${viewType === 'datasets' && subcategory === 'breachstones' ? 'active' : ''}`,
-        textContent: 'BreachStones Datasets',
-        'data-tab': 'datasets-stones'
+    // Only show tabs when NOT in datasets view
+    if (viewType !== 'datasets') {
+      // Tabs for Items/Datasets
+      const tabsContainer = createElement('div', { className: 'category-tabs' });
+      const itemsTab = createElement('button', {
+        className: `tab-button ${viewType === 'items' ? 'active' : ''}`,
+        textContent: 'Items',
+        'data-tab': 'items'
       });
       
-      splintersTab.addEventListener('click', () => {
-        router.navigate(`/category/${categoryId}?view=datasets&subcategory=breach-splinters`);
+      itemsTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=items`);
       });
       
-      stonesTab.addEventListener('click', () => {
-        router.navigate(`/category/${categoryId}?view=datasets&subcategory=breachstones`);
-      });
+      tabsContainer.appendChild(itemsTab);
       
-      tabsContainer.appendChild(splintersTab);
-      tabsContainer.appendChild(stonesTab);
-    } else if (categoryId === 'legion') {
-      // For legion category, show two separate dataset tabs
-      const subcategory = query.subcategory || 'legion-splinters';
-      const splintersTab = createElement('button', {
-        className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-splinters' ? 'active' : ''}`,
-        textContent: 'Legion Splinters Datasets',
-        'data-tab': 'datasets-splinters'
-      });
-      const emblemsTab = createElement('button', {
-        className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-emblems' ? 'active' : ''}`,
-        textContent: 'Legion Emblems Datasets',
-        'data-tab': 'datasets-emblems'
-      });
+      // For breach category, show two separate dataset tabs
+      if (categoryId === 'breach') {
+        const subcategory = query.subcategory || 'breach-splinters';
+        const splintersTab = createElement('button', {
+          className: `tab-button ${viewType === 'datasets' && subcategory === 'breach-splinters' ? 'active' : ''}`,
+          textContent: 'Breach Splinters Datasets',
+          'data-tab': 'datasets-splinters'
+        });
+        const stonesTab = createElement('button', {
+          className: `tab-button ${viewType === 'datasets' && subcategory === 'breachstones' ? 'active' : ''}`,
+          textContent: 'BreachStones Datasets',
+          'data-tab': 'datasets-stones'
+        });
+        
+        splintersTab.addEventListener('click', () => {
+          router.navigate(`/category/${categoryId}?view=datasets&subcategory=breach-splinters`);
+        });
+        
+        stonesTab.addEventListener('click', () => {
+          router.navigate(`/category/${categoryId}?view=datasets&subcategory=breachstones`);
+        });
+        
+        tabsContainer.appendChild(splintersTab);
+        tabsContainer.appendChild(stonesTab);
+      } else if (categoryId === 'legion') {
+        // For legion category, show two separate dataset tabs
+        const subcategory = query.subcategory || 'legion-splinters';
+        const splintersTab = createElement('button', {
+          className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-splinters' ? 'active' : ''}`,
+          textContent: 'Legion Splinters Datasets',
+          'data-tab': 'datasets-splinters'
+        });
+        const emblemsTab = createElement('button', {
+          className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-emblems' ? 'active' : ''}`,
+          textContent: 'Legion Emblems Datasets',
+          'data-tab': 'datasets-emblems'
+        });
+        
+        splintersTab.addEventListener('click', () => {
+          router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-splinters`);
+        });
+        
+        emblemsTab.addEventListener('click', () => {
+          router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-emblems`);
+        });
+        
+        tabsContainer.appendChild(splintersTab);
+        tabsContainer.appendChild(emblemsTab);
+      } else {
+        // For other categories, show single Datasets tab
+        const datasetsTab = createElement('button', {
+          className: `tab-button ${viewType === 'datasets' ? 'active' : ''}`,
+          textContent: 'Datasets',
+          'data-tab': 'datasets'
+        });
+        
+        datasetsTab.addEventListener('click', () => {
+          router.navigate(`/category/${categoryId}?view=datasets`);
+        });
+        
+        tabsContainer.appendChild(datasetsTab);
+      }
       
-      splintersTab.addEventListener('click', () => {
-        router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-splinters`);
-      });
-      
-      emblemsTab.addEventListener('click', () => {
-        router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-emblems`);
-      });
-      
-      tabsContainer.appendChild(splintersTab);
-      tabsContainer.appendChild(emblemsTab);
-    } else {
-      // For other categories, show single Datasets tab
-      const datasetsTab = createElement('button', {
-        className: `tab-button ${viewType === 'datasets' ? 'active' : ''}`,
-        textContent: 'Datasets',
-        'data-tab': 'datasets'
-      });
-      
-      datasetsTab.addEventListener('click', () => {
-        router.navigate(`/category/${categoryId}?view=datasets`);
-      });
-      
-      tabsContainer.appendChild(datasetsTab);
+      viewSection.appendChild(tabsContainer);
     }
-    
-    viewSection.appendChild(tabsContainer);
     
     // Content area
     const contentArea = createElement('div', { className: 'category-content' });
@@ -155,7 +158,7 @@ export async function renderCategoryView(container, params) {
       } else if (categoryId === 'legion') {
         subcategory = query.subcategory || 'legion-splinters';
       }
-      await renderDatasetsView(contentArea, subcategory);
+      await renderDatasetsView(contentArea, subcategory, categoryId);
     } else {
       await renderItemsView(contentArea, categoryId, items);
     }
@@ -415,19 +418,17 @@ async function renderItemsView(container, categoryId, items) {
  * @param {HTMLElement} container - Container element
  * @param {string} categoryId - Category identifier
  */
-async function renderDatasetsView(container, categoryId) {
+async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
   clearElement(container);
   
-  console.log(`[CategoryView] Rendering datasets view for category: ${categoryId}`);
+  // Use subcategoryId for data operations, but mainCategoryId for navigation
+  const categoryId = subcategoryId;
+  const navigationCategoryId = mainCategoryId || subcategoryId;
   
-  // Create wrapper for list and detail view (side by side)
-  const wrapper = createElement('div', { className: 'datasets-view-wrapper' });
+  console.log(`[CategoryView] Rendering datasets view for category: ${categoryId} (navigation: ${navigationCategoryId})`);
   
-  // Create list container (left side, 1/4 width)
-  const listContainer = createElement('div', { className: 'datasets-list-container' });
-  
-  // Create detail container (right side, 3/4 width)
-  const detailContainer = createElement('div', { className: 'datasets-detail-container' });
+  // Create detail container (full width for weights display)
+  const detailContainer = createElement('div', { className: 'datasets-detail-container datasets-detail-fullwidth' });
   
   // Show loading state initially (will be replaced with weights)
   const initialLoading = createElement('div', {
@@ -437,24 +438,14 @@ async function renderDatasetsView(container, categoryId) {
   detailContainer.appendChild(initialLoading);
   setLoadingState(initialLoading, true);
   
-  wrapper.appendChild(listContainer);
-  wrapper.appendChild(detailContainer);
-  container.appendChild(wrapper);
-  
-  // Loading state for datasets
-  const loadingDiv = createElement('div', { 
-    className: 'loading', 
-    textContent: 'Loading datasets...' 
-  });
-  listContainer.appendChild(loadingDiv);
-  setLoadingState(loadingDiv, true);
+  container.appendChild(detailContainer);
   
   let selectedDatasetNumber = null;
   let calculatedWeights = null;
   let categoryItems = null;
   let allDatasets = null; // Store datasets for weight calculation
   let fullDatasetsForWeights = null; // Store full datasets for Bayesian calculation
-  let weightsListItem = null; // Reference to the weights list item
+  let datasetsOverlay = null; // Reference to overlay element
   
   /**
    * Load index.json data for a category
@@ -489,6 +480,145 @@ async function renderDatasetsView(container, categoryId) {
     } catch (error) {
       console.warn(`[CategoryView] Failed to load index.json for ${categoryId}:`, error);
       return null;
+    }
+  };
+  
+  /**
+   * Create and show datasets overlay
+   */
+  const showDatasetsOverlay = async () => {
+    // Remove existing overlay if present
+    if (datasetsOverlay) {
+      datasetsOverlay.remove();
+    }
+    
+    if (!allDatasets || allDatasets.length === 0) {
+      // No datasets available
+      return;
+    }
+    
+    // Create overlay backdrop
+    const overlay = createElement('div', { className: 'datasets-overlay' });
+    const backdrop = createElement('div', { className: 'datasets-overlay-backdrop' });
+    const overlayContent = createElement('div', { className: 'datasets-overlay-content' });
+    
+    // Create header with close button
+    const overlayHeader = createElement('div', { className: 'datasets-overlay-header' });
+    const overlayTitle = createElement('h2', {
+      textContent: 'Datasets',
+      className: 'datasets-overlay-title'
+    });
+    const closeButton = createElement('button', {
+      className: 'datasets-overlay-close',
+      textContent: '×',
+      title: 'Close'
+    });
+    
+    closeButton.addEventListener('click', () => {
+      overlay.remove();
+      datasetsOverlay = null;
+    });
+    
+    backdrop.addEventListener('click', () => {
+      overlay.remove();
+      datasetsOverlay = null;
+    });
+    
+    overlayHeader.appendChild(overlayTitle);
+    overlayHeader.appendChild(closeButton);
+    overlayContent.appendChild(overlayHeader);
+    
+    // Create wrapper for sidebar and detail
+    const overlayBody = createElement('div', { className: 'datasets-overlay-body' });
+    
+    // Create sidebar for dataset list
+    const overlaySidebar = createElement('div', { className: 'datasets-overlay-sidebar' });
+    const overlayListContainer = createElement('div', { className: 'datasets-overlay-list-container' });
+    overlaySidebar.appendChild(overlayListContainer);
+    
+    // Create detail container
+    const overlayDetailContainer = createElement('div', { className: 'datasets-overlay-detail-container' });
+    
+    overlayBody.appendChild(overlaySidebar);
+    overlayBody.appendChild(overlayDetailContainer);
+    overlayContent.appendChild(overlayBody);
+    
+    overlay.appendChild(backdrop);
+    overlay.appendChild(overlayContent);
+    document.body.appendChild(overlay);
+    datasetsOverlay = overlay;
+    
+    // Track currently selected dataset in overlay
+    let overlaySelectedDatasetNumber = null;
+    
+    // Handler for dataset selection in overlay
+    const handleOverlayDatasetSelect = async (dataset) => {
+      const datasetNumber = dataset.datasetNumber;
+      
+      // If same dataset is clicked, do nothing
+      if (overlaySelectedDatasetNumber === datasetNumber) {
+        return;
+      }
+      
+      overlaySelectedDatasetNumber = datasetNumber;
+      
+      // Update active class in list
+      overlayListContainer.querySelectorAll('.dataset-list-item').forEach((item) => {
+        item.classList.remove('active');
+        const itemDatasetNumber = parseInt(item.getAttribute('data-dataset-number'), 10);
+        if (itemDatasetNumber === datasetNumber) {
+          item.classList.add('active');
+        }
+      });
+      
+      // Clear and show loading
+      clearElement(overlayDetailContainer);
+      const detailLoading = createElement('div', {
+        className: 'loading',
+        textContent: 'Loading dataset details...'
+      });
+      overlayDetailContainer.appendChild(detailLoading);
+      setLoadingState(detailLoading, true);
+      
+      try {
+        // Load full dataset
+        const fullDataset = await loadDataset(categoryId, datasetNumber);
+        
+        // Clear loading and render detail
+        clearElement(overlayDetailContainer);
+        
+        // Render dataset detail in overlay (no back button needed)
+        renderDatasetDetail(
+          overlayDetailContainer,
+          fullDataset,
+          categoryId,
+          null, // No back button in overlay
+          async (dataset, categoryId) => {
+            // Handle download (deprecated, kept for compatibility)
+            try {
+              await downloadDataset(categoryId, datasetNumber, dataset);
+            } catch (error) {
+              displayError(overlayDetailContainer, `Failed to download dataset: ${error.message}`);
+            }
+          },
+          datasetNumber // Pass datasetNumber for download link
+        );
+      } catch (error) {
+        clearElement(overlayDetailContainer);
+        displayError(overlayDetailContainer, `Failed to load dataset: ${error.message}`);
+      }
+    };
+    
+    // Sort datasets by patch version (descending)
+    const sortedDatasets = sortDatasetsByPatch(allDatasets);
+    
+    // Render dataset list in overlay sidebar (with direct download links)
+    renderDatasetList(overlayListContainer, sortedDatasets, handleOverlayDatasetSelect, null, categoryId);
+    
+    // Automatically load and display the first dataset (highest patch version)
+    if (sortedDatasets.length > 0) {
+      const firstDataset = sortedDatasets[0];
+      await handleOverlayDatasetSelect(firstDataset);
     }
   };
   
@@ -598,72 +728,32 @@ async function renderDatasetsView(container, categoryId) {
       }
       
       // Display weights with datasets for Bayesian toggle (use stored fullDatasetsForWeights)
+      // Use navigationCategoryId for navigation purposes (main category, not subcategory)
+      // Pass showDatasetsOverlay function so weightDisplay can add a button to open overlay
       const datasetsForDisplay = fullDatasetsForWeights || [];
-      renderWeightDisplay(detailContainer, calculatedWeights, categoryId, categoryItems, {
+      renderWeightDisplay(detailContainer, calculatedWeights, navigationCategoryId, categoryItems, {
         datasets: datasetsForDisplay,
         indexData: indexData, // Pass indexData for Bayesian cache (may be null)
-        normalizedDatasets: normalizedDatasets // Pass normalized datasets for Bayesian cache (may be null)
+        normalizedDatasets: normalizedDatasets, // Pass normalized datasets for Bayesian cache (may be null)
+        onOpenDatasets: showDatasetsOverlay // Pass function to open datasets overlay
       });
-      
-      // Mark weights list item as active
-      if (weightsListItem) {
-        weightsListItem.classList.add('active');
-      }
     } catch (error) {
       clearElement(detailContainer);
       displayError(detailContainer, `Failed to calculate weights: ${error.message}`);
     }
   };
   
-  // Function to handle weights list item selection
-  const handleWeightsSelect = async () => {
-    // Clear dataset selection
-    selectedDatasetNumber = null;
-    
-    // Remove active class from all dataset list items
-    listContainer.querySelectorAll('.dataset-list-item').forEach(item => {
-      item.classList.remove('active');
-    });
-    
-    // Show weights view
-    await showWeightsView();
-  };
-  
   // Function to handle dataset selection
   const handleDatasetSelect = async (dataset) => {
     const datasetNumber = dataset.datasetNumber;
     
-    // If same dataset is clicked, clear selection and return to weights view
-    if (selectedDatasetNumber === datasetNumber) {
-      selectedDatasetNumber = null;
-      // Remove active class from all list items (including weights item)
-      listContainer.querySelectorAll('.dataset-list-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      if (weightsListItem) {
-        weightsListItem.classList.remove('active');
-      }
-      // Return to weights view
-      await showWeightsView();
-      return;
+    // Close overlay when dataset is selected
+    if (datasetsOverlay) {
+      datasetsOverlay.remove();
+      datasetsOverlay = null;
     }
     
     selectedDatasetNumber = datasetNumber;
-    
-    // Remove active class from weights item
-    if (weightsListItem) {
-      weightsListItem.classList.remove('active');
-    }
-    
-    // Add active class to selected item
-    listContainer.querySelectorAll('.dataset-list-item').forEach((item) => {
-      item.classList.remove('active');
-      // Find the item that matches this dataset number
-      const itemDatasetNumber = parseInt(item.getAttribute('data-dataset-number'), 10);
-      if (itemDatasetNumber === datasetNumber) {
-        item.classList.add('active');
-      }
-    });
     
     // Clear and show loading
     clearElement(detailContainer);
@@ -681,19 +771,25 @@ async function renderDatasetsView(container, categoryId) {
       // Clear loading and render detail
       clearElement(detailContainer);
       
-      // Render dataset detail inline (without back button)
+      // Render dataset detail inline (with back button to return to weights)
       renderDatasetDetail(
         detailContainer,
         fullDataset,
         categoryId,
-        null, // No back button needed
+        () => {
+          // Back button handler - return to weights view
+          selectedDatasetNumber = null;
+          showWeightsView();
+        },
         async (dataset, categoryId) => {
+          // Handle download (deprecated, kept for compatibility)
           try {
             await downloadDataset(categoryId, datasetNumber, dataset);
           } catch (error) {
             displayError(detailContainer, `Failed to download dataset: ${error.message}`);
           }
-        }
+        },
+        datasetNumber // Pass datasetNumber for download link
       );
     } catch (error) {
       clearElement(detailContainer);
@@ -713,13 +809,9 @@ async function renderDatasetsView(container, categoryId) {
     
     console.log(`[CategoryView] Discovered ${datasets ? datasets.length : 0} datasets for ${categoryId}`);
     
-    // Clear loading
-    clearElement(listContainer);
-    
     // Handle empty datasets
     if (!datasets || datasets.length === 0) {
       console.warn(`[CategoryView] No datasets found for category: ${categoryId}`);
-      renderDatasetList(listContainer, [], null, null);
       clearElement(detailContainer);
       const emptyState = createElement('div', {
         className: 'dataset-detail-empty',
@@ -729,74 +821,16 @@ async function renderDatasetsView(container, categoryId) {
       return;
     }
     
-    // Render dataset list first (it will create its own container)
-    renderDatasetList(listContainer, datasets, handleDatasetSelect, async (dataset) => {
-      // Handle download with error handling
-      try {
-        await downloadDataset(categoryId, dataset.datasetNumber);
-      } catch (error) {
-        // Show user-friendly error message
-        const errorMsg = createElement('div', {
-          className: 'error-message',
-          style: 'margin-top: 1rem; padding: 1rem; background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); border-radius: 4px; color: #ff6666;',
-          textContent: `Download failed: ${error.message}`
-        });
-        listContainer.appendChild(errorMsg);
-        
-        // Remove error message after 5 seconds
-        setTimeout(() => {
-          if (errorMsg.parentNode) {
-            errorMsg.parentNode.removeChild(errorMsg);
-          }
-        }, 5000);
-      }
-    });
-    
-    // Find the dataset-list-container created by renderDatasetList
-    const datasetListContainer = listContainer.querySelector('.dataset-list-container');
-    
-    // Create and add "Weights" list item at the first position
-    weightsListItem = createElement('div', {
-      className: 'dataset-list-item weights-list-item active', // Active by default since weights are shown initially
-      'data-item-type': 'weights'
-    });
-    
-    const weightsContent = createElement('div', {
-      className: 'dataset-list-item-content',
-      style: 'cursor: pointer;'
-    });
-    
-    const weightsName = createElement('span', {
-      className: 'dataset-list-item-name',
-      textContent: 'Calculated Weights'
-    });
-    weightsContent.appendChild(weightsName);
-    
-    weightsContent.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      handleWeightsSelect();
-    });
-    
-    weightsListItem.appendChild(weightsContent);
-    
-    // Insert weights item at the beginning of the dataset list container
-    if (datasetListContainer && datasetListContainer.firstChild) {
-      datasetListContainer.insertBefore(weightsListItem, datasetListContainer.firstChild);
-    } else if (datasetListContainer) {
-      datasetListContainer.appendChild(weightsListItem);
-    }
-    
-    // Calculate and display weights by default (instead of first dataset)
+    // Calculate and display weights by default
     await showWeightsView(datasets);
   } catch (error) {
-    clearElement(listContainer);
+    clearElement(detailContainer);
     
     // Handle specific error types
     if (error.message.includes('timeout')) {
-      displayError(listContainer, 'Loading datasets took too long. Please try again.');
+      displayError(detailContainer, 'Loading datasets took too long. Please try again.');
     } else {
-      displayError(listContainer, `Failed to load datasets: ${error.message}`);
+      displayError(detailContainer, `Failed to load datasets: ${error.message}`);
     }
     
     // Add retry button
@@ -806,9 +840,9 @@ async function renderDatasetsView(container, categoryId) {
       style: 'margin-top: 1rem;'
     });
     retryButton.addEventListener('click', () => {
-      renderDatasetsView(container, categoryId);
+      renderDatasetsView(container, categoryId, navigationCategoryId);
     });
-    listContainer.appendChild(retryButton);
+    detailContainer.appendChild(retryButton);
   }
 }
 

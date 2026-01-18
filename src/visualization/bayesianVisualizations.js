@@ -169,13 +169,13 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
     return null;
   }
 
-  // Create wrapper for chart and overlays
+  // Create wrapper for chart
   const chartWrapper = createElement('div', { 
     className: 'bayesian-density-plot-wrapper',
     style: 'position: relative; width: 100%; height: 600px; background-color: #e8e8e8; padding: 20px; border-radius: 8px;'
   });
 
-  // Create canvas element
+  // Create chart container
   const canvas = createElement('canvas');
   const chartContainer = createElement('div', { 
     className: 'bayesian-chart-container',
@@ -184,18 +184,37 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
   chartContainer.appendChild(canvas);
   chartWrapper.appendChild(chartContainer);
 
-  // Create summary statistics table overlay (top-right, like in reference image)
-  const summaryTable = createElement('div', {
-    className: 'bayesian-summary-table-overlay',
-    style: 'position: absolute; top: 20px; right: 20px; background: white; border: 2px solid #000; padding: 12px; border-radius: 4px; font-size: 11px; z-index: 10; max-width: 320px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-family: monospace;'
+  // Create collapsible summary statistics table component
+  const collapsibleContainer = createElement('div', {
+    className: 'bayesian-summary-table-collapsible',
+    style: 'position: absolute; top: 20px; right: 20px; z-index: 10;'
   });
 
-  // Table header - matching reference image format
+  // Toggle button
+  const toggleButton = createElement('button', {
+    className: 'bayesian-summary-table-toggle',
+    style: 'background: white; border: 2px solid #000; border-radius: 4px 4px 0 0; padding: 8px 16px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-family: monospace; color: #000;'
+  });
+  toggleButton.textContent = 'Show Parameter Details ▼';
+  collapsibleContainer.appendChild(toggleButton);
+
+  // Summary table (collapsed by default)
+  const summaryTable = createElement('div', {
+    className: 'bayesian-summary-table-overlay',
+    style: 'display: none; background: white; border: 2px solid #000; border-top: none; border-radius: 0 0 4px 4px; font-size: 11px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-family: monospace; max-width: 400px; max-height: 400px; flex-direction: column;'
+  });
+
+  // Table header - matching reference image format (sticky header)
   const tableHeader = createElement('div', {
-    style: 'font-weight: bold; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #000; font-size: 11px; white-space: nowrap;'
+    style: 'font-weight: bold; padding: 12px 12px 6px 12px; border-bottom: 1px solid #000; font-size: 11px; white-space: nowrap; flex-shrink: 0; background: white; color: #000;'
   });
   tableHeader.textContent = 'Parameter | Median | 89% CI';
   summaryTable.appendChild(tableHeader);
+
+  // Scrollable table body
+  const tableBody = createElement('div', {
+    style: 'overflow-y: auto; overflow-x: hidden; flex: 1; min-height: 0; padding: 0 12px 12px 12px; color: #000;'
+  });
 
   // Sort items by median (descending) for table
   const sortedItemData = [...itemData].sort((a, b) => b.median - a.median);
@@ -203,16 +222,33 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
   // Table rows - matching reference image format
   sortedItemData.forEach(item => {
     const row = createElement('div', {
-      style: 'padding: 2px 0; border-bottom: 1px solid #eee; font-size: 10px; white-space: nowrap;'
+      style: 'padding: 2px 0; border-bottom: 1px solid #eee; font-size: 10px; white-space: nowrap; color: #000;'
     });
     const medianStr = item.median.toFixed(5);
     const ciStr = `[${item.ci89.lower.toFixed(5)}, ${item.ci89.upper.toFixed(5)}]`;
     // Format: Parameter | Median | CI
     row.textContent = `${item.itemName} | ${medianStr} | ${ciStr}`;
-    summaryTable.appendChild(row);
+    tableBody.appendChild(row);
   });
 
-  chartWrapper.appendChild(summaryTable);
+  summaryTable.appendChild(tableBody);
+  collapsibleContainer.appendChild(summaryTable);
+  chartWrapper.appendChild(collapsibleContainer);
+
+  // Toggle functionality
+  let isExpanded = false;
+  toggleButton.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    if (isExpanded) {
+      summaryTable.style.display = 'flex';
+      toggleButton.textContent = 'Hide Parameter Details ▲';
+      toggleButton.style.borderRadius = '4px 4px 0 0';
+    } else {
+      summaryTable.style.display = 'none';
+      toggleButton.textContent = 'Show Parameter Details ▼';
+      toggleButton.style.borderRadius = '4px';
+    }
+  });
 
   // Determine overall x-axis range from all datasets
   let globalXMin = Infinity;
@@ -267,6 +303,12 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
           left: 10
         }
       },
+      animation: {
+        onComplete: () => {
+          // Legend should be rendered by now
+          setTimeout(() => makeLegendScrollable(), 50);
+        }
+      },
       plugins: {
         title: {
           display: false // No title, cleaner look
@@ -276,7 +318,7 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
           position: 'right',
           align: 'start',
           labels: {
-            color: '#333',
+            color: '#000',
             font: { size: 12 },
             usePointStyle: true,
             padding: 8,
@@ -297,7 +339,7 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
           title: {
             display: true,
             text: 'Parameter',
-            color: '#333',
+            color: '#000',
             font: { size: 12, weight: 'bold' }
           }
         },
@@ -355,7 +397,167 @@ export function renderDensityPlot(container, posteriorSamples, items = [], optio
     }
   };
 
+  // Make legend scrollable after chart is rendered
+  // Chart.js v3+ renders the legend as HTML when position is 'right'
+  const makeLegendScrollable = () => {
+    try {
+      // Chart.js creates the legend as a direct child of the chart container's parent
+      // The parent is usually chartWrapper, and legend is a sibling to chartContainer
+      const chartParent = chartContainer.parentElement;
+      if (!chartParent) return;
+      
+      // Get all direct children of the parent
+      const siblings = Array.from(chartParent.children);
+      
+      for (const sibling of siblings) {
+        // Skip known elements
+        if (sibling === chartContainer || 
+            sibling === collapsibleContainer || 
+            sibling.classList.contains('bayesian-legend-scrollable')) {
+          continue;
+        }
+        
+        const style = window.getComputedStyle(sibling);
+        
+        // Legend is absolutely positioned
+        if (style.position === 'absolute') {
+          const rect = sibling.getBoundingClientRect();
+          const wrapperRect = chartWrapper.getBoundingClientRect();
+          
+          // Check if it's on the right side (legend position)
+          // Also check if it contains text that looks like a legend (has "Parameter" or list items)
+          const isOnRight = rect.left > wrapperRect.left + wrapperRect.width * 0.5;
+          const hasLegendContent = sibling.textContent.includes('Parameter') || 
+                                   sibling.querySelector('ul') !== null ||
+                                   sibling.querySelectorAll('li').length > 0;
+          
+          if (isOnRight && (hasLegendContent || sibling.textContent.trim().length > 10)) {
+            sibling.classList.add('bayesian-legend-scrollable');
+            console.log('[BayesianVisualizations] Found and styled legend container');
+            return;
+          }
+        }
+      }
+      
+      // Fallback: search all divs in wrapper
+      const allDivs = chartWrapper.querySelectorAll('div');
+      for (const div of allDivs) {
+        if (div === chartContainer || div === collapsibleContainer) continue;
+        if (div.classList.contains('bayesian-legend-scrollable')) continue;
+        
+        const style = window.getComputedStyle(div);
+        if (style.position === 'absolute') {
+          const rect = div.getBoundingClientRect();
+          const wrapperRect = chartWrapper.getBoundingClientRect();
+          
+          if (rect.left > wrapperRect.left + wrapperRect.width * 0.5) {
+            // Check if it looks like a legend
+            const hasList = div.querySelector('ul') !== null;
+            const hasLegendText = div.textContent.includes('Parameter');
+            const hasMultipleItems = div.querySelectorAll('li, span').length > 5;
+            
+            if (hasList || hasLegendText || hasMultipleItems) {
+              div.classList.add('bayesian-legend-scrollable');
+              console.log('[BayesianVisualizations] Found legend via fallback search');
+              return;
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('[BayesianVisualizations] Failed to make legend scrollable:', error);
+    }
+  };
+  
   const chart = new Chart(canvas, chartOptions);
+  
+  // Set up MutationObserver to catch legend when it's added
+  let legendFound = false;
+  const observer = new MutationObserver((mutations) => {
+    if (legendFound) return;
+    
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== 1) continue; // Only element nodes
+        
+        // Check if this is the legend
+        const style = window.getComputedStyle(node);
+        if (style.position === 'absolute' && 
+            node !== chartContainer && 
+            node !== collapsibleContainer &&
+            !node.classList.contains('bayesian-legend-scrollable')) {
+          
+          const rect = node.getBoundingClientRect();
+          const wrapperRect = chartWrapper.getBoundingClientRect();
+          
+          if (rect.left > wrapperRect.left + wrapperRect.width * 0.5) {
+            const hasList = node.querySelector('ul') !== null;
+            const hasLegendText = node.textContent.includes('Parameter');
+            const hasMultipleItems = node.querySelectorAll('li, span').length > 5;
+            
+            if (hasList || hasLegendText || hasMultipleItems) {
+              node.classList.add('bayesian-legend-scrollable');
+              legendFound = true;
+              observer.disconnect();
+              console.log('[BayesianVisualizations] Legend found via MutationObserver');
+              return;
+            }
+          }
+        }
+        
+        // Also check children of added nodes
+        if (node.querySelectorAll) {
+          const potentialLegends = node.querySelectorAll('div[style*="position: absolute"]');
+          for (const potentialLegend of potentialLegends) {
+            if (potentialLegend !== chartContainer && 
+                potentialLegend !== collapsibleContainer &&
+                !potentialLegend.classList.contains('bayesian-legend-scrollable')) {
+              const rect = potentialLegend.getBoundingClientRect();
+              const wrapperRect = chartWrapper.getBoundingClientRect();
+              if (rect.left > wrapperRect.left + wrapperRect.width * 0.5) {
+                potentialLegend.classList.add('bayesian-legend-scrollable');
+                legendFound = true;
+                observer.disconnect();
+                console.log('[BayesianVisualizations] Legend found in added node');
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    // Also try direct search
+    makeLegendScrollable();
+  });
+  
+  observer.observe(chartWrapper, { 
+    childList: true, 
+    subtree: true,
+    attributes: false
+  });
+  
+  // Try multiple times with increasing delays
+  setTimeout(makeLegendScrollable, 0);
+  setTimeout(makeLegendScrollable, 100);
+  setTimeout(makeLegendScrollable, 300);
+  setTimeout(makeLegendScrollable, 500);
+  setTimeout(makeLegendScrollable, 1000);
+  
+  // Disconnect observer after 3 seconds to avoid memory leaks
+  setTimeout(() => {
+    if (!legendFound) {
+      observer.disconnect();
+      console.warn('[BayesianVisualizations] Legend not found after 3 seconds');
+    }
+  }, 3000);
+  
+  // Also try on chart resize and update
+  const originalOnResize = chart.options.onResize;
+  chart.options.onResize = () => {
+    if (originalOnResize) originalOnResize();
+    makeLegendScrollable();
+  };
   
   container.appendChild(chartWrapper);
   return chart;

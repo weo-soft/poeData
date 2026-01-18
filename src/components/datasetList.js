@@ -3,15 +3,17 @@
  */
 
 import { createElement, clearElement } from '../utils/dom.js';
+import { getDatasetUrl } from '../utils/fileUrls.js';
 
 /**
  * Render dataset list
  * @param {HTMLElement} container - Container element to render into
  * @param {Array} datasets - Array of DatasetMetadata objects
  * @param {Function} onDatasetSelect - Callback when dataset is selected
- * @param {Function} onDownload - Callback when download is requested
+ * @param {Function} onDownload - Callback when download is requested (deprecated, kept for compatibility)
+ * @param {string} categoryId - Category identifier (required for generating download links)
  */
-export function renderDatasetList(container, datasets, onDatasetSelect, onDownload) {
+export function renderDatasetList(container, datasets, onDatasetSelect, onDownload, categoryId) {
   clearElement(container);
   
   console.log(`[DatasetList] Rendering ${datasets ? datasets.length : 0} datasets`);
@@ -23,18 +25,81 @@ export function renderDatasetList(container, datasets, onDatasetSelect, onDownlo
     return;
   }
   
+  // Sort datasets by patch version (descending)
+  const sortedDatasets = sortDatasetsByPatch(datasets);
+  
   // Create dataset list container
   const listContainer = createElement('div', { className: 'dataset-list-container' });
   
   // Render each dataset as a list item
-  datasets.forEach((dataset, index) => {
+  sortedDatasets.forEach((dataset, index) => {
     console.log(`[DatasetList] Rendering dataset ${index + 1}:`, dataset.name || `Dataset ${dataset.datasetNumber}`);
-    const listItem = renderDatasetListItem(dataset, onDatasetSelect, onDownload);
+    const listItem = renderDatasetListItem(dataset, onDatasetSelect, onDownload, categoryId);
     listContainer.appendChild(listItem);
   });
   
   container.appendChild(listContainer);
-  console.log(`[DatasetList] Successfully rendered ${datasets.length} dataset list items`);
+  console.log(`[DatasetList] Successfully rendered ${sortedDatasets.length} dataset list items`);
+}
+
+/**
+ * Sort datasets by patch version (descending)
+ * @param {Array} datasets - Array of DatasetMetadata objects
+ * @returns {Array} Sorted array of datasets
+ */
+export function sortDatasetsByPatch(datasets) {
+  if (!datasets || datasets.length === 0) {
+    return [];
+  }
+  
+  return [...datasets].sort((a, b) => {
+    const patchA = a.patch || '';
+    const patchB = b.patch || '';
+    
+    // If both have patches, compare them
+    if (patchA && patchB) {
+      return comparePatchVersions(patchB, patchA); // Descending order
+    }
+    
+    // If only one has a patch, prioritize it
+    if (patchA && !patchB) return -1;
+    if (!patchA && patchB) return 1;
+    
+    // If neither has a patch, sort by dataset number (descending)
+    return (b.datasetNumber || 0) - (a.datasetNumber || 0);
+  });
+}
+
+/**
+ * Compare two patch version strings (e.g., "3.24", "3.23")
+ * Returns: negative if a < b, positive if a > b, 0 if equal
+ * @param {string} a - First patch version
+ * @param {string} b - Second patch version
+ * @returns {number} Comparison result
+ */
+function comparePatchVersions(a, b) {
+  // Parse patch versions (e.g., "3.24" -> [3, 24])
+  const parsePatch = (patch) => {
+    return patch.split('.').map(part => {
+      const num = parseInt(part, 10);
+      return isNaN(num) ? 0 : num;
+    });
+  };
+  
+  const partsA = parsePatch(a);
+  const partsB = parsePatch(b);
+  
+  // Compare each part
+  const maxLength = Math.max(partsA.length, partsB.length);
+  for (let i = 0; i < maxLength; i++) {
+    const partA = partsA[i] || 0;
+    const partB = partsB[i] || 0;
+    
+    if (partA < partB) return -1;
+    if (partA > partB) return 1;
+  }
+  
+  return 0;
 }
 
 /**
@@ -57,10 +122,11 @@ function renderEmptyState(container) {
  * Render dataset list item
  * @param {Object} dataset - DatasetMetadata object
  * @param {Function} onSelect - Callback when dataset is selected
- * @param {Function} onDownload - Callback when download is requested
+ * @param {Function} onDownload - Callback when download is requested (deprecated, kept for compatibility)
+ * @param {string} categoryId - Category identifier (required for generating download links)
  * @returns {HTMLElement} Dataset list item element
  */
-function renderDatasetListItem(dataset, onSelect, onDownload) {
+function renderDatasetListItem(dataset, onSelect, onDownload, categoryId) {
   const listItem = createElement('div', { 
     className: 'dataset-list-item',
     'data-dataset-number': dataset.datasetNumber
@@ -95,36 +161,23 @@ function renderDatasetListItem(dataset, onSelect, onDownload) {
     });
   }
   
-  // Download button (separate from click action)
-  if (onDownload) {
-    const downloadButton = createElement('button', {
+  // Download link (separate from click action) - Direct link to dataset file
+  if (dataset && dataset.datasetNumber && categoryId) {
+    const datasetUrl = getDatasetUrl(categoryId, dataset.datasetNumber);
+    const downloadLink = createElement('a', {
       className: 'btn btn-secondary btn-small',
-      textContent: 'Download'
+      href: datasetUrl,
+      download: `dataset${dataset.datasetNumber}.json`,
+      textContent: 'Download',
+      title: 'Direct link to dataset JSON file'
     });
-    downloadButton.addEventListener('click', async (e) => {
-      e.preventDefault();
+    
+    // Prevent link click from triggering parent click
+    downloadLink.addEventListener('click', (e) => {
       e.stopPropagation();
-      const originalText = downloadButton.textContent;
-      downloadButton.disabled = true;
-      downloadButton.textContent = 'Downloading...';
-      
-      try {
-        await onDownload(dataset);
-        downloadButton.textContent = 'Downloaded!';
-        setTimeout(() => {
-          downloadButton.textContent = originalText;
-          downloadButton.disabled = false;
-        }, 2000);
-      } catch (error) {
-        downloadButton.textContent = 'Error';
-        setTimeout(() => {
-          downloadButton.textContent = originalText;
-          downloadButton.disabled = false;
-        }, 2000);
-        console.error('Download failed:', error);
-      }
     });
-    content.appendChild(downloadButton);
+    
+    content.appendChild(downloadLink);
   }
   
   listItem.appendChild(content);

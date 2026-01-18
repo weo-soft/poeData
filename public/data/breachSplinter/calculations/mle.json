@@ -1,0 +1,72 @@
+{
+    "name": "Calculated Weights for Breach",
+    "description": "Calculated item weights for Breach using MLE method from 5 datasets",
+    "date": "2026-01-18",
+    "patch": "3.26.0",
+    "sources": [
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+        "author": "cardpender"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+        "author": "cardpender"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+        "author": "cardpender"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+        "author": "cardpender"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1338054352920903764",
+        "author": "cardpender"
+      }
+    ],
+    "items": [
+      {
+        "id": "xoph",
+        "weight": 0.28719939166204894
+      },
+      {
+        "id": "esh",
+        "weight": 0.26651446021092445
+      },
+      {
+        "id": "tul",
+        "weight": 0.26572565976352097
+      },
+      {
+        "id": "uul-netol",
+        "weight": 0.11762265953667576
+      },
+      {
+        "id": "chayula",
+        "weight": 0.06293782882682993
+      }
+    ],
+    "inputItems": [
+      {
+        "id": "esh"
+      },
+      {
+        "id": "tul"
+      },
+      {
+        "id": "xoph"
+      },
+      {
+        "id": "uul-netol"
+      },
+      {
+        "id": "chayula"
+      }
+    ]
+  }

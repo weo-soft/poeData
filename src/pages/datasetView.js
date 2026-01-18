@@ -56,13 +56,14 @@ export async function renderDatasetView(container, params) {
         router.navigate(`/category/${categoryId}?view=datasets`);
       },
       async (dataset, categoryId) => {
-        // Handle download
+        // Handle download (deprecated, kept for compatibility)
         try {
           await downloadDataset(categoryId, datasetNumber, dataset);
         } catch (error) {
           displayError(viewSection, `Failed to download dataset: ${error.message}`);
         }
-      }
+      },
+      datasetNumber // Pass datasetNumber for download link
     );
     
   } catch (error) {

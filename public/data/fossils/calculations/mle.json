@@ -1,0 +1,206 @@
+{
+    "name": "Calculated Weights for Fossils",
+    "description": "Calculated item weights for Fossils using MLE method from 9 datasets",
+    "date": "2026-01-18",
+    "patch": "3.19.0",
+    "sources": [
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+        "author": "Lextra"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+        "author": "FallenAng3L"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1024022915882160228",
+        "author": "valiant_beetle_44940"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1150370447007961099",
+        "author": "hakei."
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1296229903947141122",
+        "author": "inev_"
+      }
+    ],
+    "items": [
+      {
+        "id": "jagged",
+        "weight": 0.11577070751602904
+      },
+      {
+        "id": "pristine",
+        "weight": 0.11484330531963828
+      },
+      {
+        "id": "metalic",
+        "weight": 0.11086950862390794
+      },
+      {
+        "id": "dense",
+        "weight": 0.10819692291217149
+      },
+      {
+        "id": "abberant",
+        "weight": 0.10729999296889657
+      },
+      {
+        "id": "frigid",
+        "weight": 0.1047181991444448
+      },
+      {
+        "id": "scorched",
+        "weight": 0.1012414064392411
+      },
+      {
+        "id": "shuddering",
+        "weight": 0.025658127433396582
+      },
+      {
+        "id": "serrated",
+        "weight": 0.024730725237005806
+      },
+      {
+        "id": "corroded",
+        "weight": 0.023803323040615023
+      },
+      {
+        "id": "deft",
+        "weight": 0.023803323040615023
+      },
+      {
+        "id": "aetheric",
+        "weight": 0.023803323040615023
+      },
+      {
+        "id": "bound",
+        "weight": 0.022412219746028843
+      },
+      {
+        "id": "fundamental",
+        "weight": 0.021484817549638047
+      },
+      {
+        "id": "lucent",
+        "weight": 0.021476808777223477
+      },
+      {
+        "id": "prismatic",
+        "weight": 0.020866549418710845
+      },
+      {
+        "id": "perfect",
+        "weight": 0.018393476895002002
+      },
+      {
+        "id": "opulent",
+        "weight": 0.003245907687274663
+      },
+      {
+        "id": "glyphic",
+        "weight": 0.001700237359937944
+      },
+      {
+        "id": "gilded",
+        "weight": 0.0015078079641685578
+      },
+      {
+        "id": "sanctified",
+        "weight": 0.0013911032944626772
+      },
+      {
+        "id": "faceted",
+        "weight": 0.0007728351634297021
+      },
+      {
+        "id": "fractured",
+        "weight": 0.0006182681304970711
+      },
+      {
+        "id": "hollow",
+        "weight": 0.0004637010990164428
+      },
+      {
+        "id": "bloodstained",
+        "weight": 0.0004637010990164428
+      },
+      {
+        "id": "tangled",
+        "weight": 0.0004637010990164428
+      }
+    ],
+    "inputItems": [
+      {
+        "id": "abberant"
+      },
+      {
+        "id": "metalic"
+      },
+      {
+        "id": "frigid"
+      },
+      {
+        "id": "lucent"
+      },
+      {
+        "id": "gilded"
+      }
+    ]
+  }

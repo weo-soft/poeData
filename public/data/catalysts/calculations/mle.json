@@ -1,0 +1,134 @@
+{
+    "name": "Calculated Weights for Catalysts",
+    "description": "Calculated item weights for Catalysts using MLE method from 6 datasets",
+    "date": "2026-01-18",
+    "patch": "3.25.0",
+    "sources": [
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      },
+      {
+        "name": "Google Sheet",
+        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+        "author": "pedrolopa"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+        "author": "kubuxu"
+      }
+    ],
+    "items": [
+      {
+        "id": "intrinsic",
+        "weight": 0.22805511593695532
+      },
+      {
+        "id": "turbulent",
+        "weight": 0.16099953563655028
+      },
+      {
+        "id": "noxious",
+        "weight": 0.15559012186825108
+      },
+      {
+        "id": "imbued",
+        "weight": 0.15447035432533024
+      },
+      {
+        "id": "abrasive",
+        "weight": 0.1544327475654119
+      },
+      {
+        "id": "fertile",
+        "weight": 0.03776156381622516
+      },
+      {
+        "id": "prismatic",
+        "weight": 0.03776156381622516
+      },
+      {
+        "id": "tempering",
+        "weight": 0.03761052765050599
+      },
+      {
+        "id": "unstable",
+        "weight": 0.017097956012646392
+      },
+      {
+        "id": "accelerating",
+        "weight": 0.016205367916492342
+      },
+      {
+        "id": "intrisic",
+        "weight": 0.000015145455406214253
+      }
+    ],
+    "inputItems": [
+      {
+        "id": "intrisic"
+      },
+      {
+        "id": "turbulent"
+      },
+      {
+        "id": "abrasive"
+      },
+      {
+        "id": "noxious"
+      },
+      {
+        "id": "imbued"
+      },
+      {
+        "id": "tempering"
+      }
+    ]
+  }

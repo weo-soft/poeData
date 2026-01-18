@@ -1,0 +1,72 @@
+{
+    "name": "Calculated Weights for Legion",
+    "description": "Calculated item weights for Legion using MLE method from 5 datasets",
+    "date": "2026-01-18",
+    "patch": "3.25.0",
+    "sources": [
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+        "author": "gdmt_"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+        "author": "gdmt_"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+        "author": "gdmt_"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+        "author": "gdmt_"
+      },
+      {
+        "name": "Discord Thread",
+        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740856073322687",
+        "author": "gdmt_"
+      }
+    ],
+    "items": [
+      {
+        "id": "eternal-empire",
+        "weight": 0.2926060557968826
+      },
+      {
+        "id": "karui",
+        "weight": 0.28548462092259136
+      },
+      {
+        "id": "vaal",
+        "weight": 0.24026654602703368
+      },
+      {
+        "id": "templar",
+        "weight": 0.12011545637579776
+      },
+      {
+        "id": "maraketh",
+        "weight": 0.06152732087769462
+      }
+    ],
+    "inputItems": [
+      {
+        "id": "eternal-empire"
+      },
+      {
+        "id": "karui"
+      },
+      {
+        "id": "vaal"
+      },
+      {
+        "id": "templar"
+      },
+      {
+        "id": "maraketh"
+      }
+    ]
+  }

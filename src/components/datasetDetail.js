@@ -3,6 +3,7 @@
  */
 
 import { createElement, clearElement } from '../utils/dom.js';
+import { getDatasetUrl } from '../utils/fileUrls.js';
 
 /**
  * Render dataset detail view
@@ -10,9 +11,10 @@ import { createElement, clearElement } from '../utils/dom.js';
  * @param {Object} dataset - Full dataset object
  * @param {string} categoryId - Category identifier
  * @param {Function} onBack - Callback when back button is clicked
- * @param {Function} onDownload - Callback when download is requested
+ * @param {Function} onDownload - Callback when download is requested (deprecated, kept for compatibility)
+ * @param {number} [datasetNumber] - Optional dataset number (if not provided, will try to get from dataset.datasetNumber)
  */
-export function renderDatasetDetail(container, dataset, categoryId, onBack, onDownload) {
+export function renderDatasetDetail(container, dataset, categoryId, onBack, onDownload, datasetNumber) {
   clearElement(container);
   
   if (!dataset) {
@@ -26,18 +28,22 @@ export function renderDatasetDetail(container, dataset, categoryId, onBack, onDo
   
   const detailSection = createElement('div', { className: 'dataset-detail' });
   
-  // Back button
+  // Create header with back button (if provided)
   if (onBack) {
+    const detailHeader = createElement('div', { className: 'dataset-detail-header' });
     const backButton = createElement('button', {
       className: 'btn btn-secondary',
       textContent: '← Back to Dataset List'
     });
     backButton.addEventListener('click', onBack);
-    detailSection.appendChild(backButton);
+    detailHeader.appendChild(backButton);
+    detailSection.appendChild(detailHeader);
   }
   
-  // Metadata section
-  const metadataSection = renderMetadataSection(dataset);
+  // Metadata section (with download link inline)
+  // Use provided datasetNumber or try to get from dataset object
+  const effectiveDatasetNumber = datasetNumber || dataset.datasetNumber;
+  const metadataSection = renderMetadataSection(dataset, onDownload, categoryId, effectiveDatasetNumber);
   detailSection.appendChild(metadataSection);
   
   // Sources section
@@ -74,37 +80,7 @@ export function renderDatasetDetail(container, dataset, categoryId, onBack, onDo
     }
   }
   
-  // Download button
-  if (onDownload) {
-    const downloadSection = createElement('div', { className: 'dataset-detail-actions' });
-    const downloadButton = createElement('button', {
-      className: 'btn btn-primary',
-      textContent: 'Download Dataset'
-    });
-    downloadButton.addEventListener('click', async () => {
-      const originalText = downloadButton.textContent;
-      downloadButton.disabled = true;
-      downloadButton.textContent = 'Downloading...';
-      
-      try {
-        await onDownload(dataset, categoryId);
-        downloadButton.textContent = 'Downloaded!';
-        setTimeout(() => {
-          downloadButton.textContent = originalText;
-          downloadButton.disabled = false;
-        }, 2000);
-      } catch (error) {
-        downloadButton.textContent = 'Error - Try Again';
-        setTimeout(() => {
-          downloadButton.textContent = originalText;
-          downloadButton.disabled = false;
-        }, 3000);
-        console.error('Download failed:', error);
-      }
-    });
-    downloadSection.appendChild(downloadButton);
-    detailSection.appendChild(downloadSection);
-  }
+  // Note: Download button is now in the header, so we don't need it at the bottom anymore
   
   container.appendChild(detailSection);
 }
@@ -112,10 +88,16 @@ export function renderDatasetDetail(container, dataset, categoryId, onBack, onDo
 /**
  * Render metadata section
  * @param {Object} dataset - Dataset object
+ * @param {Function} onDownload - Optional download callback (deprecated, kept for compatibility)
+ * @param {string} categoryId - Category identifier
+ * @param {number} [datasetNumber] - Optional dataset number for generating download link
  * @returns {HTMLElement} Metadata section element
  */
-function renderMetadataSection(dataset) {
+function renderMetadataSection(dataset, onDownload, categoryId, datasetNumber) {
   const section = createElement('section', { className: 'dataset-detail-section' });
+  
+  // Create title container with flex layout
+  const titleContainer = createElement('div', { className: 'dataset-metadata-title-container' });
   
   // Build title with inline metadata
   const title = createElement('h2', { className: 'section-title' });
@@ -169,7 +151,22 @@ function renderMetadataSection(dataset) {
     });
   }
   
-  section.appendChild(title);
+  titleContainer.appendChild(title);
+  
+  // Download link (right side) - Direct link to dataset file
+  if (datasetNumber) {
+    const datasetUrl = getDatasetUrl(categoryId, datasetNumber);
+    const downloadLink = createElement('a', {
+      className: 'btn btn-primary dataset-detail-download-link',
+      href: datasetUrl,
+      download: `dataset${datasetNumber}.json`,
+      textContent: 'Download Dataset',
+      title: 'Direct link to dataset JSON file'
+    });
+    titleContainer.appendChild(downloadLink);
+  }
+  
+  section.appendChild(titleContainer);
   
   // Description (kept separate as it wasn't mentioned in the merge request)
   if (dataset.description) {
