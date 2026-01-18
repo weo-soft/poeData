@@ -632,9 +632,9 @@ function createBayesianVisualizationTabs(result, items) {
       textContent: tab.label
     });
     
-    tabElement.addEventListener('click', () => {
+    tabElement.addEventListener('click', async () => {
       // Use currentBayesianResult and currentItems from module state
-      handleBayesianTabClick(tab.id, currentBayesianResult, currentItems);
+      await handleBayesianTabClick(tab.id, currentBayesianResult, currentItems);
     });
     
     tabsContainer.appendChild(tabElement);
@@ -649,7 +649,7 @@ function createBayesianVisualizationTabs(result, items) {
  * @param {Object} result - Bayesian result object
  * @param {Array<Object>} items - Item metadata
  */
-function handleBayesianTabClick(viewType, result, items) {
+async function handleBayesianTabClick(viewType, result, items) {
   // Use stored result and items if not provided
   const bayesianResult = result || currentBayesianResult;
   const bayesianItems = items || currentItems;
@@ -678,7 +678,7 @@ function handleBayesianTabClick(viewType, result, items) {
   // Render new visualization - use stored content area or find it
   const contentArea = currentContentArea || document.querySelector('.bayesian-visualization-content');
   if (contentArea && bayesianResult) {
-    renderBayesianVisualization(contentArea, viewType, bayesianResult, bayesianItems);
+    await renderBayesianVisualization(contentArea, viewType, bayesianResult, bayesianItems);
   } else {
     console.error('Content area not found for visualization');
   }
@@ -691,7 +691,7 @@ function handleBayesianTabClick(viewType, result, items) {
  * @param {Object} result - Bayesian result object
  * @param {Array<Object>} items - Item metadata
  */
-function renderBayesianVisualization(container, viewType, result, items) {
+async function renderBayesianVisualization(container, viewType, result, items) {
   clearElement(container);
 
   switch (viewType) {
@@ -704,9 +704,55 @@ function renderBayesianVisualization(container, viewType, result, items) {
                                    Object.keys(result.posteriorSamples).length > 0;
       
       if (hasPosteriorSamples) {
-        currentChartInstance = renderDensityPlot(container, result.posteriorSamples, items, {
-          summaryStatistics: result.summaryStatistics
+        // Show loading indicator while computing density plot
+        const loadingDiv = createElement('div', {
+          className: 'loading bayesian-density-loading',
+          style: 'padding: 40px; text-align: center;'
         });
+        const loadingText = createElement('p', {
+          textContent: 'Computing density plot... This may take a moment for large datasets.',
+          style: 'margin-bottom: 10px; color: #d4d4d4;'
+        });
+        const progressBar = createElement('div', {
+          className: 'bayesian-progress-bar',
+          style: 'width: 100%; max-width: 400px; height: 4px; background-color: rgba(255, 255, 255, 0.1); border-radius: 2px; margin: 0 auto; overflow: hidden;'
+        });
+        const progressFill = createElement('div', {
+          className: 'bayesian-progress-fill',
+          style: 'width: 0%; height: 100%; background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%); transition: width 0.3s ease; animation: pulse 2s infinite;'
+        });
+        progressBar.appendChild(progressFill);
+        loadingDiv.appendChild(loadingText);
+        loadingDiv.appendChild(progressBar);
+        container.appendChild(loadingDiv);
+
+        // Render density plot asynchronously with progress updates
+        try {
+          currentChartInstance = await renderDensityPlot(container, result.posteriorSamples, items, {
+            summaryStatistics: result.summaryStatistics,
+            onProgress: (progress) => {
+              progressFill.style.width = `${progress}%`;
+              if (progress >= 100) {
+                // Keep loading indicator visible briefly after completion
+                setTimeout(() => {
+                  if (loadingDiv.parentElement === container) {
+                    loadingDiv.remove();
+                  }
+                }, 300);
+              }
+            }
+          });
+        } catch (error) {
+          // Remove loading indicator on error
+          loadingDiv.remove();
+          const errorState = createElement('div', {
+            className: 'visualization-placeholder',
+            style: 'padding: 20px; text-align: center; color: #ff6b6b;',
+            textContent: `Failed to render density plot: ${error.message}`
+          });
+          container.appendChild(errorState);
+          console.error('Density plot rendering error:', error);
+        }
       } else {
         // No posterior samples available (legacy cache or missing data)
         const emptyState = createElement('div', {

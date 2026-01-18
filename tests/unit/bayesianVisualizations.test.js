@@ -129,36 +129,36 @@ describe('renderDensityPlot', () => {
     vi.restoreAllMocks();
   });
 
-  it('should throw error with invalid container', () => {
-    expect(() => renderDensityPlot(null, {})).toThrow('Container must be a valid HTMLElement');
+  it('should throw error with invalid container', async () => {
+    await expect(renderDensityPlot(null, {})).rejects.toThrow('Container must be a valid HTMLElement');
   });
 
-  it('should display empty state with no posterior samples', () => {
-    renderDensityPlot(container, {}, []);
+  it('should display empty state with no posterior samples', async () => {
+    await renderDensityPlot(container, {}, []);
     
     expect(container.querySelector('.visualization-placeholder')).toBeTruthy();
     expect(container.textContent).toContain('No posterior samples');
   });
 
-  it('should render density plot with posterior samples', () => {
+  it('should render density plot with posterior samples', async () => {
     const posteriorSamples = {
       'tul': Array.from({ length: 100 }, () => 0.3 + Math.random() * 0.1),
       'xoph': Array.from({ length: 100 }, () => 0.2 + Math.random() * 0.1)
     };
 
-    const chart = renderDensityPlot(container, posteriorSamples, []);
+    const chart = await renderDensityPlot(container, posteriorSamples, []);
 
     expect(container.querySelector('.bayesian-chart-container')).toBeTruthy();
     expect(container.querySelector('canvas')).toBeTruthy();
     expect(Chart).toHaveBeenCalled();
   });
 
-  it('should create density plot with proper configuration', () => {
+  it('should create density plot with proper configuration', async () => {
     const posteriorSamples = {
       'tul': Array.from({ length: 100 }, () => 0.3)
     };
 
-    renderDensityPlot(container, posteriorSamples, []);
+    await renderDensityPlot(container, posteriorSamples, []);
 
     const chartCall = Chart.mock.calls[0];
     const chartConfig = chartCall[1];
@@ -171,7 +171,7 @@ describe('renderDensityPlot', () => {
     expect(chartConfig.options.scales.x.title.text).toContain('Probability');
   });
 
-  it('should handle items with metadata', () => {
+  it('should handle items with metadata', async () => {
     const posteriorSamples = {
       'tul': Array.from({ length: 100 }, () => 0.3)
     };
@@ -179,7 +179,7 @@ describe('renderDensityPlot', () => {
       { id: 'tul', name: 'Tul Breachstone' }
     ];
 
-    renderDensityPlot(container, posteriorSamples, items);
+    await renderDensityPlot(container, posteriorSamples, items);
 
     const chartCall = Chart.mock.calls[0];
     const chartData = chartCall[1].data;

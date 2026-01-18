@@ -9,6 +9,7 @@ const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID_FORM = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_FORM;
 const EMAILJS_TEMPLATE_ID_IMPORT = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_IMPORT;
 const EMAILJS_TEMPLATE_ID_DATASET = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_DATASET;
+const EMAILJS_TEMPLATE_ID_FLEXIBLE = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_FLEXIBLE;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 // Initialize EmailJS if public key is available
@@ -22,7 +23,7 @@ if (EMAILJS_PUBLIC_KEY) {
  */
 export function isEmailJSConfigured() {
   return !!(EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && 
-           (EMAILJS_TEMPLATE_ID_FORM || EMAILJS_TEMPLATE_ID_IMPORT || EMAILJS_TEMPLATE_ID_DATASET));
+           (EMAILJS_TEMPLATE_ID_FORM || EMAILJS_TEMPLATE_ID_IMPORT || EMAILJS_TEMPLATE_ID_DATASET || EMAILJS_TEMPLATE_ID_FLEXIBLE));
 }
 
 /**
@@ -140,6 +141,97 @@ export async function sendDatasetSubmission(submissionData) {
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID_DATASET,
+      templateParams
+    );
+
+    return {
+      success: true,
+      messageId: response.text,
+      status: response.status
+    };
+  } catch (error) {
+    console.error('EmailJS send error:', error);
+    throw new Error(`Failed to send email: ${error.text || error.message}`);
+  }
+}
+
+/**
+ * Send flexible dataset submission via EmailJS
+ * @param {Object} submissionData - Submission data
+ * @param {string} submissionData.method - Submission method: "file" or "link"
+ * @param {string} submissionData.dataSource - File content (if method is "file") or URL (if method is "link")
+ * @param {string} [submissionData.description] - Optional description
+ * @param {string} [submissionData.categoryId] - Optional category identifier
+ * @param {Object} [submissionData.fileMetadata] - File metadata (required if method is "file")
+ * @param {Object} [submissionData.linkMetadata] - Link metadata (required if method is "link")
+ * @returns {Promise<Object>} EmailJS response with success status and messageId
+ * @throws {Error} If EmailJS is not configured or submission fails
+ */
+export async function sendFlexibleSubmission(submissionData) {
+  if (!isEmailJSConfigured() || !EMAILJS_TEMPLATE_ID_FLEXIBLE) {
+    throw new Error('EmailJS is not configured. Please set up EmailJS credentials in .env.local');
+  }
+
+  // Validate method
+  if (submissionData.method !== 'file' && submissionData.method !== 'link') {
+    throw new Error(`Invalid submission method: ${submissionData.method}`);
+  }
+
+  // Validate metadata based on method
+  if (submissionData.method === 'file' && !submissionData.fileMetadata) {
+    throw new Error('File metadata required for file submissions');
+  }
+
+  if (submissionData.method === 'link' && !submissionData.linkMetadata) {
+    throw new Error('Link metadata required for link submissions');
+  }
+
+  try {
+    // Prepare template parameters
+    const templateParams = {
+      submission_type: 'flexible',
+      method: submissionData.method,
+      category_id: submissionData.categoryId || '',
+      timestamp: new Date().toISOString(),
+      description: submissionData.description || '',
+      user_email: submissionData.userEmail || 'Not provided'
+    };
+
+    // Add file-specific parameters
+    if (submissionData.method === 'file') {
+      const fileContent = submissionData.dataSource || '';
+      const MAX_CONTENT_LENGTH = 50 * 1024; // 50KB
+      const isTruncated = fileContent.length > MAX_CONTENT_LENGTH;
+      
+      templateParams.file_name = submissionData.fileMetadata.name || '';
+      templateParams.file_size = String(submissionData.fileMetadata.size || 0);
+      templateParams.file_type = submissionData.fileMetadata.type || '';
+      templateParams.file_extension = submissionData.fileMetadata.extension || '';
+      templateParams.file_content = isTruncated 
+        ? fileContent.substring(0, MAX_CONTENT_LENGTH) 
+        : fileContent;
+      templateParams.file_content_truncated = isTruncated ? 'true' : 'false';
+      
+      // Initialize link-specific params as empty
+      templateParams.link_url = '';
+      templateParams.link_detected_type = '';
+    } else {
+      // Add link-specific parameters
+      templateParams.link_url = submissionData.dataSource || '';
+      templateParams.link_detected_type = submissionData.linkMetadata?.detectedType || '';
+      
+      // Initialize file-specific params as empty
+      templateParams.file_name = '';
+      templateParams.file_size = '';
+      templateParams.file_type = '';
+      templateParams.file_extension = '';
+      templateParams.file_content = '';
+      templateParams.file_content_truncated = 'false';
+    }
+
+    const response = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID_FLEXIBLE,
       templateParams
     );
 
