@@ -1,11 +1,12 @@
 /**
- * Submission forms view component - Guided form and import functionality
+ * Submission forms view component - Dataset submission and import functionality
  */
 
 import { createElement, clearElement } from '../utils/dom.js';
 import { displayError } from '../utils/errors.js';
-import { GuidedForm } from '../forms/guidedForm.js';
 import { handleImport, formatImportErrors, createImportSummary } from '../forms/importForm.js';
+import { DatasetSubmissionForm } from '../forms/datasetSubmissionForm.js';
+import { getAvailableCategories, loadCategoryData } from '../services/dataLoader.js';
 
 let currentForm = null;
 let currentCategoryId = null;
@@ -27,20 +28,20 @@ export async function renderSubmission(container, params = {}) {
   const title = createElement('h1', { textContent: 'Submit Item Data' });
   submissionSection.appendChild(title);
   
-  // Category selector if no category specified
-  if (!categoryId) {
-    const categorySelect = await createCategorySelector();
-    submissionSection.appendChild(categorySelect);
-  } else {
-    // Tabs for guided form and import
+  // Always show category selector (allows changing category even after selection)
+  const categorySelect = await createCategorySelector(categoryId);
+  submissionSection.appendChild(categorySelect);
+  
+  // Tabs for dataset submission and import (only show if category is selected)
+  if (categoryId) {
     const tabsContainer = createElement('div', { className: 'submission-tabs' });
     
-    const guidedTab = createElement('button', {
+    const datasetTab = createElement('button', {
       className: 'tab-button active',
-      textContent: 'Guided Form',
-      'data-tab': 'guided'
+      textContent: 'Dataset Submission',
+      'data-tab': 'dataset'
     });
-    guidedTab.addEventListener('click', () => switchTab('guided', submissionSection));
+    datasetTab.addEventListener('click', () => switchTab('dataset', submissionSection));
     
     const importTab = createElement('button', {
       className: 'tab-button',
@@ -49,7 +50,7 @@ export async function renderSubmission(container, params = {}) {
     });
     importTab.addEventListener('click', () => switchTab('import', submissionSection));
     
-    tabsContainer.appendChild(guidedTab);
+    tabsContainer.appendChild(datasetTab);
     tabsContainer.appendChild(importTab);
     submissionSection.appendChild(tabsContainer);
     
@@ -57,8 +58,15 @@ export async function renderSubmission(container, params = {}) {
     const tabContent = createElement('div', { className: 'tab-content', id: 'tab-content' });
     submissionSection.appendChild(tabContent);
     
-    // Render guided form by default
-    await renderGuidedForm(tabContent, categoryId);
+    // Render dataset submission form by default
+    await renderDatasetSubmission(tabContent, categoryId);
+  } else {
+    // Show message when no category is selected
+    const messageDiv = createElement('div', {
+      className: 'category-selection-message',
+      textContent: 'Please select a category above to continue.'
+    });
+    submissionSection.appendChild(messageDiv);
   }
   
   // Navigation
@@ -76,44 +84,139 @@ export async function renderSubmission(container, params = {}) {
 
 /**
  * Create category selector
+ * @param {string} [currentCategoryId] - Currently selected category ID (optional)
  * @returns {Promise<HTMLElement>} Category selector element
  */
-async function createCategorySelector() {
+async function createCategorySelector(currentCategoryId = null) {
   const selector = createElement('div', { className: 'category-selector' });
   
   const label = createElement('label', { 
-    textContent: 'Select Category:',
+    textContent: currentCategoryId ? 'Change Category:' : 'Select Category:',
     htmlFor: 'category-select'
   });
   selector.appendChild(label);
   
   const select = createElement('select', { id: 'category-select' });
   
-  // Hardcoded categories for now
-  const categories = [
-    { id: 'scarabs', name: 'Scarabs' },
-    { id: 'divination-cards', name: 'Divination Cards' }
-  ];
-  
-  categories.forEach(category => {
-    const option = createElement('option', {
-      value: category.id,
-      textContent: category.name
-    });
-    select.appendChild(option);
+  // Show loading state
+  const loadingOption = createElement('option', {
+    value: '',
+    textContent: 'Loading categories...'
   });
-  
-  select.addEventListener('change', (e) => {
-    window.location.hash = `#/submit/${e.target.value}`;
-  });
-  
+  select.appendChild(loadingOption);
   selector.appendChild(select);
+  
+  try {
+    // Load all available categories
+    const categories = await getAvailableCategories();
+    
+    // Transform categories: replace combined categories with their subcategories for submissions
+    const submissionCategories = [];
+    categories.forEach(category => {
+      if (category.id === 'breach') {
+        // Replace 'breach' with its subcategories
+        submissionCategories.push({
+          id: 'breach-splinters',
+          name: 'Breach Splinters',
+          description: 'Breach splinters'
+        });
+        submissionCategories.push({
+          id: 'breachstones',
+          name: 'Breachstones',
+          description: 'Breachstones'
+        });
+      } else if (category.id === 'legion') {
+        // Replace 'legion' with its subcategories
+        submissionCategories.push({
+          id: 'legion-splinters',
+          name: 'Legion Splinters',
+          description: 'Legion splinters'
+        });
+        submissionCategories.push({
+          id: 'legion-emblems',
+          name: 'Legion Emblems',
+          description: 'Legion emblems'
+        });
+      } else {
+        // Keep other categories as-is
+        submissionCategories.push(category);
+      }
+    });
+    
+    // Load item counts for subcategories
+    for (const category of submissionCategories) {
+      if (['breach-splinters', 'breachstones', 'legion-splinters', 'legion-emblems'].includes(category.id)) {
+        try {
+          const items = await loadCategoryData(category.id);
+          category.itemCount = items.length;
+        } catch (error) {
+          console.warn(`Could not load item count for ${category.id}:`, error);
+          category.itemCount = 0;
+        }
+      }
+    }
+    
+    // Clear loading option
+    clearElement(select);
+    
+    // Add default option (only if no category is currently selected)
+    if (!currentCategoryId) {
+      const defaultOption = createElement('option', {
+        value: '',
+        textContent: '-- Select a category --',
+        disabled: true,
+        selected: true
+      });
+      select.appendChild(defaultOption);
+    }
+    
+    // Add all submission categories
+    submissionCategories.forEach(category => {
+      const option = createElement('option', {
+        value: category.id,
+        textContent: category.name,
+        selected: category.id === currentCategoryId
+      });
+      select.appendChild(option);
+    });
+    
+    // Add option to clear selection (go back to category selection)
+    if (currentCategoryId) {
+      const clearOption = createElement('option', {
+        value: '',
+        textContent: '-- Change category --'
+      });
+      select.insertBefore(clearOption, select.firstChild);
+    }
+    
+    select.addEventListener('change', (e) => {
+      const selectedValue = e.target.value;
+      if (selectedValue) {
+        // Navigate to selected category
+        window.location.hash = `#/submit/${selectedValue}`;
+      } else if (currentCategoryId) {
+        // Clear selection - go back to category selection page
+        window.location.hash = '#/submit';
+      }
+    });
+  } catch (error) {
+    // Show error if categories can't be loaded
+    clearElement(select);
+    const errorOption = createElement('option', {
+      value: '',
+      textContent: 'Error loading categories',
+      disabled: true
+    });
+    select.appendChild(errorOption);
+    displayError(selector, `Failed to load categories: ${error.message}`);
+  }
+  
   return selector;
 }
 
 /**
  * Switch between tabs
- * @param {string} tabName - Tab name ('guided' or 'import')
+ * @param {string} tabName - Tab name ('dataset' or 'import')
  * @param {HTMLElement} container - Container element
  */
 async function switchTab(tabName, container) {
@@ -131,346 +234,10 @@ async function switchTab(tabName, container) {
   const tabContent = container.querySelector('#tab-content');
   clearElement(tabContent);
   
-  if (tabName === 'guided') {
-    await renderGuidedForm(tabContent, currentCategoryId);
+  if (tabName === 'dataset') {
+    await renderDatasetSubmission(tabContent, currentCategoryId);
   } else if (tabName === 'import') {
     renderImportForm(tabContent, currentCategoryId);
-  }
-}
-
-/**
- * Render guided form
- * @param {HTMLElement} container - Container element
- * @param {string} categoryId - Category identifier
- */
-async function renderGuidedForm(container, categoryId) {
-  currentForm = new GuidedForm(categoryId);
-  
-  const formContainer = createElement('div', { className: 'guided-form' });
-  
-  // Show loading state
-  const loadingDiv = createElement('div', {
-    className: 'loading-message',
-    textContent: 'Loading items...'
-  });
-  formContainer.appendChild(loadingDiv);
-  container.appendChild(formContainer);
-  
-  try {
-    // Load items
-    await currentForm.loadItems();
-    
-    // Remove loading message
-    clearElement(formContainer);
-    
-    // Render item selection or dropWeight form
-    renderItemSelection(formContainer, categoryId);
-    
-  } catch (error) {
-    clearElement(formContainer);
-    displayError(formContainer, `Failed to load items: ${error.message}`);
-  }
-}
-
-/**
- * Render item selection interface
- * @param {HTMLElement} container - Container element
- * @param {string} categoryId - Category identifier
- */
-function renderItemSelection(container, categoryId) {
-  clearElement(container);
-  
-  // If item is already selected, show dropWeight form
-  if (currentForm.selectedItem) {
-    renderDropWeightForm(container);
-    return;
-  }
-  
-  const title = createElement('h2', { textContent: 'Select an Item' });
-  container.appendChild(title);
-  
-  const description = createElement('p', {
-    textContent: 'Choose an item from the list below to submit a drop weight value.',
-    className: 'form-description'
-  });
-  container.appendChild(description);
-  
-  // Search input
-  const searchContainer = createElement('div', { className: 'search-container' });
-  const searchInput = createElement('input', {
-    type: 'text',
-    id: 'item-search',
-    placeholder: 'Search items by name or ID...',
-    className: 'search-input'
-  });
-  searchInput.addEventListener('input', (e) => {
-    currentForm.setSearchQuery(e.target.value);
-    renderItemList(itemListContainer);
-  });
-  searchContainer.appendChild(searchInput);
-  container.appendChild(searchContainer);
-  
-  // Item list container
-  const itemListContainer = createElement('div', { className: 'item-list-container' });
-  container.appendChild(itemListContainer);
-  
-  // Render initial item list
-  renderItemList(itemListContainer);
-}
-
-/**
- * Render item list
- * @param {HTMLElement} container - Container element
- */
-function renderItemList(container) {
-  clearElement(container);
-  
-  const filteredItems = currentForm.getFilteredItems();
-  
-  if (filteredItems.length === 0) {
-    const noResults = createElement('div', {
-      className: 'no-results',
-      textContent: 'No items found matching your search.'
-    });
-    container.appendChild(noResults);
-    return;
-  }
-  
-  const itemList = createElement('div', { className: 'item-list' });
-  
-  filteredItems.forEach(item => {
-    const itemCard = createElement('div', {
-      className: 'item-card',
-      'data-item-id': item.id
-    });
-    
-    const itemName = createElement('div', {
-      className: 'item-name',
-      textContent: item.name || item.id
-    });
-    itemCard.appendChild(itemName);
-    
-    const itemId = createElement('div', {
-      className: 'item-id',
-      textContent: `ID: ${item.id}`
-    });
-    itemCard.appendChild(itemId);
-    
-    if (item.dropWeight !== undefined && item.dropWeight !== null) {
-      const currentWeight = createElement('div', {
-        className: 'item-weight',
-        textContent: `Current Drop Weight: ${item.dropWeight}`
-      });
-      itemCard.appendChild(currentWeight);
-    }
-    
-    itemCard.addEventListener('click', () => {
-      currentForm.selectItem(item);
-      renderItemSelection(container.parentElement, currentForm.categoryId);
-    });
-    
-    itemList.appendChild(itemCard);
-  });
-  
-  container.appendChild(itemList);
-}
-
-/**
- * Render drop weight form
- * @param {HTMLElement} container - Container element
- */
-function renderDropWeightForm(container) {
-  clearElement(container);
-  
-  const selectedItem = currentForm.selectedItem;
-  
-  const title = createElement('h2', { textContent: 'Submit Drop Weight' });
-  container.appendChild(title);
-  
-  // Selected item info
-  const itemInfo = createElement('div', { className: 'selected-item-info' });
-  const itemName = createElement('div', {
-    className: 'selected-item-name',
-    textContent: selectedItem.name || selectedItem.id
-  });
-  itemInfo.appendChild(itemName);
-  
-  const itemId = createElement('div', {
-    className: 'selected-item-id',
-    textContent: `ID: ${selectedItem.id}`
-  });
-  itemInfo.appendChild(itemId);
-  
-  if (selectedItem.dropWeight !== undefined && selectedItem.dropWeight !== null) {
-    const currentWeight = createElement('div', {
-      className: 'current-weight',
-      textContent: `Current Drop Weight: ${selectedItem.dropWeight}`
-    });
-    itemInfo.appendChild(currentWeight);
-  }
-  
-  container.appendChild(itemInfo);
-  
-  // Change item button
-  const changeButton = createElement('button', {
-    textContent: '← Select Different Item',
-    className: 'btn-secondary',
-    id: 'change-item-button'
-  });
-  changeButton.addEventListener('click', () => {
-    currentForm.clearSelection();
-    renderItemSelection(container, currentForm.categoryId);
-  });
-  container.appendChild(changeButton);
-  
-  // Drop weight input
-  const formField = createElement('div', { className: 'form-field' });
-  
-  const label = createElement('label', {
-    htmlFor: 'drop-weight-input',
-    textContent: 'Drop Weight *'
-  });
-  formField.appendChild(label);
-  
-  const input = createElement('input', {
-    type: 'number',
-    id: 'drop-weight-input',
-    name: 'dropWeight',
-    step: '0.1',
-    min: '0.1',
-    value: currentForm.dropWeight || '',
-    required: true,
-    placeholder: 'Enter drop weight value'
-  });
-  
-  input.addEventListener('input', (e) => {
-    currentForm.setDropWeight(e.target.value);
-    const error = currentForm.getValidationError();
-    if (error) {
-      showFieldError(formField, error);
-    } else {
-      clearFieldError(formField);
-    }
-  });
-  
-  formField.appendChild(input);
-  
-  // Error display
-  const errorDiv = createElement('div', { className: 'field-error' });
-  formField.appendChild(errorDiv);
-  
-  // Show existing error if any
-  const existingError = currentForm.getValidationError();
-  if (existingError) {
-    showFieldError(formField, existingError);
-  }
-  
-  container.appendChild(formField);
-  
-  // Submit button
-  const submitButton = createElement('button', {
-    textContent: 'Submit Drop Weight',
-    className: 'btn-primary',
-    id: 'submit-button'
-  });
-  submitButton.addEventListener('click', () => handleSubmit(container));
-  container.appendChild(submitButton);
-}
-
-/**
- * Handle form submission
- * @param {HTMLElement} formContainer - Form container
- */
-async function handleSubmit(formContainer) {
-  // Validate drop weight
-  if (!currentForm.validateDropWeight()) {
-    const error = currentForm.getValidationError();
-    const fieldContainer = formContainer.querySelector('.form-field');
-    if (fieldContainer && error) {
-      showFieldError(fieldContainer, error);
-    }
-    return;
-  }
-  
-  // Show loading state
-  const submitButton = formContainer.querySelector('#submit-button');
-  if (submitButton) {
-    submitButton.disabled = true;
-    submitButton.textContent = 'Submitting...';
-  }
-  
-  try {
-    const result = await currentForm.submit();
-    
-    if (result.success) {
-      // Show success message
-      const successDiv = createElement('div', {
-        className: 'success-message',
-        innerHTML: `
-          <h2>Submission Successful!</h2>
-          <p>Your drop weight value for "${result.submissionData.itemName}" has been submitted and will be reviewed.</p>
-          <p>Thank you for your contribution!</p>
-        `
-      });
-      formContainer.innerHTML = '';
-      formContainer.appendChild(successDiv);
-    } else {
-      // Show error message
-      const errorDiv = createElement('div', {
-        className: 'error-message',
-        innerHTML: `
-          <h2>Submission Failed</h2>
-          <p>${result.error || 'Please correct the errors below and try again.'}</p>
-        `
-      });
-      formContainer.insertBefore(errorDiv, formContainer.firstChild);
-      
-      // Show validation error if any
-      if (result.validationError) {
-        const fieldContainer = formContainer.querySelector('.form-field');
-        if (fieldContainer) {
-          showFieldError(fieldContainer, result.validationError);
-        }
-      }
-      
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit Drop Weight';
-      }
-    }
-  } catch (error) {
-    displayError(formContainer, `Submission error: ${error.message}`);
-    if (submitButton) {
-      submitButton.disabled = false;
-      submitButton.textContent = 'Submit Drop Weight';
-    }
-  }
-}
-
-/**
- * Show field error
- * @param {HTMLElement} fieldContainer - Field container
- * @param {Object} error - Error object
- */
-function showFieldError(fieldContainer, error) {
-  const errorDiv = fieldContainer.querySelector('.field-error');
-  if (errorDiv) {
-    errorDiv.textContent = error.message;
-    errorDiv.style.display = 'block';
-    fieldContainer.classList.add('has-error');
-  }
-}
-
-/**
- * Clear field error
- * @param {HTMLElement} fieldContainer - Field container
- */
-function clearFieldError(fieldContainer) {
-  const errorDiv = fieldContainer.querySelector('.field-error');
-  if (errorDiv) {
-    errorDiv.textContent = '';
-    errorDiv.style.display = 'none';
-    fieldContainer.classList.remove('has-error');
   }
 }
 
@@ -648,6 +415,40 @@ async function handleFileImport(container, categoryId) {
     displayError(container, `Import error: ${error.message}`);
     importButton.disabled = false;
     importButton.textContent = 'Import and Submit';
+  }
+}
+
+/**
+ * Render dataset submission form
+ * @param {HTMLElement} container - Container element
+ * @param {string} categoryId - Category identifier
+ */
+async function renderDatasetSubmission(container, categoryId) {
+  currentForm = new DatasetSubmissionForm(categoryId);
+  
+  const formContainer = createElement('div', { className: 'dataset-submission-container' });
+  
+  // Show loading state
+  const loadingDiv = createElement('div', {
+    className: 'loading-message',
+    textContent: 'Loading items...'
+  });
+  formContainer.appendChild(loadingDiv);
+  container.appendChild(formContainer);
+  
+  try {
+    // Load items
+    await currentForm.loadItems();
+    
+    // Remove loading message
+    clearElement(formContainer);
+    
+    // Render the form
+    currentForm.render(formContainer);
+    
+  } catch (error) {
+    clearElement(formContainer);
+    displayError(formContainer, `Failed to load items: ${error.message}`);
   }
 }
 

@@ -49,19 +49,28 @@ export function validateDataset(dataset) {
     };
   }
   
-  // Check required fields
-  if (!dataset.name || typeof dataset.name !== 'string' || dataset.name.trim().length === 0) {
-    return {
-      valid: false,
-      error: 'Missing required field: name (must be non-empty string)'
-    };
-  }
-  
-  if (dataset.name.length > 200) {
-    return {
-      valid: false,
-      error: 'Field "name" exceeds maximum length of 200 characters'
-    };
+  // Check name field (optional, but if provided must be valid)
+  if (dataset.name !== undefined) {
+    if (typeof dataset.name !== 'string') {
+      return {
+        valid: false,
+        error: 'Field "name" must be a string'
+      };
+    }
+    
+    if (dataset.name.trim().length === 0) {
+      return {
+        valid: false,
+        error: 'Field "name" cannot be empty (omit the field if no name is provided)'
+      };
+    }
+    
+    if (dataset.name.length > 200) {
+      return {
+        valid: false,
+        error: 'Field "name" exceeds maximum length of 200 characters'
+      };
+    }
   }
   
   if (!Array.isArray(dataset.items)) {
