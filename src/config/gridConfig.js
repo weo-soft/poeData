@@ -488,9 +488,10 @@ export const DELIRIUM_ORBS_GRID_CONFIG = {
     height: 841
   },
   cellGroups: [
-    // TODO: Analyze delirium-orbs-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
-    { x: 100, y: 50, count: 8, type: 'delirium-orb' }
+    // Row 1: First 8 delirium orbs
+    { x: 100, y: 50, count: 8, type: 'delirium-orb' },
+    // Row 2: Next 8 delirium orbs (assuming ~60px row height: 50 + 60 = 110)
+    { x: 100, y: 110, count: 8, type: 'delirium-orb' }
   ],
   defaultCellSize: {
     width: 49,
@@ -587,9 +588,16 @@ export const FOSSILS_GRID_CONFIG = {
     height: 839
   },
   cellGroups: [
-    // TODO: Analyze fossils-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
-    { x: 100, y: 50, count: 12, type: 'fossil' }
+    // Row 1: First 5 fossils
+    { x: 100, y: 50, count: 5, type: 'fossil' },
+    // Row 2: Next 5 fossils (assuming ~60px row height: 50 + 60 = 110)
+    { x: 100, y: 110, count: 5, type: 'fossil' },
+    // Row 3: Next 5 fossils
+    { x: 100, y: 170, count: 5, type: 'fossil' },
+    // Row 4: Next 5 fossils
+    { x: 100, y: 230, count: 5, type: 'fossil' },
+    // Row 5: Last 5 fossils
+    { x: 100, y: 290, count: 5, type: 'fossil' }
   ],
   defaultCellSize: {
     width: 49,
@@ -613,9 +621,10 @@ export const OILS_GRID_CONFIG = {
     height: 842
   },
   cellGroups: [
-    // TODO: Analyze oils-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
-    { x: 100, y: 50, count: 12, type: 'oil' }
+    // Row 1: First 8 oils
+    { x: 100, y: 50, count: 8, type: 'oil' },
+    // Row 2: Next 8 oils (assuming ~60px row height: 50 + 60 = 110)
+    { x: 100, y: 110, count: 8, type: 'oil' }
   ],
   defaultCellSize: {
     width: 49,
@@ -639,10 +648,10 @@ export const CATALYSTS_GRID_CONFIG = {
     height: 839
   },
   cellGroups: [
-    // TODO: Analyze catalysts-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
-    // Actual positions should match the visual layout in the image
-    { x: 100, y: 50, count: 10, type: 'catalyst' }
+    // Row 1: First 6 catalysts
+    { x: 100, y: 50, count: 6, type: 'catalyst' },
+    // Row 2: Next 5 catalysts (assuming ~60px row height: 50 + 60 = 110)
+    { x: 100, y: 110, count: 5, type: 'catalyst' }
   ],
   defaultCellSize: {
     width: 49,

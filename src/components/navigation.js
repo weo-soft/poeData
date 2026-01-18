@@ -21,15 +21,6 @@ export function createNavigation() {
   });
   homeItem.appendChild(homeLink);
   
-  // Categories link
-  const categoriesItem = createElement('li');
-  const categoriesLink = createElement('a', {
-    href: '#/categories',
-    textContent: 'Categories',
-    className: 'nav-link'
-  });
-  categoriesItem.appendChild(categoriesLink);
-  
   // Submit link
   const submitItem = createElement('li');
   const submitLink = createElement('a', {
@@ -40,7 +31,6 @@ export function createNavigation() {
   submitItem.appendChild(submitLink);
   
   navList.appendChild(homeItem);
-  navList.appendChild(categoriesItem);
   navList.appendChild(submitItem);
   nav.appendChild(navList);
   
@@ -65,9 +55,6 @@ export function updateActiveLink(nav) {
     // Check if current route matches this link
     if (linkHash === '#/' && currentHash === '#/') {
       // Exact match for home
-      link.classList.add('active');
-    } else if (linkHash === '#/categories' && currentHash === '#/categories') {
-      // Exact match for categories
       link.classList.add('active');
     } else if (linkHash === '#/submit' && currentHash.startsWith('#/submit')) {
       // Match submit and submit/:categoryId

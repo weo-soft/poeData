@@ -8,6 +8,7 @@ import { inferWeights } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 import { renderDensityPlot, renderRankedProbabilityChart } from '../visualization/bayesianVisualizations.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
+import { renderWeightDisplay } from './weightDisplay.js';
 
 // Module-level state
 let currentBayesianResult = null;
@@ -17,6 +18,8 @@ let currentChartInstance = null;
 let currentDatasets = null; // Store datasets for potential recalculation
 let currentCategoryId = null; // Store categoryId for recalculation
 let currentOptions = null; // Store options for recalculation
+let currentDeterministicWeights = null; // Store deterministic weights for navigation back
+let currentContainer = null; // Store container reference for navigation back
 let isLoading = false;
 
 /**
@@ -45,10 +48,35 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     return;
   }
 
+  // Store container and deterministic weights for navigation back
+  currentContainer = container;
+  currentDeterministicWeights = options.deterministicWeights || null;
+  currentOptions = options; // Store options for navigation back
+  currentCategoryId = categoryId; // Store categoryId
+  currentItems = items; // Store items
+
   const bayesianDisplay = createElement('div', { className: 'bayesian-weight-display' });
 
   // Create header with clear "Bayesian" labeling
   const header = createElement('div', { className: 'bayesian-weight-display-header' });
+  
+  // Add back button if deterministic weights are available
+  if (currentDeterministicWeights) {
+    const backButton = createElement('button', {
+      className: 'back-to-weights-btn',
+      textContent: '← Back to Calculated Item Weights'
+    });
+    backButton.addEventListener('click', () => {
+      // Restore deterministic view with method toggle buttons
+      renderWeightDisplay(container, currentDeterministicWeights, categoryId, items, {
+        ...options,
+        datasets: datasets,
+        method: 'deterministic'
+      });
+    });
+    header.appendChild(backButton);
+  }
+  
   const title = createElement('h2', {
     textContent: 'Bayesian Weight Estimates'
   });

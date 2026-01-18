@@ -3,8 +3,6 @@
  */
 
 import { createElement, clearElement } from '../utils/dom.js';
-import { getAvailableCategories } from '../services/dataLoader.js';
-import { displayError } from '../utils/errors.js';
 
 /**
  * Render homepage
@@ -25,55 +23,16 @@ export async function renderHome(container) {
   homeSection.appendChild(title);
   homeSection.appendChild(description);
   
-  // Load and display categories
-  try {
-    const categories = await getAvailableCategories();
-    
-    const categoriesSection = createElement('div', { className: 'categories-preview' });
-    const categoriesTitle = createElement('h2', { textContent: 'Available Categories' });
-    categoriesSection.appendChild(categoriesTitle);
-    
-    const categoriesList = createElement('div', { className: 'categories-grid' });
-    
-    categories.forEach(category => {
-      const categoryCard = createElement('div', { className: 'category-card' });
-      const categoryLink = createElement('a', { 
-        href: `#/category/${category.id}`,
-        className: 'category-link'
-      });
-      
-      const categoryName = createElement('h3', { textContent: category.name });
-      const categoryDesc = createElement('p', { textContent: category.description || '' });
-      
-      categoryLink.appendChild(categoryName);
-      categoryLink.appendChild(categoryDesc);
-      categoryCard.appendChild(categoryLink);
-      categoriesList.appendChild(categoryCard);
-    });
-    
-    categoriesSection.appendChild(categoriesList);
-    
-    // Navigation links
-    const navLinks = createElement('div', { className: 'nav-links' });
-    const viewAllLink = createElement('a', {
-      href: '#/categories',
-      textContent: 'View All Categories →',
-      className: 'primary-link'
-    });
-    const submitLink = createElement('a', {
-      href: '#/submit',
-      textContent: 'Submit Item Data →',
-      className: 'primary-link'
-    });
-    navLinks.appendChild(viewAllLink);
-    navLinks.appendChild(submitLink);
-    
-    homeSection.appendChild(categoriesSection);
-    homeSection.appendChild(navLinks);
-    
-  } catch (error) {
-    displayError(homeSection, `Failed to load categories: ${error.message}`);
-  }
+  // Navigation links
+  const navLinks = createElement('div', { className: 'nav-links' });
+  const submitLink = createElement('a', {
+    href: '#/submit',
+    textContent: 'Submit Item Data →',
+    className: 'primary-link'
+  });
+  navLinks.appendChild(submitLink);
+  
+  homeSection.appendChild(navLinks);
   
   container.appendChild(homeSection);
 }

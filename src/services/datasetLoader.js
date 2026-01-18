@@ -5,6 +5,9 @@
 // Cache for discovered datasets metadata per category
 const discoveryCache = new Map();
 
+// Cache for discovered base paths per category (to avoid trying wrong paths)
+const basePathCache = new Map();
+
 // Cache for loaded full dataset contents
 const datasetCache = new Map();
 
@@ -235,8 +238,11 @@ export async function discoverDatasetsParallel(categoryId) {
     
     console.log(`[DatasetLoader] Discovered ${datasets.length} datasets for category: ${categoryId}`);
     
-    // Cache the results
+    // Cache the results and the base path
     discoveryCache.set(categoryId, datasets);
+    if (foundPath) {
+      basePathCache.set(categoryId, foundPath);
+    }
     
     return datasets;
   } catch (error) {
@@ -324,6 +330,9 @@ async function discoverDatasetsSequential(categoryId, dirName, basePaths) {
   
   datasets.sort((a, b) => a.datasetNumber - b.datasetNumber);
   discoveryCache.set(categoryId, datasets);
+  if (foundPath) {
+    basePathCache.set(categoryId, foundPath);
+  }
   return datasets;
 }
 
@@ -398,11 +407,21 @@ export async function loadDataset(categoryId, datasetNumber) {
     // Get actual directory name from category ID
     const dirName = getCategoryDirectory(categoryId);
     
-    // Try both directory patterns
-    const basePaths = [
+    // Build list of paths to try - use cached path first if available
+    const allPossiblePaths = [
       `/data/${dirName}/dataset/`,
       `/data/${dirName}/datasets/`
     ];
+    
+    let basePaths = [];
+    if (basePathCache.has(categoryId)) {
+      // Use the cached path first (most likely to succeed), then fallback to others
+      const cachedPath = basePathCache.get(categoryId);
+      basePaths = [cachedPath, ...allPossiblePaths.filter(p => p !== cachedPath)];
+    } else {
+      // No cached path, try both in order
+      basePaths = allPossiblePaths;
+    }
     
     let dataset = null;
     let lastError = null;
@@ -416,7 +435,7 @@ export async function loadDataset(categoryId, datasetNumber) {
         
         if (!response.ok) {
           if (response.status === 404) {
-            console.log(`[DatasetLoader] Dataset not found at: ${url}`);
+            // Don't log 404s - they're expected during fallback
             continue; // Try next path
           }
           throw new Error(`Failed to load dataset: ${response.statusText}`);
@@ -425,7 +444,10 @@ export async function loadDataset(categoryId, datasetNumber) {
         // Check content type to ensure it's JSON
         const contentType = response.headers.get('content-type');
         if (contentType && !contentType.includes('application/json')) {
-          console.warn(`[DatasetLoader] Response from ${url} is not JSON (content-type: ${contentType})`);
+          // Don't warn about 404s (they return HTML)
+          if (response.status !== 404) {
+            console.warn(`[DatasetLoader] Response from ${url} is not JSON (content-type: ${contentType})`);
+          }
           continue; // Try next path
         }
         
@@ -449,9 +471,9 @@ export async function loadDataset(categoryId, datasetNumber) {
           continue; // Try next path
         }
       } catch (fetchError) {
-        console.warn(`[DatasetLoader] Error fetching ${url}:`, fetchError);
+        // Continue trying other paths
         lastError = fetchError;
-        continue; // Try next path
+        continue;
       }
     }
     
@@ -479,8 +501,10 @@ export async function loadDataset(categoryId, datasetNumber) {
 export function clearDiscoveryCache(categoryId) {
   if (categoryId) {
     discoveryCache.delete(categoryId);
+    basePathCache.delete(categoryId);
   } else {
     discoveryCache.clear();
+    basePathCache.clear();
   }
 }
 

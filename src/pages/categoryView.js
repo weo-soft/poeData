@@ -60,13 +60,7 @@ export async function renderCategoryView(container, params) {
       textContent: formatCategoryName(categoryId)
     });
     
-    const itemCount = createElement('span', {
-      textContent: `${items.length} items`,
-      className: 'item-count'
-    });
-    
     header.appendChild(title);
-    header.appendChild(itemCount);
     viewSection.appendChild(header);
     
     // Tabs for Items/Datasets

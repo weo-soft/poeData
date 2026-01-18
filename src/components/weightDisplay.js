@@ -105,7 +105,8 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
         await renderBayesianWeightDisplay(container, options.datasets, categoryId, items, {
           ...options,
           indexData: options.indexData,
-          normalizedDatasets: options.normalizedDatasets
+          normalizedDatasets: options.normalizedDatasets,
+          deterministicWeights: weights // Pass deterministic weights for navigation back
         });
       } catch (error) {
         displayError(container, `Failed to load Bayesian estimates: ${error.message}`);
@@ -392,6 +393,22 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
 
   // Header
   const header = createElement('div', { className: 'comparison-header' });
+  
+  // Add back button to return to deterministic view
+  const backButton = createElement('button', {
+    className: 'back-to-weights-btn',
+    textContent: '← Back to Calculated Item Weights'
+  });
+  backButton.addEventListener('click', () => {
+    // Restore deterministic view with method toggle buttons
+    renderWeightDisplay(container, deterministicWeights, categoryId, items, {
+      ...options,
+      datasets: datasets,
+      method: 'deterministic'
+    });
+  });
+  header.appendChild(backButton);
+  
   const title = createElement('h2', {
     textContent: 'Weight Calculation Comparison'
   });
