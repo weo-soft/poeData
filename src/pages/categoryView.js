@@ -76,22 +76,76 @@ export async function renderCategoryView(container, params) {
       textContent: 'Items',
       'data-tab': 'items'
     });
-    const datasetsTab = createElement('button', {
-      className: `tab-button ${viewType === 'datasets' ? 'active' : ''}`,
-      textContent: 'Datasets',
-      'data-tab': 'datasets'
-    });
     
     itemsTab.addEventListener('click', () => {
       router.navigate(`/category/${categoryId}?view=items`);
     });
     
-    datasetsTab.addEventListener('click', () => {
-      router.navigate(`/category/${categoryId}?view=datasets`);
-    });
-    
     tabsContainer.appendChild(itemsTab);
-    tabsContainer.appendChild(datasetsTab);
+    
+    // For breach category, show two separate dataset tabs
+    if (categoryId === 'breach') {
+      const subcategory = query.subcategory || 'breach-splinters';
+      const splintersTab = createElement('button', {
+        className: `tab-button ${viewType === 'datasets' && subcategory === 'breach-splinters' ? 'active' : ''}`,
+        textContent: 'Breach Splinters Datasets',
+        'data-tab': 'datasets-splinters'
+      });
+      const stonesTab = createElement('button', {
+        className: `tab-button ${viewType === 'datasets' && subcategory === 'breachstones' ? 'active' : ''}`,
+        textContent: 'BreachStones Datasets',
+        'data-tab': 'datasets-stones'
+      });
+      
+      splintersTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=datasets&subcategory=breach-splinters`);
+      });
+      
+      stonesTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=datasets&subcategory=breachstones`);
+      });
+      
+      tabsContainer.appendChild(splintersTab);
+      tabsContainer.appendChild(stonesTab);
+    } else if (categoryId === 'legion') {
+      // For legion category, show two separate dataset tabs
+      const subcategory = query.subcategory || 'legion-splinters';
+      const splintersTab = createElement('button', {
+        className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-splinters' ? 'active' : ''}`,
+        textContent: 'Legion Splinters Datasets',
+        'data-tab': 'datasets-splinters'
+      });
+      const emblemsTab = createElement('button', {
+        className: `tab-button ${viewType === 'datasets' && subcategory === 'legion-emblems' ? 'active' : ''}`,
+        textContent: 'Legion Emblems Datasets',
+        'data-tab': 'datasets-emblems'
+      });
+      
+      splintersTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-splinters`);
+      });
+      
+      emblemsTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-emblems`);
+      });
+      
+      tabsContainer.appendChild(splintersTab);
+      tabsContainer.appendChild(emblemsTab);
+    } else {
+      // For other categories, show single Datasets tab
+      const datasetsTab = createElement('button', {
+        className: `tab-button ${viewType === 'datasets' ? 'active' : ''}`,
+        textContent: 'Datasets',
+        'data-tab': 'datasets'
+      });
+      
+      datasetsTab.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}?view=datasets`);
+      });
+      
+      tabsContainer.appendChild(datasetsTab);
+    }
+    
     viewSection.appendChild(tabsContainer);
     
     // Content area
@@ -100,7 +154,14 @@ export async function renderCategoryView(container, params) {
     
     // Render based on view type
     if (viewType === 'datasets') {
-      await renderDatasetsView(contentArea, categoryId);
+      // For merged categories, use subcategory from query param
+      let subcategory = categoryId;
+      if (categoryId === 'breach') {
+        subcategory = query.subcategory || 'breach-splinters';
+      } else if (categoryId === 'legion') {
+        subcategory = query.subcategory || 'legion-splinters';
+      }
+      await renderDatasetsView(contentArea, subcategory);
     } else {
       await renderItemsView(contentArea, categoryId, items);
     }

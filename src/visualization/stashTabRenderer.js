@@ -553,67 +553,87 @@ function getItemType(item, gridConfig, categoryId) {
         }
       }
     }
-  } else {
-    // For essences, check if it's a special, right-expanding, or left-expanding type
-    if (categoryId === 'essences') {
-      const rightExpandingTypes = ['loathing', 'zeal', 'anguish', 'spite', 'scorn', 'envy', 'misery', 'dread'];
-      const specialEssenceTypes = ['insanity', 'horror', 'delirium', 'hysteria'];
-      const idLower = item.id.toLowerCase();
-      
-      // Check for special essences first (they have format "essence-of-{type}")
-      if (idLower.startsWith('essence-of-')) {
-        const essenceType = idLower.replace('essence-of-', '');
-        if (specialEssenceTypes.includes(essenceType)) {
-          return 'essence-special';
+    } else {
+      // For essences, check if it's a special, right-expanding, or left-expanding type
+      if (categoryId === 'essences') {
+        const rightExpandingTypes = ['loathing', 'zeal', 'anguish', 'spite', 'scorn', 'envy', 'misery', 'dread'];
+        const specialEssenceTypes = ['insanity', 'horror', 'delirium', 'hysteria'];
+        const idLower = item.id.toLowerCase();
+        
+        // Check for special essences first (they have format "essence-of-{type}")
+        if (idLower.startsWith('essence-of-')) {
+          const essenceType = idLower.replace('essence-of-', '');
+          if (specialEssenceTypes.includes(essenceType)) {
+            return 'essence-special';
+          }
+        }
+        
+        // Check for right-expanding types
+        const ofMatch = idLower.match(/-of-([^-]+)$/);
+        if (ofMatch) {
+          const essenceType = ofMatch[1];
+          if (rightExpandingTypes.includes(essenceType)) {
+            return 'essence-right';
+          }
+        } else if (idLower.startsWith('essence-of-')) {
+          const essenceType = idLower.replace('essence-of-', '');
+          if (rightExpandingTypes.includes(essenceType)) {
+            return 'essence-right';
+          }
+        }
+        
+        // Default to 'essence' for left-expanding types
+        if (idLower.includes('essence')) {
+          return 'essence';
         }
       }
       
-      // Check for right-expanding types
-      const ofMatch = idLower.match(/-of-([^-]+)$/);
-      if (ofMatch) {
-        const essenceType = ofMatch[1];
-        if (rightExpandingTypes.includes(essenceType)) {
-          return 'essence-right';
+      // For breach category, explicitly check for splinters and breachstones
+      if (categoryId === 'breach') {
+        if (idLower.includes('splinter')) {
+          return 'splinter';
         }
-      } else if (idLower.startsWith('essence-of-')) {
-        const essenceType = idLower.replace('essence-of-', '');
-        if (rightExpandingTypes.includes(essenceType)) {
-          return 'essence-right';
+        if (idLower.includes('breachstone')) {
+          return 'breachstone';
         }
       }
       
-      // Default to 'essence' for left-expanding types
-      if (idLower.includes('essence')) {
-        return 'essence';
+      // For legion category, explicitly check for splinters and emblems
+      if (categoryId === 'legion') {
+        if (idLower.includes('splinter')) {
+          return 'splinter';
+        }
+        if (idLower.includes('emblem')) {
+          return 'emblem';
+        }
+      }
+      
+      // For other categories, try to match item ID/name to group types
+      // Get all group types from cell definitions
+      const groupTypes = cellDefinitions
+        .map(c => c.groupType)
+        .filter(t => t);
+      
+      // Check if item ID matches any group type
+      for (const type of groupTypes) {
+        if (idLower.includes(type.toLowerCase()) || type.toLowerCase().includes(idLower)) {
+          return type;
+        }
+      }
+      
+      // Check if item name contains group type
+      const nameLower = (item.name || '').toLowerCase();
+      for (const type of groupTypes) {
+        if (nameLower.includes(type.toLowerCase())) {
+          return type;
+        }
+      }
+      
+      // If only one group type exists, use it as default
+      if (groupTypes.length === 1) {
+        return groupTypes[0];
       }
     }
-    
-    // For other categories, try to match item ID/name to group types
-    // Get all group types from cell definitions
-    const groupTypes = cellDefinitions
-      .map(c => c.groupType)
-      .filter(t => t);
-    
-    // Check if item ID matches any group type
-    for (const type of groupTypes) {
-      if (idLower.includes(type.toLowerCase()) || type.toLowerCase().includes(idLower)) {
-        return type;
-      }
-    }
-    
-    // Check if item name contains group type
-    const nameLower = (item.name || '').toLowerCase();
-    for (const type of groupTypes) {
-      if (nameLower.includes(type.toLowerCase())) {
-        return type;
-      }
-    }
-    
-    // If only one group type exists, use it as default
-    if (groupTypes.length === 1) {
-      return groupTypes[0];
-    }
-  }
   
   // If no match, return null (will be unmapped)
   return null;

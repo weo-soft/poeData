@@ -46,6 +46,7 @@ export async function loadCategoryData(categoryId) {
     }
     
     // Special handling for merged categories - merge data from multiple files
+    // Only merge for the main category, not subcategories
     if (categoryId === 'breach') {
       data = await mergeBreachData(data);
     }
@@ -53,6 +54,9 @@ export async function loadCategoryData(categoryId) {
     if (categoryId === 'legion') {
       data = await mergeLegionData(data);
     }
+    
+    // Subcategories (breach-splinters, breachstones, legion-splinters, legion-emblems)
+    // should not be merged - they are already single-file categories
     
     // Cache the data
     dataCache.set(categoryId, data);
@@ -217,6 +221,24 @@ function getCategoryFilename(categoryId) {
   if (categoryId === 'legion') {
     // Start with legion-splinters, then merge emblems in mergeLegionData
     return 'legionSplinters/legionSplinters.json';
+  }
+  
+  // Special handling for legion subcategories
+  if (categoryId === 'legion-splinters') {
+    return 'legionSplinters/legionSplinters.json';
+  }
+  
+  if (categoryId === 'legion-emblems') {
+    return 'legionEmblems/legionEmblems.json';
+  }
+  
+  // Special handling for breach subcategories
+  if (categoryId === 'breach-splinters') {
+    return 'breachSplinter/breachSplinter.json';
+  }
+  
+  if (categoryId === 'breachstones') {
+    return 'breachstones/breachStones.json';
   }
   
   // Special handling for new categories with subdirectory structure

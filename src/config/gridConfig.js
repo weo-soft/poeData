@@ -429,9 +429,10 @@ export const BREACH_GRID_CONFIG = {
   },
   cellGroups: [
     // TODO: Analyze breach-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
+    // For now, using a simple layout as placeholder
     // Actual positions should match the visual layout in the image
-    { x: 100, y: 50, count: 5, type: 'breachstone' }
+    { x: 100, y: 50, count: 5, type: 'breachstone' },
+    { x: 100, y: 110, count: 5, type: 'splinter' }
   ],
   defaultCellSize: {
     width: 49,
@@ -439,7 +440,8 @@ export const BREACH_GRID_CONFIG = {
   },
   defaultPadding: 2,
   itemOrderConfig: {
-    'breachstone': [] // Will be populated based on item data or use default sorting
+    'breachstone': [], // Will be populated based on item data or use default sorting
+    'splinter': [] // Will be populated based on item data or use default sorting
   }
 };
 
@@ -457,8 +459,11 @@ export const FRAGMENTS_GRID_CONFIG = {
   },
   cellGroups: [
     // TODO: Analyze fragments-tab.png to determine actual cell positions
-    // For now, using a simple single-row layout as placeholder
-    { x: 100, y: 50, count: 10, type: 'fragment' }
+    // For now, using a simple layout as placeholder
+    // Splinters row
+    { x: 100, y: 50, count: 5, type: 'splinter' },
+    // Emblems row
+    { x: 100, y: 110, count: 5, type: 'emblem' }
   ],
   defaultCellSize: {
     width: 49,
@@ -466,7 +471,8 @@ export const FRAGMENTS_GRID_CONFIG = {
   },
   defaultPadding: 2,
   itemOrderConfig: {
-    'fragment': []
+    'splinter': [],
+    'emblem': []
   }
 };
 
