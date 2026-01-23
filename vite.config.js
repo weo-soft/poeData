@@ -17,9 +17,25 @@ export default defineConfig({
   plugins: [
     calculationsPlugin()
   ],
+  ssr: {
+    noExternal: [
+      /^@exodus\/bytes/,
+      'html-encoding-sniffer',
+      'jsdom',
+      /^whatwg-url/,
+      /^webidl-conversions/
+    ]
+  },
   test: {
     globals: true,
     environment: 'jsdom',
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        singleThread: false,
+        isolate: true
+      }
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -29,14 +45,6 @@ export default defineConfig({
         'dist/',
         '*.config.js'
       ]
-    },
-    server: {
-      deps: {
-        inline: [
-          '@exodus/bytes',
-          'html-encoding-sniffer'
-        ]
-      }
     }
   }
 });
