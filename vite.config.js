@@ -29,6 +29,14 @@ export default defineConfig({
         'dist/',
         '*.config.js'
       ]
+    },
+    server: {
+      deps: {
+        inline: [
+          '@exodus/bytes',
+          'html-encoding-sniffer'
+        ]
+      }
     }
   }
 });
