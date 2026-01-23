@@ -19,81 +19,84 @@ const app = document.getElementById('app');
 if (!app) {
   console.error('App container not found');
 } else {
-  // Create navigation
-  const navigation = createNavigation();
-  
-  // Create layout container for sidebar and main content
-  const layoutContainer = document.createElement('div');
-  layoutContainer.className = 'app-layout';
-  
-  // Create sidebar and main content container
-  const sidebar = await createCategorySidebar();
-  const mainContent = document.createElement('main');
-  mainContent.id = 'main-content';
-  
-  layoutContainer.appendChild(sidebar);
-  layoutContainer.appendChild(mainContent);
-  
-  // Clear app and add navigation and layout container
-  app.innerHTML = '';
-  app.appendChild(navigation);
-  app.appendChild(layoutContainer);
-  
-  // Set up route handlers (render to mainContent instead of app)
-  router.on('/', () => {
-    renderHome(mainContent);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/categories', () => {
-    renderCategoryList(mainContent);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/category/:categoryId', (params, query) => {
-    renderCategoryView(mainContent, { ...params, query });
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/category/:categoryId/item/:itemId', (params) => {
-    renderItemDetail(mainContent, params);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/category/:categoryId/dataset/:datasetNumber', (params) => {
-    renderDatasetView(mainContent, params);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/submit', () => {
-    renderSubmission(mainContent);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  router.on('/submit/:categoryId', (params) => {
-    renderSubmission(mainContent, params);
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  // Listen to route changes to update navigation
-  router.addListener(() => {
-    updateActiveLink(navigation);
-    updateActiveCategoryLink(sidebar);
-  });
-  
-  // Initialize router
-  router.init();
-  
-  // Setup global error handling
-  import('./utils/errors.js').then(({ setupGlobalErrorHandler }) => {
-    setupGlobalErrorHandler();
-  });
+  // Initialize app asynchronously
+  (async () => {
+    // Create navigation
+    const navigation = createNavigation();
+    
+    // Create layout container for sidebar and main content
+    const layoutContainer = document.createElement('div');
+    layoutContainer.className = 'app-layout';
+    
+    // Create sidebar and main content container
+    const sidebar = await createCategorySidebar();
+    const mainContent = document.createElement('main');
+    mainContent.id = 'main-content';
+    
+    layoutContainer.appendChild(sidebar);
+    layoutContainer.appendChild(mainContent);
+    
+    // Clear app and add navigation and layout container
+    app.innerHTML = '';
+    app.appendChild(navigation);
+    app.appendChild(layoutContainer);
+    
+    // Set up route handlers (render to mainContent instead of app)
+    router.on('/', () => {
+      renderHome(mainContent);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/categories', () => {
+      renderCategoryList(mainContent);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/category/:categoryId', (params, query) => {
+      renderCategoryView(mainContent, { ...params, query });
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/category/:categoryId/item/:itemId', (params) => {
+      renderItemDetail(mainContent, params);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/category/:categoryId/dataset/:datasetNumber', (params) => {
+      renderDatasetView(mainContent, params);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/submit', () => {
+      renderSubmission(mainContent);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/submit/:categoryId', (params) => {
+      renderSubmission(mainContent, params);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    // Listen to route changes to update navigation
+    router.addListener(() => {
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    // Initialize router
+    router.init();
+    
+    // Setup global error handling
+    import('./utils/errors.js').then(({ setupGlobalErrorHandler }) => {
+      setupGlobalErrorHandler();
+    });
+  })();
 }
 
