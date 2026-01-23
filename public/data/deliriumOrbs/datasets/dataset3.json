@@ -17,13 +17,81 @@
     ],
     "inputItems": [
         {
-            "id": "armoursmith"
+            "id": "armoursmiths-delirium-orb"
         }
     ],
     "items": [
         {
-            "id": "abyssal",
-            "count": 18
+            "id": "abyssal-delirium-orb",
+            "count": 38
+        },
+        {
+            "id": "amorphous-delirium-orb",
+            "count": 41
+        },
+        {
+            "id": "blacksmiths-delirium-orb",
+            "count": 109
+        },
+        {
+            "id": "blighted-delirium-orb",
+            "count": 32
+        },
+        {
+            "id": "cartographers-delirium-orb",
+            "count": 31
+        },
+        {
+            "id": "diviners-delirium-orb",
+            "count": 64
+        },
+        {
+            "id": "fine-delirium-orb",
+            "count": 123
+        },
+        {
+            "id": "foreboding-delirium-orb",
+            "count": 53
+        },
+        {
+            "id": "fossilised-delirium-orb",
+            "count": 34
+        },
+        {
+            "id": "fragmented-delirium-orb",
+            "count": 38
+        },
+        {
+            "id": "imperial-delirium-orb",
+            "count": 61
+        },
+        {
+            "id": "jewellers-delirium-orb",
+            "count": 143
+        },
+        {
+            "id": "obscured-delirium-orb",
+            "count": 19
+        },
+        {
+            "id": "singular-delirium-orb",
+            "count": 30
+        },
+        {
+            "id": "skittering-delirium-orb",
+            "count": 48
+        },
+        {
+            "id": "thaumaturges-delirium-orb",
+            "count": 27
+        },
+        {
+            "id": "timeless-delirium-orb",
+            "count": 28
+        },
+        {
+            "id": "whispering-delirium-orb",
+            "count": 74
         }
     ]
 }

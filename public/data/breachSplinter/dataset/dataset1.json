@@ -12,24 +12,24 @@
     ],
     "inputItems": [
         {
-            "id": "esh"
+            "id": "splinter-of-esh"
         }
     ],
     "items": [
         {
-            "id": "tul",
+            "id": "splinter-of-tul",
             "count": 2030
         },
         {
-            "id": "xoph",
+            "id": "splinter-of-xoph",
             "count": 2007
         },
         {
-            "id": "uul-netol",
+            "id": "splinter-of-uul-netol",
             "count": 846
         },
         {
-            "id": "chayula",
+            "id": "splinter-of-chayula",
             "count": 457
         }
     ]

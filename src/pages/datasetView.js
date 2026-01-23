@@ -52,8 +52,8 @@ export async function renderDatasetView(container, params) {
       dataset,
       categoryId,
       () => {
-        // Back to dataset list
-        router.navigate(`/category/${categoryId}?view=datasets`);
+        // Back to category view
+        router.navigate(`/category/${categoryId}`);
       },
       async (dataset, categoryId) => {
         // Handle download (deprecated, kept for compatibility)
@@ -72,10 +72,22 @@ export async function renderDatasetView(container, params) {
     
     // Add back link
     const backLink = createElement('a', {
-      href: `#/category/${categoryId}?view=datasets`,
-      textContent: '← Back to Dataset List',
+      href: `#/category/${categoryId}`,
+      textContent: `← Back to ${formatCategoryName(categoryId)}`,
       className: 'back-link'
     });
     viewSection.appendChild(backLink);
   }
+}
+
+/**
+ * Format category name for display
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Formatted name
+ */
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

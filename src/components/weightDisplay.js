@@ -9,8 +9,6 @@ import { displayError } from '../utils/errors.js';
 import { inferWeights } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 import { router } from '../services/router.js';
-import { downloadCalculatedWeights } from '../utils/download.js';
-import { getAvailableCategories } from '../services/dataLoader.js';
 import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUrls.js';
 
 // Module-level state for chart instance management
@@ -87,19 +85,19 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
     style: 'display: flex; gap: 0.5rem; margin-left: 1rem;'
   });
   
-  // MLE calculation link
+  // MLE calculation link - uses static file URL (served from public or calculated on-demand)
   const mleUrl = getMleCalculationUrl(categoryId);
   const mleLink = createElement('a', {
     className: 'download-weights-link',
     href: mleUrl,
     download: 'mle.json',
     textContent: 'Download MLE',
-    title: 'Direct link to MLE calculation JSON file',
+    title: 'Download MLE calculation JSON file (from precalculated file or calculated on-demand)',
     style: 'padding: 0.5rem 1rem; background-color: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; display: inline-block;'
   });
   downloadLinksContainer.appendChild(mleLink);
   
-  // Bayesian calculation link (if datasets are available)
+  // Bayesian calculation link (if datasets are available) - uses static file URL
   if (options.datasets && options.datasets.length > 0) {
     const bayesianUrl = getBayesianCalculationUrl(categoryId);
     const bayesianLink = createElement('a', {
@@ -107,7 +105,7 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
       href: bayesianUrl,
       download: 'bayesian.json',
       textContent: 'Download Bayesian',
-      title: 'Direct link to Bayesian calculation JSON file',
+      title: 'Download Bayesian calculation JSON file (from precalculated file or calculated on-demand)',
       style: 'padding: 0.5rem 1rem; background-color: #8e44ad; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; display: inline-block;'
     });
     downloadLinksContainer.appendChild(bayesianLink);

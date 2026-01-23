@@ -1,130 +1,130 @@
 {
-    "name": "Calculated Weights for Catalysts",
-    "description": "Calculated item weights for Catalysts using BAYESIAN method from 6 datasets",
-    "date": "2026-01-18",
-    "patch": "3.25.0",
-    "sources": [
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
-        "author": "pedrolopa"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
-        "author": "kubuxu"
-      }
-    ],
-    "items": [
-      {
-        "id": "intrinsic",
-        "weight": 0.29198813506357946
-      },
-      {
-        "id": "turbulent",
-        "weight": 0.14449799720627304
-      },
-      {
-        "id": "noxious",
-        "weight": 0.14337575898579918
-      },
-      {
-        "id": "abrasive",
-        "weight": 0.14307474221166191
-      },
-      {
-        "id": "imbued",
-        "weight": 0.13741664832454137
-      },
-      {
-        "id": "fertile",
-        "weight": 0.036416709824817595
-      },
-      {
-        "id": "prismatic",
-        "weight": 0.03633630177619535
-      },
-      {
-        "id": "tempering",
-        "weight": 0.033448926797786334
-      },
-      {
-        "id": "unstable",
-        "weight": 0.016419060391966195
-      },
-      {
-        "id": "accelerating",
-        "weight": 0.014860802088850532
-      }
-    ],
-    "inputItems": [
-      {
-        "id": "intrisic"
-      },
-      {
-        "id": "turbulent"
-      },
-      {
-        "id": "abrasive"
-      },
-      {
-        "id": "noxious"
-      },
-      {
-        "id": "imbued"
-      },
-      {
-        "id": "tempering"
-      }
-    ]
-  }
+  "name": "Calculated Weights for Catalysts",
+  "description": "Calculated item weights for Catalysts using BAYESIAN method from 6 datasets",
+  "date": "2026-01-23",
+  "patch": "3.25.0",
+  "sources": [
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1Klj-nH5P7DLQH9lUtwHGdlZ9uiC9Y6lIAzhvfy79Nrc/edit?gid=0#gid=0",
+      "author": "pedrolopa"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/993168289431822447/1081669700141977740",
+      "author": "kubuxu"
+    }
+  ],
+  "items": [
+    {
+      "id": "intrinsic-catalyst",
+      "weight": 0.2905790897455777
+    },
+    {
+      "id": "turbulent-catalyst",
+      "weight": 0.15251948719073774
+    },
+    {
+      "id": "noxious-catalyst",
+      "weight": 0.145179473606605
+    },
+    {
+      "id": "abrasive-catalyst",
+      "weight": 0.14072483482340933
+    },
+    {
+      "id": "imbued-catalyst",
+      "weight": 0.13691428295146468
+    },
+    {
+      "id": "fertile-catalyst",
+      "weight": 0.03528842084798527
+    },
+    {
+      "id": "prismatic-catalyst",
+      "weight": 0.03444672436497788
+    },
+    {
+      "id": "tempering-catalyst",
+      "weight": 0.03345067362304798
+    },
+    {
+      "id": "unstable-catalyst",
+      "weight": 0.016240040254737693
+    },
+    {
+      "id": "accelerating-catalyst",
+      "weight": 0.015046718763701375
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "intrinsic-catalyst"
+    },
+    {
+      "id": "turbulent-catalyst"
+    },
+    {
+      "id": "abrasive-catalyst"
+    },
+    {
+      "id": "noxious-catalyst"
+    },
+    {
+      "id": "imbued-catalyst"
+    },
+    {
+      "id": "tempering-catalyst"
+    }
+  ]
+}

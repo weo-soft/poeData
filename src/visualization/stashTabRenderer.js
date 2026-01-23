@@ -55,20 +55,23 @@ let cellDefinitions = [];
 const cellToItemMap = new Map();
 const itemToCellMap = new Map();
 let highlightedItemId = null;
+let highlightedItemIds = new Set(); // Set of item IDs to highlight (for filtered items)
 
 /**
  * Render stash tab with items
  * @param {HTMLCanvasElement} canvas - Canvas element to render into
  * @param {Array} items - Array of item objects
  * @param {string} categoryId - Category identifier
+ * @param {Set<string>} filteredItemIds - Optional set of item IDs to highlight (for filtered items)
  */
-/**
- * Render stash tab with items
- * @param {HTMLCanvasElement} canvas - Canvas element to render into
- * @param {Array} items - Array of item objects
- * @param {string} categoryId - Category identifier
- */
-export async function renderStashTab(canvas, items, categoryId) {
+export async function renderStashTab(canvas, items, categoryId, filteredItemIds = null) {
+  // Store filtered item IDs for highlighting
+  if (filteredItemIds) {
+    highlightedItemIds = filteredItemIds;
+  } else {
+    highlightedItemIds.clear();
+  }
+  
   // For scarabs, use the grid-based approach with base image (backward compatibility)
   if (categoryId === 'scarabs') {
     await renderScarabGrid(canvas, items);
@@ -760,10 +763,18 @@ function renderGrid(canvas, items, categoryId) {
     if (item) {
       drawCellOverlay(ctx, cell, item, categoryId);
       
-      // Draw highlight if this item is highlighted
-      if (highlightedItemId === item.id) {
+      // Draw highlight if this item is highlighted (hover) or filtered
+      const isHovered = highlightedItemId === item.id;
+      const isFiltered = highlightedItemIds.has(item.id);
+      
+      if (isHovered) {
+        // Hover highlight (gold, more prominent)
         drawCellHighlight(ctx, cell.x, cell.y, cell.width, cell.height, '#ffd700', 0.6);
         drawCellBorder(ctx, cell.x, cell.y, cell.width, cell.height, '#ffd700', 3);
+      } else if (isFiltered) {
+        // Filter highlight (lighter gold/yellow, less prominent)
+        drawCellHighlight(ctx, cell.x, cell.y, cell.width, cell.height, '#ffd700', 0.3);
+        drawCellBorder(ctx, cell.x, cell.y, cell.width, cell.height, '#ffd700', 2);
       }
     }
   });
@@ -862,7 +873,7 @@ function setupEventHandlers(canvas, items, categoryId) {
     if (item && item !== currentItem) {
       currentItem = item;
       highlightedItemId = item.id;
-      showTooltip(item, e.clientX, e.clientY);
+      showTooltip(item, e.clientX, e.clientY, categoryId);
       renderGrid(canvas, items, categoryId);
     } else if (!item && currentItem) {
       currentItem = null;
@@ -947,7 +958,8 @@ async function renderSimpleGrid(canvas, items, categoryId) {
     const x = padding + col * (itemSize + itemSpacing);
     const y = padding + row * (itemSize + itemSpacing);
     
-    drawItemSlot(ctx, x, y, itemSize, item, categoryId);
+    const isFiltered = highlightedItemIds.has(item.id);
+    drawItemSlot(ctx, x, y, itemSize, item, categoryId, isFiltered);
   });
   
   // Add click handler
@@ -973,16 +985,28 @@ async function renderSimpleGrid(canvas, items, categoryId) {
  * @param {number} size - Item slot size
  * @param {Object} item - Item object
  * @param {string} categoryId - Category identifier
+ * @param {boolean} isFiltered - Whether this item matches the filter
  */
-function drawItemSlot(ctx, x, y, size, item, _categoryId) {
+function drawItemSlot(ctx, x, y, size, item, _categoryId, isFiltered = false) {
   // Item slot background
   ctx.fillStyle = '#2a2a2a';
   ctx.fillRect(x, y, size, size);
   
-  // Item slot border
-  ctx.strokeStyle = '#4a4a4a';
-  ctx.lineWidth = 1;
+  // Item slot border - highlight if filtered
+  if (isFiltered) {
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = 2;
+  } else {
+    ctx.strokeStyle = '#4a4a4a';
+    ctx.lineWidth = 1;
+  }
   ctx.strokeRect(x, y, size, size);
+  
+  // Add highlight overlay if filtered
+  if (isFiltered) {
+    ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+    ctx.fillRect(x, y, size, size);
+  }
   
   // Item name (truncated)
   ctx.fillStyle = '#d4d4d4';

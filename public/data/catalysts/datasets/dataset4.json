@@ -17,44 +17,44 @@
     ],
     "inputItems": [
         {
-            "id": "noxious"
+            "id": "noxious-catalyst"
         }
     ],
     "items": [
         {
-            "id": "intrinsic",
+            "id": "intrinsic-catalyst",
             "count": 620
         },
         {
-            "id": "turbulent",
+            "id": "turbulent-catalyst",
             "count": 288
         },
         {
-            "id": "abrasive",
+            "id": "abrasive-catalyst",
             "count": 324
         },
         {
-            "id": "imbued",
+            "id": "imbued-catalyst",
             "count": 315
         },
         {
-            "id": "tempering",
+            "id": "tempering-catalyst",
             "count": 81
         },
         {
-            "id": "fertile",
+            "id": "fertile-catalyst",
             "count": 70
         },
         {
-            "id": "prismatic",
+            "id": "prismatic-catalyst",
             "count": 91
         },
         {
-            "id": "unstable",
+            "id": "unstable-catalyst",
             "count": 23
         },
         {
-            "id": "accelerating",
+            "id": "accelerating-catalyst",
             "count": 38
         }
     ]

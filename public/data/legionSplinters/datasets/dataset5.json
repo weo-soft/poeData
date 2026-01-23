@@ -12,24 +12,24 @@
     ],
     "inputItems": [
         {
-            "id": "maraketh"
+            "id": "timeless-maraketh-splinter"
         }
     ],
     "items": [
         {
-            "id": "eternal-empire",
+            "id": "timeless-eternal-empire-splinter",
             "count": 326
         },
         {
-            "id": "karui",
+            "id": "timeless-karui-splinter",
             "count": 296
         },
         {
-            "id": "vaal",
+            "id": "timeless-vaal-splinter",
             "count": 241
         },
         {
-            "id": "templar",
+            "id": "timeless-templar-splinter",
             "count": 137
         }
     ]

@@ -1,150 +1,150 @@
 {
-    "name": "Calculated Weights for Delirium Orbs",
-    "description": "Calculated item weights for Delirium Orbs using MLE method from 5 datasets",
-    "date": "2026-01-18",
-    "patch": "3.22.0",
-    "sources": [
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
-        "author": "aertherel"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
-        "author": "aertherel"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
-        "author": "aertherel"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
-        "author": "aertherel"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
-        "author": "aertherel"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
-        "author": "aertherel"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
-        "author": "aertherel"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
-        "author": "aertherel"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
-        "author": "aertherel"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
-        "author": "aertherel"
-      }
-    ],
-    "items": [
-      {
-        "id": "fine",
-        "weight": 0.13288786754513424
-      },
-      {
-        "id": "armoursmith",
-        "weight": 0.12239963037439558
-      },
-      {
-        "id": "blacksmith",
-        "weight": 0.11821170154116076
-      },
-      {
-        "id": "jeweller",
-        "weight": 0.09356878004834626
-      },
-      {
-        "id": "diviner",
-        "weight": 0.05965259111824207
-      },
-      {
-        "id": "imperial",
-        "weight": 0.05227083235110174
-      },
-      {
-        "id": "foreboding",
-        "weight": 0.04932706774641888
-      },
-      {
-        "id": "whispering",
-        "weight": 0.04748266450214586
-      },
-      {
-        "id": "abyssal",
-        "weight": 0.033716681936397694
-      },
-      {
-        "id": "skittering",
-        "weight": 0.03291865396157172
-      },
-      {
-        "id": "blighted",
-        "weight": 0.03251963997415872
-      },
-      {
-        "id": "timeless",
-        "weight": 0.03232013298045223
-      },
-      {
-        "id": "fossilied",
-        "weight": 0.03212062598674573
-      },
-      {
-        "id": "amorphous",
-        "weight": 0.03172161199933274
-      },
-      {
-        "id": "cartographer",
-        "weight": 0.030325063043387272
-      },
-      {
-        "id": "fragmented",
-        "weight": 0.029128021081148304
-      },
-      {
-        "id": "thaumaturge",
-        "weight": 0.02872900709373531
-      },
-      {
-        "id": "singular",
-        "weight": 0.022943304276246943
-      },
-      {
-        "id": "obscured",
-        "weight": 0.01775612243987809
-      }
-    ],
-    "inputItems": [
-      {
-        "id": "fine"
-      },
-      {
-        "id": "blacksmith"
-      },
-      {
-        "id": "armoursmith"
-      },
-      {
-        "id": "foreboding"
-      }
-    ]
-  }
+  "name": "Calculated Weights for Delirium Orbs",
+  "description": "Calculated item weights for Delirium Orbs using MLE method from 5 datasets",
+  "date": "2026-01-23",
+  "patch": "3.22.0",
+  "sources": [
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+      "author": "aertherel"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+      "author": "aertherel"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+      "author": "aertherel"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+      "author": "aertherel"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+      "author": "aertherel"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+      "author": "aertherel"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+      "author": "aertherel"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+      "author": "aertherel"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1178330052946034731",
+      "author": "aertherel"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1MYtnloyxTca0gBTwbSkKA5UU1pcTxZR3dg_Pjpj61yE/edit?gid=0#gid=0",
+      "author": "aertherel"
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-delirium-orb",
+      "weight": 0.12643627712635058
+    },
+    {
+      "id": "armoursmiths-delirium-orb",
+      "weight": 0.12295356235125858
+    },
+    {
+      "id": "blacksmiths-delirium-orb",
+      "weight": 0.11422079686846187
+    },
+    {
+      "id": "jewellers-delirium-orb",
+      "weight": 0.10030213621253964
+    },
+    {
+      "id": "diviners-delirium-orb",
+      "weight": 0.05949293373390831
+    },
+    {
+      "id": "imperial-delirium-orb",
+      "weight": 0.052937238556618145
+    },
+    {
+      "id": "whispering-delirium-orb",
+      "weight": 0.051134422382863344
+    },
+    {
+      "id": "foreboding-delirium-orb",
+      "weight": 0.04916296814816172
+    },
+    {
+      "id": "skittering-delirium-orb",
+      "weight": 0.03490907681907017
+    },
+    {
+      "id": "amorphous-delirium-orb",
+      "weight": 0.03277847588645086
+    },
+    {
+      "id": "blighted-delirium-orb",
+      "weight": 0.031959013989289596
+    },
+    {
+      "id": "fossilised-delirium-orb",
+      "weight": 0.031959013989289596
+    },
+    {
+      "id": "timeless-delirium-orb",
+      "weight": 0.031139552092128327
+    },
+    {
+      "id": "abyssal-delirium-orb",
+      "weight": 0.030975659712696068
+    },
+    {
+      "id": "fragmented-delirium-orb",
+      "weight": 0.0301561978155348
+    },
+    {
+      "id": "cartographers-delirium-orb",
+      "weight": 0.029992305436102543
+    },
+    {
+      "id": "thaumaturges-delirium-orb",
+      "weight": 0.028025596882915487
+    },
+    {
+      "id": "singular-delirium-orb",
+      "weight": 0.023764395017676878
+    },
+    {
+      "id": "obscured-delirium-orb",
+      "weight": 0.017700376978683482
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "fine-delirium-orb"
+    },
+    {
+      "id": "blacksmiths-delirium-orb"
+    },
+    {
+      "id": "armoursmiths-delirium-orb"
+    },
+    {
+      "id": "foreboding-delirium-orb"
+    }
+  ]
+}

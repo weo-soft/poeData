@@ -12,104 +12,104 @@
     ],
     "inputItems": [
         {
-            "id": "frigid"
+            "id": "frigid-fossil"
         }
     ],
     "items": [
         {
-            "id": "pristine",
+            "id": "pristine-fossil",
             "count": 13
         },
         {
-            "id": "abberant",
+            "id": "aberrant-fossil",
             "count": 12
         },
         {
-            "id": "metalic",
+            "id": "metallic-fossil",
             "count": 11
         },
         {
-            "id": "scorched",
+            "id": "scorched-fossil",
             "count": 10
         },
         {
-            "id": "jagged",
+            "id": "jagged-fossil",
             "count": 9
         },
         {
-            "id": "dense",
+            "id": "dense-fossil",
             "count": 6
         },
         {
-            "id": "serrated",
+            "id": "serrated-fossil",
             "count": 5
         },
         {
-            "id": "shuddering",
+            "id": "shuddering-fossil",
             "count": 4
         },
         {
-            "id": "perfect",
+            "id": "perfect-fossil",
             "count": 3
         },
         {
-            "id": "aetheric",
+            "id": "aetheric-fossil",
             "count": 2
         },
         {
-            "id": "deft",
+            "id": "deft-fossil",
             "count": 2
         },
         {
-            "id": "lucent",
+            "id": "lucent-fossil",
             "count": 2
         },
         {
-            "id": "prismatic",
+            "id": "prismatic-fossil",
             "count": 2
         },
         {
-            "id": "corroded",
+            "id": "corroded-fossil",
             "count": 1
         },
         {
-            "id": "bound",
+            "id": "bound-fossil",
             "count": 0
         },
         {
-            "id": "gilded",
+            "id": "gilded-fossil",
             "count": 0
         },
         {
-            "id": "fundamental",
+            "id": "fundamental-fossil",
             "count": 0
         },
         {
-            "id": "sanctified",
+            "id": "sanctified-fossil",
             "count": 0
         },
         {
-            "id": "faceted",
+            "id": "faceted-fossil",
             "count": 0
         },
         {
-            "id": "fractured",
+            "id": "fractured-fossil",
             "count": 0
         },
         {
-            "id": "hollow",
+            "id": "hollow-fossil",
             "count": 0
         },
         {
-            "id": "glyphic",
+            "id": "glyphic-fossil",
             "count": 0
         },
         {
-            "id": "bloodstained",
+            "id": "bloodstained-fossil",
             "count": 0
         },
         {
-            "id": "tangled",
+            "id": "tangled-fossil",
             "count": 0
         }
     ]

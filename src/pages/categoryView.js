@@ -8,7 +8,7 @@ import { displayError } from '../utils/errors.js';
 import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
-import { renderListView } from '../visualization/listViewRenderer.js';
+import { renderListView, filterTattoos, filterRunegrafts } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
 import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
@@ -20,6 +20,7 @@ import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 
 let currentItems = [];
 let currentCategoryId = null;
+let filteredDivinationCards = null; // Store filtered cards for divination cards view
 
 /**
  * Render category view
@@ -61,6 +62,19 @@ export async function renderCategoryView(container, params) {
     });
     
     header.appendChild(title);
+    
+    // Add back button when in datasets view
+    if (viewType === 'datasets') {
+      const backButton = createElement('button', {
+        className: 'btn btn-secondary',
+        textContent: '← Back'
+      });
+      backButton.addEventListener('click', () => {
+        router.navigate(`/category/${categoryId}`);
+      });
+      header.appendChild(backButton);
+    }
+    
     viewSection.appendChild(header);
     
     // Only show tabs when NOT in datasets view
@@ -202,7 +216,8 @@ function isNewCategory(categoryId) {
   // fossils, legion, oils
   // These are now handled by renderStashTab with grid configurations
   const newCategories = [
-    'tattoos'
+    'tattoos',
+    'runegrafts'
   ];
   return newCategories.includes(categoryId);
 }
@@ -238,7 +253,8 @@ function getCategoryDirectory(categoryId) {
     'legion-emblems': 'legionEmblems',
     'legion-splinters': 'legionSplinters',
     'oils': 'oils',
-    'tattoos': 'tattoos'
+    'tattoos': 'tattoos',
+    'runegrafts': 'runegrafts'
   };
   
   if (categoryDirMap[categoryId]) {
@@ -280,7 +296,8 @@ function getCategoryFilename(categoryId) {
     'fossils': 'fossils/fossils.json',
     'legion': 'legionSplinters/legionSplinters.json', // Merged category - handled in dataLoader
     'oils': 'oils/oils.json',
-    'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
+    'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
+    'runegrafts': 'runegrafts/runegrafts.json'
   };
   
   if (categoryFileMap[categoryId]) {
@@ -303,6 +320,137 @@ function getCategoryFilename(categoryId) {
 }
 
 /**
+ * Filter divination cards based on search query
+ * @param {Array} items - Array of divination card items
+ * @param {string} searchQuery - Search query string
+ * @returns {Array} Filtered array of items
+ */
+function filterDivinationCards(items, searchQuery) {
+  if (!searchQuery || searchQuery.trim() === '') {
+    return items;
+  }
+  
+  const query = searchQuery.toLowerCase().trim();
+  
+  return items.filter(card => {
+    // Search in name
+    if (card.name && card.name.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    // Search in flavour text
+    if (card.flavourText) {
+      // Remove HTML tags for searching
+      const cleanFlavourText = card.flavourText.replace(/<[^>]*>/g, '').toLowerCase();
+      if (cleanFlavourText.includes(query)) {
+        return true;
+      }
+    }
+    
+    // Search in explicit modifiers text
+    if (card.explicitModifiers && Array.isArray(card.explicitModifiers)) {
+      const modifierText = card.explicitModifiers
+        .map(m => m.text)
+        .join(' ')
+        .replace(/<[^>]*>/g, '')
+        .toLowerCase();
+      if (modifierText.includes(query)) {
+        return true;
+      }
+    }
+    
+    // Search in drop areas
+    if (card.dropAreas && Array.isArray(card.dropAreas)) {
+      if (card.dropAreas.some(area => area.toLowerCase().includes(query))) {
+        return true;
+      }
+    }
+    
+    // Search in drop monsters
+    if (card.dropMonsters && Array.isArray(card.dropMonsters)) {
+      if (card.dropMonsters.some(monster => monster.toLowerCase().includes(query))) {
+        return true;
+      }
+    }
+    
+    return false;
+  });
+}
+
+/**
+ * Generic filter function for items based on search query
+ * Searches in name, description, id, and other common fields
+ * @param {Array} items - Array of items
+ * @param {string} searchQuery - Search query string
+ * @returns {Array} Filtered array of items
+ */
+function filterItems(items, searchQuery) {
+  if (!searchQuery || searchQuery.trim() === '') {
+    return items;
+  }
+  
+  const query = searchQuery.toLowerCase().trim();
+  
+  return items.filter(item => {
+    // Search in name
+    if (item.name && item.name.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    // Search in id
+    if (item.id && item.id.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    // Search in description
+    if (item.description) {
+      const cleanDescription = item.description.replace(/<[^>]*>/g, '').toLowerCase();
+      if (cleanDescription.includes(query)) {
+        return true;
+      }
+    }
+    
+    // Search in explicit modifiers text
+    if (item.explicitModifiers && Array.isArray(item.explicitModifiers)) {
+      const modifierText = item.explicitModifiers
+        .map(m => m.text || m)
+        .join(' ')
+        .replace(/<[^>]*>/g, '')
+        .toLowerCase();
+      if (modifierText.includes(query)) {
+        return true;
+      }
+    }
+    
+    // Search in drop areas
+    if (item.dropAreas && Array.isArray(item.dropAreas)) {
+      if (item.dropAreas.some(area => area.toLowerCase().includes(query))) {
+        return true;
+      }
+    }
+    
+    // Search in drop monsters
+    if (item.dropMonsters && Array.isArray(item.dropMonsters)) {
+      if (item.dropMonsters.some(monster => monster.toLowerCase().includes(query))) {
+        return true;
+      }
+    }
+    
+    // Search in dropRequired
+    if (item.dropRequired && item.dropRequired.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    // Search in type
+    if (item.type && item.type.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    return false;
+  });
+}
+
+/**
  * Render grid of miniature divination cards
  * @param {HTMLElement} container - Container element to render into
  * @param {Array} items - Array of divination card items
@@ -310,6 +458,17 @@ function getCategoryFilename(categoryId) {
 async function renderDivinationCardGrid(container, items) {
   // Clear container
   clearElement(container);
+  
+  // Show message if no cards match filter
+  if (items.length === 0) {
+    const noResultsMessage = createElement('div', {
+      className: 'divination-cards-no-results',
+      textContent: 'No cards match your search.',
+      style: 'text-align: center; padding: 2rem; color: var(--poe-text-dim);'
+    });
+    container.appendChild(noResultsMessage);
+    return;
+  }
   
   // Render each card as a miniature
   const cardWidth = 150; // Miniature size (reduced from 180)
@@ -380,23 +539,222 @@ async function renderItemsView(container, categoryId, items) {
   } else {
     // Render visualizations based on category type
     if (categoryId === 'divination-cards') {
+      // Create header bar container (same style as tattoos/runegrafts)
+      const headerBar = createElement('div', {
+        className: 'tattoos-header-bar'
+      });
+      
+      // JSON link
+      const jsonLink = createElement('a', {
+        href: `/data/${getCategoryFilename(categoryId)}`,
+        textContent: 'View Raw JSON Data',
+        className: 'json-link',
+        target: '_blank'
+      });
+      
+      // Search input
+      const searchInput = createElement('input', {
+        type: 'text',
+        placeholder: 'Search cards by name, reward, flavour text, or drop location...',
+        className: 'tattoos-search-input',
+        id: 'divination-cards-search'
+      });
+      
+      const searchLabel = createElement('label', {
+        textContent: 'Filter / Search:',
+        className: 'tattoos-search-label'
+      });
+      searchLabel.setAttribute('for', 'divination-cards-search');
+      
+      const searchWrapper = createElement('div', {
+        className: 'tattoos-search-wrapper'
+      });
+      searchWrapper.appendChild(searchLabel);
+      searchWrapper.appendChild(searchInput);
+      
+      headerBar.appendChild(jsonLink);
+      headerBar.appendChild(searchWrapper);
+      
+      // Replace the JSON link that was added earlier
+      const existingJsonLink = container.querySelector('.json-link');
+      if (existingJsonLink) {
+        existingJsonLink.remove();
+      }
+      
+      // Initialize filtered cards with all items
+      filteredDivinationCards = items;
+      
       // Render divination card grid
       const cardsGrid = createElement('div', {
         className: 'divination-cards-grid',
         id: 'divination-cards-grid'
       });
+      
+      // Add header bar before grid
+      container.insertBefore(headerBar, chartsContainer);
       container.insertBefore(cardsGrid, chartsContainer);
-      await renderDivinationCardGrid(cardsGrid, items);
-    } else if (isNewCategory(categoryId)) {
-      // Render list view for new categories
-      const listContainer = createElement('div', {
-        className: 'list-view-container',
-        id: 'list-view-container'
+      
+      // Initial render
+      await renderDivinationCardGrid(cardsGrid, filteredDivinationCards);
+      
+      // Add search event listener
+      let searchTimeout = null;
+      searchInput.addEventListener('input', async (e) => {
+        const query = e.target.value;
+        
+        // Debounce search to avoid too many re-renders
+        if (searchTimeout) {
+          clearTimeout(searchTimeout);
+        }
+        
+        searchTimeout = setTimeout(async () => {
+          filteredDivinationCards = filterDivinationCards(items, query);
+          await renderDivinationCardGrid(cardsGrid, filteredDivinationCards);
+        }, 150); // 150ms debounce
       });
-      container.insertBefore(listContainer, chartsContainer);
-      await renderListView(listContainer, items, categoryId);
+    } else if (isNewCategory(categoryId)) {
+      // Special handling for tattoos and runegrafts - create header bar with JSON link and search
+      if (categoryId === 'tattoos' || categoryId === 'runegrafts') {
+        // Create header bar container
+        const headerBar = createElement('div', {
+          className: 'tattoos-header-bar'
+        });
+        
+        // JSON link
+        const jsonLink = createElement('a', {
+          href: `/data/${getCategoryFilename(categoryId)}`,
+          textContent: 'View Raw JSON Data',
+          className: 'json-link',
+          target: '_blank'
+        });
+        
+        // Search input
+        const placeholderText = categoryId === 'tattoos' 
+          ? 'Search tattoos by name, description, attribute, or drop location...'
+          : 'Search runegrafts by name, description, or drop location...';
+        const searchId = categoryId === 'tattoos' ? 'tattoos-search' : 'runegrafts-search';
+        const searchInput = createElement('input', {
+          type: 'text',
+          placeholder: placeholderText,
+          className: 'tattoos-search-input',
+          id: searchId
+        });
+        
+        const searchLabel = createElement('label', {
+          textContent: 'Filter / Search:',
+          className: 'tattoos-search-label'
+        });
+        searchLabel.setAttribute('for', searchId);
+        
+        const searchWrapper = createElement('div', {
+          className: 'tattoos-search-wrapper'
+        });
+        searchWrapper.appendChild(searchLabel);
+        searchWrapper.appendChild(searchInput);
+        
+        headerBar.appendChild(jsonLink);
+        headerBar.appendChild(searchWrapper);
+        
+        // Replace the JSON link that was added earlier
+        const existingJsonLink = container.querySelector('.json-link');
+        if (existingJsonLink) {
+          existingJsonLink.remove();
+        }
+        container.insertBefore(headerBar, chartsContainer);
+        
+        // Create list container
+        const listContainer = createElement('div', {
+          className: 'list-view-container',
+          id: 'list-view-container'
+        });
+        container.insertBefore(listContainer, chartsContainer);
+        
+        // Store original items for filtering
+        const originalItems = items;
+        
+        // Render function that can be called with filtered items
+        const renderList = async (itemsToRender) => {
+          clearElement(listContainer);
+          await renderListView(listContainer, itemsToRender, categoryId);
+        };
+        
+        // Initial render with all items
+        await renderList(originalItems);
+        
+        // Add search event listener with debouncing
+        let searchTimeout = null;
+        searchInput.addEventListener('input', async (e) => {
+          const query = e.target.value;
+          
+          // Debounce search to avoid too many re-renders
+          if (searchTimeout) {
+            clearTimeout(searchTimeout);
+          }
+          
+          searchTimeout = setTimeout(async () => {
+            let filteredItems;
+            if (categoryId === 'tattoos') {
+              filteredItems = filterTattoos(originalItems, query);
+            } else {
+              filteredItems = filterRunegrafts(originalItems, query);
+            }
+            await renderList(filteredItems);
+          }, 150); // 150ms debounce
+        });
+      } else {
+        // Render list view for other new categories
+        const listContainer = createElement('div', {
+          className: 'list-view-container',
+          id: 'list-view-container'
+        });
+        container.insertBefore(listContainer, chartsContainer);
+        await renderListView(listContainer, items, categoryId);
+      }
     } else {
-      // Render stash tab visualization for other categories
+      // Render stash tab visualization for other categories with search/filter
+      // Create header bar container (same style as tattoos/runegrafts)
+      const headerBar = createElement('div', {
+        className: 'tattoos-header-bar'
+      });
+      
+      // JSON link
+      const jsonLink = createElement('a', {
+        href: `/data/${getCategoryFilename(categoryId)}`,
+        textContent: 'View Raw JSON Data',
+        className: 'json-link',
+        target: '_blank'
+      });
+      
+      // Search input
+      const searchInput = createElement('input', {
+        type: 'text',
+        placeholder: `Search ${formatCategoryName(categoryId).toLowerCase()} by name, description, or other properties...`,
+        className: 'tattoos-search-input',
+        id: `category-search-${categoryId}`
+      });
+      
+      const searchLabel = createElement('label', {
+        textContent: 'Filter / Search:',
+        className: 'tattoos-search-label'
+      });
+      searchLabel.setAttribute('for', `category-search-${categoryId}`);
+      
+      const searchWrapper = createElement('div', {
+        className: 'tattoos-search-wrapper'
+      });
+      searchWrapper.appendChild(searchLabel);
+      searchWrapper.appendChild(searchInput);
+      
+      headerBar.appendChild(jsonLink);
+      headerBar.appendChild(searchWrapper);
+      
+      // Replace the JSON link that was added earlier
+      const existingJsonLink = container.querySelector('.json-link');
+      if (existingJsonLink) {
+        existingJsonLink.remove();
+      }
+      
+      // Create stash tab container
       const stashContainer = createElement('div', { 
         className: 'stash-tab-container',
         id: 'stash-tab-canvas-container'
@@ -406,8 +764,38 @@ async function renderItemsView(container, categoryId, items) {
         className: 'stash-tab-canvas'
       });
       stashContainer.appendChild(canvas);
+      
+      // Add header bar before stash tab
+      container.insertBefore(headerBar, chartsContainer);
       container.insertBefore(stashContainer, chartsContainer);
-      await renderStashTab(canvas, items, categoryId);
+      
+      // Store original items for filtering
+      const originalItems = items;
+      let filteredItems = items;
+      
+      // Initial render
+      await renderStashTab(canvas, filteredItems, categoryId);
+      
+      // Add search event listener with debouncing
+      let searchTimeout = null;
+      searchInput.addEventListener('input', async (e) => {
+        const query = e.target.value;
+        
+        // Debounce search to avoid too many re-renders
+        if (searchTimeout) {
+          clearTimeout(searchTimeout);
+        }
+        
+        searchTimeout = setTimeout(async () => {
+          filteredItems = filterItems(originalItems, query);
+          
+          // Create set of filtered item IDs for highlighting (only if query is not empty)
+          const filteredItemIds = query.trim() === '' ? null : new Set(filteredItems.map(item => item.id));
+          
+          // Re-render with all items but highlight filtered ones
+          await renderStashTab(canvas, originalItems, categoryId, filteredItemIds);
+        }, 150); // 150ms debounce
+      });
     }
     generateCategoryCharts(chartsContainer, items, categoryId);
   }

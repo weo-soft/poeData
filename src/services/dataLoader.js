@@ -69,39 +69,67 @@ export async function loadCategoryData(categoryId) {
 }
 
 /**
- * Merge weight data from dataset into scarab items
+ * Merge weight data from calculation files into scarab items
  * @param {Array} items - Array of scarab items
- * @returns {Promise<Array>} Items with dropWeight merged from dataset
+ * @returns {Promise<Array>} Items with dropWeight (bayesian) and dropWeightMle merged from calculation files
  */
 async function mergeScarabWeights(items) {
   try {
-    // Load the dataset
-    const datasetResponse = await fetch('/data/scarabs/datasets/dataset1.json');
+    // Load both calculation files
+    const [bayesianResponse, mleResponse] = await Promise.all([
+      fetch('/data/scarabs/calculations/bayesian.json'),
+      fetch('/data/scarabs/calculations/mle.json')
+    ]);
     
-    if (!datasetResponse.ok) {
-      console.warn('Could not load scarab dataset, items will not have dropWeight');
-      return items;
+    // Create maps for both weight types
+    const bayesianWeightMap = new Map();
+    const mleWeightMap = new Map();
+    
+    // Load Bayesian weights
+    if (bayesianResponse.ok) {
+      const bayesianData = await bayesianResponse.json();
+      if (bayesianData.items && Array.isArray(bayesianData.items)) {
+        bayesianData.items.forEach(item => {
+          if (item.id && item.weight !== undefined) {
+            bayesianWeightMap.set(item.id, item.weight);
+          }
+        });
+      }
+    } else {
+      console.warn('Could not load bayesian calculation file');
     }
     
-    const dataset = await datasetResponse.json();
-    
-    // Create a map of item ID to weight
-    const weightMap = new Map();
-    if (dataset.items && Array.isArray(dataset.items)) {
-      dataset.items.forEach(item => {
-        if (item.id && item.count !== undefined) {
-          weightMap.set(item.id, item.count);
-        }
-      });
+    // Load MLE weights
+    if (mleResponse.ok) {
+      const mleData = await mleResponse.json();
+      if (mleData.items && Array.isArray(mleData.items)) {
+        mleData.items.forEach(item => {
+          if (item.id && item.weight !== undefined) {
+            mleWeightMap.set(item.id, item.weight);
+          }
+        });
+      }
+    } else {
+      console.warn('Could not load MLE calculation file');
     }
     
     // Merge weights into items
+    // Use Bayesian as primary dropWeight, MLE as dropWeightMle
     return items.map(item => {
-      const weight = weightMap.get(item.id);
-      if (weight !== undefined) {
-        return { ...item, dropWeight: weight };
+      const bayesianWeight = bayesianWeightMap.get(item.id);
+      const mleWeight = mleWeightMap.get(item.id);
+      
+      const updatedItem = { ...item };
+      
+      if (bayesianWeight !== undefined) {
+        updatedItem.dropWeight = bayesianWeight;
       }
-      return item;
+      
+      if (mleWeight !== undefined) {
+        updatedItem.dropWeightMle = mleWeight;
+      }
+      
+      return updatedItem;
     });
   } catch (error) {
     console.warn('Error merging scarab weights:', error);
@@ -248,7 +276,8 @@ function getCategoryFilename(categoryId) {
     'essences': 'essences/essences.json',
     'fossils': 'fossils/fossils.json',
     'oils': 'oils/oils.json',
-    'tattoos': 'tattoos/tattos.json' // Note: filename is "tattos" not "tattoos"
+    'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
+    'runegrafts': 'runegrafts/runegrafts.json'
   };
   
   if (categoryFileMap[categoryId]) {
@@ -354,6 +383,11 @@ export async function getAvailableCategories() {
       id: 'tattoos',
       name: 'Tattoos',
       description: 'Items that modify passive skill trees'
+    },
+    {
+      id: 'runegrafts',
+      name: 'Runegrafts',
+      description: 'Items that replace mastery passive skills'
     }
   ];
   

@@ -12,24 +12,24 @@
     ],
     "inputItems": [
         {
-            "id": "tul"
+            "id": "tul-s-breachstone"
         }
     ],
     "items": [
         {
-            "id": "xoph",
+            "id": "xoph-s-breachstone",
             "count": 18
         },
         {
-            "id": "esh",
+            "id": "esh-s-breachstone",
             "count": 22
         },
         {
-            "id": "uul-netol",
+            "id": "uul-netol-s-breachstone",
             "count": 8
         },
         {
-            "id": "chayula",
+            "id": "chayula-s-breachstone",
             "count": 2
         }
     ]

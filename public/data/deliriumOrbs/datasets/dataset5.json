@@ -17,84 +17,84 @@
     ],
     "inputItems": [
         {
-            "id": "foreboding"
+            "id": "foreboding-delirium-orb"
         }
     ],
     "items": [
         {
-            "id": "abyssal",
+            "id": "abyssal-delirium-orb",
             "count": 38
         },
         {
-            "id": "amorphous",
+            "id": "amorphous-delirium-orb",
             "count": 31
         },
         {
-            "id": "armoursmith",
+            "id": "armoursmiths-delirium-orb",
             "count": 147
         },
         {
-            "id": "blacksmith",
+            "id": "blacksmiths-delirium-orb",
             "count": 138
         },
         {
-            "id": "blighted",
+            "id": "blighted-delirium-orb",
             "count": 42
         },
         {
-            "id": "cartographer",
+            "id": "cartographers-delirium-orb",
             "count": 27
         },
         {
-            "id": "diviner",
+            "id": "diviners-delirium-orb",
             "count": 61
         },
         {
-            "id": "fine",
+            "id": "fine-delirium-orb",
             "count": 128
         },
         {
-            "id": "foreboding",
+            "id": "foreboding-delirium-orb",
             "count": 52
         },
         {
-            "id": "fossilied",
+            "id": "fossilised-delirium-orb",
             "count": 28
         },
         {
-            "id": "fragmented",
+            "id": "fragmented-delirium-orb",
             "count": 29
         },
         {
-            "id": "imperial",
+            "id": "imperial-delirium-orb",
             "count": 56
         },
         {
-            "id": "jeweller",
+            "id": "jewellers-delirium-orb",
             "count": 0
         },
         {
-            "id": "obscured",
+            "id": "obscured-delirium-orb",
             "count": 14
         },
         {
-            "id": "singular",
+            "id": "singular-delirium-orb",
             "count": 22
         },
         {
-            "id": "skittering",
+            "id": "skittering-delirium-orb",
             "count": 35
         },
         {
-            "id": "thaumaturge",
+            "id": "thaumaturges-delirium-orb",
             "count": 33
         },
         {
-            "id": "timeless",
+            "id": "timeless-delirium-orb",
             "count": 29
         },
         {
-            "id": "whispering",
+            "id": "whispering-delirium-orb",
             "count": 50
         }
     ]

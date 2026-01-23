@@ -1,206 +1,206 @@
 {
-    "name": "Calculated Weights for Fossils",
-    "description": "Calculated item weights for Fossils using BAYESIAN method from 9 datasets",
-    "date": "2026-01-18",
-    "patch": "3.19.0",
-    "sources": [
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
-        "author": "Lextra"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
-        "author": "FallenAng3L"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1024022915882160228",
-        "author": "valiant_beetle_44940"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1150370447007961099",
-        "author": "hakei."
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1296229903947141122",
-        "author": "inev_"
-      }
-    ],
-    "items": [
-      {
-        "id": "jagged",
-        "weight": 0.11504234725440583
-      },
-      {
-        "id": "pristine",
-        "weight": 0.11327321043797947
-      },
-      {
-        "id": "metalic",
-        "weight": 0.10883099870050911
-      },
-      {
-        "id": "dense",
-        "weight": 0.10824924378475599
-      },
-      {
-        "id": "abberant",
-        "weight": 0.10809969598605913
-      },
-      {
-        "id": "scorched",
-        "weight": 0.10330219543170863
-      },
-      {
-        "id": "frigid",
-        "weight": 0.10328267929658008
-      },
-      {
-        "id": "shuddering",
-        "weight": 0.0261186181002389
-      },
-      {
-        "id": "serrated",
-        "weight": 0.025459907526402134
-      },
-      {
-        "id": "aetheric",
-        "weight": 0.02371778400679721
-      },
-      {
-        "id": "deft",
-        "weight": 0.023502854877409555
-      },
-      {
-        "id": "lucent",
-        "weight": 0.022609122803443616
-      },
-      {
-        "id": "corroded",
-        "weight": 0.022221648260276443
-      },
-      {
-        "id": "bound",
-        "weight": 0.0218561841550913
-      },
-      {
-        "id": "fundamental",
-        "weight": 0.020897073108646455
-      },
-      {
-        "id": "prismatic",
-        "weight": 0.01935917776309149
-      },
-      {
-        "id": "perfect",
-        "weight": 0.017811498012463806
-      },
-      {
-        "id": "opulent",
-        "weight": 0.004589446720800181
-      },
-      {
-        "id": "sanctified",
-        "weight": 0.002109361978892522
-      },
-      {
-        "id": "glyphic",
-        "weight": 0.0015530997475735947
-      },
-      {
-        "id": "hollow",
-        "weight": 0.0011815380771017887
-      },
-      {
-        "id": "tangled",
-        "weight": 0.0010544819135639987
-      },
-      {
-        "id": "bloodstained",
-        "weight": 0.00099651425979573
-      },
-      {
-        "id": "gilded",
-        "weight": 0.0009650711505999388
-      },
-      {
-        "id": "fractured",
-        "weight": 0.0008730705881218572
-      },
-      {
-        "id": "faceted",
-        "weight": 0.000690371792205915
-      }
-    ],
-    "inputItems": [
-      {
-        "id": "abberant"
-      },
-      {
-        "id": "metalic"
-      },
-      {
-        "id": "frigid"
-      },
-      {
-        "id": "lucent"
-      },
-      {
-        "id": "gilded"
-      }
-    ]
-  }
+  "name": "Calculated Weights for Fossils",
+  "description": "Calculated item weights for Fossils using BAYESIAN method from 9 datasets",
+  "date": "2026-01-23",
+  "patch": "3.19.0",
+  "sources": [
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1-bQ_n1M67Tu2Mch7zv-iNBAmxaLvL6-vZJ3EDF_fJc8/edit?gid=0#gid=0",
+      "author": "Lextra"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402",
+      "author": "FallenAng3L"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1024022915882160228",
+      "author": "valiant_beetle_44940"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1150370447007961099",
+      "author": "hakei."
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1296229903947141122",
+      "author": "inev_"
+    }
+  ],
+  "items": [
+    {
+      "id": "jagged-fossil",
+      "weight": 0.11588496191895477
+    },
+    {
+      "id": "pristine-fossil",
+      "weight": 0.11507668844896903
+    },
+    {
+      "id": "metallic-fossil",
+      "weight": 0.10919789602217406
+    },
+    {
+      "id": "dense-fossil",
+      "weight": 0.10773466318494065
+    },
+    {
+      "id": "aberrant-fossil",
+      "weight": 0.10544518114687405
+    },
+    {
+      "id": "frigid-fossil",
+      "weight": 0.10389683215964254
+    },
+    {
+      "id": "scorched-fossil",
+      "weight": 0.1010910620291075
+    },
+    {
+      "id": "shuddering-fossil",
+      "weight": 0.02591007775049235
+    },
+    {
+      "id": "serrated-fossil",
+      "weight": 0.024881425127381732
+    },
+    {
+      "id": "corroded-fossil",
+      "weight": 0.023846400773152376
+    },
+    {
+      "id": "aetheric-fossil",
+      "weight": 0.023313746618067573
+    },
+    {
+      "id": "deft-fossil",
+      "weight": 0.02325995600866966
+    },
+    {
+      "id": "bound-fossil",
+      "weight": 0.02243846408236089
+    },
+    {
+      "id": "prismatic-fossil",
+      "weight": 0.02066129868010078
+    },
+    {
+      "id": "lucent-fossil",
+      "weight": 0.020186205709760385
+    },
+    {
+      "id": "fundamental-fossil",
+      "weight": 0.019668966163943022
+    },
+    {
+      "id": "perfect-fossil",
+      "weight": 0.019038700627609095
+    },
+    {
+      "id": "opulent-fossil",
+      "weight": 0.0024781948943168462
+    },
+    {
+      "id": "glyphic-fossil",
+      "weight": 0.0018937458898404317
+    },
+    {
+      "id": "tangled-fossil",
+      "weight": 0.0016354742489489327
+    },
+    {
+      "id": "bloodstained-fossil",
+      "weight": 0.0015015490238554463
+    },
+    {
+      "id": "faceted-fossil",
+      "weight": 0.001471301331333839
+    },
+    {
+      "id": "fractured-fossil",
+      "weight": 0.001463768474102556
+    },
+    {
+      "id": "sanctified-fossil",
+      "weight": 0.001414803519655543
+    },
+    {
+      "id": "hollow-fossil",
+      "weight": 0.0011065212517359757
+    },
+    {
+      "id": "gilded-fossil",
+      "weight": 0.00040201322609766576
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "aberrant-fossil"
+    },
+    {
+      "id": "metallic-fossil"
+    },
+    {
+      "id": "frigid-fossil"
+    },
+    {
+      "id": "lucent-fossil"
+    },
+    {
+      "id": "gilded-fossil"
+    }
+  ]
+}

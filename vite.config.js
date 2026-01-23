@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { calculationsPlugin } from './vite-plugin-calculations.js';
 
 export default defineConfig({
   root: '.',
@@ -12,6 +13,9 @@ export default defineConfig({
     port: 5173,
     open: true
   },
+  plugins: [
+    calculationsPlugin()
+  ],
   test: {
     globals: true,
     environment: 'jsdom',

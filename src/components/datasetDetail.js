@@ -6,6 +6,18 @@ import { createElement, clearElement } from '../utils/dom.js';
 import { getDatasetUrl } from '../utils/fileUrls.js';
 
 /**
+ * Format category name for display
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Formatted name
+ */
+function formatCategoryName(categoryId) {
+  return categoryId
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
  * Render dataset detail view
  * @param {HTMLElement} container - Container element to render into
  * @param {Object} dataset - Full dataset object
@@ -28,15 +40,25 @@ export function renderDatasetDetail(container, dataset, categoryId, onBack, onDo
   
   const detailSection = createElement('div', { className: 'dataset-detail' });
   
-  // Create header with back button (if provided)
+  // Create header with category name and back button (if provided)
   if (onBack) {
     const detailHeader = createElement('div', { className: 'dataset-detail-header' });
+    
+    // Category name on the left
+    const categoryName = createElement('h1', { 
+      className: 'dataset-category-name',
+      textContent: formatCategoryName(categoryId)
+    });
+    detailHeader.appendChild(categoryName);
+    
+    // Back button on the right
     const backButton = createElement('button', {
       className: 'btn btn-secondary',
-      textContent: '← Back to Dataset List'
+      textContent: '← Back'
     });
     backButton.addEventListener('click', onBack);
     detailHeader.appendChild(backButton);
+    
     detailSection.appendChild(detailHeader);
   }
   

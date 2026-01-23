@@ -1,450 +1,450 @@
 {
-    "name": "Calculated Weights for Scarabs",
-    "description": "Calculated item weights for Scarabs using MLE method from 1 dataset",
-    "date": "2026-01-18",
-    "patch": "3.27.0",
-    "sources": [
-      {
-        "name": "Reddit Post",
-        "url": "https://old.reddit.com/r/pathofexile/comments/1psepyv/100k_scarabs_vendored_327_weighting_and_profits/",
-        "author": "VTSAX_ (u/VTSAX_)"
-      },
-      {
-        "name": "Google Sheet",
-        "url": "https://docs.google.com/spreadsheets/d/1HToI124FJIKw6M3HRuvukJuVUEVwd2u-TFRs8XO4MCU/edit?gid=0#gid=0",
-        "author": "Lextra"
-      }
-    ],
-    "items": [
-      {
-        "id": "ritual-scarab-of-selectiveness",
-        "weight": 0.0202208088323434
-      },
-      {
-        "id": "divination-scarab-of-the-cloister",
-        "weight": 0.01983079323171937
-      },
-      {
-        "id": "sulphite-scarab",
-        "weight": 0.019710788431527362
-      },
-      {
-        "id": "domination-scarab",
-        "weight": 0.019560782431287352
-      },
-      {
-        "id": "expedition-scarab",
-        "weight": 0.019560782431287352
-      },
-      {
-        "id": "harvest-scarab",
-        "weight": 0.019470778831139932
-      },
-      {
-        "id": "ambush-scarab",
-        "weight": 0.019380775230999337
-      },
-      {
-        "id": "cartography-scarab-of-escalation",
-        "weight": 0.019350774030951333
-      },
-      {
-        "id": "scarab-of-adversaries",
-        "weight": 0.019020760830423304
-      },
-      {
-        "id": "delirium-scarab",
-        "weight": 0.0189307572302793
-      },
-      {
-        "id": "legion-scarab",
-        "weight": 0.018900756030231298
-      },
-      {
-        "id": "anarchy-scarab",
-        "weight": 0.01884075363013529
-      },
-      {
-        "id": "incursion-scarab",
-        "weight": 0.018510740429607268
-      },
-      {
-        "id": "titanic-scarab",
-        "weight": 0.018480739229559263
-      },
-      {
-        "id": "harbinger-scarab",
-        "weight": 0.01842073682946326
-      },
-      {
-        "id": "scarab-of-monstrous-lineage",
-        "weight": 0.018390735629415258
-      },
-      {
-        "id": "kalguuran-scarab",
-        "weight": 0.018360734429367257
-      },
-      {
-        "id": "torment-scarab",
-        "weight": 0.018150726029031238
-      },
-      {
-        "id": "essence-scarab",
-        "weight": 0.018090723628935233
-      },
-      {
-        "id": "abyss-scarab",
-        "weight": 0.01803072122883923
-      },
-      {
-        "id": "betrayal-scarab",
-        "weight": 0.01779071162845521
-      },
-      {
-        "id": "bestiary-scarab",
-        "weight": 0.01728069122763917
-      },
-      {
-        "id": "beyond-scarab",
-        "weight": 0.01674066962677512
-      },
-      {
-        "id": "influencing-scarab-of-the-shaper",
-        "weight": 0.016740669626771707
-      },
-      {
-        "id": "influencing-scarab-of-the-elder",
-        "weight": 0.015540621624851605
-      },
-      {
-        "id": "ultimatum-scarab",
-        "weight": 0.015420616824659596
-      },
-      {
-        "id": "blight-scarab",
-        "weight": 0.01437057482298293
-      },
-      {
-        "id": "betrayal-scarab-of-reinforcements",
-        "weight": 0.013170526821062832
-      },
-      {
-        "id": "influencing-scarab-of-hordes",
-        "weight": 0.013080523220918825
-      },
-      {
-        "id": "delirium-scarab-of-mania",
-        "weight": 0.01302052082082282
-      },
-      {
-        "id": "cartography-scarab-of-the-multitude",
-        "weight": 0.012900516020630809
-      },
-      {
-        "id": "harbinger-scarab-of-obelisks",
-        "weight": 0.012900516020630809
-      },
-      {
-        "id": "betrayal-scarab-of-the-allflame",
-        "weight": 0.012780511220438797
-      },
-      {
-        "id": "incursion-scarab-of-invasion",
-        "weight": 0.012630505220198788
-      },
-      {
-        "id": "ritual-scarab-of-wisps",
-        "weight": 0.012630505220198788
-      },
-      {
-        "id": "kalguuran-scarab-of-guarded-riches",
-        "weight": 0.012600504020150784
-      },
-      {
-        "id": "ultimatum-scarab-of-bribing",
-        "weight": 0.012600504020150784
-      },
-      {
-        "id": "beyond-scarab-of-haemophilia",
-        "weight": 0.012540501620054779
-      },
-      {
-        "id": "ambush-scarab-of-hidden-compartments",
-        "weight": 0.012450498019910772
-      },
-      {
-        "id": "anarchy-scarab-of-gigantification",
-        "weight": 0.012420496819862771
-      },
-      {
-        "id": "scarab-of-hunted-traitors",
-        "weight": 0.012420496819862771
-      },
-      {
-        "id": "delirium-scarab-of-paranoia",
-        "weight": 0.012390495619814767
-      },
-      {
-        "id": "expedition-scarab-of-verisium-powder",
-        "weight": 0.012360494419766764
-      },
-      {
-        "id": "abyss-scarab-of-multitudes",
-        "weight": 0.01233049321971876
-      },
-      {
-        "id": "essence-scarab-of-stability",
-        "weight": 0.012210488419526752
-      },
-      {
-        "id": "expedition-scarab-of-runefinding",
-        "weight": 0.012180487219478748
-      },
-      {
-        "id": "scarab-of-divinity",
-        "weight": 0.012090483619334742
-      },
-      {
-        "id": "torment-scarab-of-peculiarity",
-        "weight": 0.012090483619334742
-      },
-      {
-        "id": "ambush-scarab-of-potency",
-        "weight": 0.012000480019190735
-      },
-      {
-        "id": "bestiary-scarab-of-the-herd",
-        "weight": 0.011670466818662706
-      },
-      {
-        "id": "domination-scarab-of-apparitions",
-        "weight": 0.010950438017510646
-      },
-      {
-        "id": "anarchy-scarab-of-partnership",
-        "weight": 0.007170286811462308
-      },
-      {
-        "id": "expedition-scarab-of-archaeology",
-        "weight": 0.007020280811222294
-      },
-      {
-        "id": "legion-scarab-of-command",
-        "weight": 0.0069302772110782845
-      },
-      {
-        "id": "ritual-scarab-of-abundance",
-        "weight": 0.00678027121083827
-      },
-      {
-        "id": "sulphite-scarab-of-fumes",
-        "weight": 0.006720268810742264
-      },
-      {
-        "id": "horned-scarab-of-nemeses",
-        "weight": 0.006570262810502249
-      },
-      {
-        "id": "harbinger-scarab-of-warhoards",
-        "weight": 0.006540261610454246
-      },
-      {
-        "id": "harvest-scarab-of-doubling",
-        "weight": 0.006540261610454246
-      },
-      {
-        "id": "bestiary-scarab-of-duplicating",
-        "weight": 0.006510260410406243
-      },
-      {
-        "id": "scarab-of-bisection",
-        "weight": 0.00648025921035824
-      },
-      {
-        "id": "domination-scarab-of-evolution",
-        "weight": 0.006450258010310237
-      },
-      {
-        "id": "beyond-scarab-of-the-invasion",
-        "weight": 0.006390255610214231
-      },
-      {
-        "id": "scarab-of-wisps",
-        "weight": 0.006360254410166228
-      },
-      {
-        "id": "titanic-scarab-of-legend",
-        "weight": 0.006360254410166228
-      },
-      {
-        "id": "divination-scarab-of-plenty",
-        "weight": 0.006330253210118225
-      },
-      {
-        "id": "ambush-scarab-of-discernment",
-        "weight": 0.006300252010070222
-      },
-      {
-        "id": "delirium-scarab-of-neuroses",
-        "weight": 0.006300252010070222
-      },
-      {
-        "id": "beyond-scarab-of-resurgence",
-        "weight": 0.006240249609974216
-      },
-      {
-        "id": "legion-scarab-of-officers",
-        "weight": 0.006240249609974216
-      },
-      {
-        "id": "influencing-scarab-of-conversion",
-        "weight": 0.006120244809782204
-      },
-      {
-        "id": "essence-scarab-of-ascent",
-        "weight": 0.006090243609734201
-      },
-      {
-        "id": "blight-scarab-of-the-blightheart",
-        "weight": 0.0060302412096381935
-      },
-      {
-        "id": "torment-scarab-of-possession",
-        "weight": 0.005910236409446182
-      },
-      {
-        "id": "delirium-scarab-of-delusions",
-        "weight": 0.005790231609254169
-      },
-      {
-        "id": "cartography-scarab-of-corruption",
-        "weight": 0.005760230409206166
-      },
-      {
-        "id": "abyss-scarab-of-edifice",
-        "weight": 0.00570022800911016
-      },
-      {
-        "id": "incursion-scarab-of-champions",
-        "weight": 0.00561022440896615
-      },
-      {
-        "id": "titanic-scarab-of-treasures",
-        "weight": 0.00561022440896615
-      },
-      {
-        "id": "scarab-of-stability",
-        "weight": 0.005490219608774137
-      },
-      {
-        "id": "harbinger-scarab-of-regency",
-        "weight": 0.005460218408726134
-      },
-      {
-        "id": "ultimatum-scarab-of-inscription",
-        "weight": 0.005370214808582124
-      },
-      {
-        "id": "horned-scarab-of-bloodlines",
-        "weight": 0.0010200408016209721
-      },
-      {
-        "id": "blight-scarab-of-blooming",
-        "weight": 0.0009600384015248993
-      },
-      {
-        "id": "scarab-of-radiant-storms",
-        "weight": 0.0009600384015248993
-      },
-      {
-        "id": "cartography-scarab-of-risk",
-        "weight": 0.0009000360014288162
-      },
-      {
-        "id": "kalguuran-scarab-of-refinement",
-        "weight": 0.0008700348013807703
-      },
-      {
-        "id": "abyss-scarab-of-profound-depth",
-        "weight": 0.000780031201236609
-      },
-      {
-        "id": "domination-scarab-of-terrors",
-        "weight": 0.000780031201236609
-      },
-      {
-        "id": "harvest-scarab-of-cornucopia",
-        "weight": 0.0007500300011885466
-      },
-      {
-        "id": "essence-scarab-of-calcification",
-        "weight": 0.000720028801140477
-      },
-      {
-        "id": "horned-scarab-of-glittering",
-        "weight": 0.000720028801140477
-      },
-      {
-        "id": "incursion-scarab-of-timelines",
-        "weight": 0.000720028801140477
-      },
-      {
-        "id": "legion-scarab-of-eternal-conflict",
-        "weight": 0.000720028801140477
-      },
-      {
-        "id": "blight-scarab-of-invigoration",
-        "weight": 0.0006900276010924015
-      },
-      {
-        "id": "horned-scarab-of-tradition",
-        "weight": 0.0006900276010924015
-      },
-      {
-        "id": "ultimatum-scarab-of-catalysing",
-        "weight": 0.0006600264010443185
-      },
-      {
-        "id": "essence-scarab-of-adaptation",
-        "weight": 0.0006300252009962263
-      },
-      {
-        "id": "divination-scarab-of-pilfering",
-        "weight": 0.0005700228009000086
-      },
-      {
-        "id": "horned-scarab-of-awakening",
-        "weight": 0.0005700228009000086
-      },
-      {
-        "id": "horned-scarab-of-pandemonium",
-        "weight": 0.0005700228009000086
-      },
-      {
-        "id": "ultimatum-scarab-of-dueling",
-        "weight": 0.0005400216008518778
-      },
-      {
-        "id": "ambush-scarab-of-containment",
-        "weight": 0.00039001560061084064
-      },
-      {
-        "id": "horned-scarab-of-preservation",
-        "weight": 0.00009000360122661585
-      }
-    ],
-    "inputItems": [
-      {
-        "id": "influencing-scarab-of-the-elder"
-      },
-      {
-        "id": "influencing-scarab-of-the-shaper"
-      },
-      {
-        "id": "ultimatum-scarab"
-      },
-      {
-        "id": "harvest-scarab"
-      }
-    ]
-  }
+  "name": "Calculated Weights for Scarabs",
+  "description": "Calculated item weights for Scarabs using MLE method from 1 dataset",
+  "date": "2026-01-23",
+  "patch": "3.27.0",
+  "sources": [
+    {
+      "name": "Reddit Post",
+      "url": "https://old.reddit.com/r/pathofexile/comments/1psepyv/100k_scarabs_vendored_327_weighting_and_profits/",
+      "author": "VTSAX_ (u/VTSAX_)"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1HToI124FJIKw6M3HRuvukJuVUEVwd2u-TFRs8XO4MCU/edit?gid=0#gid=0",
+      "author": "Lextra"
+    }
+  ],
+  "items": [
+    {
+      "id": "ritual-scarab-of-selectiveness",
+      "weight": 0.0202208088323434
+    },
+    {
+      "id": "divination-scarab-of-the-cloister",
+      "weight": 0.01983079323171937
+    },
+    {
+      "id": "sulphite-scarab",
+      "weight": 0.019710788431527362
+    },
+    {
+      "id": "domination-scarab",
+      "weight": 0.019560782431287352
+    },
+    {
+      "id": "expedition-scarab",
+      "weight": 0.019560782431287352
+    },
+    {
+      "id": "harvest-scarab",
+      "weight": 0.019470778831139932
+    },
+    {
+      "id": "ambush-scarab",
+      "weight": 0.019380775230999337
+    },
+    {
+      "id": "cartography-scarab-of-escalation",
+      "weight": 0.019350774030951333
+    },
+    {
+      "id": "scarab-of-adversaries",
+      "weight": 0.019020760830423304
+    },
+    {
+      "id": "delirium-scarab",
+      "weight": 0.0189307572302793
+    },
+    {
+      "id": "legion-scarab",
+      "weight": 0.018900756030231298
+    },
+    {
+      "id": "anarchy-scarab",
+      "weight": 0.01884075363013529
+    },
+    {
+      "id": "incursion-scarab",
+      "weight": 0.018510740429607268
+    },
+    {
+      "id": "titanic-scarab",
+      "weight": 0.018480739229559263
+    },
+    {
+      "id": "harbinger-scarab",
+      "weight": 0.01842073682946326
+    },
+    {
+      "id": "scarab-of-monstrous-lineage",
+      "weight": 0.018390735629415258
+    },
+    {
+      "id": "kalguuran-scarab",
+      "weight": 0.018360734429367257
+    },
+    {
+      "id": "torment-scarab",
+      "weight": 0.018150726029031238
+    },
+    {
+      "id": "essence-scarab",
+      "weight": 0.018090723628935233
+    },
+    {
+      "id": "abyss-scarab",
+      "weight": 0.01803072122883923
+    },
+    {
+      "id": "betrayal-scarab",
+      "weight": 0.01779071162845521
+    },
+    {
+      "id": "bestiary-scarab",
+      "weight": 0.01728069122763917
+    },
+    {
+      "id": "beyond-scarab",
+      "weight": 0.01674066962677512
+    },
+    {
+      "id": "influencing-scarab-of-the-shaper",
+      "weight": 0.016740669626771707
+    },
+    {
+      "id": "influencing-scarab-of-the-elder",
+      "weight": 0.015540621624851605
+    },
+    {
+      "id": "ultimatum-scarab",
+      "weight": 0.015420616824659596
+    },
+    {
+      "id": "blight-scarab",
+      "weight": 0.01437057482298293
+    },
+    {
+      "id": "betrayal-scarab-of-reinforcements",
+      "weight": 0.013170526821062832
+    },
+    {
+      "id": "influencing-scarab-of-hordes",
+      "weight": 0.013080523220918825
+    },
+    {
+      "id": "delirium-scarab-of-mania",
+      "weight": 0.01302052082082282
+    },
+    {
+      "id": "cartography-scarab-of-the-multitude",
+      "weight": 0.012900516020630809
+    },
+    {
+      "id": "harbinger-scarab-of-obelisks",
+      "weight": 0.012900516020630809
+    },
+    {
+      "id": "betrayal-scarab-of-the-allflame",
+      "weight": 0.012780511220438797
+    },
+    {
+      "id": "incursion-scarab-of-invasion",
+      "weight": 0.012630505220198788
+    },
+    {
+      "id": "ritual-scarab-of-wisps",
+      "weight": 0.012630505220198788
+    },
+    {
+      "id": "kalguuran-scarab-of-guarded-riches",
+      "weight": 0.012600504020150784
+    },
+    {
+      "id": "ultimatum-scarab-of-bribing",
+      "weight": 0.012600504020150784
+    },
+    {
+      "id": "beyond-scarab-of-haemophilia",
+      "weight": 0.012540501620054779
+    },
+    {
+      "id": "ambush-scarab-of-hidden-compartments",
+      "weight": 0.012450498019910772
+    },
+    {
+      "id": "anarchy-scarab-of-gigantification",
+      "weight": 0.012420496819862771
+    },
+    {
+      "id": "scarab-of-hunted-traitors",
+      "weight": 0.012420496819862771
+    },
+    {
+      "id": "delirium-scarab-of-paranoia",
+      "weight": 0.012390495619814767
+    },
+    {
+      "id": "expedition-scarab-of-verisium-powder",
+      "weight": 0.012360494419766764
+    },
+    {
+      "id": "abyss-scarab-of-multitudes",
+      "weight": 0.01233049321971876
+    },
+    {
+      "id": "essence-scarab-of-stability",
+      "weight": 0.012210488419526752
+    },
+    {
+      "id": "expedition-scarab-of-runefinding",
+      "weight": 0.012180487219478748
+    },
+    {
+      "id": "scarab-of-divinity",
+      "weight": 0.012090483619334742
+    },
+    {
+      "id": "torment-scarab-of-peculiarity",
+      "weight": 0.012090483619334742
+    },
+    {
+      "id": "ambush-scarab-of-potency",
+      "weight": 0.012000480019190735
+    },
+    {
+      "id": "bestiary-scarab-of-the-herd",
+      "weight": 0.011670466818662706
+    },
+    {
+      "id": "domination-scarab-of-apparitions",
+      "weight": 0.010950438017510646
+    },
+    {
+      "id": "anarchy-scarab-of-partnership",
+      "weight": 0.007170286811462308
+    },
+    {
+      "id": "expedition-scarab-of-archaeology",
+      "weight": 0.007020280811222294
+    },
+    {
+      "id": "legion-scarab-of-command",
+      "weight": 0.0069302772110782845
+    },
+    {
+      "id": "ritual-scarab-of-abundance",
+      "weight": 0.00678027121083827
+    },
+    {
+      "id": "sulphite-scarab-of-fumes",
+      "weight": 0.006720268810742264
+    },
+    {
+      "id": "horned-scarab-of-nemeses",
+      "weight": 0.006570262810502249
+    },
+    {
+      "id": "harbinger-scarab-of-warhoards",
+      "weight": 0.006540261610454246
+    },
+    {
+      "id": "harvest-scarab-of-doubling",
+      "weight": 0.006540261610454246
+    },
+    {
+      "id": "bestiary-scarab-of-duplicating",
+      "weight": 0.006510260410406243
+    },
+    {
+      "id": "scarab-of-bisection",
+      "weight": 0.00648025921035824
+    },
+    {
+      "id": "domination-scarab-of-evolution",
+      "weight": 0.006450258010310237
+    },
+    {
+      "id": "beyond-scarab-of-the-invasion",
+      "weight": 0.006390255610214231
+    },
+    {
+      "id": "scarab-of-wisps",
+      "weight": 0.006360254410166228
+    },
+    {
+      "id": "titanic-scarab-of-legend",
+      "weight": 0.006360254410166228
+    },
+    {
+      "id": "divination-scarab-of-plenty",
+      "weight": 0.006330253210118225
+    },
+    {
+      "id": "ambush-scarab-of-discernment",
+      "weight": 0.006300252010070222
+    },
+    {
+      "id": "delirium-scarab-of-neuroses",
+      "weight": 0.006300252010070222
+    },
+    {
+      "id": "beyond-scarab-of-resurgence",
+      "weight": 0.006240249609974216
+    },
+    {
+      "id": "legion-scarab-of-officers",
+      "weight": 0.006240249609974216
+    },
+    {
+      "id": "influencing-scarab-of-conversion",
+      "weight": 0.006120244809782204
+    },
+    {
+      "id": "essence-scarab-of-ascent",
+      "weight": 0.006090243609734201
+    },
+    {
+      "id": "blight-scarab-of-the-blightheart",
+      "weight": 0.0060302412096381935
+    },
+    {
+      "id": "torment-scarab-of-possession",
+      "weight": 0.005910236409446182
+    },
+    {
+      "id": "delirium-scarab-of-delusions",
+      "weight": 0.005790231609254169
+    },
+    {
+      "id": "cartography-scarab-of-corruption",
+      "weight": 0.005760230409206166
+    },
+    {
+      "id": "abyss-scarab-of-edifice",
+      "weight": 0.00570022800911016
+    },
+    {
+      "id": "incursion-scarab-of-champions",
+      "weight": 0.00561022440896615
+    },
+    {
+      "id": "titanic-scarab-of-treasures",
+      "weight": 0.00561022440896615
+    },
+    {
+      "id": "scarab-of-stability",
+      "weight": 0.005490219608774137
+    },
+    {
+      "id": "harbinger-scarab-of-regency",
+      "weight": 0.005460218408726134
+    },
+    {
+      "id": "ultimatum-scarab-of-inscription",
+      "weight": 0.005370214808582124
+    },
+    {
+      "id": "horned-scarab-of-bloodlines",
+      "weight": 0.0010200408016209721
+    },
+    {
+      "id": "blight-scarab-of-blooming",
+      "weight": 0.0009600384015248993
+    },
+    {
+      "id": "scarab-of-radiant-storms",
+      "weight": 0.0009600384015248993
+    },
+    {
+      "id": "cartography-scarab-of-risk",
+      "weight": 0.0009000360014288162
+    },
+    {
+      "id": "kalguuran-scarab-of-refinement",
+      "weight": 0.0008700348013807703
+    },
+    {
+      "id": "abyss-scarab-of-profound-depth",
+      "weight": 0.000780031201236609
+    },
+    {
+      "id": "domination-scarab-of-terrors",
+      "weight": 0.000780031201236609
+    },
+    {
+      "id": "harvest-scarab-of-cornucopia",
+      "weight": 0.0007500300011885466
+    },
+    {
+      "id": "essence-scarab-of-calcification",
+      "weight": 0.000720028801140477
+    },
+    {
+      "id": "horned-scarab-of-glittering",
+      "weight": 0.000720028801140477
+    },
+    {
+      "id": "incursion-scarab-of-timelines",
+      "weight": 0.000720028801140477
+    },
+    {
+      "id": "legion-scarab-of-eternal-conflict",
+      "weight": 0.000720028801140477
+    },
+    {
+      "id": "blight-scarab-of-invigoration",
+      "weight": 0.0006900276010924015
+    },
+    {
+      "id": "horned-scarab-of-tradition",
+      "weight": 0.0006900276010924015
+    },
+    {
+      "id": "ultimatum-scarab-of-catalysing",
+      "weight": 0.0006600264010443185
+    },
+    {
+      "id": "essence-scarab-of-adaptation",
+      "weight": 0.0006300252009962263
+    },
+    {
+      "id": "divination-scarab-of-pilfering",
+      "weight": 0.0005700228009000086
+    },
+    {
+      "id": "horned-scarab-of-awakening",
+      "weight": 0.0005700228009000086
+    },
+    {
+      "id": "horned-scarab-of-pandemonium",
+      "weight": 0.0005700228009000086
+    },
+    {
+      "id": "ultimatum-scarab-of-dueling",
+      "weight": 0.0005400216008518778
+    },
+    {
+      "id": "ambush-scarab-of-containment",
+      "weight": 0.00039001560061084064
+    },
+    {
+      "id": "horned-scarab-of-preservation",
+      "weight": 0.00009000360122661585
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "influencing-scarab-of-the-elder"
+    },
+    {
+      "id": "influencing-scarab-of-the-shaper"
+    },
+    {
+      "id": "ultimatum-scarab"
+    },
+    {
+      "id": "harvest-scarab"
+    }
+  ]
+}

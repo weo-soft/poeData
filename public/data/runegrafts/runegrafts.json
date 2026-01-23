@@ -1,0 +1,170 @@
+[
+    {
+        "id": "runegraft-of-bellows",
+        "name": "Runegraft of Bellows",
+        "description": "100% increased Warcry Speed if you have not Warcried Recently",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-blasphemy",
+        "name": "Runegraft of Blasphemy",
+        "description": "30% chance to Curse non-Cursed Enemies with a random Hex on Hit",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-gemcraft",
+        "name": "Runegraft of Gemcraft",
+        "description": "+1 to Level of all non-Exceptional Support Gems",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-loyalty",
+        "name": "Runegraft of Loyalty",
+        "description": "40% chance for Elemental Ailments inflicted on you to be inflicted on a nearby Minion instead",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-quaffing",
+        "name": "Runegraft of Quaffing",
+        "description": "Non-instant Mana Recovery from Flasks is also Recovered as Life\n25% reduced Mana Recovery from Flasks",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-refraction",
+        "name": "Runegraft of Refraction",
+        "description": "Fire at most 1 Projectile\nProjectiles Fork\nSkills Chain +1 times",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-restitching",
+        "name": "Runegraft of Restitching",
+        "description": "40% of Damage taken from Critical Strikes Recouped as Life",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-stability",
+        "name": "Runegraft of Stability",
+        "description": "Your Lucky or Unlucky effects are instead Unexciting",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-angler",
+        "name": "Runegraft of the Angler",
+        "description": "All hits are Critical Strikes while holding a Fishing Rod",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-bound",
+        "name": "Runegraft of the Bound",
+        "description": "20% increased bonuses gained from Equipped Gloves\n20% reduced bonuses gained from Equipped Boots",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-combatant",
+        "name": "Runegraft of the Combatant",
+        "description": "50% increased Attack Damage against Enemies with a higher percentage of their Life remaining than you",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-fortress",
+        "name": "Runegraft of the Fortress",
+        "description": "10% reduced Attributes\n40% increased Global Defences",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-jeweller",
+        "name": "Runegraft of the Jeweller",
+        "description": "10% increased Damage for each unlinked Socket in Equipped Two Handed Weapon",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-novamark",
+        "name": "Runegraft of the Novamark",
+        "description": "Nova Spells Cast at a Marked target instead of around you if possible",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-river",
+        "name": "Runegraft of the River",
+        "description": "20% chance on reaching Low Life to recover to Full Life",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-sinistral",
+        "name": "Runegraft of the Sinistral",
+        "description": "10% more Attack speed with Offhand",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-soulwick",
+        "name": "Runegraft of the Soulwick",
+        "description": "Gain 1 Vaal Soul per second",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-warp",
+        "name": "Runegraft of the Warp",
+        "description": "Debuffs on you expire 30% faster\nBuffs on you expire 30% slower",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-the-witchmark",
+        "name": "Runegraft of the Witchmark",
+        "description": "Spells Cost +8% of Life\nSpells deal added Chaos Damage equal to 2% of your maximum Life",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-time",
+        "name": "Runegraft of Time",
+        "description": "20% chance for Skills to not consume a Cooldown on use",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    },
+    {
+        "id": "runegraft-of-treachery",
+        "name": "Runegraft of Treachery",
+        "description": "Auras from your Skills which affect Allies also affect Enemies\n15% increased Reservation Efficiency of Skills",
+        "dropRequired": "Obtained randomly as a reward for shipping resources from Kingsmarch to Riben Fell, Pondium or Kalguur.",
+        "replaces": "A Mastery Passive Skill",
+        "stackSize": 10
+    }
+]

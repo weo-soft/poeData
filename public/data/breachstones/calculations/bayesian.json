@@ -1,56 +1,56 @@
 {
-    "name": "Calculated Weights for Breach",
-    "description": "Calculated item weights for Breach using BAYESIAN method from 3 datasets",
-    "date": "2026-01-18",
-    "patch": "3.25.0",
-    "sources": [
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
-        "author": "gdmt_"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
-        "author": "gdmt_"
-      },
-      {
-        "name": "Discord Thread",
-        "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
-        "author": "gdmt_"
-      }
-    ],
-    "items": [
-      {
-        "id": "xoph",
-        "weight": 0.2951588354118041
-      },
-      {
-        "id": "esh",
-        "weight": 0.28491003617104327
-      },
-      {
-        "id": "tul",
-        "weight": 0.27573020430835204
-      },
-      {
-        "id": "uul-netol",
-        "weight": 0.0848555807784168
-      },
-      {
-        "id": "chayula",
-        "weight": 0.05064632626083077
-      }
-    ],
-    "inputItems": [
-      {
-        "id": "xoph"
-      },
-      {
-        "id": "tul"
-      },
-      {
-        "id": "esh"
-      }
-    ]
-  }
+  "name": "Calculated Weights for Breach",
+  "description": "Calculated item weights for Breach using BAYESIAN method from 3 datasets",
+  "date": "2026-01-23",
+  "patch": "3.25.0",
+  "sources": [
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
+      "author": "gdmt_"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
+      "author": "gdmt_"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/1019681836584161402/1435740267495034972",
+      "author": "gdmt_"
+    }
+  ],
+  "items": [
+    {
+      "id": "xoph-s-breachstone",
+      "weight": 0.3060131766938794
+    },
+    {
+      "id": "esh-s-breachstone",
+      "weight": 0.28431270095112543
+    },
+    {
+      "id": "tul-s-breachstone",
+      "weight": 0.2698671947641478
+    },
+    {
+      "id": "uul-netol-s-breachstone",
+      "weight": 0.08752694078010084
+    },
+    {
+      "id": "chayula-s-breachstone",
+      "weight": 0.051477226576329624
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "xoph-s-breachstone"
+    },
+    {
+      "id": "tul-s-breachstone"
+    },
+    {
+      "id": "esh-s-breachstone"
+    }
+  ]
+}
