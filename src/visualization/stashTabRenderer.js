@@ -744,10 +744,15 @@ function renderGrid(canvas, items, categoryId) {
     ctx.fillRect(0, 0, displayWidth, displayHeight);
   }
   
-  // Draw cell IDs for debugging
-  cellDefinitions.forEach(cell => {
-    drawCellId(ctx, cell);
-  });
+  // Draw cell borders for all cells (hidden)
+  // cellDefinitions.forEach(cell => {
+  //   drawCellBorder(ctx, cell.x, cell.y, cell.width, cell.height, '#666666', 1);
+  // });
+  
+  // Draw cell IDs for debugging (hidden)
+  // cellDefinitions.forEach(cell => {
+  //   drawCellId(ctx, cell);
+  // });
   
   // Draw item overlays
   cellDefinitions.forEach(cell => {

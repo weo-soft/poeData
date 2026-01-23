@@ -5,6 +5,11 @@
         "helpText": "Modifies a Map item adding layers of Delirium with the Abyss Items reward type"
     },
     {
+        "id": "obscured-delirium-orb",
+        "name": "Obscured Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Breach reward type"
+    },
+    {
         "id": "armoursmiths-delirium-orb",
         "name": "Armoursmith's Delirium Orb",
         "helpText": "Modifies a Map item adding layers of Delirium with the Armour reward type"
@@ -33,6 +38,11 @@
         "id": "fine-delirium-orb",
         "name": "Fine Delirium Orb",
         "helpText": "Modifies a Map item adding layers of Delirium with the Currency Items reward type"
+    },
+    {
+        "id": "primal-delirium-orb",
+        "name": "Primal Delirium Orb",
+        "helpText": "Modifies a Map item adding layers of Delirium with the Talisman reward type"
     },
     {
         "id": "foreboding-delirium-orb",
