@@ -4,6 +4,7 @@ import { calculationsPlugin } from './vite-plugin-calculations.js';
 
 export default defineConfig({
   root: '.',
+  base: '/', // Use root base for custom domain
   publicDir: 'public',
   build: {
     outDir: 'dist',

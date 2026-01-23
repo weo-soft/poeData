@@ -118,6 +118,35 @@ Access raw JSON data directly:
   - `/data/scarabs/scarabs.json`
   - `/data/breachSplinter/dataset/dataset1.json`
 
+## Deployment
+
+This application is deployed to GitHub Pages and is available at [PoeData.dev](https://PoeData.dev).
+
+### GitHub Pages Setup
+
+1. **Custom Domain Configuration**:
+   - The `CNAME` file in `public/` contains the custom domain `PoeData.dev`
+   - This file is automatically copied to `dist/` during the build process
+   - GitHub Pages will serve the site from this custom domain
+
+2. **Automatic Deployment**:
+   - The GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically builds and deploys the site on every push to the `main` branch
+   - The workflow runs tests, builds the production bundle, and deploys to GitHub Pages
+
+3. **Manual Deployment**:
+   - You can also trigger a manual deployment using the "Run workflow" button in the GitHub Actions tab
+
+4. **DNS Configuration**:
+   - Ensure your DNS is configured to point `PoeData.dev` to GitHub Pages
+   - Add the following DNS records:
+     - Type: `A` records pointing to GitHub Pages IPs: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+     - Or Type: `CNAME` record pointing to `{username}.github.io` (if using a user/org page)
+
+5. **GitHub Repository Settings**:
+   - Go to Settings → Pages
+   - Source should be set to "GitHub Actions" (not "Deploy from a branch")
+   - The custom domain should be configured in Settings → Pages → Custom domain
+
 ## License
 
 MIT
