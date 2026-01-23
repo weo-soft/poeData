@@ -17,6 +17,7 @@ import { estimateItemWeights } from '../services/weightCalculator.js';
 import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
+import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
 
 let currentItems = [];
 let currentCategoryId = null;
@@ -490,6 +491,19 @@ async function renderDivinationCardGrid(container, items) {
     await renderDivinationCard(cardContainer, card, {
       width: cardWidth,
       responsive: false
+    });
+    
+    // Add tooltip event handlers
+    cardWrapper.addEventListener('mouseenter', (e) => {
+      showTooltip(card, e.clientX, e.clientY, 'divination-cards');
+    });
+    
+    cardWrapper.addEventListener('mousemove', (e) => {
+      updateTooltipPosition(e.clientX, e.clientY);
+    });
+    
+    cardWrapper.addEventListener('mouseleave', () => {
+      hideTooltip();
     });
     
     cardLink.appendChild(cardContainer);

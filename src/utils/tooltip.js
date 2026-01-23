@@ -39,10 +39,15 @@ function ensureTooltip() {
 export function showTooltip(item, x, y, categoryId = null) {
   const tooltip = ensureTooltip();
   
-  // Check if this is a tattoo or runegraft item (has replaces, dropRequired, or stackSize properties)
-  const isTattoo = categoryId === 'tattoos' || categoryId === 'runegrafts' || item.replaces || item.dropRequired || (item.stackSize && !item.dropLevel);
+  // Check if this is a divination card
+  const isDivinationCard = categoryId === 'divination-cards' || (item.explicitModifiers && item.flavourText && item.stackSize);
   
-  if (isTattoo) {
+  // Check if this is a tattoo or runegraft item (has replaces, dropRequired, or stackSize properties)
+  const isTattoo = categoryId === 'tattoos' || categoryId === 'runegrafts' || item.replaces || item.dropRequired || (item.stackSize && !item.dropLevel && !isDivinationCard);
+  
+  if (isDivinationCard) {
+    showDivinationCardTooltip(item, x, y);
+  } else if (isTattoo) {
     showTattooTooltip(item, x, y);
   } else {
     showGenericTooltip(item, x, y);
@@ -71,6 +76,17 @@ function showTattooTooltip(tattoo, x, y) {
   // Separator line
   content += `<div style="border-top: 1px solid #444; margin: 0.5rem 0;"></div>`;
   
+  // Show weights - Bayesian as primary, MLE as secondary if available (as percentages)
+  if (tattoo.dropWeight !== undefined && tattoo.dropWeight !== null) {
+    const percentage = (tattoo.dropWeight * 100).toFixed(4);
+    content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Weight (Bayesian):</span> ${percentage}%</div>`;
+  }
+  
+  if (tattoo.dropWeightMle !== undefined && tattoo.dropWeightMle !== null) {
+    const percentage = (tattoo.dropWeightMle * 100).toFixed(4);
+    content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Weight (MLE):</span> ${percentage}%</div>`;
+  }
+  
   // Replaces (what passive it replaces)
   if (tattoo.replaces) {
     content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Replaces:</span> ${tattoo.replaces}</div>`;
@@ -90,6 +106,83 @@ function showTattooTooltip(tattoo, x, y) {
   tooltip.style.display = 'block';
   // Increase max-width for tattoos as they may have longer text
   tooltip.style.maxWidth = '350px';
+  updateTooltipPosition(x, y);
+}
+
+/**
+ * Show tooltip for a divination card
+ * @param {Object} card - Divination card item object
+ * @param {number} x - Mouse X position
+ * @param {number} y - Mouse Y position
+ */
+function showDivinationCardTooltip(card, x, y) {
+  const tooltip = ensureTooltip();
+  
+  // Build tooltip content for divination cards
+  let content = `<div style="font-weight: bold; color: #af6025; margin-bottom: 0.5rem; font-size: 1rem;">${card.name || card.id}</div>`;
+  
+  // Stack size
+  if (card.stackSize !== undefined && card.stackSize !== null) {
+    content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Stack Size:</span> ${card.stackSize}</div>`;
+  }
+  
+  // Drop level
+  if (card.dropLevel) {
+    content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Drop Level:</span> ${card.dropLevel}</div>`;
+  }
+  
+  // Separator line
+  content += `<div style="border-top: 1px solid #444; margin: 0.5rem 0;"></div>`;
+  
+  // Explicit modifiers (reward)
+  if (card.explicitModifiers && Array.isArray(card.explicitModifiers) && card.explicitModifiers.length > 0) {
+    content += `<div style="margin-bottom: 0.5rem;"><div style="color: #d4d4d4; font-size: 0.85rem; margin-bottom: 0.25rem;">Reward:</div>`;
+    card.explicitModifiers.forEach(modifier => {
+      if (modifier.text) {
+        // Strip HTML tags for tooltip display (keep it simple)
+        const cleanText = modifier.text.replace(/<[^>]*>/g, '').replace(/\n/g, ' ');
+        content += `<div style="color: #888888; font-size: 0.85rem; margin-left: 0.5rem; margin-bottom: 0.15rem;">${cleanText}</div>`;
+      }
+    });
+    content += `</div>`;
+  }
+  
+  // Drop areas
+  if (card.dropAreas && Array.isArray(card.dropAreas) && card.dropAreas.length > 0) {
+    content += `<div style="margin-bottom: 0.5rem;"><div style="color: #d4d4d4; font-size: 0.85rem; margin-bottom: 0.25rem;">Drop Areas:</div>`;
+    content += `<div style="color: #888888; font-size: 0.85rem; margin-left: 0.5rem;">${card.dropAreas.join(', ')}</div></div>`;
+  }
+  
+  // Drop monsters
+  if (card.dropMonsters && Array.isArray(card.dropMonsters) && card.dropMonsters.length > 0) {
+    content += `<div style="margin-bottom: 0.5rem;"><div style="color: #d4d4d4; font-size: 0.85rem; margin-bottom: 0.25rem;">Drop Monsters:</div>`;
+    content += `<div style="color: #888888; font-size: 0.85rem; margin-left: 0.5rem;">${card.dropMonsters.join(', ')}</div></div>`;
+  }
+  
+  // Flavour text
+  if (card.flavourText) {
+    // Strip HTML tags and clean up flavour text
+    const cleanFlavourText = card.flavourText.replace(/<[^>]*>/g, '').trim();
+    if (cleanFlavourText) {
+      content += `<div style="border-top: 1px solid #444; margin: 0.5rem 0; padding-top: 0.5rem; color: #888888; font-size: 0.8rem; font-style: italic;">${cleanFlavourText}</div>`;
+    }
+  }
+  
+  // Show weights - Bayesian as primary, MLE as secondary if available (as percentages)
+  if (card.dropWeight !== undefined && card.dropWeight !== null) {
+    const percentage = (card.dropWeight * 100).toFixed(4);
+    content += `<div style="margin-top: 0.5rem; margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Weight (Bayesian):</span> ${percentage}%</div>`;
+  }
+  
+  if (card.dropWeightMle !== undefined && card.dropWeightMle !== null) {
+    const percentage = (card.dropWeightMle * 100).toFixed(4);
+    content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Weight (MLE):</span> ${percentage}%</div>`;
+  }
+  
+  tooltip.innerHTML = content;
+  tooltip.style.display = 'block';
+  // Increase max-width for divination cards as they may have longer text
+  tooltip.style.maxWidth = '400px';
   updateTooltipPosition(x, y);
 }
 

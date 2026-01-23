@@ -35,28 +35,23 @@ export async function loadCategoryData(categoryId) {
       throw new Error(`Invalid data format: expected array, got ${typeof data}`);
     }
     
-    // Special handling for scarabs - merge weight data from dataset
-    if (categoryId === 'scarabs') {
-      data = await mergeScarabWeights(data);
-    }
-    
-    // Special handling for divination-cards - merge weight data from dataset
-    if (categoryId === 'divination-cards') {
-      data = await mergeDivinationCardWeights(data);
-    }
-    
     // Special handling for merged categories - merge data from multiple files
     // Only merge for the main category, not subcategories
     if (categoryId === 'breach') {
       data = await mergeBreachData(data);
-    }
-    
-    if (categoryId === 'legion') {
+      // After merging breach data, merge weights from both subcategories
+      // Try both subcategory calculation directories - items will get weights from the correct one
+      data = await mergeWeightsFromCalculations(data, 'breachstones');
+      data = await mergeWeightsFromCalculations(data, 'breach-splinters');
+    } else if (categoryId === 'legion') {
       data = await mergeLegionData(data);
+      // After merging legion data, merge weights from legion-splinters
+      // (legion-emblems may not have calculation files, but it's safe to try)
+      data = await mergeWeightsFromCalculations(data, 'legion-splinters');
+    } else {
+      // For all categories, merge weights from calculation files if they exist
+      data = await mergeWeightsFromCalculations(data, categoryId);
     }
-    
-    // Subcategories (breach-splinters, breachstones, legion-splinters, legion-emblems)
-    // should not be merged - they are already single-file categories
     
     // Cache the data
     dataCache.set(categoryId, data);
@@ -69,16 +64,46 @@ export async function loadCategoryData(categoryId) {
 }
 
 /**
- * Merge weight data from calculation files into scarab items
- * @param {Array} items - Array of scarab items
+ * Get calculation directory name from category ID
+ * Maps category IDs to their directory names where calculation files are stored
+ * @param {string} categoryId - Category identifier
+ * @returns {string|null} Directory name or null if no calculation files exist
+ */
+function getCalculationDirectory(categoryId) {
+  // Map category IDs to their calculation directory names
+  const categoryToDirMap = {
+    'scarabs': 'scarabs',
+    'divination-cards': 'divinationCards',
+    'breach-splinters': 'breachSplinter',
+    'breachstones': 'breachstones',
+    'catalysts': 'catalysts',
+    'delirium-orbs': 'deliriumOrbs',
+    'fossils': 'fossils',
+    'legion-splinters': 'legionSplinters'
+  };
+  
+  return categoryToDirMap[categoryId] || null;
+}
+
+/**
+ * Merge weight data from calculation files into items
+ * Generic function that works for any category with calculation files
+ * @param {Array} items - Array of items
+ * @param {string} categoryId - Category identifier
  * @returns {Promise<Array>} Items with dropWeight (bayesian) and dropWeightMle merged from calculation files
  */
-async function mergeScarabWeights(items) {
+async function mergeWeightsFromCalculations(items, categoryId) {
+  const calcDir = getCalculationDirectory(categoryId);
+  if (!calcDir) {
+    // No calculation files for this category
+    return items;
+  }
+  
   try {
     // Load both calculation files
     const [bayesianResponse, mleResponse] = await Promise.all([
-      fetch('/data/scarabs/calculations/bayesian.json'),
-      fetch('/data/scarabs/calculations/mle.json')
+      fetch(`/data/${calcDir}/calculations/bayesian.json`),
+      fetch(`/data/${calcDir}/calculations/mle.json`)
     ]);
     
     // Create maps for both weight types
@@ -95,8 +120,6 @@ async function mergeScarabWeights(items) {
           }
         });
       }
-    } else {
-      console.warn('Could not load bayesian calculation file');
     }
     
     // Load MLE weights
@@ -109,8 +132,6 @@ async function mergeScarabWeights(items) {
           }
         });
       }
-    } else {
-      console.warn('Could not load MLE calculation file');
     }
     
     // Merge weights into items
@@ -132,9 +153,19 @@ async function mergeScarabWeights(items) {
       return updatedItem;
     });
   } catch (error) {
-    console.warn('Error merging scarab weights:', error);
+    console.warn(`Error merging weights for ${categoryId}:`, error);
     return items;
   }
+}
+
+/**
+ * Merge weight data from calculation files into scarab items
+ * @param {Array} items - Array of scarab items
+ * @returns {Promise<Array>} Items with dropWeight (bayesian) and dropWeightMle merged from calculation files
+ * @deprecated Use mergeWeightsFromCalculations instead
+ */
+async function mergeScarabWeights(items) {
+  return mergeWeightsFromCalculations(items, 'scarabs');
 }
 
 /**
