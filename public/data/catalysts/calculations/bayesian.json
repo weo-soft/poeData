@@ -68,43 +68,43 @@
   "items": [
     {
       "id": "intrinsic-catalyst",
-      "weight": 0.2905790897455777
+      "weight": 0.2934309968634945
     },
     {
       "id": "turbulent-catalyst",
-      "weight": 0.15251948719073774
+      "weight": 0.15067235489126218
     },
     {
       "id": "noxious-catalyst",
-      "weight": 0.145179473606605
+      "weight": 0.14333948222770954
     },
     {
       "id": "abrasive-catalyst",
-      "weight": 0.14072483482340933
+      "weight": 0.14068954847052786
     },
     {
       "id": "imbued-catalyst",
-      "weight": 0.13691428295146468
+      "weight": 0.13377286003948377
     },
     {
       "id": "fertile-catalyst",
-      "weight": 0.03528842084798527
-    },
-    {
-      "id": "prismatic-catalyst",
-      "weight": 0.03444672436497788
+      "weight": 0.03629055008557068
     },
     {
       "id": "tempering-catalyst",
-      "weight": 0.03345067362304798
+      "weight": 0.03520822095344844
+    },
+    {
+      "id": "prismatic-catalyst",
+      "weight": 0.03507467855140981
     },
     {
       "id": "unstable-catalyst",
-      "weight": 0.016240040254737693
+      "weight": 0.015401256094514596
     },
     {
       "id": "accelerating-catalyst",
-      "weight": 0.015046718763701375
+      "weight": 0.014554971323052824
     }
   ],
   "inputItems": [

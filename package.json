@@ -12,7 +12,8 @@
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint:fix": "eslint src/ --fix",
+    "calculate-weights": "node scripts/calculate-weights.js"
   },
   "keywords": [
     "path-of-exile",

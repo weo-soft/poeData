@@ -1,6 +1,6 @@
 {
-  "name": "Calculated Weights for Breach",
-  "description": "Calculated item weights for Breach using MLE method from 3 datasets",
+  "name": "Calculated Weights for Breachstones",
+  "description": "Calculated item weights for Breachstones using MLE method from 3 datasets",
   "date": "2026-01-23",
   "patch": "3.25.0",
   "sources": [

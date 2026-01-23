@@ -1,6 +1,6 @@
 {
-  "name": "Calculated Weights for Breach",
-  "description": "Calculated item weights for Breach using BAYESIAN method from 3 datasets",
+  "name": "Calculated Weights for Breachstones",
+  "description": "Calculated item weights for Breachstones using BAYESIAN method from 3 datasets",
   "date": "2026-01-23",
   "patch": "3.25.0",
   "sources": [
@@ -23,23 +23,23 @@
   "items": [
     {
       "id": "xoph-s-breachstone",
-      "weight": 0.3060131766938794
-    },
-    {
-      "id": "esh-s-breachstone",
-      "weight": 0.28431270095112543
+      "weight": 0.2954663096745634
     },
     {
       "id": "tul-s-breachstone",
-      "weight": 0.2698671947641478
+      "weight": 0.2820778576912955
+    },
+    {
+      "id": "esh-s-breachstone",
+      "weight": 0.27688184318336184
     },
     {
       "id": "uul-netol-s-breachstone",
-      "weight": 0.08752694078010084
+      "weight": 0.08535594081188001
     },
     {
       "id": "chayula-s-breachstone",
-      "weight": 0.051477226576329624
+      "weight": 0.05067484117764354
     }
   ],
   "inputItems": [
