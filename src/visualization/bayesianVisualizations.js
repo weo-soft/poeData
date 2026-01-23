@@ -598,11 +598,13 @@ export async function renderDensityPlot(container, posteriorSamples, items = [],
   }, 3000);
   
   // Also try on chart resize and update
-  const originalOnResize = chart.options.onResize;
-  chart.options.onResize = () => {
-    if (originalOnResize) originalOnResize();
-    makeLegendScrollable();
-  };
+  if (chart.options) {
+    const originalOnResize = chart.options.onResize;
+    chart.options.onResize = () => {
+      if (originalOnResize) originalOnResize();
+      makeLegendScrollable();
+    };
+  }
   
   container.appendChild(chartWrapper);
   

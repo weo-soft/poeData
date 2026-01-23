@@ -70,7 +70,7 @@ describe('Bayesian Weight Display Integration', () => {
 
     // Verify Bayesian results are displayed
     expect(container.querySelector('.bayesian-results-table')).toBeTruthy();
-    expect(container.textContent).toContain('Bayesian (JAGS)');
+    expect(container.textContent).toContain('Bayesian Weight Estimates');
     expect(container.textContent).toContain('Posterior Median');
     expect(container.textContent).toContain('MAP Estimate');
     expect(container.textContent).toContain('95% Credible Interval');

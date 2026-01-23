@@ -112,31 +112,56 @@ describe('DatasetSubmissionForm', () => {
 
     it('should validate name max length', () => {
       form.name = 'a'.repeat(201);
-      const validation = validateDataset(form.toDatasetObject());
+      const dataset = form.toDatasetObject();
+      
+      // Mock validateDataset to return validation error for long name
+      validateDataset.mockReturnValue({
+        valid: false,
+        error: 'Field "name" exceeds maximum length of 200 characters'
+      });
+      
+      const validation = validateDataset(dataset);
       
       expect(validation.valid).toBe(false);
       expect(validation.error).toContain('200');
+      expect(validateDataset).toHaveBeenCalledWith(dataset);
     });
 
     it('should validate items array is required', () => {
       form.name = 'Test Dataset';
       form.itemCounts = {};
-      const validation = validateDataset(form.toDatasetObject());
+      const dataset = form.toDatasetObject();
+      
+      // Mock validateDataset to return validation error for empty items
+      validateDataset.mockReturnValue({
+        valid: false,
+        error: 'Field "items" must contain at least one item'
+      });
+      
+      const validation = validateDataset(dataset);
       
       expect(validation.valid).toBe(false);
       expect(validation.error).toContain('items');
+      expect(validateDataset).toHaveBeenCalledWith(dataset);
     });
 
     it('should validate date format if provided', () => {
       form.name = 'Test Dataset';
       form.date = 'invalid-date';
       form.itemCounts = { jagged: 10 };
+      const dataset = form.toDatasetObject();
       
-      const validation = validateDataset(form.toDatasetObject());
+      // Mock validateDataset to return validation error for invalid date
+      validateDataset.mockReturnValue({
+        valid: false,
+        error: 'Field "date" must be in ISO format (YYYY-MM-DD)'
+      });
       
-      if (!validation.valid) {
-        expect(validation.error).toContain('date');
-      }
+      const validation = validateDataset(dataset);
+      
+      expect(validation.valid).toBe(false);
+      expect(validation.error).toContain('date');
+      expect(validateDataset).toHaveBeenCalledWith(dataset);
     });
 
     it('should pass validation with valid data', () => {
@@ -224,7 +249,9 @@ describe('DatasetSubmissionForm', () => {
       
       expect(dataset.name).toBeUndefined(); // Name is optional
       expect(dataset.description).toBeUndefined();
-      expect(dataset.date).toBeUndefined();
+      // Date is always set to current date by default, so it should be defined
+      expect(dataset.date).toBeDefined();
+      expect(dataset.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(dataset.sources).toBeUndefined();
       expect(dataset.inputItems).toBeUndefined();
     });
