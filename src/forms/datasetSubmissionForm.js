@@ -263,7 +263,8 @@ export class DatasetSubmissionForm {
       className: 'form-input',
       value: this.name,
       placeholder: 'Enter dataset name (optional)',
-      'aria-describedby': 'dataset-name-help'
+      'aria-describedby': 'dataset-name-help',
+      inputmode: 'text'
     });
     nameInput.addEventListener('input', (e) => {
       this.name = e.target.value;
@@ -435,7 +436,8 @@ export class DatasetSubmissionForm {
       className: 'form-input form-input-compact',
       placeholder: 'URL',
       value: source.url || '',
-      'aria-label': 'Source URL'
+      'aria-label': 'Source URL',
+      inputmode: 'url'
     });
     urlInput.addEventListener('input', (e) => {
       this.updateSource(index, 'url', e.target.value);
@@ -641,6 +643,7 @@ export class DatasetSubmissionForm {
       const countCell = createElement('td');
       const countInput = createElement('input', {
         type: 'number',
+        inputmode: 'numeric',
         className: 'form-input count-input',
         min: '0',
         step: '1',

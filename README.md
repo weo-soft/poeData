@@ -32,7 +32,26 @@ A static web application that provides detailed data and visualizations for Path
 
 - Node.js 18+ and npm (for development)
 - Modern web browser (Chrome, Firefox, Safari, Edge - latest 2 versions)
+- **Mobile browsers supported**: Chrome Mobile, Safari Mobile, Firefox Mobile
 - **No additional dependencies required** - Bayesian inference runs entirely in the browser
+
+## Mobile Support
+
+The application is fully responsive and optimized for mobile devices:
+- **Mobile-first design**: Optimized for screens 320px and wider
+- **Touch-friendly**: All interactive elements meet 44x44px minimum touch target requirements
+- **Responsive navigation**: Hamburger menu on mobile, full navigation on desktop
+- **Mobile-optimized forms**: Full-width inputs with appropriate mobile keyboard types
+- **Responsive visualizations**: Charts and canvas visualizations scale appropriately for mobile screens
+- **Orientation support**: Layouts adapt to both portrait and landscape orientations
+
+### Testing on Mobile
+
+To test the mobile experience:
+1. Use browser DevTools device emulation (F12 → Toggle device toolbar)
+2. Test at breakpoints: 320px, 375px, 768px, 1024px
+3. Test in both portrait and landscape orientations
+4. Run E2E tests: `npm run test:e2e` (includes mobile viewport tests)
 
 ## Setup
 

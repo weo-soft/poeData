@@ -203,15 +203,37 @@ async function renderCategoryGrid(canvas, items, categoryId, gridConfig) {
 function setupCanvas(canvas, width, height) {
   const ctx = canvas.getContext('2d');
   
+  // Mobile scaling: scale canvas to fit viewport width while maintaining aspect ratio
+  const isMobile = window.innerWidth < 768;
+  let displayWidth = width;
+  let displayHeight = height;
+  let scale = 1;
+  
+  if (isMobile) {
+    const maxWidth = window.innerWidth - 32; // Account for padding
+    if (width > maxWidth) {
+      scale = maxWidth / width;
+      displayWidth = maxWidth;
+      displayHeight = height * scale;
+    }
+  }
+  
   // Set display size
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
+  canvas.style.width = `${displayWidth}px`;
+  canvas.style.height = `${displayHeight}px`;
   
   // Set actual canvas size (for high DPI displays)
   const dpr = window.devicePixelRatio || 1;
-  canvas.width = width * dpr;
-  canvas.height = height * dpr;
+  canvas.width = displayWidth * dpr;
+  canvas.height = displayHeight * dpr;
   ctx.scale(dpr, dpr);
+  
+  // Apply scaling transform if needed for mobile
+  if (scale !== 1) {
+    ctx.scale(scale, scale);
+  }
+  
+  return { scale, displayWidth, displayHeight };
 }
 
 /**
@@ -915,15 +937,11 @@ function setupEventHandlers(canvas, items, categoryId) {
  * @param {string} categoryId - Category identifier
  */
 async function renderSimpleGrid(canvas, items, categoryId) {
-  const ctx = canvas.getContext('2d');
-  
-  // Set canvas size
+  // Set canvas size - responsive to container
   const container = canvas.parentElement;
-  const containerWidth = container.clientWidth || 1200;
-  const containerHeight = Math.max(600, Math.ceil(items.length / 12) * 60);
-  
-  canvas.width = containerWidth;
-  canvas.height = containerHeight;
+  const isMobile = window.innerWidth < 768;
+  const baseWidth = isMobile ? Math.min(window.innerWidth - 32, 1200) : (container.clientWidth || 1200);
+  const containerWidth = baseWidth;
   
   // Stash tab styling
   const backgroundColor = '#1a1a1a';
@@ -932,22 +950,34 @@ async function renderSimpleGrid(canvas, items, categoryId) {
   const itemSpacing = 5;
   const padding = 20;
   const itemsPerRow = Math.floor((containerWidth - padding * 2) / (itemSize + itemSpacing));
+  const containerHeight = Math.max(400, Math.ceil(items.length / itemsPerRow) * 60);
+  
+  // Use setupCanvas for consistent scaling
+  setupCanvas(canvas, containerWidth, containerHeight);
+  
+  // Get context after setupCanvas (it may have scaled)
+  const finalCtx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  finalCtx.scale(dpr, dpr);
   
   // Clear canvas
-  ctx.fillStyle = backgroundColor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  finalCtx.fillStyle = backgroundColor;
+  finalCtx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   // Draw border
-  ctx.strokeStyle = borderColor;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+  finalCtx.strokeStyle = borderColor;
+  finalCtx.lineWidth = 2;
+  finalCtx.strokeRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   // Draw items in grid
+  const logicalWidth = canvas.width / dpr;
+  const logicalHeight = canvas.height / dpr;
+  
   if (items.length === 0) {
-    ctx.fillStyle = '#888888';
-    ctx.font = '16px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('No items in this category', canvas.width / 2, canvas.height / 2);
+    finalCtx.fillStyle = '#888888';
+    finalCtx.font = '16px sans-serif';
+    finalCtx.textAlign = 'center';
+    finalCtx.fillText('No items in this category', logicalWidth / 2, logicalHeight / 2);
     return;
   }
   
@@ -959,7 +989,7 @@ async function renderSimpleGrid(canvas, items, categoryId) {
     const y = padding + row * (itemSize + itemSpacing);
     
     const isFiltered = highlightedItemIds.has(item.id);
-    drawItemSlot(ctx, x, y, itemSize, item, categoryId, isFiltered);
+    drawItemSlot(finalCtx, x, y, itemSize, item, categoryId, isFiltered);
   });
   
   // Add click handler

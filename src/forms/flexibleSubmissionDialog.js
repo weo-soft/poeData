@@ -450,7 +450,8 @@ export class FlexibleSubmissionDialog {
       value: this.url,
       'aria-label': 'Dataset URL',
       'aria-describedby': this.urlError ? 'flexible-url-error' : undefined,
-      'aria-invalid': this.urlError ? 'true' : 'false'
+      'aria-invalid': this.urlError ? 'true' : 'false',
+      inputmode: 'url'
     });
     urlInput.addEventListener('input', (e) => {
       this.url = e.target.value;

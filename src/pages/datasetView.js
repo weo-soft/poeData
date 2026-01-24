@@ -27,6 +27,13 @@ export async function renderDatasetView(container, params) {
     return;
   }
   
+  // Update navbar with category title
+  const navigation = document.querySelector('.global-nav');
+  if (navigation) {
+    const { setCategoryTitle } = await import('../components/navigation.js');
+    setCategoryTitle(navigation, formatCategoryName(categoryId));
+  }
+  
   const viewSection = createElement('section', { className: 'dataset-view' });
   
   // Loading state

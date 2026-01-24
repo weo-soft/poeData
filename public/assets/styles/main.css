@@ -22,18 +22,187 @@
   --poe-normal: #c8c8c8;
 }
 
+/* ============================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ============================================================================
+   Mobile-first approach:
+   - Mobile: 320px - 767px (default styles, no media query)
+   - Tablet: 768px and up (@media (min-width: 768px))
+   - Desktop: 1024px and up (@media (min-width: 1024px))
+   ============================================================================ */
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background-color: var(--poe-darker-bg);
   color: var(--poe-text);
   line-height: 1.6;
   min-height: 100vh;
+  /* Mobile-first: 16px minimum prevents iOS zoom */
+  font-size: 16px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  body {
+    font-size: 16px; /* Maintain readable size */
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  body {
+    font-size: 16px; /* Maintain readable size */
+  }
 }
 
 #app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* ============================================================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================================================ */
+
+/* Mobile-first: Base typography (320px - 767px) */
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 0.875rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-bottom: 0.625rem;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.25rem;
+  }
+  
+  h2 {
+    font-size: 1.875rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE IMAGES
+   ============================================================================ */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Image containers should prevent overflow */
+.image-container,
+.img-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   TOUCH TARGET UTILITIES
+   ============================================================================ */
+
+/* Base touch target class - ensures minimum 44x44px for interactive elements */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem;
+}
+
+/* Mobile-specific: Apply touch targets to all interactive elements */
+@media (max-width: 767px) {
+  button,
+  a.nav-link,
+  .nav-link,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .btn,
+  .button {
+    min-height: 44px;
+    padding: 0.75rem 1rem; /* Comfortable touch area */
+  }
+  
+  /* Form inputs should have minimum height for touch */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+  
+  /* Links and clickable elements */
+  a:not(.nav-link),
+  .clickable,
+  [role="button"] {
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* Ensure spacing between touch targets */
+  button + button,
+  .btn + .btn,
+  a + a {
+    margin-left: 0.5rem; /* Minimum 8px spacing */
+  }
 }
 
 /* Navigation */
@@ -47,6 +216,15 @@ nav.global-nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+nav.global-nav .nav-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
 nav.global-nav .nav-list {
   list-style: none;
   display: flex;
@@ -54,8 +232,22 @@ nav.global-nav .nav-list {
   align-items: center;
   margin: 0;
   padding: 0;
-  max-width: 1400px;
-  margin: 0 auto;
+  justify-content: flex-start;
+}
+
+nav.global-nav .nav-category-title {
+  color: var(--poe-text);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  grid-column: 2;
+  white-space: nowrap;
+}
+
+nav.global-nav .nav-right {
+  display: flex;
+  justify-content: flex-end;
 }
 
 nav.global-nav .nav-link {
@@ -181,6 +373,13 @@ main {
   overflow-x: hidden;
 }
 
+/* Mobile: Reduce main padding */
+@media (max-width: 767px) {
+  main {
+    padding: 1rem;
+  }
+}
+
 /* Loading States */
 .loading {
   text-align: center;
@@ -293,39 +492,237 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 3rem;
 }
 
-/* Responsive styles for welcome text */
-@media (max-width: 768px) {
-  .home h1 {
-    font-size: 2.25rem;
-    margin-bottom: 1.5rem;
+/* ============================================================================
+   MOBILE NAVIGATION
+   ============================================================================ */
+
+/* Hamburger menu button */
+.hamburger-menu {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  z-index: 101;
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+  height: 18px;
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--poe-text);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger-menu[aria-expanded="true"] .hamburger-icon span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu[aria-expanded="true"] .hamburger-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu[aria-expanded="true"] .hamburger-icon span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile menu overlay */
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.mobile-menu-overlay.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+.mobile-menu-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+}
+
+.mobile-menu-content {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+  background-color: var(--poe-dark-bg);
+  border-right: 2px solid var(--poe-border);
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  z-index: 1001;
+  animation: slideInLeft 0.3s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
   }
-  
-  .welcome-text {
-    padding: 2rem 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .welcome-text p {
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
-  
-  .welcome-text p:first-of-type {
-    font-size: 1.1rem;
+  to {
+    transform: translateX(0);
   }
 }
 
-@media (max-width: 600px) {
+.mobile-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid var(--poe-border);
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: var(--poe-text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background-color 0.2s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus {
+  background-color: var(--poe-darker-bg);
+  color: var(--poe-accent);
+}
+
+.mobile-nav-link.active {
+  background-color: rgba(175, 96, 37, 0.2);
+  color: var(--poe-accent);
+  border-left: 3px solid var(--poe-accent);
+}
+
+.mobile-categories-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-categories-toggle::after {
+  content: '▼';
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.mobile-categories-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.mobile-categories-menu {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--poe-darker-bg);
+}
+
+.mobile-categories-menu.show {
+  display: block;
+}
+
+.mobile-category-link {
+  padding-left: 2.5rem;
+  font-size: 0.9rem;
+}
+
+/* Mobile navigation: Hide desktop nav, show hamburger */
+@media (max-width: 767px) {
+  .hamburger-menu {
+    display: flex;
+  }
+  
+  nav.global-nav .nav-list {
+    display: none; /* Hide desktop navigation */
+  }
+  
+  nav.global-nav {
+    padding: 1rem;
+  }
+  
+  nav.global-nav .nav-container {
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  nav.global-nav .nav-category-title {
+    font-size: 1.25rem;
+    grid-column: 2;
+    text-align: center;
+  }
+  
+  nav.global-nav .nav-right {
+    display: none;
+  }
+}
+
+/* Desktop: Hide mobile menu, show desktop nav */
+@media (min-width: 768px) {
+  .hamburger-menu {
+    display: none;
+  }
+  
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+  
+  nav.global-nav .nav-list {
+    display: flex;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - HOMEPAGE
+   ============================================================================ */
+
+@media (max-width: 767px) {
   .home {
     padding: 1rem;
   }
   
   .home h1 {
     font-size: 1.75rem;
+    margin-bottom: 1.5rem;
   }
   
   .welcome-text {
     padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
     border-radius: 8px;
   }
   
@@ -333,10 +730,157 @@ input:focus, textarea:focus, select:focus {
     font-size: 1rem;
     line-height: 1.6;
     text-align: left;
+    margin-bottom: 1rem;
   }
   
   .welcome-text p:first-of-type {
     font-size: 1.05rem;
+  }
+  
+  /* Category grid: single column on mobile */
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .category-card {
+    min-height: 44px; /* Touch target */
+    padding: 1rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .primary-link,
+  .secondary-link {
+    width: 100%;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - CATEGORY LIST
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  /* Category list page mobile styles */
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  .category-card {
+    width: 100%;
+    min-height: 44px;
+    padding: 1rem;
+  }
+  
+  .category-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - CATEGORY VIEW
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .category-view {
+    padding: 1rem;
+  }
+  
+  /* List view: single column on mobile */
+  .list-view-container {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+  }
+  
+  .list-view-item {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+  
+  .list-view-item-link {
+    min-height: 44px;
+  }
+  
+  /* Stash tab container: responsive scaling */
+  .stash-tab-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .stash-tab-canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - ITEM DETAIL
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .item-detail {
+    padding: 1rem;
+  }
+  
+  .item-details-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* Stack content sections vertically */
+  .item-detail section {
+    width: 100%;
+  }
+  
+  .item-detail h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .item-detail h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .primary-link,
+  .secondary-link,
+  .back-link {
+    width: 100%;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .list-view-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -523,6 +1067,46 @@ input:focus, textarea:focus, select:focus {
   margin: 2rem 0;
 }
 
+/* ============================================================================
+   RESPONSIVE VISUALIZATION STYLES - CANVAS
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .stash-tab-container {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .stash-tab-canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Very small screens: consider alternative view */
+  @media (max-width: 399px) {
+    .stash-tab-container {
+      /* Canvas may be too small, list view alternative could be shown */
+    }
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE VISUALIZATION STYLES - CHARTS GRID
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+}
+
 .chart-container {
   background-color: var(--poe-dark-bg);
   border: 1px solid var(--poe-border);
@@ -533,6 +1117,31 @@ input:focus, textarea:focus, select:focus {
 
 .chart-container canvas {
   max-height: 100%;
+}
+
+/* ============================================================================
+   RESPONSIVE CHART STYLES
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .chart-container {
+    width: 100%;
+    min-width: 280px;
+    height: 250px; /* Reduced height for mobile */
+    padding: 0.75rem;
+  }
+  
+  .chart-container canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Charts grid: single column on mobile */
+  .charts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 /* Item Detail Styles */
@@ -1723,6 +2332,33 @@ input:focus, textarea:focus, select:focus {
   margin: 2rem 0;
 }
 
+/* ============================================================================
+   RESPONSIVE LIST VIEW STYLES
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .list-view-container {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    margin: 1rem 0;
+  }
+  
+  .list-view-item {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+  
+  .list-view-item-link {
+    min-height: 44px;
+  }
+  
+  .list-view-item-icon-container {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
 /* Override grid layout for tattoo attribute containers */
 .list-view-container > .tattoo-attribute-container {
   display: block;
@@ -2548,6 +3184,36 @@ input:focus, textarea:focus, select:focus {
   border-radius: 8px;
   padding: 2rem;
   margin-top: 1rem;
+}
+
+/* ============================================================================
+   RESPONSIVE VISUALIZATION STYLES - WEIGHT DISPLAYS
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .weight-display {
+    padding: 1rem;
+    margin-top: 0.75rem;
+  }
+  
+  .weight-display-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .weight-method-toggle {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .method-toggle-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .bayesian-weight-display-header h2 {
+    font-size: 1.25rem;
+  }
 }
 
 .weight-display-header {
@@ -3827,24 +4493,226 @@ input:focus, textarea:focus, select:focus {
   min-width: 100px;
 }
 
-/* Responsive adjustments for flexible submission */
-@media (max-width: 768px) {
+/* ============================================================================
+   RESPONSIVE FORM STYLES - DATASET SUBMISSION FORM
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .dataset-submission-form {
+    padding: 1rem;
+  }
+  
+  .dataset-submission-form .form-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Full-width inputs on mobile */
+  .dataset-submission-form .form-input,
+  .dataset-submission-form .form-textarea,
+  .dataset-submission-form select {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS zoom */
+    padding: 0.75rem;
+  }
+  
+  /* Form groups stack vertically */
+  .dataset-submission-form .form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  /* Source input rows stack on mobile */
+  .source-input-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .source-input-row input {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  
+  /* Form buttons full-width on mobile */
+  .dataset-submission-form .btn,
+  .dataset-submission-form button[type="submit"],
+  .dataset-submission-form button[type="button"] {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Validation messages readable */
+  .dataset-submission-form .field-error {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    display: block;
+  }
+  
+  /* Input items tags wrap on mobile */
+  .selected-input-items {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+  
+  .input-item-tag {
+    min-height: 32px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Compact sections adjust spacing */
+  .dataset-submission-form .form-section.compact-section {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE DIALOG STYLES - FLEXIBLE SUBMISSION
+   ============================================================================ */
+
+@media (max-width: 767px) {
   .flexible-submission-content {
     width: 95%;
+    max-width: 95%;
     max-height: 90vh;
+    margin: 2.5vh auto;
   }
-
+  
+  .flexible-submission-body {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    padding: 1rem;
+  }
+  
   .flexible-submission-methods {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-
+  
+  .flexible-submission-method-button {
+    width: 100%;
+    min-height: 44px;
+    padding: 1rem;
+  }
+  
+  .flexible-submission-file-input-container,
+  .flexible-submission-url-input-container,
+  .flexible-submission-description-container {
+    width: 100%;
+  }
+  
+  .flexible-submission-url-input,
+  .flexible-submission-description-input {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS zoom */
+    padding: 0.75rem;
+  }
+  
+  .flexible-submission-file-label {
+    min-height: 44px;
+    padding: 1rem;
+  }
+  
   .flexible-submission-buttons {
     flex-direction: column-reverse;
+    gap: 0.75rem;
   }
-
+  
   .flexible-submission-cancel,
   .flexible-submission-submit {
     width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Close button touch-friendly */
+  .flexible-submission-content .datasets-overlay-close {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  /* Error messages readable */
+  .flexible-submission-error {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+  }
+  
+  /* Success messages readable */
+  .flexible-submission-success {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE TOOLTIP STYLES
+   ============================================================================ */
+
+.stash-tooltip {
+  /* Base tooltip styles are inline, but we can enhance for mobile */
+}
+
+@media (max-width: 767px) {
+  .stash-tooltip {
+    max-width: 90vw !important;
+    font-size: 0.95rem !important;
+    padding: 1rem !important;
+    /* Ensure tooltip is readable on mobile */
+    line-height: 1.5;
+  }
+  
+  /* Touch-friendly: Show tooltip on long-press instead of hover */
+  /* This is handled in JavaScript via touch events */
+}
+
+/* ============================================================================
+   RESPONSIVE IMAGE OPTIMIZATION
+   ============================================================================ */
+
+/* Ensure all images are responsive (already added in foundational styles) */
+/* Additional optimizations for mobile */
+@media (max-width: 767px) {
+  /* Lazy loading for images below the fold */
+  img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  img[loading="lazy"].loaded {
+    opacity: 1;
+  }
+  
+  /* Optimize image rendering for mobile */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ============================================================================
+   ORIENTATION CHANGE HANDLING
+   ============================================================================ */
+
+/* Orientation-specific adjustments are handled by viewport width media queries */
+/* Portrait and landscape both use the same breakpoints */
+@media (orientation: portrait) and (max-width: 767px) {
+  /* Additional portrait-specific adjustments if needed */
+}
+
+@media (orientation: landscape) and (max-width: 767px) {
+  /* Additional landscape-specific adjustments if needed */
+  .stash-tab-container {
+    max-height: 60vh;
   }
 }
 
@@ -4190,18 +5058,23 @@ input:focus, textarea:focus, select:focus {
   display: inline-block;
 }
 
-/* Responsive adjustments for contributions */
-@media (max-width: 768px) {
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - CONTRIBUTIONS PAGE
+   ============================================================================ */
+
+@media (max-width: 767px) {
   .contributions {
     padding: 1rem;
   }
 
   .category-guideline-list {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .nav-links {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .primary-link,
@@ -4209,14 +5082,81 @@ input:focus, textarea:focus, select:focus {
   .back-link {
     width: 100%;
     text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .category-contribution-guide {
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
   }
 
   .contribution-guide-title {
     font-size: 1.5rem;
+  }
+  
+  .contribution-overview {
+    padding: 1rem;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE PAGE STYLES - DATASET VIEW PAGE
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .dataset-view {
+    padding: 1rem;
+  }
+  
+  .dataset-detail {
+    padding: 1rem;
+    margin-top: 0.75rem;
+  }
+  
+  .dataset-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .dataset-detail-download-btn {
+    margin-left: 0;
+    width: 100%;
+    min-height: 44px;
+  }
+  
+  .dataset-metadata-list {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .dataset-metadata-list dt {
+    margin-top: 0.75rem;
+  }
+  
+  .dataset-metadata-list dt:first-child {
+    margin-top: 0;
+  }
+  
+  .dataset-detail-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .items-table {
+    font-size: 0.9rem;
+  }
+  
+  .items-table th,
+  .items-table td {
+    padding: 0.5rem;
+  }
+  
+  /* Make tables scrollable on mobile if needed */
+  .items-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
