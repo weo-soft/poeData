@@ -36,6 +36,13 @@ export default defineConfig({
         isolate: true
       }
     },
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/cypress/**',
+      '**/.{idea,git,cache,output,temp}/**',
+      '**/mobile-responsive.test.js' // Exclude Playwright E2E test
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
