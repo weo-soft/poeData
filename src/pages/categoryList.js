@@ -17,7 +17,7 @@ export async function renderCategoryList(container) {
   listSection.appendChild(title);
   
   const description = createElement('p', {
-    textContent: 'Select a category from the sidebar menu to view items.',
+    textContent: 'Select a category from the navigation menu to view items.',
     className: 'description'
   });
   listSection.appendChild(description);
