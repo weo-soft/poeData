@@ -11,8 +11,7 @@ import { renderItemDetail } from './pages/itemDetail.js';
 import { renderSubmission } from './pages/submission.js';
 import { renderDatasetView } from './pages/datasetView.js';
 import { renderContributions } from './pages/contributions.js';
-import { createNavigation, updateActiveLink } from './components/navigation.js';
-import { createCategorySidebar, updateActiveCategoryLink } from './components/categorySidebar.js';
+import { createNavigation, updateActiveLink, updateActiveCategoryLink } from './components/navigation.js';
 
 // Get app container
 const app = document.getElementById('app');
@@ -22,86 +21,68 @@ if (!app) {
 } else {
   // Initialize app asynchronously
   (async () => {
-    // Create navigation
-    const navigation = createNavigation();
+    // Create navigation (now includes categories dropdown)
+    const navigation = await createNavigation();
     
-    // Create layout container for sidebar and main content
-    const layoutContainer = document.createElement('div');
-    layoutContainer.className = 'app-layout';
-    
-    // Create sidebar and main content container
-    const sidebar = await createCategorySidebar();
+    // Create main content container
     const mainContent = document.createElement('main');
     mainContent.id = 'main-content';
     
-    layoutContainer.appendChild(sidebar);
-    layoutContainer.appendChild(mainContent);
-    
-    // Clear app and add navigation and layout container
+    // Clear app and add navigation and main content
     app.innerHTML = '';
     app.appendChild(navigation);
-    app.appendChild(layoutContainer);
+    app.appendChild(mainContent);
     
-    // Set up route handlers (render to mainContent instead of app)
+    // Set up route handlers (render to mainContent)
     router.on('/', () => {
       renderHome(mainContent);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/categories', () => {
       renderCategoryList(mainContent);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/category/:categoryId', (params, query) => {
       renderCategoryView(mainContent, { ...params, query });
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/category/:categoryId/item/:itemId', (params) => {
       renderItemDetail(mainContent, params);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/category/:categoryId/dataset/:datasetNumber', (params) => {
       renderDatasetView(mainContent, params);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/submit', () => {
       renderSubmission(mainContent);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/submit/:categoryId', (params) => {
       renderSubmission(mainContent, params);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     // Contribution guide routes (category-specific must be registered before overview)
     router.on('/contributions/:categoryId', (params) => {
       renderContributions(mainContent, params.categoryId);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     router.on('/contributions', () => {
       renderContributions(mainContent, null);
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     // Listen to route changes to update navigation
     router.addListener(() => {
       updateActiveLink(navigation);
-      updateActiveCategoryLink(sidebar);
     });
     
     // Initialize router
