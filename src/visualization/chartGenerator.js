@@ -25,23 +25,8 @@ export function generateCategoryCharts(container, items, categoryId) {
     return;
   }
   
-  // Skip drop weight distribution chart for specific categories
-  const categoriesWithoutDropWeightChart = ['scarabs', 'divination-cards'];
-  if (categoriesWithoutDropWeightChart.includes(categoryId)) {
-    return;
-  }
-  
-  // Create charts container
-  const chartsGrid = document.createElement('div');
-  chartsGrid.className = 'charts-grid';
-  
-  // Drop Weight Distribution Chart
-  const dropWeightChart = createDropWeightChart(items);
-  if (dropWeightChart) {
-    chartsGrid.appendChild(dropWeightChart);
-  }
-  
-  container.appendChild(chartsGrid);
+  // Drop weight distribution chart removed from all category views
+  return;
 }
 
 /**
