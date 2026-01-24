@@ -57,13 +57,15 @@ export async function renderCategoryView(container, params) {
     // Clear loading
     clearElement(viewSection);
     
-    // Category header
-    const header = createElement('div', { className: 'category-header' });
-    const title = createElement('h1', { 
-      textContent: formatCategoryName(categoryId)
-    });
+    // Update navbar with category title
+    const navigation = document.querySelector('.global-nav');
+    if (navigation) {
+      const { setCategoryTitle } = await import('../components/navigation.js');
+      setCategoryTitle(navigation, formatCategoryName(categoryId));
+    }
     
-    header.appendChild(title);
+    // Category header (without title, only back button if needed)
+    const header = createElement('div', { className: 'category-header' });
     
     // Add back button when in datasets view
     if (viewType === 'datasets') {
@@ -77,7 +79,10 @@ export async function renderCategoryView(container, params) {
       header.appendChild(backButton);
     }
     
-    viewSection.appendChild(header);
+    // Only append header if it has content
+    if (header.children.length > 0) {
+      viewSection.appendChild(header);
+    }
     
     // Only show tabs when NOT in datasets view
     if (viewType !== 'datasets') {

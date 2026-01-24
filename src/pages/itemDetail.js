@@ -22,6 +22,13 @@ export async function renderItemDetail(container, params) {
   
   const { categoryId, itemId } = params;
   
+  // Update navbar with category title
+  const navigation = document.querySelector('.global-nav');
+  if (navigation) {
+    const { setCategoryTitle } = await import('../components/navigation.js');
+    setCategoryTitle(navigation, formatCategoryName(categoryId));
+  }
+  
   const detailSection = createElement('section', { className: 'item-detail' });
   
   // Loading state

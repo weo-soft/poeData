@@ -1,8 +1,11 @@
 /**
  * Tooltip utility functions for displaying item information on hover
+ * Supports both mouse hover (desktop) and touch/long-press (mobile)
  */
 
 let tooltipElement = null;
+let touchTooltipTimeout = null;
+let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 /**
  * Create tooltip element if it doesn't exist
@@ -11,18 +14,20 @@ function ensureTooltip() {
   if (!tooltipElement) {
     tooltipElement = document.createElement('div');
     tooltipElement.className = 'stash-tooltip';
+    const isMobile = window.innerWidth < 768;
     tooltipElement.style.cssText = `
       position: fixed;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0.95);
       color: #d4d4d4;
-      padding: 0.75rem;
+      padding: ${isMobile ? '1rem' : '0.75rem'};
       border-radius: 4px;
       border: 1px solid #af6025;
       pointer-events: none;
       z-index: 10000;
-      font-size: 0.9rem;
-      max-width: 300px;
+      font-size: ${isMobile ? '0.95rem' : '0.9rem'};
+      max-width: ${isMobile ? '90vw' : '300px'};
       display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     `;
     document.body.appendChild(tooltipElement);
   }

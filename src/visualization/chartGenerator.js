@@ -100,23 +100,35 @@ function createDropWeightChart(items) {
         title: {
           display: true,
           text: 'Drop Weight Distribution',
-          color: '#d4d4d4'
+          color: '#d4d4d4',
+          font: {
+            size: window.innerWidth < 768 ? 14 : 16
+          }
         },
         legend: {
-          display: false
+          display: false,
+          position: window.innerWidth < 768 ? 'bottom' : 'top'
         }
       },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: { color: '#d4d4d4' },
+          ticks: { 
+            color: '#d4d4d4',
+            font: {
+              size: window.innerWidth < 768 ? 10 : 12
+            }
+          },
           grid: { color: '#3a3a3a' }
         },
         x: {
           ticks: { 
             color: '#d4d4d4',
-            maxRotation: 45,
-            minRotation: 45
+            maxRotation: window.innerWidth < 768 ? 90 : 45,
+            minRotation: window.innerWidth < 768 ? 90 : 45,
+            font: {
+              size: window.innerWidth < 768 ? 10 : 12
+            }
           },
           grid: { color: '#3a3a3a' }
         }

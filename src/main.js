@@ -11,7 +11,7 @@ import { renderItemDetail } from './pages/itemDetail.js';
 import { renderSubmission } from './pages/submission.js';
 import { renderDatasetView } from './pages/datasetView.js';
 import { renderContributions } from './pages/contributions.js';
-import { createNavigation, updateActiveLink, updateActiveCategoryLink } from './components/navigation.js';
+import { createNavigation, updateActiveLink, updateActiveCategoryLink, clearCategoryTitle } from './components/navigation.js';
 
 // Get app container
 const app = document.getElementById('app');
@@ -35,11 +35,13 @@ if (!app) {
     
     // Set up route handlers (render to mainContent)
     router.on('/', () => {
+      clearCategoryTitle(navigation);
       renderHome(mainContent);
       updateActiveLink(navigation);
     });
     
     router.on('/categories', () => {
+      clearCategoryTitle(navigation);
       renderCategoryList(mainContent);
       updateActiveLink(navigation);
     });
@@ -50,32 +52,38 @@ if (!app) {
     });
     
     router.on('/category/:categoryId/item/:itemId', (params) => {
+      // Keep category title when viewing item detail
       renderItemDetail(mainContent, params);
       updateActiveLink(navigation);
     });
     
     router.on('/category/:categoryId/dataset/:datasetNumber', (params) => {
+      // Keep category title when viewing dataset detail
       renderDatasetView(mainContent, params);
       updateActiveLink(navigation);
     });
     
     router.on('/submit', () => {
+      clearCategoryTitle(navigation);
       renderSubmission(mainContent);
       updateActiveLink(navigation);
     });
     
     router.on('/submit/:categoryId', (params) => {
+      clearCategoryTitle(navigation);
       renderSubmission(mainContent, params);
       updateActiveLink(navigation);
     });
     
     // Contribution guide routes (category-specific must be registered before overview)
     router.on('/contributions/:categoryId', (params) => {
+      clearCategoryTitle(navigation);
       renderContributions(mainContent, params.categoryId);
       updateActiveLink(navigation);
     });
     
     router.on('/contributions', () => {
+      clearCategoryTitle(navigation);
       renderContributions(mainContent, null);
       updateActiveLink(navigation);
     });

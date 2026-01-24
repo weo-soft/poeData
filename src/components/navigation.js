@@ -5,6 +5,7 @@
 import { createElement } from '../utils/dom.js';
 import { getAvailableCategories } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
+import { isMobileViewport } from '../utils/mobileUtils.js';
 
 let categoriesCache = null;
 
@@ -14,6 +15,7 @@ let categoriesCache = null;
  */
 export async function createNavigation() {
   const nav = createElement('nav', { className: 'global-nav' });
+  const navContainer = createElement('div', { className: 'nav-container' });
   const navList = createElement('ul', { className: 'nav-list' });
   
   // Home link
@@ -115,10 +117,163 @@ export async function createNavigation() {
   navList.appendChild(categoriesItem);
   navList.appendChild(contributeItem);
   navList.appendChild(submitItem);
-  nav.appendChild(navList);
   
-  // Store dropdown menu reference for active link updates
+  // Hamburger menu button for mobile
+  const hamburgerButton = createElement('button', {
+    className: 'hamburger-menu',
+    type: 'button',
+    'aria-label': 'Toggle navigation menu',
+    'aria-expanded': 'false',
+    'aria-controls': 'mobile-menu-overlay'
+  });
+  
+  // Hamburger icon (three lines)
+  const hamburgerIcon = createElement('span', { className: 'hamburger-icon' });
+  hamburgerIcon.innerHTML = '<span></span><span></span><span></span>';
+  hamburgerButton.appendChild(hamburgerIcon);
+  
+  // Mobile menu overlay
+  const mobileMenuOverlay = createElement('div', {
+    className: 'mobile-menu-overlay',
+    id: 'mobile-menu-overlay',
+    'aria-hidden': 'true'
+  });
+  
+  const mobileMenuBackdrop = createElement('div', {
+    className: 'mobile-menu-backdrop'
+  });
+  
+  const mobileMenuContent = createElement('div', {
+    className: 'mobile-menu-content'
+  });
+  
+  const mobileMenuList = createElement('ul', {
+    className: 'mobile-menu-list'
+  });
+  
+  // Copy navigation items to mobile menu
+  const mobileHomeItem = createElement('li');
+  const mobileHomeLink = createElement('a', {
+    href: '#/',
+    textContent: 'Home',
+    className: 'mobile-nav-link'
+  });
+  mobileHomeItem.appendChild(mobileHomeLink);
+  mobileMenuList.appendChild(mobileHomeItem);
+  
+  // Categories in mobile menu (accordion style)
+  const mobileCategoriesItem = createElement('li', { className: 'mobile-nav-item' });
+  const mobileCategoriesButton = createElement('button', {
+    className: 'mobile-nav-link mobile-categories-toggle',
+    type: 'button',
+    textContent: 'Categories',
+    'aria-expanded': 'false'
+  });
+  mobileCategoriesItem.appendChild(mobileCategoriesButton);
+  
+  const mobileCategoriesMenu = createElement('ul', {
+    className: 'mobile-categories-menu'
+  });
+  
+  // Copy category links to mobile menu
+  dropdownMenu.querySelectorAll('.dropdown-link').forEach(link => {
+    const mobileCategoryItem = createElement('li');
+    const mobileCategoryLink = createElement('a', {
+      href: link.getAttribute('href'),
+      textContent: link.textContent,
+      className: 'mobile-nav-link mobile-category-link',
+      'data-category-id': link.getAttribute('data-category-id')
+    });
+    mobileCategoryItem.appendChild(mobileCategoryLink);
+    mobileCategoriesMenu.appendChild(mobileCategoryItem);
+  });
+  
+  mobileCategoriesItem.appendChild(mobileCategoriesMenu);
+  mobileMenuList.appendChild(mobileCategoriesItem);
+  
+  // Contributions link
+  const mobileContributeItem = createElement('li');
+  const mobileContributeLink = createElement('a', {
+    href: '#/contributions',
+    textContent: 'Contribute',
+    className: 'mobile-nav-link'
+  });
+  mobileContributeItem.appendChild(mobileContributeLink);
+  mobileMenuList.appendChild(mobileContributeItem);
+  
+  // Submit link
+  const mobileSubmitItem = createElement('li');
+  const mobileSubmitLink = createElement('a', {
+    href: '#/submit',
+    textContent: 'Submit',
+    className: 'mobile-nav-link'
+  });
+  mobileSubmitItem.appendChild(mobileSubmitLink);
+  mobileMenuList.appendChild(mobileSubmitItem);
+  
+  mobileMenuContent.appendChild(mobileMenuList);
+  mobileMenuOverlay.appendChild(mobileMenuBackdrop);
+  mobileMenuOverlay.appendChild(mobileMenuContent);
+  
+  // Hamburger toggle functionality
+  hamburgerButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isExpanded = hamburgerButton.getAttribute('aria-expanded') === 'true';
+    hamburgerButton.setAttribute('aria-expanded', !isExpanded);
+    mobileMenuOverlay.setAttribute('aria-hidden', isExpanded);
+    mobileMenuOverlay.classList.toggle('show', !isExpanded);
+    document.body.style.overflow = !isExpanded ? 'hidden' : '';
+  });
+  
+  // Close mobile menu when clicking backdrop
+  mobileMenuBackdrop.addEventListener('click', () => {
+    hamburgerButton.setAttribute('aria-expanded', 'false');
+    mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+    mobileMenuOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+  });
+  
+  // Close mobile menu when clicking a link
+  mobileMenuList.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburgerButton.setAttribute('aria-expanded', 'false');
+      mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+      mobileMenuOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+    });
+  });
+  
+  // Mobile categories toggle
+  mobileCategoriesButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isExpanded = mobileCategoriesButton.getAttribute('aria-expanded') === 'true';
+    mobileCategoriesButton.setAttribute('aria-expanded', !isExpanded);
+    mobileCategoriesMenu.classList.toggle('show', !isExpanded);
+  });
+  
+  // Category title (centered, initially hidden)
+  const categoryTitle = createElement('h1', { 
+    className: 'nav-category-title',
+    style: 'display: none;'
+  });
+  
+  // Right side spacer (to balance the layout)
+  const navRight = createElement('div', { className: 'nav-right' });
+  
+  navContainer.appendChild(hamburgerButton);
+  navContainer.appendChild(navList);
+  navContainer.appendChild(categoryTitle);
+  navContainer.appendChild(navRight);
+  nav.appendChild(navContainer);
+  nav.appendChild(mobileMenuOverlay);
+  
+  // Store references for updates
   nav._dropdownMenu = dropdownMenu;
+  nav._categoryTitle = categoryTitle;
+  nav._hamburgerButton = hamburgerButton;
+  nav._mobileMenuOverlay = mobileMenuOverlay;
   
   // Update active link based on current route
   updateActiveLink(nav);
@@ -184,5 +339,30 @@ export function updateActiveCategoryLink(nav) {
  */
 export function getCachedCategories() {
   return categoriesCache;
+}
+
+/**
+ * Set the category title in the navbar
+ * @param {HTMLElement} nav - Navigation element
+ * @param {string} categoryName - Category name to display
+ */
+export function setCategoryTitle(nav, categoryName) {
+  const categoryTitle = nav?._categoryTitle;
+  if (categoryTitle) {
+    categoryTitle.textContent = categoryName;
+    categoryTitle.style.display = 'block';
+  }
+}
+
+/**
+ * Clear the category title from the navbar
+ * @param {HTMLElement} nav - Navigation element
+ */
+export function clearCategoryTitle(nav) {
+  const categoryTitle = nav?._categoryTitle;
+  if (categoryTitle) {
+    categoryTitle.textContent = '';
+    categoryTitle.style.display = 'none';
+  }
 }
 
