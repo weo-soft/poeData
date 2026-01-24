@@ -59,6 +59,15 @@ vi.mock('../../src/utils/tooltip.js', () => ({
   updateTooltipPosition: vi.fn()
 }));
 
+// Mock listViewRenderer - create mock function inside factory
+vi.mock('../../src/visualization/listViewRenderer.js', async () => {
+  const actual = await vi.importActual('../../src/visualization/listViewRenderer.js');
+  return {
+    ...actual,
+    renderListViewWithWeights: vi.fn()
+  };
+});
+
 describe('Category Grid Integration Tests', () => {
   let container;
   let canvas;
@@ -430,15 +439,9 @@ describe('Category Grid Integration Tests', () => {
       const { loadCategoryData } = await import('../../src/services/dataLoader.js');
       const items = await loadCategoryData('essences');
       
-      // Mock renderListViewWithWeights
-      const mockRenderListViewWithWeights = vi.fn();
-      vi.mock('../../src/visualization/listViewRenderer.js', async () => {
-        const actual = await vi.importActual('../../src/visualization/listViewRenderer.js');
-        return {
-          ...actual,
-          renderListViewWithWeights: mockRenderListViewWithWeights
-        };
-      });
+      // Get the mocked function
+      const { renderListViewWithWeights } = await import('../../src/visualization/listViewRenderer.js');
+      vi.mocked(renderListViewWithWeights).mockClear();
 
       await renderCategoryView(container, { categoryId: 'essences' });
 
@@ -455,8 +458,8 @@ describe('Category Grid Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 200));
 
       // Verify renderListViewWithWeights was called with filtered items
-      expect(mockRenderListViewWithWeights).toHaveBeenCalled();
-      const lastCall = mockRenderListViewWithWeights.mock.calls[mockRenderListViewWithWeights.mock.calls.length - 1];
+      expect(renderListViewWithWeights).toHaveBeenCalled();
+      const lastCall = vi.mocked(renderListViewWithWeights).mock.calls[vi.mocked(renderListViewWithWeights).mock.calls.length - 1];
       const filteredItems = lastCall[1];
       expect(filteredItems.length).toBeLessThan(items.length);
       expect(filteredItems.some(item => item.name.toLowerCase().includes('anger'))).toBe(true);
@@ -466,14 +469,9 @@ describe('Category Grid Integration Tests', () => {
       const { loadCategoryData } = await import('../../src/services/dataLoader.js');
       const items = await loadCategoryData('essences');
       
-      const mockRenderListViewWithWeights = vi.fn();
-      vi.mock('../../src/visualization/listViewRenderer.js', async () => {
-        const actual = await vi.importActual('../../src/visualization/listViewRenderer.js');
-        return {
-          ...actual,
-          renderListViewWithWeights: mockRenderListViewWithWeights
-        };
-      });
+      // Get the mocked function
+      const { renderListViewWithWeights } = await import('../../src/visualization/listViewRenderer.js');
+      vi.mocked(renderListViewWithWeights).mockClear();
 
       await renderCategoryView(container, { categoryId: 'essences' });
 
@@ -490,7 +488,7 @@ describe('Category Grid Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 200));
 
       // Verify renderListViewWithWeights was called with all items
-      const lastCall = mockRenderListViewWithWeights.mock.calls[mockRenderListViewWithWeights.mock.calls.length - 1];
+      const lastCall = vi.mocked(renderListViewWithWeights).mock.calls[vi.mocked(renderListViewWithWeights).mock.calls.length - 1];
       const filteredItems = lastCall[1];
       expect(filteredItems.length).toBe(items.length);
     });
