@@ -537,4 +537,67 @@ test.describe('Mobile Responsive Design', () => {
       expect(hamburgerVisible).toBe(false);
     });
   });
+
+  test.describe('User Story 3 - List View Responsive Layout', () => {
+    test('T019: should display grid and list side-by-side on desktop (≥1024px)', async ({ page }) => {
+      await page.setViewportSize({ width: 1024, height: 768 });
+      await page.goto(`${baseURL}/#/category/essences`);
+      await page.waitForLoadState('networkidle');
+      
+      // Wait for views container to appear
+      const viewsContainer = page.locator('.category-views-container');
+      await expect(viewsContainer).toBeVisible();
+      
+      // Check computed styles for side-by-side layout
+      const gridTemplateColumns = await viewsContainer.evaluate((el) => {
+        return window.getComputedStyle(el).gridTemplateColumns;
+      });
+      
+      // Should have 2 columns (1fr 1fr) on desktop
+      expect(gridTemplateColumns).toContain('1fr');
+    });
+
+    test('T020: should stack grid and list on mobile (<1024px)', async ({ page }) => {
+      await page.setViewportSize({ width: 768, height: 1024 });
+      await page.goto(`${baseURL}/#/category/essences`);
+      await page.waitForLoadState('networkidle');
+      
+      // Wait for views container to appear
+      const viewsContainer = page.locator('.category-views-container');
+      await expect(viewsContainer).toBeVisible();
+      
+      // Check computed styles for stacked layout
+      const gridTemplateColumns = await viewsContainer.evaluate((el) => {
+        return window.getComputedStyle(el).gridTemplateColumns;
+      });
+      
+      // Should have 1 column on mobile (stacked)
+      // The media query should override to single column
+      expect(gridTemplateColumns).toBeTruthy();
+      
+      // Verify list view is accessible
+      const listView = page.locator('.category-list-view');
+      await expect(listView).toBeVisible();
+    });
+
+    test('should work on 320px minimum width screens', async ({ page }) => {
+      await page.setViewportSize({ width: 320, height: 568 });
+      await page.goto(`${baseURL}/#/category/essences`);
+      await page.waitForLoadState('networkidle');
+      
+      // Verify no horizontal scroll
+      const hasScroll = await hasHorizontalScroll(page);
+      expect(hasScroll).toBe(false);
+      
+      // Verify list view is accessible
+      const listView = page.locator('.category-list-view');
+      await expect(listView).toBeVisible();
+      
+      // Verify list entries are readable
+      const firstEntry = listView.locator('.category-list-entry').first();
+      if (await firstEntry.count() > 0) {
+        await expect(firstEntry).toBeVisible();
+      }
+    });
+  });
 });

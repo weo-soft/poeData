@@ -5,8 +5,9 @@ A static web application that provides detailed data and visualizations for Path
 ## Features
 
 - **Browse Categories**: Explore available item categories (Scarabs, Divination Cards, Breach Splinters, Breachstones, Catalysts, Delirium Orbs, Essences, Fossils, Legion Emblems, Legion Splinters, Oils, Tattoos)
-- **Stash Tab Visualization**: View items in an in-game style stash tab using HTML5 Canvas (for Scarabs)
-- **List View**: Browse items in a simple list format with names and icons (for new categories)
+- **Stash Tab Visualization**: View items in an in-game style stash tab using HTML5 Canvas (for grid categories)
+- **List View**: Browse items in a simple list format with names and icons (for new categories like tattoos and runegrafts)
+- **Dual View**: Grid categories now display both grid and list views side-by-side, with list view showing item names and calculated weights for easy scanning
 - **Item Details**: See detailed information about each item
 - **Statistics Charts**: View data trends and distributions using Chart.js
 - **Raw JSON Access**: Direct links to JSON data for programmatic access

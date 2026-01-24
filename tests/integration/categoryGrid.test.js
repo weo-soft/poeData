@@ -424,4 +424,75 @@ describe('Category Grid Integration Tests', () => {
       window.location.hash = originalHash;
     });
   });
+
+  describe('User Story 2 - Filter Synchronization', () => {
+    it('should update both grid and list views when filter is applied', async () => {
+      const { loadCategoryData } = await import('../../src/services/dataLoader.js');
+      const items = await loadCategoryData('essences');
+      
+      // Mock renderListViewWithWeights
+      const mockRenderListViewWithWeights = vi.fn();
+      vi.mock('../../src/visualization/listViewRenderer.js', async () => {
+        const actual = await vi.importActual('../../src/visualization/listViewRenderer.js');
+        return {
+          ...actual,
+          renderListViewWithWeights: mockRenderListViewWithWeights
+        };
+      });
+
+      await renderCategoryView(container, { categoryId: 'essences' });
+
+      // Find search input
+      const searchInput = container.querySelector('.tattoos-search-input');
+      expect(searchInput).toBeTruthy();
+
+      // Simulate typing in search
+      searchInput.value = 'anger';
+      const inputEvent = new Event('input', { bubbles: true });
+      searchInput.dispatchEvent(inputEvent);
+
+      // Wait for debounce
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      // Verify renderListViewWithWeights was called with filtered items
+      expect(mockRenderListViewWithWeights).toHaveBeenCalled();
+      const lastCall = mockRenderListViewWithWeights.mock.calls[mockRenderListViewWithWeights.mock.calls.length - 1];
+      const filteredItems = lastCall[1];
+      expect(filteredItems.length).toBeLessThan(items.length);
+      expect(filteredItems.some(item => item.name.toLowerCase().includes('anger'))).toBe(true);
+    });
+
+    it('should show all items in both views when filter is cleared', async () => {
+      const { loadCategoryData } = await import('../../src/services/dataLoader.js');
+      const items = await loadCategoryData('essences');
+      
+      const mockRenderListViewWithWeights = vi.fn();
+      vi.mock('../../src/visualization/listViewRenderer.js', async () => {
+        const actual = await vi.importActual('../../src/visualization/listViewRenderer.js');
+        return {
+          ...actual,
+          renderListViewWithWeights: mockRenderListViewWithWeights
+        };
+      });
+
+      await renderCategoryView(container, { categoryId: 'essences' });
+
+      const searchInput = container.querySelector('.tattoos-search-input');
+      
+      // Apply filter
+      searchInput.value = 'anger';
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      // Clear filter
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      // Verify renderListViewWithWeights was called with all items
+      const lastCall = mockRenderListViewWithWeights.mock.calls[mockRenderListViewWithWeights.mock.calls.length - 1];
+      const filteredItems = lastCall[1];
+      expect(filteredItems.length).toBe(items.length);
+    });
+  });
 });

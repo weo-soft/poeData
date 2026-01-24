@@ -8,7 +8,7 @@ import { displayError } from '../utils/errors.js';
 import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
-import { renderListView, filterTattoos, filterRunegrafts } from '../visualization/listViewRenderer.js';
+import { renderListView, filterTattoos, filterRunegrafts, renderListViewWithWeights } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
 import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
@@ -777,6 +777,11 @@ async function renderItemsView(container, categoryId, items) {
         existingJsonLink.remove();
       }
       
+      // Create views container for grid + list layout
+      const viewsContainer = createElement('div', { className: 'category-views-container' });
+      const gridContainer = createElement('div', { className: 'category-grid-container' });
+      const listContainer = createElement('div', { className: 'category-list-container' });
+      
       // Create stash tab container
       const stashContainer = createElement('div', { 
         className: 'stash-tab-container',
@@ -788,16 +793,37 @@ async function renderItemsView(container, categoryId, items) {
       });
       stashContainer.appendChild(canvas);
       
-      // Add header bar before stash tab
+      // Assemble views container
+      gridContainer.appendChild(stashContainer);
+      viewsContainer.appendChild(gridContainer);
+      viewsContainer.appendChild(listContainer);
+      
+      // Add header bar before views container
       container.insertBefore(headerBar, chartsContainer);
-      container.insertBefore(stashContainer, chartsContainer);
+      container.insertBefore(viewsContainer, chartsContainer);
       
       // Store original items for filtering
       const originalItems = items;
       let filteredItems = items;
+      let currentSortOption = 'weight-desc'; // Default sort: weight descending
       
-      // Initial render
+      // Function to re-render list view with current sort
+      const renderList = async () => {
+        await renderListViewWithWeights(
+          listContainer, 
+          filteredItems, 
+          categoryId, 
+          currentSortOption,
+          (newSortOption) => {
+            currentSortOption = newSortOption;
+            renderList();
+          }
+        );
+      };
+      
+      // Initial render - both views
       await renderStashTab(canvas, filteredItems, categoryId);
+      await renderList();
       
       // Add search event listener with debouncing
       let searchTimeout = null;
@@ -815,8 +841,9 @@ async function renderItemsView(container, categoryId, items) {
           // Create set of filtered item IDs for highlighting (only if query is not empty)
           const filteredItemIds = query.trim() === '' ? null : new Set(filteredItems.map(item => item.id));
           
-          // Re-render with all items but highlight filtered ones
+          // Update both views
           await renderStashTab(canvas, originalItems, categoryId, filteredItemIds);
+          await renderList();
         }, 150); // 150ms debounce
       });
     }
