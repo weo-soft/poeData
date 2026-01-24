@@ -3,7 +3,7 @@
  */
 
 import { createElement, clearElement, setLoadingState } from '../utils/dom.js';
-import { loadCategoryData } from '../services/dataLoader.js';
+import { loadCategoryData, getAvailableCategories } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
 import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
@@ -18,6 +18,7 @@ import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
+import { loadContent } from '../services/contributionContentLoader.js';
 
 let currentItems = [];
 let currentCategoryId = null;
@@ -176,6 +177,9 @@ export async function renderCategoryView(container, params) {
       await renderDatasetsView(contentArea, subcategory, categoryId);
     } else {
       await renderItemsView(contentArea, categoryId, items);
+      
+      // Add contribution guide section (only in items view)
+      await renderContributionGuide(contentArea, categoryId);
     }
     
     // Navigation (outside content area)
@@ -1245,6 +1249,67 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
       renderDatasetsView(container, categoryId, navigationCategoryId);
     });
     detailContainer.appendChild(retryButton);
+  }
+}
+
+/**
+ * Render contribution guide section in category view
+ * @param {HTMLElement} container - Container element to render into
+ * @param {string} categoryId - Category identifier
+ * @returns {Promise<void>} Resolves when rendering is complete
+ */
+async function renderContributionGuide(container, categoryId) {
+  try {
+    // Load contribution content for this category
+    const content = await loadContent(categoryId);
+    
+    // Get category name
+    const categories = await getAvailableCategories();
+    const category = categories.find(c => c.id === categoryId);
+    const categoryName = category?.name || categoryId;
+    
+    // Create contribution guide section
+    const guideSection = createElement('div', { className: 'category-contribution-guide' });
+    
+    // Section header
+    const guideHeader = createElement('div', { className: 'contribution-guide-header' });
+    const guideTitle = createElement('h2', {
+      textContent: `How to Contribute ${categoryName} Datasets`,
+      className: 'contribution-guide-title'
+    });
+    guideHeader.appendChild(guideTitle);
+    guideSection.appendChild(guideHeader);
+    
+    // Generic content banner (if using fallback)
+    if (content.isGeneric) {
+      const banner = createElement('div', { className: 'generic-content-banner' });
+      const bannerText = createElement('p', {
+        textContent: 'ℹ️ Viewing generic guidelines. Category-specific guidelines coming soon.',
+        className: 'banner-text'
+      });
+      banner.appendChild(bannerText);
+      guideSection.appendChild(banner);
+    }
+    
+    // Content
+    const contentSection = createElement('div', { className: 'contribution-content' });
+    contentSection.innerHTML = content.html;
+    guideSection.appendChild(contentSection);
+    
+    // Add link to submission form
+    const submitLinkWrapper = createElement('div', { className: 'contribution-submit-link-wrapper' });
+    const submitLink = createElement('a', {
+      href: `#/submit/${categoryId}`,
+      textContent: `Submit ${categoryName} Dataset →`,
+      className: 'primary-link contribution-submit-link'
+    });
+    submitLinkWrapper.appendChild(submitLink);
+    guideSection.appendChild(submitLinkWrapper);
+    
+    container.appendChild(guideSection);
+  } catch (error) {
+    // Silently fail - don't break the category view if contribution guide fails to load
+    console.warn(`Failed to load contribution guide for ${categoryId}:`, error);
   }
 }
 

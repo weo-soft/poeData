@@ -10,6 +10,7 @@ import { renderCategoryView } from './pages/categoryView.js';
 import { renderItemDetail } from './pages/itemDetail.js';
 import { renderSubmission } from './pages/submission.js';
 import { renderDatasetView } from './pages/datasetView.js';
+import { renderContributions } from './pages/contributions.js';
 import { createNavigation, updateActiveLink } from './components/navigation.js';
 import { createCategorySidebar, updateActiveCategoryLink } from './components/categorySidebar.js';
 
@@ -80,6 +81,19 @@ if (!app) {
     
     router.on('/submit/:categoryId', (params) => {
       renderSubmission(mainContent, params);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    // Contribution guide routes (category-specific must be registered before overview)
+    router.on('/contributions/:categoryId', (params) => {
+      renderContributions(mainContent, params.categoryId);
+      updateActiveLink(navigation);
+      updateActiveCategoryLink(sidebar);
+    });
+    
+    router.on('/contributions', () => {
+      renderContributions(mainContent, null);
       updateActiveLink(navigation);
       updateActiveCategoryLink(sidebar);
     });

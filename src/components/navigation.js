@@ -21,6 +21,15 @@ export function createNavigation() {
   });
   homeItem.appendChild(homeLink);
   
+  // Contributions link
+  const contributeItem = createElement('li');
+  const contributeLink = createElement('a', {
+    href: '#/contributions',
+    textContent: 'Contribute',
+    className: 'nav-link'
+  });
+  contributeItem.appendChild(contributeLink);
+  
   // Submit link
   const submitItem = createElement('li');
   const submitLink = createElement('a', {
@@ -31,6 +40,7 @@ export function createNavigation() {
   submitItem.appendChild(submitLink);
   
   navList.appendChild(homeItem);
+  navList.appendChild(contributeItem);
   navList.appendChild(submitItem);
   nav.appendChild(navList);
   
@@ -55,6 +65,9 @@ export function updateActiveLink(nav) {
     // Check if current route matches this link
     if (linkHash === '#/' && currentHash === '#/') {
       // Exact match for home
+      link.classList.add('active');
+    } else if (linkHash === '#/contributions' && currentHash.startsWith('#/contributions')) {
+      // Match contributions and contributions/:categoryId
       link.classList.add('active');
     } else if (linkHash === '#/submit' && currentHash.startsWith('#/submit')) {
       // Match submit and submit/:categoryId

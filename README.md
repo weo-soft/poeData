@@ -16,6 +16,7 @@ A static web application that provides detailed data and visualizations for Path
 - **Dataset Details**: View comprehensive dataset information including metadata, sources, input items, and output items
 - **Weight Calculations**: Calculate item weights using Maximum Likelihood Estimation (MLE)
 - **Bayesian Weight Estimates**: View Bayesian MCMC-based weight estimates with uncertainty quantification (posterior distributions, credible intervals) - runs entirely client-side
+- **Contribution Guide**: Learn how to contribute datasets with category-specific guidelines and quality requirements
 
 ## Tech Stack
 
@@ -108,6 +109,14 @@ Datasets are stored alongside category data in `public/data/{category}/dataset/`
 - `{category}/dataset/dataset1.json`, `dataset2.json`, etc. - Dataset files for each category
 - Example: `public/data/breachSplinter/dataset/dataset1.json`
 - Each dataset contains metadata (name, date, patch), sources, input items, and output items with weights
+
+### Contribution Guide Content
+
+Contribution guide content is stored in `public/data/contributions/`:
+- `index.json` - Metadata about which categories have specific guidelines
+- `generic.html` - Generic contribution guidelines (fallback for categories without specific content)
+- `categories/{categoryId}.html` - Category-specific contribution guidelines
+- Example: `public/data/contributions/categories/scarabs.html`
 
 ## Direct JSON Access
 

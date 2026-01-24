@@ -28,6 +28,37 @@ export async function renderSubmission(container, params = {}) {
   const title = createElement('h1', { textContent: 'Submit Item Data' });
   submissionSection.appendChild(title);
   
+  // Add contribution guide link
+  if (categoryId) {
+    const guideLink = createElement('a', {
+      href: `#/contributions/${categoryId}`,
+      textContent: '📖 View Contribution Guidelines',
+      className: 'contribution-guide-link',
+      style: 'display: inline-block; margin-bottom: 1rem; color: var(--poe-accent); text-decoration: none;'
+    });
+    guideLink.addEventListener('mouseenter', () => {
+      guideLink.style.textDecoration = 'underline';
+    });
+    guideLink.addEventListener('mouseleave', () => {
+      guideLink.style.textDecoration = 'none';
+    });
+    submissionSection.appendChild(guideLink);
+  } else {
+    const guideLink = createElement('a', {
+      href: '#/contributions',
+      textContent: '📖 View Contribution Guidelines',
+      className: 'contribution-guide-link',
+      style: 'display: inline-block; margin-bottom: 1rem; color: var(--poe-accent); text-decoration: none;'
+    });
+    guideLink.addEventListener('mouseenter', () => {
+      guideLink.style.textDecoration = 'underline';
+    });
+    guideLink.addEventListener('mouseleave', () => {
+      guideLink.style.textDecoration = 'none';
+    });
+    submissionSection.appendChild(guideLink);
+  }
+  
   // Always show category selector (allows changing category even after selection)
   const categorySelect = await createCategorySelector(categoryId);
   submissionSection.appendChild(categorySelect);

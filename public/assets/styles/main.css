@@ -3845,3 +3845,376 @@ input:focus, textarea:focus, select:focus {
     width: 100%;
   }
 }
+
+/* Contribution Guide Styles */
+.contributions {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contributions h1 {
+  margin-bottom: 2rem;
+  color: var(--poe-accent);
+}
+
+.contributions h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--poe-text);
+}
+
+.contributions .loading-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+}
+
+.contributions .retry-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--poe-accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.contributions .retry-button:hover {
+  background-color: var(--poe-accent-hover);
+}
+
+/* Contribution Overview */
+.contribution-overview {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+}
+
+.contribution-overview h1,
+.contribution-overview h2,
+.contribution-overview h3 {
+  color: var(--poe-text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.contribution-overview h1:first-child {
+  margin-top: 0;
+}
+
+.contribution-overview p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.contribution-overview ul,
+.contribution-overview ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contribution-overview li {
+  margin-bottom: 0.5rem;
+}
+
+.contribution-overview a {
+  color: var(--poe-accent);
+  text-decoration: none;
+}
+
+.contribution-overview a:hover {
+  text-decoration: underline;
+}
+
+.contribution-overview code {
+  background-color: var(--poe-darker-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+/* Category Guidelines List */
+.contribution-categories {
+  margin-bottom: 2rem;
+}
+
+.categories-description {
+  color: var(--poe-text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.category-guideline-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.category-guideline-item {
+  margin: 0;
+}
+
+.category-guideline-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  color: var(--poe-text);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.category-guideline-link:hover {
+  border-color: var(--poe-accent);
+  background-color: var(--poe-darker-bg);
+  color: var(--poe-accent);
+}
+
+.guideline-indicator {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.guideline-indicator.available {
+  color: #4caf50;
+}
+
+.guideline-indicator.generic {
+  color: var(--poe-text-dim);
+}
+
+/* Category-Specific Guide */
+.breadcrumbs {
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb-list {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+  content: '›';
+  margin-left: 0.5rem;
+  color: var(--poe-text-dim);
+}
+
+.breadcrumb-item a {
+  color: var(--poe-text);
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--poe-accent);
+}
+
+.breadcrumb-item.active {
+  color: var(--poe-text-dim);
+}
+
+.generic-content-banner {
+  padding: 1rem 1.5rem;
+  background-color: rgba(175, 96, 37, 0.2);
+  border: 1px solid var(--poe-accent);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.banner-text {
+  margin: 0;
+  color: var(--poe-text);
+}
+
+.contribution-content {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+}
+
+.contribution-content h1,
+.contribution-content h2,
+.contribution-content h3 {
+  color: var(--poe-text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.contribution-content h1:first-child {
+  margin-top: 0;
+}
+
+.contribution-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.contribution-content ul,
+.contribution-content ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contribution-content li {
+  margin-bottom: 0.5rem;
+}
+
+.contribution-content a {
+  color: var(--poe-accent);
+  text-decoration: none;
+}
+
+.contribution-content a:hover {
+  text-decoration: underline;
+}
+
+.contribution-content code {
+  background-color: var(--poe-darker-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.contribution-content pre {
+  background-color: var(--poe-darker-bg);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.contribution-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--poe-border);
+}
+
+.primary-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--poe-accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.primary-link:hover {
+  background-color: var(--poe-accent-hover);
+}
+
+.secondary-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--poe-dark-bg);
+  color: var(--poe-text);
+  text-decoration: none;
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.secondary-link:hover {
+  border-color: var(--poe-accent);
+  color: var(--poe-accent);
+}
+
+.back-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  color: var(--poe-text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--poe-text);
+}
+
+/* Category Contribution Guide (embedded in category view) */
+.category-contribution-guide {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 2px solid var(--poe-border);
+}
+
+.contribution-guide-header {
+  margin-bottom: 1.5rem;
+}
+
+.contribution-guide-title {
+  color: var(--poe-text);
+  margin: 0 0 1rem 0;
+  font-size: 1.75rem;
+}
+
+.contribution-submit-link-wrapper {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.contribution-submit-link {
+  display: inline-block;
+}
+
+/* Responsive adjustments for contributions */
+@media (max-width: 768px) {
+  .contributions {
+    padding: 1rem;
+  }
+
+  .category-guideline-list {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    flex-direction: column;
+  }
+
+  .primary-link,
+  .secondary-link,
+  .back-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .category-contribution-guide {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .contribution-guide-title {
+    font-size: 1.5rem;
+  }
+}
