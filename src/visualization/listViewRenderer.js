@@ -6,6 +6,7 @@
 import { createElement, clearElement } from '../utils/dom.js';
 import { loadItemIcon, getIconUrl } from '../utils/iconLoader.js';
 import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
+import { highlightGridItem } from './stashTabRenderer.js';
 
 /**
  * Render list view for items
@@ -424,6 +425,268 @@ async function renderRunegraftsView(container, items, categoryId) {
   await Promise.all(runegraftPromises);
   
   container.appendChild(gridContainer);
+}
+
+/**
+ * Format weight value for display in list view
+ * @param {Object} item - Item object with dropWeight and/or dropWeightMle
+ * @returns {string} Formatted weight string (e.g., "2.50%" or "N/A")
+ */
+export function formatWeightForDisplay(item) {
+  const weight = item.dropWeight ?? item.dropWeightMle;
+  if (weight === undefined) return 'N/A';
+  return (weight * 100).toFixed(2) + '%';
+}
+
+/**
+ * Create list view entry element
+ * @param {Object} item - Item object
+ * @param {string} categoryId - Category identifier
+ * @returns {HTMLElement} List entry element
+ */
+export function createListViewEntry(item, categoryId) {
+  const link = createElement('a', {
+    href: `#/category/${categoryId}/item/${item.id}`,
+    className: 'category-list-entry-link'
+  });
+  
+  const entry = createElement('div', { className: 'category-list-entry' });
+  
+  const name = createElement('span', {
+    className: 'category-list-entry-name',
+    textContent: item.name || item.id || 'Unknown Item'
+  });
+  
+  const weight = createElement('span', {
+    className: 'category-list-entry-weight',
+    textContent: formatWeightForDisplay(item)
+  });
+  
+  entry.appendChild(name);
+  entry.appendChild(weight);
+  link.appendChild(entry);
+  
+  // Add tooltip event handlers (same as grid view)
+  link.addEventListener('mouseenter', (e) => {
+    showTooltip(item, e.clientX, e.clientY, categoryId);
+    // Highlight corresponding item in grid view (fire and forget)
+    highlightGridItem(item.id).catch(() => {
+      // Ignore errors - highlighting is non-critical
+    });
+  });
+  
+  link.addEventListener('mousemove', (e) => {
+    updateTooltipPosition(e.clientX, e.clientY);
+  });
+  
+  link.addEventListener('mouseleave', () => {
+    hideTooltip();
+    // Clear highlight in grid view (fire and forget)
+    highlightGridItem(null).catch(() => {
+      // Ignore errors - highlighting is non-critical
+    });
+  });
+  
+  return link;
+}
+
+/**
+ * Get weight value for sorting (Bayesian preferred, MLE fallback)
+ * @param {Object} item - Item object with dropWeight and/or dropWeightMle
+ * @returns {number} Weight value or -1 if not available (for sorting to end)
+ */
+function getWeightForSorting(item) {
+  const weight = item.dropWeight ?? item.dropWeightMle;
+  return weight !== undefined ? weight : -1;
+}
+
+/**
+ * Sort items by weight descending (highest first)
+ * @param {Array<Object>} items - Array of items
+ * @returns {Array<Object>} Sorted items
+ */
+function sortByWeightDescending(items) {
+  return [...items].sort((a, b) => {
+    const weightA = getWeightForSorting(a);
+    const weightB = getWeightForSorting(b);
+    
+    // Both have weights: sort descending
+    if (weightA >= 0 && weightB >= 0) {
+      return weightB - weightA;
+    }
+    
+    // Only A has weight: A comes first
+    if (weightA >= 0 && weightB < 0) {
+      return -1;
+    }
+    
+    // Only B has weight: B comes first
+    if (weightA < 0 && weightB >= 0) {
+      return 1;
+    }
+    
+    // Neither has weight: maintain original order
+    return 0;
+  });
+}
+
+/**
+ * Sort items by weight ascending (lowest first)
+ * @param {Array<Object>} items - Array of items
+ * @returns {Array<Object>} Sorted items
+ */
+function sortByWeightAscending(items) {
+  return [...items].sort((a, b) => {
+    const weightA = getWeightForSorting(a);
+    const weightB = getWeightForSorting(b);
+    
+    // Both have weights: sort ascending
+    if (weightA >= 0 && weightB >= 0) {
+      return weightA - weightB;
+    }
+    
+    // Only A has weight: A comes first
+    if (weightA >= 0 && weightB < 0) {
+      return -1;
+    }
+    
+    // Only B has weight: B comes first
+    if (weightA < 0 && weightB >= 0) {
+      return 1;
+    }
+    
+    // Neither has weight: maintain original order
+    return 0;
+  });
+}
+
+/**
+ * Sort items by name A-Z
+ * @param {Array<Object>} items - Array of items
+ * @returns {Array<Object>} Sorted items
+ */
+function sortByNameAscending(items) {
+  return [...items].sort((a, b) => {
+    const nameA = (a.name || a.id || '').toLowerCase();
+    const nameB = (b.name || b.id || '').toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+}
+
+/**
+ * Sort items by name Z-A
+ * @param {Array<Object>} items - Array of items
+ * @returns {Array<Object>} Sorted items
+ */
+function sortByNameDescending(items) {
+  return [...items].sort((a, b) => {
+    const nameA = (a.name || a.id || '').toLowerCase();
+    const nameB = (b.name || b.id || '').toLowerCase();
+    return nameB.localeCompare(nameA);
+  });
+}
+
+/**
+ * Sort items based on sort option
+ * @param {Array<Object>} items - Array of items
+ * @param {string} sortOption - Sort option: 'weight-desc' | 'weight-asc' | 'name-asc' | 'name-desc'
+ * @returns {Array<Object>} Sorted items
+ */
+function sortItems(items, sortOption) {
+  switch (sortOption) {
+    case 'weight-desc':
+      return sortByWeightDescending(items);
+    case 'weight-asc':
+      return sortByWeightAscending(items);
+    case 'name-asc':
+      return sortByNameAscending(items);
+    case 'name-desc':
+      return sortByNameDescending(items);
+    default:
+      return sortByWeightDescending(items); // Default to weight descending
+  }
+}
+
+/**
+ * Create sort control dropdown
+ * @param {string} currentSort - Current sort option
+ * @param {Function} onSortChange - Callback when sort changes
+ * @returns {HTMLElement} Sort control element
+ */
+function createSortControl(currentSort, onSortChange) {
+  const sortWrapper = createElement('div', { className: 'category-list-sort-wrapper' });
+  
+  const sortLabel = createElement('label', {
+    textContent: 'Sort by:',
+    className: 'category-list-sort-label',
+    htmlFor: 'category-list-sort-select'
+  });
+  
+  const sortSelect = createElement('select', {
+    id: 'category-list-sort-select',
+    className: 'category-list-sort-select'
+  });
+  
+  const sortOptions = [
+    { value: 'weight-desc', label: 'Weight (High to Low)' },
+    { value: 'weight-asc', label: 'Weight (Low to High)' },
+    { value: 'name-asc', label: 'Name (A-Z)' },
+    { value: 'name-desc', label: 'Name (Z-A)' }
+  ];
+  
+  sortOptions.forEach(option => {
+    const optionElement = createElement('option', {
+      value: option.value,
+      textContent: option.label,
+      selected: option.value === currentSort
+    });
+    sortSelect.appendChild(optionElement);
+  });
+  
+  sortSelect.addEventListener('change', (e) => {
+    onSortChange(e.target.value);
+  });
+  
+  sortWrapper.appendChild(sortLabel);
+  sortWrapper.appendChild(sortSelect);
+  
+  return sortWrapper;
+}
+
+/**
+ * Render list view with item names and weights for grid categories
+ * @param {HTMLElement} container - Container element to render into
+ * @param {Array<Object>} items - Array of item objects with name, id, dropWeight, dropWeightMle
+ * @param {string} categoryId - Category identifier
+ * @param {string} sortOption - Sort option: 'weight-desc' | 'weight-asc' | 'name-asc' | 'name-desc'
+ * @param {Function} onSortChange - Optional callback when sort changes
+ * @returns {Promise<void>} Resolves when rendering is complete
+ */
+export async function renderListViewWithWeights(container, items, categoryId, sortOption = 'weight-desc', onSortChange = null) {
+  clearElement(container);
+  
+  if (!items || items.length === 0) {
+    renderEmptyState(container, categoryId);
+    return;
+  }
+  
+  // Create sort control if callback is provided
+  if (onSortChange) {
+    const sortControl = createSortControl(sortOption, onSortChange);
+    container.appendChild(sortControl);
+  }
+  
+  // Sort items based on sort option
+  const sortedItems = sortItems(items, sortOption);
+  
+  const listView = createElement('div', { className: 'category-list-view' });
+  
+  for (const item of sortedItems) {
+    const entry = createListViewEntry(item, categoryId);
+    listView.appendChild(entry);
+  }
+  
+  container.appendChild(listView);
 }
 
 /**

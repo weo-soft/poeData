@@ -57,6 +57,12 @@ const itemToCellMap = new Map();
 let highlightedItemId = null;
 let highlightedItemIds = new Set(); // Set of item IDs to highlight (for filtered items)
 
+// Store references for re-rendering when highlight changes from list view
+let currentCanvas = null;
+let currentItems = null;
+let currentCategoryId = null;
+let currentGridType = null; // 'category' | 'simple' | 'scarab'
+
 /**
  * Render stash tab with items
  * @param {HTMLCanvasElement} canvas - Canvas element to render into
@@ -65,6 +71,11 @@ let highlightedItemIds = new Set(); // Set of item IDs to highlight (for filtere
  * @param {Set<string>} filteredItemIds - Optional set of item IDs to highlight (for filtered items)
  */
 export async function renderStashTab(canvas, items, categoryId, filteredItemIds = null) {
+  // Store references for re-rendering when highlight changes from list view
+  currentCanvas = canvas;
+  currentItems = items;
+  currentCategoryId = categoryId;
+  
   // Store filtered item IDs for highlighting
   if (filteredItemIds) {
     highlightedItemIds = filteredItemIds;
@@ -74,16 +85,42 @@ export async function renderStashTab(canvas, items, categoryId, filteredItemIds 
   
   // For scarabs, use the grid-based approach with base image (backward compatibility)
   if (categoryId === 'scarabs') {
+    currentGridType = 'scarab';
     await renderScarabGrid(canvas, items);
   } else {
     // Check if category has grid configuration
     const gridConfig = getGridConfig(categoryId);
     if (gridConfig) {
+      currentGridType = 'category';
       // Use category-specific grid rendering
       await renderCategoryGrid(canvas, items, categoryId, gridConfig);
     } else {
+      currentGridType = 'simple';
       // For categories without grid config, use simple grid layout
       await renderSimpleGrid(canvas, items, categoryId);
+    }
+  }
+}
+
+/**
+ * Highlight an item in the grid view (called from list view)
+ * @param {string|null} itemId - Item ID to highlight, or null to clear highlight
+ */
+export async function highlightGridItem(itemId) {
+  if (highlightedItemId === itemId) {
+    return; // No change needed
+  }
+  
+  highlightedItemId = itemId;
+  
+  // Re-render the grid with the new highlight
+  if (currentCanvas && currentItems && currentCategoryId) {
+    if (currentGridType === 'category' || currentGridType === 'scarab') {
+      // For category grids, use renderGrid
+      renderGrid(currentCanvas, currentItems, currentCategoryId);
+    } else if (currentGridType === 'simple') {
+      // For simple grids, re-render the entire grid (async)
+      await renderSimpleGrid(currentCanvas, currentItems, currentCategoryId);
     }
   }
 }
@@ -989,7 +1026,8 @@ async function renderSimpleGrid(canvas, items, categoryId) {
     const y = padding + row * (itemSize + itemSpacing);
     
     const isFiltered = highlightedItemIds.has(item.id);
-    drawItemSlot(finalCtx, x, y, itemSize, item, categoryId, isFiltered);
+    const isHovered = highlightedItemId === item.id;
+    drawItemSlot(finalCtx, x, y, itemSize, item, categoryId, isFiltered, isHovered);
   });
   
   // Add click handler
@@ -1016,14 +1054,20 @@ async function renderSimpleGrid(canvas, items, categoryId) {
  * @param {Object} item - Item object
  * @param {string} categoryId - Category identifier
  * @param {boolean} isFiltered - Whether this item matches the filter
+ * @param {boolean} isHovered - Whether this item is hovered (from list view)
  */
-function drawItemSlot(ctx, x, y, size, item, _categoryId, isFiltered = false) {
+function drawItemSlot(ctx, x, y, size, item, _categoryId, isFiltered = false, isHovered = false) {
   // Item slot background
   ctx.fillStyle = '#2a2a2a';
   ctx.fillRect(x, y, size, size);
   
-  // Item slot border - highlight if filtered
-  if (isFiltered) {
+  // Item slot border - highlight if hovered (stronger) or filtered
+  if (isHovered) {
+    // Hover highlight (gold, more prominent)
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = 3;
+  } else if (isFiltered) {
+    // Filter highlight (lighter gold/yellow, less prominent)
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = 2;
   } else {
@@ -1032,8 +1076,13 @@ function drawItemSlot(ctx, x, y, size, item, _categoryId, isFiltered = false) {
   }
   ctx.strokeRect(x, y, size, size);
   
-  // Add highlight overlay if filtered
-  if (isFiltered) {
+  // Add highlight overlay if hovered or filtered
+  if (isHovered) {
+    // Hover highlight (more prominent)
+    ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
+    ctx.fillRect(x, y, size, size);
+  } else if (isFiltered) {
+    // Filter highlight (less prominent)
     ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
     ctx.fillRect(x, y, size, size);
   }
