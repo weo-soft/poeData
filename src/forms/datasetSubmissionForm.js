@@ -23,6 +23,7 @@ export class DatasetSubmissionForm {
     // Form state
     this.name = '';
     this.description = '';
+    this.author = '';
     this.date = null; // Will default to current date if not provided
     this.sources = []; // Array of {name, url, author}
     this.selectedInputItems = []; // Array of item IDs
@@ -40,6 +41,13 @@ export class DatasetSubmissionForm {
    * @returns {Promise<void>}
    */
   async loadItems() {
+    if (!this.categoryId) {
+      // No category selected, skip loading items
+      this.items = [];
+      this.loading = false;
+      return;
+    }
+    
     this.loading = true;
     try {
       this.items = await loadCategoryData(this.categoryId);
@@ -87,6 +95,10 @@ export class DatasetSubmissionForm {
       dataset.description = this.description;
     }
 
+    if (this.author && this.author.trim()) {
+      dataset.author = this.author.trim();
+    }
+
     if (this.date) {
       dataset.date = this.date;
     } else {
@@ -108,6 +120,48 @@ export class DatasetSubmissionForm {
     }
 
     return dataset;
+  }
+
+  /**
+   * Check if the form has any entered values
+   * @returns {boolean} True if form has any values entered
+   */
+  hasEnteredValues() {
+    // Check name
+    if (this.name && this.name.trim()) {
+      return true;
+    }
+    
+    // Check description
+    if (this.description && this.description.trim()) {
+      return true;
+    }
+    
+    // Check author
+    if (this.author && this.author.trim()) {
+      return true;
+    }
+    
+    // Check sources
+    if (this.sources.length > 0) {
+      return true;
+    }
+    
+    // Check input items
+    if (this.selectedInputItems.length > 0) {
+      return true;
+    }
+    
+    // Check output item counts (any count > 0)
+    const hasItemCounts = Object.values(this.itemCounts).some(count => {
+      const numCount = Number(count);
+      return !isNaN(numCount) && numCount > 0;
+    });
+    if (hasItemCounts) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
@@ -194,8 +248,9 @@ export class DatasetSubmissionForm {
   /**
    * Render form UI into container
    * @param {HTMLElement} container - Container element to render into
+   * @param {HTMLElement} [categorySelector] - Optional category selector element to insert after Sources section
    */
-  render(container) {
+  render(container, categorySelector = null) {
     clearElement(container);
     
     const formElement = createElement('form', {
@@ -211,13 +266,22 @@ export class DatasetSubmissionForm {
     const sourcesSection = this.renderSourcesSection();
     formElement.appendChild(sourcesSection);
 
-    // Input Items Section
-    const inputItemsSection = this.renderInputItemsSection();
-    formElement.appendChild(inputItemsSection);
+    // Category Selector (inserted after Sources section)
+    if (categorySelector) {
+      formElement.appendChild(categorySelector);
+    }
 
-    // Output Items Section
-    const outputItemsSection = this.renderOutputItemsSection();
-    formElement.appendChild(outputItemsSection);
+    // Input Items Section (only show if category is selected)
+    if (this.categoryId && this.items.length > 0) {
+      const inputItemsSection = this.renderInputItemsSection();
+      formElement.appendChild(inputItemsSection);
+    }
+
+    // Output Items Section (only show if category is selected)
+    if (this.categoryId && this.items.length > 0) {
+      const outputItemsSection = this.renderOutputItemsSection();
+      formElement.appendChild(outputItemsSection);
+    }
 
     // Submit Button
     const submitSection = this.renderSubmitSection();
@@ -320,6 +384,49 @@ export class DatasetSubmissionForm {
     descGroup.appendChild(descTextarea);
     descGroup.appendChild(descHelp);
     section.appendChild(descGroup);
+
+    // Author field
+    const authorGroup = createElement('div', { className: 'form-group' });
+    const authorLabel = createElement('label', {
+      textContent: 'Author',
+      htmlFor: 'dataset-author'
+    });
+    const authorInput = createElement('input', {
+      type: 'text',
+      id: 'dataset-author',
+      className: 'form-input',
+      value: this.author,
+      placeholder: 'Enter author name (optional)',
+      'aria-describedby': 'dataset-author-help',
+      inputmode: 'text'
+    });
+    authorInput.addEventListener('input', (e) => {
+      this.author = e.target.value;
+      this.validateField('author');
+    });
+    const authorHelp = createElement('div', {
+      id: 'dataset-author-help',
+      className: 'field-help',
+      textContent: 'Optional: Name of the person who created this dataset (max 100 characters)'
+    });
+    authorGroup.appendChild(authorLabel);
+    authorGroup.appendChild(authorInput);
+    authorGroup.appendChild(authorHelp);
+    if (this.validationErrors.author) {
+      const errorMsg = createElement('div', {
+        className: 'field-error',
+        id: 'dataset-author-error',
+        role: 'alert',
+        'aria-live': 'polite',
+        textContent: this.validationErrors.author
+      });
+      authorInput.setAttribute('aria-invalid', 'true');
+      authorInput.setAttribute('aria-describedby', 'dataset-author-help dataset-author-error');
+      authorGroup.appendChild(errorMsg);
+    } else {
+      authorInput.setAttribute('aria-invalid', 'false');
+    }
+    section.appendChild(authorGroup);
 
     // Date field
     const dateGroup = createElement('div', { className: 'form-group' });
@@ -642,11 +749,10 @@ export class DatasetSubmissionForm {
 
       const countCell = createElement('td');
       const countInput = createElement('input', {
-        type: 'number',
+        type: 'text',
         inputmode: 'numeric',
+        pattern: '[0-9]*',
         className: 'form-input count-input',
-        min: '0',
-        step: '1',
         value: this.itemCounts[item.id] || '',
         placeholder: '0',
         'aria-label': `Count for ${item.name || item.id}`,
@@ -658,8 +764,32 @@ export class DatasetSubmissionForm {
       } else {
         countInput.setAttribute('aria-invalid', 'false');
       }
+      
+      // Use beforeinput event (modern API) to prevent non-numeric input
+      countInput.addEventListener('beforeinput', (e) => {
+        // Allow control/command keys (backspace, delete, select all, etc.)
+        if (e.inputType === 'deleteContentBackward' || 
+            e.inputType === 'deleteContentForward' || 
+            e.inputType === 'deleteByDrag' ||
+            e.inputType === 'deleteByCut') {
+          return; // Allow deletion
+        }
+        
+        // Check if the input data contains non-numeric characters
+        if (e.data && !/^\d+$/.test(e.data)) {
+          e.preventDefault(); // Prevent non-numeric input
+        }
+      });
+      
+      // Fallback: Filter input to only allow numeric characters
+      // This handles cases where beforeinput isn't supported or other input methods
       countInput.addEventListener('input', (e) => {
-        this.setItemCount(item.id, e.target.value);
+        // Remove any non-numeric characters
+        const numericValue = e.target.value.replace(/[^0-9]/g, '');
+        if (e.target.value !== numericValue) {
+          e.target.value = numericValue;
+        }
+        this.setItemCount(item.id, numericValue);
         this.validateField(`item-${item.id}-count`);
         // Update validation display after field validation
         this.updateValidationDisplay();
@@ -902,6 +1032,18 @@ export class DatasetSubmissionForm {
       } else {
         // Empty name is valid (optional field)
         delete this.validationErrors.name;
+      }
+    } else if (fieldName === 'author') {
+      // Author is optional, but if provided, must be valid
+      if (this.author && this.author.trim().length > 0) {
+        if (this.author.length > 100) {
+          this.validationErrors.author = 'Author name must be 100 characters or less';
+        } else {
+          delete this.validationErrors.author;
+        }
+      } else {
+        // Empty author is valid (optional field)
+        delete this.validationErrors.author;
       }
     } else if (fieldName === 'date' && this.date) {
       const dateRegex = /^\d{4}-\d{2}-\d{2}$/;

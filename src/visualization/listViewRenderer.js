@@ -382,6 +382,44 @@ async function renderTattooCard(container, tattoo, categoryId) {
   });
   nameContainer.appendChild(itemName);
   
+  // Add jobs for contracts
+  if (categoryId === 'contracts' && tattoo.jobs && Array.isArray(tattoo.jobs) && tattoo.jobs.length > 0) {
+    const jobsContainer = createElement('div', {
+      className: 'contract-card-jobs'
+    });
+    tattoo.jobs.forEach(job => {
+      // Handle both old format (string) and new format (object with name and id)
+      const jobName = typeof job === 'string' ? job : job.name;
+      const jobId = typeof job === 'string' ? job.toLowerCase().replace(/\s+/g, '-') : job.id;
+      
+      const jobItem = createElement('div', {
+        className: 'contract-card-job'
+      });
+      
+      // Add job icon
+      const jobIcon = createElement('img', {
+        className: 'contract-card-job-icon',
+        src: `/assets/images/contracts/${jobId}-job.png`,
+        alt: jobName,
+        onerror: function() {
+          // Hide icon if it fails to load
+          this.style.display = 'none';
+        }
+      });
+      
+      // Add job name
+      const jobNameSpan = createElement('span', {
+        className: 'contract-card-job-name',
+        textContent: jobName
+      });
+      
+      jobItem.appendChild(jobIcon);
+      jobItem.appendChild(jobNameSpan);
+      jobsContainer.appendChild(jobItem);
+    });
+    nameContainer.appendChild(jobsContainer);
+  }
+  
   // Assemble card
   cardLink.appendChild(iconContainer);
   cardLink.appendChild(nameContainer);
@@ -451,9 +489,9 @@ async function renderContractsView(container, items, categoryId) {
     return;
   }
   
-  // Create grid container for contracts (similar to tattoos/runegrafts)
+  // Create grid container for contracts (4 columns for wider cards)
   const gridContainer = createElement('div', {
-    className: 'tattoo-grid-container'
+    className: 'contract-grid-container'
   });
   
   // Render each contract as a card
@@ -494,6 +532,16 @@ export function filterContracts(contracts, searchQuery) {
     if (contract.helpText) {
       if (contract.helpText.toLowerCase().includes(query)) {
         return true;
+      }
+    }
+    
+    // Search in jobs (handle both string and object format)
+    if (contract.jobs && Array.isArray(contract.jobs)) {
+      for (const job of contract.jobs) {
+        const jobName = typeof job === 'string' ? job : job.name;
+        if (jobName && jobName.toLowerCase().includes(query)) {
+          return true;
+        }
       }
     }
     

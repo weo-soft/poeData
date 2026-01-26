@@ -132,11 +132,11 @@ Datasets are stored alongside category data in `public/data/{category}/dataset/`
 
 ### Contribution Guide Content
 
-Contribution guide content is stored in `public/data/contributions/`:
+Contribution guide content is stored in `public/contributions/`:
 - `index.json` - Metadata about which categories have specific guidelines
 - `generic.html` - Generic contribution guidelines (fallback for categories without specific content)
 - `categories/{categoryId}.html` - Category-specific contribution guidelines
-- Example: `public/data/contributions/categories/scarabs.html`
+- Example: `public/contributions/categories/scarabs.html`
 
 ## Direct JSON Access
 

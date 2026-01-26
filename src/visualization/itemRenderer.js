@@ -93,6 +93,8 @@ export async function renderItemDetails(container, item, categoryId) {
     renderScarabAttributes(container, item);
   } else if (categoryId === 'divination-cards') {
     renderDivinationCardAttributes(container, item);
+  } else if (categoryId === 'contracts') {
+    renderContractAttributes(container, item);
   } else {
     // Generic rendering for new categories and unknown attributes
     renderGenericAttributes(container, item, categoryId);
@@ -136,6 +138,70 @@ function renderScarabAttributes(container, item) {
       textContent: item.description,
       className: 'description-text'
     });
+    list.appendChild(dt);
+    list.appendChild(dd);
+  }
+  
+  section.appendChild(list);
+  container.appendChild(section);
+}
+
+/**
+ * Render contract-specific attributes
+ * @param {HTMLElement} container - Container element
+ * @param {Object} item - Item object
+ */
+function renderContractAttributes(container, item) {
+  const section = createElement('div', { className: 'item-section contract-attributes' });
+  const title = createElement('h2', { textContent: 'Contract Attributes' });
+  section.appendChild(title);
+  
+  const list = createElement('dl', { className: 'attribute-list' });
+  
+  if (item.stackSize !== undefined) {
+    addAttribute(list, 'Stack Size', item.stackSize);
+  }
+  
+  if (item.helpText) {
+    addAttribute(list, 'Help Text', item.helpText);
+  }
+  
+  // Render jobs with icons
+  if (item.jobs && Array.isArray(item.jobs) && item.jobs.length > 0) {
+    const dt = createElement('dt', { textContent: 'Jobs' });
+    const dd = createElement('dd');
+    const jobsList = createElement('ul', { className: 'contract-jobs-list' });
+    
+    item.jobs.forEach(job => {
+      // Handle both old format (string) and new format (object with name and id)
+      const jobName = typeof job === 'string' ? job : job.name;
+      const jobId = typeof job === 'string' ? job.toLowerCase().replace(/\s+/g, '-') : job.id;
+      
+      const jobItem = createElement('li', { className: 'contract-job-item' });
+      
+      // Add job icon
+      const jobIcon = createElement('img', {
+        className: 'contract-job-icon',
+        src: `/assets/images/contracts/${jobId}-job.png`,
+        alt: jobName,
+        onerror: function() {
+          // Hide icon if it fails to load
+          this.style.display = 'none';
+        }
+      });
+      
+      // Add job name
+      const jobNameSpan = createElement('span', {
+        className: 'contract-job-name',
+        textContent: jobName
+      });
+      
+      jobItem.appendChild(jobIcon);
+      jobItem.appendChild(jobNameSpan);
+      jobsList.appendChild(jobItem);
+    });
+    
+    dd.appendChild(jobsList);
     list.appendChild(dt);
     list.appendChild(dd);
   }

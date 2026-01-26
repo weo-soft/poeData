@@ -39,7 +39,7 @@ describe('contributionContentLoader', () => {
       const result = await loadMetadata();
 
       expect(result).toEqual(mockMetadata);
-      expect(global.fetch).toHaveBeenCalledWith('/data/contributions/index.json');
+      expect(global.fetch).toHaveBeenCalledWith('/contributions/index.json');
       
       // Second call should use cache
       const result2 = await loadMetadata();
@@ -81,7 +81,7 @@ describe('contributionContentLoader', () => {
       expect(result.categoryId).toBe('generic');
       expect(result.html).toBe(mockHtml);
       expect(result.isGeneric).toBe(true);
-      expect(global.fetch).toHaveBeenCalledWith('/data/contributions/generic.html');
+      expect(global.fetch).toHaveBeenCalledWith('/contributions/generic.html');
     });
 
     it('should load category-specific content when available', async () => {
@@ -111,7 +111,7 @@ describe('contributionContentLoader', () => {
       expect(result.categoryId).toBe('scarabs');
       expect(result.html).toBe(mockHtml);
       expect(result.isGeneric).toBe(false);
-      expect(global.fetch).toHaveBeenCalledWith('/data/contributions/categories/scarabs.html');
+      expect(global.fetch).toHaveBeenCalledWith('/contributions/categories/scarabs.html');
     });
 
     it('should fallback to generic when category not available', async () => {
@@ -141,7 +141,7 @@ describe('contributionContentLoader', () => {
       expect(result.categoryId).toBe('generic');
       expect(result.html).toBe(mockHtml);
       expect(result.isGeneric).toBe(true);
-      expect(global.fetch).toHaveBeenCalledWith('/data/contributions/generic.html');
+      expect(global.fetch).toHaveBeenCalledWith('/contributions/generic.html');
     });
 
     it('should cache loaded content', async () => {

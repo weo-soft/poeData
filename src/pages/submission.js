@@ -59,63 +59,37 @@ export async function renderSubmission(container, params = {}) {
     submissionSection.appendChild(guideLink);
   }
   
-  // Always show category selector (allows changing category even after selection)
-  const categorySelect = await createCategorySelector(categoryId);
-  submissionSection.appendChild(categorySelect);
-
-  // Tabs for dataset submission and flexible submission (only show if category is selected)
-  if (categoryId) {
-    const tabsContainer = createElement('div', { className: 'submission-tabs' });
-    
-    const datasetTab = createElement('button', {
-      className: 'tab-button active',
-      textContent: 'Dataset Submission',
-      'data-tab': 'dataset'
-    });
-    datasetTab.addEventListener('click', () => switchTab('dataset', submissionSection));
-    
-    const flexibleTab = createElement('button', {
-      className: 'tab-button',
-      textContent: 'Flexible Submission',
-      'data-tab': 'flexible',
-      title: 'Submit dataset via file upload or link'
-    });
-    flexibleTab.addEventListener('click', () => {
-      const dialog = new FlexibleSubmissionDialog();
-      dialog.open();
-    });
-    
-    tabsContainer.appendChild(datasetTab);
-    tabsContainer.appendChild(flexibleTab);
-    submissionSection.appendChild(tabsContainer);
-    
-    // Tab content container
-    const tabContent = createElement('div', { className: 'tab-content', id: 'tab-content' });
-    submissionSection.appendChild(tabContent);
-    
-    // Render dataset submission form by default
-    await renderDatasetSubmission(tabContent, categoryId);
-  } else {
-    // Show message when no category is selected, but allow flexible submission
-    const messageDiv = createElement('div', {
-      className: 'category-selection-message',
-      textContent: 'Please select a category above to continue, or use Flexible Submission to submit without a category.'
-    });
-    submissionSection.appendChild(messageDiv);
-    
-    // Allow flexible submission even without category
-    const flexibleButton = createElement('button', {
-      className: 'btn btn-primary',
-      textContent: 'Open Flexible Submission',
-      type: 'button'
-    });
-    flexibleButton.addEventListener('click', () => {
-      const dialog = new FlexibleSubmissionDialog();
-      dialog.open();
-    });
-    messageDiv.appendChild(createElement('br'));
-    messageDiv.appendChild(flexibleButton);
-  }
+  // Always show tabs for dataset submission and flexible submission
+  const tabsContainer = createElement('div', { className: 'submission-tabs' });
+  
+  const datasetTab = createElement('button', {
+    className: 'tab-button active',
+    textContent: 'Dataset Submission',
+    'data-tab': 'dataset'
+  });
+  datasetTab.addEventListener('click', () => switchTab('dataset', submissionSection));
+  
+  const flexibleTab = createElement('button', {
+    className: 'tab-button',
+    textContent: 'File/Link Submission',
+    'data-tab': 'flexible',
+    title: 'Submit dataset via file upload or link'
+  });
+  flexibleTab.addEventListener('click', () => {
+    const dialog = new FlexibleSubmissionDialog();
+    dialog.open();
+  });
+  
+  tabsContainer.appendChild(datasetTab);
+  tabsContainer.appendChild(flexibleTab);
+  submissionSection.appendChild(tabsContainer);
+  
+  // Tab content container
+  const tabContent = createElement('div', { className: 'tab-content', id: 'tab-content' });
+  submissionSection.appendChild(tabContent);
+  
+  // Render dataset submission form by default (category selector will be inside the form)
+  await renderDatasetSubmission(tabContent, categoryId);
   
   // Navigation
   const navLinks = createElement('div', { className: 'nav-links' });
@@ -237,8 +211,27 @@ async function createCategorySelector(currentCategoryId = null) {
       select.insertBefore(clearOption, select.firstChild);
     }
     
-    select.addEventListener('change', (e) => {
+    select.addEventListener('change', async (e) => {
       const selectedValue = e.target.value;
+      
+      // Check if form has entered values before changing category
+      if (currentForm && currentForm.hasEnteredValues && currentForm.hasEnteredValues()) {
+        const message = 'Warning: Changing the category will clear all entered values including:\n' +
+          '• Name\n' +
+          '• Description\n' +
+          '• Sources\n' +
+          '• Input items\n' +
+          '• Output item counts\n\n' +
+          'Do you want to continue?';
+        const confirmed = window.confirm(message);
+        
+        if (!confirmed) {
+          // Reset select to previous value
+          select.value = currentCategoryId || '';
+          return;
+        }
+      }
+      
       if (selectedValue) {
         // Navigate to selected category
         window.location.hash = `#/submit/${selectedValue}`;
@@ -290,34 +283,52 @@ async function switchTab(tabName, container) {
 /**
  * Render dataset submission form
  * @param {HTMLElement} container - Container element
- * @param {string} categoryId - Category identifier
+ * @param {string} categoryId - Category identifier (can be null)
  */
 async function renderDatasetSubmission(container, categoryId) {
   currentForm = new DatasetSubmissionForm(categoryId);
   
   const formContainer = createElement('div', { className: 'dataset-submission-container' });
   
-  // Show loading state
-  const loadingDiv = createElement('div', {
-    className: 'loading-message',
-    textContent: 'Loading items...'
-  });
-  formContainer.appendChild(loadingDiv);
+  // Create a separate container for the form
+  const formWrapper = createElement('div', { className: 'dataset-submission-form-wrapper' });
+  formContainer.appendChild(formWrapper);
+  
+  // Show loading state only if category is selected
+  if (categoryId) {
+    const loadingDiv = createElement('div', {
+      className: 'loading-message',
+      textContent: 'Loading items...'
+    });
+    formWrapper.appendChild(loadingDiv);
+  }
+  
   container.appendChild(formContainer);
   
   try {
-    // Load items
-    await currentForm.loadItems();
+    // Load items only if category is selected
+    if (categoryId) {
+      await currentForm.loadItems();
+    }
     
-    // Remove loading message
-    clearElement(formContainer);
+    // Remove loading message if it exists
+    const loadingDiv = formWrapper.querySelector('.loading-message');
+    if (loadingDiv) {
+      loadingDiv.remove();
+    }
     
-    // Render the form
-    currentForm.render(formContainer);
+    // Create category selector to be inserted into the form
+    const categorySelect = await createCategorySelector(categoryId);
+    
+    // Render the form into the wrapper, passing the category selector
+    currentForm.render(formWrapper, categorySelect);
     
   } catch (error) {
-    clearElement(formContainer);
-    displayError(formContainer, `Failed to load items: ${error.message}`);
+    const loadingDiv = formWrapper.querySelector('.loading-message');
+    if (loadingDiv) {
+      loadingDiv.remove();
+    }
+    displayError(formWrapper, `Failed to load items: ${error.message}`);
   }
 }
 

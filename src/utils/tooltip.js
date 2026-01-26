@@ -102,6 +102,17 @@ function showTattooTooltip(tattoo, x, y) {
     content += `<div style="margin-bottom: 0.25rem; color: #888888; font-size: 0.85rem;"><span style="color: #d4d4d4;">Stack Size:</span> ${tattoo.stackSize}</div>`;
   }
   
+  // Jobs (for contracts)
+  if (tattoo.jobs && Array.isArray(tattoo.jobs) && tattoo.jobs.length > 0) {
+    content += `<div style="margin-top: 0.5rem; margin-bottom: 0.5rem;"><div style="color: #d4d4d4; font-size: 0.85rem; margin-bottom: 0.25rem;">Jobs:</div>`;
+    tattoo.jobs.forEach(job => {
+      // Handle both old format (string) and new format (object with name and id)
+      const jobName = typeof job === 'string' ? job : job.name;
+      content += `<div style="color: #888888; font-size: 0.85rem; margin-left: 0.5rem; margin-bottom: 0.15rem;">${jobName}</div>`;
+    });
+    content += `</div>`;
+  }
+  
   // Drop required (how to obtain)
   if (tattoo.dropRequired) {
     content += `<div style="margin-top: 0.5rem; color: #888888; font-size: 0.8rem; font-style: italic;">${tattoo.dropRequired}</div>`;

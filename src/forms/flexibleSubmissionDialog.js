@@ -173,7 +173,7 @@ export class FlexibleSubmissionDialog {
   renderHeader() {
     const header = createElement('div', { className: 'datasets-overlay-header' });
     const title = createElement('h2', {
-      textContent: 'Flexible Dataset Submission',
+      textContent: 'File/Link Submission',
       className: 'datasets-overlay-title',
       id: 'flexible-submission-dialog-title'
     });
@@ -705,7 +705,7 @@ export class FlexibleSubmissionDialog {
       textContent: this.isSubmitting ? 'Submitting...' : 'Submit',
       type: 'button',
       disabled: this.isSubmitting || !this.canSubmit(),
-      'aria-label': 'Submit flexible dataset submission'
+      'aria-label': 'Submit file/link submission'
     });
     submitButton.addEventListener('click', () => this.handleSubmit());
 

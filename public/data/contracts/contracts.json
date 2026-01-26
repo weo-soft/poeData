@@ -3,54 +3,130 @@
         "id": "contract-bunker",
         "name": "Contract: Bunker",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 48,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Agility", "id": "agility"},
+            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
+            {"name": "Engineering", "id": "engineering"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Lockpicking", "id": "lockpicking"},
+            {"name": "Perception", "id": "perception"},
+            {"name": "Trap disarmament", "id": "trap-disarmament"}
+        ]
     },
     {
         "id": "contract-underbelly",
         "name": "Contract: Underbelly",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 48,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Brute force", "id": "brute-force"},   
+            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Lockpicking", "id": "lockpicking"},
+            {"name": "Trap disarmament", "id": "trap-disarmament"}
+        ]
     },
     {
         "id": "contract-mansion",
         "name": "Contract: Mansion",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 50,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Agility", "id": "agility"},
+            {"name": "Brute force", "id": "brute-force"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Lockpicking", "id": "lockpicking"},
+            {"name": "Perception", "id": "perception"}
+        ]
     },
     {
         "id": "contract-records-office",
         "name": "Contract: Records Office",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 50,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Brute force", "id": "brute-force"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Perception", "id": "perception"},
+            {"name": "Trap disarmament", "id": "trap-disarmament"}
+        ]
     },
     {
         "id": "contract-smugglers-den",
         "name": "Contract: Smugglers Den",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 50,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Agility", "id": "agility"},
+            {"name": "Brute force", "id": "brute-force"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Engineering", "id": "engineering"}
+        ]
     },
     {
         "id": "contract-repository",
         "name": "Contract: Repository",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 55,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
+            {"name": "Engineering", "id": "engineering"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Perception", "id": "perception"}
+        ]
     },
     {
         "id": "contract-tunnels",
         "name": "Contract: Tunnels",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 55,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
+            {"name": "Deception", "id": "deception"},
+            {"name": "Engineering", "id": "engineering"},
+            {"name": "Lockpicking", "id": "lockpicking"},
+            {"name": "Perception", "id": "perception"}
+        ]
     },
     {
         "id": "contract-laboratory",
         "name": "Contract: Laboratory",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 60,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Agility", "id": "agility"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Lockpicking", "id": "lockpicking"},
+            {"name": "Perception", "id": "perception"},
+            {"name": "Trap disarmament", "id": "trap-disarmament"}
+        ]
     },
     {
         "id": "contract-prohibited-library",
         "name": "Contract: Prohibited Library",
         "stackSize": 1,
-        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+        "dropLevel": 60,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
+        "jobs": [
+            {"name": "Agility", "id": "agility"},
+            {"name": "Brute force", "id": "brute-force"},
+            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
+            {"name": "Demolition", "id": "demolition"},
+            {"name": "Engineering", "id": "engineering"},
+            {"name": "Trap disarmament", "id": "trap-disarmament"}
+        ]
     }
 ]

@@ -1192,6 +1192,35 @@ input:focus, textarea:focus, select:focus {
   color: var(--poe-text);
 }
 
+/* Contract jobs list on detail page */
+.contract-jobs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contract-job-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.contract-job-item:last-child {
+  margin-bottom: 0;
+}
+
+.contract-job-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.contract-job-name {
+  color: var(--poe-text);
+}
+
 .description-text,
 .flavour-text {
   white-space: pre-wrap;
@@ -2702,9 +2731,22 @@ input:focus, textarea:focus, select:focus {
   flex: 1;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 0.5rem;
+}
+
+/* Contract cards - align name and jobs to left */
+.contract-grid-container .tattoo-card-name-container {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.contract-grid-container .tattoo-card-name {
+  width: 100%;
+  text-align: left;
 }
 
 .tattoo-card-name {
@@ -2714,6 +2756,49 @@ input:focus, textarea:focus, select:focus {
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.3;
+}
+
+/* Contract grid container - 4 columns for wider cards */
+.contract-grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Contract cards - wider than tattoo cards */
+.contract-grid-container .tattoo-card {
+  min-width: 200px;
+  width: 100%;
+}
+
+/* Contract card jobs display */
+.contract-card-jobs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.contract-card-job {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  color: var(--poe-text-dim);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.contract-card-job-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Responsive styles for tattoo grid */
@@ -2738,6 +2823,25 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 400px) {
   .tattoo-grid-container {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive styles for contract grid */
+@media (max-width: 1200px) {
+  .contract-grid-container {
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .contract-grid-container {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .contract-grid-container {
+    grid-template-columns: minmax(200px, 1fr);
   }
 }
 

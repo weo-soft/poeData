@@ -33,7 +33,7 @@ export class ContentLoadError extends Error {
 /**
  * Load contribution guide metadata (which categories have specific guidelines)
  * 
- * Fetches the metadata file from `/data/contributions/index.json` which contains
+ * Fetches the metadata file from `/contributions/index.json` which contains
  * information about which categories have specific contribution guidelines available.
  * Results are cached in memory for subsequent calls.
  * 
@@ -60,7 +60,7 @@ export async function loadMetadata() {
   }
 
   try {
-    const response = await fetch('/data/contributions/index.json');
+    const response = await fetch('/contributions/index.json');
     
     if (!response.ok) {
       throw new ContentLoadError(
@@ -134,7 +134,7 @@ export async function loadContent(categoryId) {
     
     // If categoryId is null, load generic content
     if (categoryId === null) {
-      const response = await fetch('/data/contributions/generic.html');
+      const response = await fetch('/contributions/generic.html');
       if (!response.ok) {
         throw new ContentLoadError(
           `Failed to load generic content: ${response.statusText}`,
@@ -152,13 +152,13 @@ export async function loadContent(categoryId) {
       if (categoryInfo?.available) {
         // Try to load category-specific content
         try {
-          const response = await fetch(`/data/contributions/categories/${categoryId}.html`);
+          const response = await fetch(`/contributions/categories/${categoryId}.html`);
           if (response.ok) {
             html = await response.text();
             isGeneric = false;
           } else {
             // Category file not found, fallback to generic
-            const genericResponse = await fetch('/data/contributions/generic.html');
+            const genericResponse = await fetch('/contributions/generic.html');
             if (!genericResponse.ok) {
               throw new ContentLoadError(
                 `Failed to load generic fallback: ${genericResponse.statusText}`,
@@ -172,7 +172,7 @@ export async function loadContent(categoryId) {
           }
         } catch (error) {
           // Network error loading category file, try generic fallback
-          const genericResponse = await fetch('/data/contributions/generic.html');
+          const genericResponse = await fetch('/contributions/generic.html');
           if (!genericResponse.ok) {
             throw new ContentLoadError(
               `Failed to load generic fallback: ${genericResponse.statusText}`,
@@ -186,7 +186,7 @@ export async function loadContent(categoryId) {
         }
       } else {
         // Category not available, load generic
-        const response = await fetch('/data/contributions/generic.html');
+        const response = await fetch('/contributions/generic.html');
         if (!response.ok) {
           throw new ContentLoadError(
             `Failed to load generic content: ${response.statusText}`,
