@@ -329,3 +329,51 @@ export async function sendFlexibleSubmission(submissionData) {
   }
 }
 
+/**
+ * Send contact form submission via EmailJS
+ * @param {Object} contactData - Contact form data
+ * @param {string} contactData.name - Sender's name
+ * @param {string} contactData.email - Sender's email
+ * @param {string} contactData.subject - Message subject
+ * @param {string} contactData.message - Message content
+ * @returns {Promise<Object>} EmailJS response with success status and messageId
+ * @throws {Error} If EmailJS is not configured or submission fails
+ */
+export async function sendContactForm(contactData) {
+  if (!isEmailJSConfigured()) {
+    const missing = [];
+    if (!EMAILJS_SERVICE_ID) missing.push('VITE_EMAILJS_SERVICE_ID');
+    if (!EMAILJS_PUBLIC_KEY) missing.push('VITE_EMAILJS_PUBLIC_KEY');
+    if (!EMAILJS_TEMPLATE_ID) missing.push('VITE_EMAILJS_TEMPLATE_ID');
+    
+    const errorMsg = missing.length > 0
+      ? `EmailJS is not configured. Missing required variables in .env.local: ${missing.join(', ')}. Please ensure all variables are prefixed with VITE_ and restart the dev server.`
+      : 'EmailJS is not configured. Please set up EmailJS credentials in .env.local';
+    throw new Error(errorMsg);
+  }
+
+  try {
+    const templateParams = {
+      from_name: contactData.name || 'Anonymous',
+      from_email: contactData.email || 'noreply@poedata.dev',
+      subject: contactData.subject || 'Contact Form Submission',
+      message: contactData.message || '',
+      timestamp: new Date().toISOString()
+    };
+
+    const response = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams
+    );
+
+    return {
+      success: true,
+      messageId: response.text,
+      status: response.status
+    };
+  } catch (error) {
+    console.error('EmailJS send error:', error);
+    throw new Error(`Failed to send email: ${error.text || error.message}`);
+  }
+}

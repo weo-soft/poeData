@@ -1467,6 +1467,40 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 1rem;
 }
 
+/* Contact Form Styles */
+.contact {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact h1 {
+  margin-bottom: 1rem;
+  color: var(--poe-accent);
+}
+
+.contact-description {
+  margin-bottom: 2rem;
+  color: var(--poe-text-dim);
+  line-height: 1.6;
+}
+
+.contact-form {
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.contact-messages {
+  margin-top: 1.5rem;
+}
+
+.contact-messages .success-message {
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
 .error-message h2 {
   color: #ff6666;
   margin-bottom: 1rem;

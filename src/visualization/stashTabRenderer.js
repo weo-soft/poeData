@@ -132,15 +132,9 @@ export async function highlightGridItem(itemId) {
  */
 async function renderScarabGrid(canvas, items) {
   try {
-    // Load base image - try public first, then src
-    let baseImagePath = '/assets/images/Scarab-tab.png';
-    try {
-      baseImage = await loadImage(baseImagePath);
-    } catch (e) {
-      // Fallback to src path
-      baseImagePath = '/src/assets/images/Scarab-tab.png';
-      baseImage = await loadImage(baseImagePath);
-    }
+    // Load base image
+    const baseImagePath = '/assets/images/Scarab-tab.png';
+    baseImage = await loadImage(baseImagePath);
     
     // Setup canvas to match image dimensions
     setupCanvas(canvas, baseImage.width, baseImage.height);
@@ -185,20 +179,13 @@ async function renderCategoryGrid(canvas, items, categoryId, gridConfig) {
       tabImage = tabImageCache.get(categoryId);
       baseImage = tabImage;
     } else {
-      // Load base image - try public first, then src
+      // Load base image
       const tabImagePath = getCategoryTabImage(categoryId);
       if (!tabImagePath) {
         throw new Error(`No tab image path found for category: ${categoryId}`);
       }
       
-      let baseImagePath = tabImagePath;
-      try {
-        tabImage = await loadImage(baseImagePath);
-      } catch (e) {
-        // Fallback to src path
-        baseImagePath = tabImagePath.replace('/assets/', '/src/assets/');
-        tabImage = await loadImage(baseImagePath);
-      }
+      tabImage = await loadImage(tabImagePath);
       
       // Cache the loaded image
       tabImageCache.set(categoryId, tabImage);
@@ -733,42 +720,23 @@ async function loadItemImage(item, categoryId) {
     if (!imageDir) {
       // Fallback to scarabs for backward compatibility
       const fallbackPath = `/assets/images/scarabs/${item.id}.png`;
-      try {
-        const image = await loadImage(fallbackPath);
-        itemImageCache.set(cacheKey, image);
-        return image;
-      } catch (e) {
-        // Try src path
-        const srcPath = `/src/assets/images/scarabs/${item.id}.png`;
-        const image = await loadImage(srcPath);
-        itemImageCache.set(cacheKey, image);
-        return image;
-      }
+      const image = await loadImage(fallbackPath);
+      itemImageCache.set(cacheKey, image);
+      return image;
     }
     
     // For merged categories, try multiple directories
     const directoriesToTry = getImageDirectoriesForCategory(categoryId);
     
     for (const dir of directoriesToTry) {
-      // Try public path first, then src path
-      let imagePath = `${dir}${item.id}.png`;
-      let image;
+      const imagePath = `${dir}${item.id}.png`;
       try {
-        image = await loadImage(imagePath);
+        const image = await loadImage(imagePath);
         itemImageCache.set(cacheKey, image);
         return image;
       } catch (e) {
-        // Try src path
-        const srcImageDir = dir.replace('/assets/', '/src/assets/');
-        imagePath = `${srcImageDir}${item.id}.png`;
-        try {
-          image = await loadImage(imagePath);
-          itemImageCache.set(cacheKey, image);
-          return image;
-        } catch (e2) {
-          // Continue to next directory
-          continue;
-        }
+        // Continue to next directory
+        continue;
       }
     }
     

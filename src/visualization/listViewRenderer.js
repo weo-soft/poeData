@@ -35,6 +35,12 @@ export async function renderListView(container, items, categoryId) {
     return;
   }
   
+  // Special handling for contracts
+  if (categoryId === 'contracts') {
+    await renderContractsView(container, items, categoryId);
+    return;
+  }
+  
   // Create list container
   const listContainer = createElement('div', {
     className: 'list-view-container'
@@ -425,6 +431,74 @@ async function renderRunegraftsView(container, items, categoryId) {
   await Promise.all(runegraftPromises);
   
   container.appendChild(gridContainer);
+}
+
+/**
+ * Render contracts view with grid layout (similar to runegrafts)
+ * @param {HTMLElement} container - Container element to render into
+ * @param {Array} items - Array of contract items
+ * @param {string} categoryId - Category identifier
+ */
+async function renderContractsView(container, items, categoryId) {
+  // Show message if no contracts match filter
+  if (items.length === 0) {
+    const noResultsMessage = createElement('div', {
+      className: 'tattoos-no-results',
+      textContent: 'No contracts match your search.',
+      style: 'text-align: center; padding: 2rem; color: var(--poe-text-dim);'
+    });
+    container.appendChild(noResultsMessage);
+    return;
+  }
+  
+  // Create grid container for contracts (similar to tattoos/runegrafts)
+  const gridContainer = createElement('div', {
+    className: 'tattoo-grid-container'
+  });
+  
+  // Render each contract as a card
+  const contractPromises = items.map(contract => renderTattooCard(gridContainer, contract, categoryId));
+  await Promise.all(contractPromises);
+  
+  container.appendChild(gridContainer);
+}
+
+/**
+ * Filter contracts based on search query
+ * @param {Array} contracts - Array of contract items
+ * @param {string} searchQuery - Search query string
+ * @returns {Array} Filtered array of contracts
+ */
+export function filterContracts(contracts, searchQuery) {
+  if (!searchQuery || searchQuery.trim() === '') {
+    return contracts;
+  }
+  
+  const query = searchQuery.toLowerCase().trim();
+  
+  return contracts.filter(contract => {
+    // Search in name
+    if (contract.name && contract.name.toLowerCase().includes(query)) {
+      return true;
+    }
+    
+    // Search in description
+    if (contract.description) {
+      const cleanDescription = contract.description.replace(/<[^>]*>/g, '').toLowerCase();
+      if (cleanDescription.includes(query)) {
+        return true;
+      }
+    }
+    
+    // Search in helpText
+    if (contract.helpText) {
+      if (contract.helpText.toLowerCase().includes(query)) {
+        return true;
+      }
+    }
+    
+    return false;
+  });
 }
 
 /**

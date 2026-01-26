@@ -113,10 +113,20 @@ export async function createNavigation() {
   });
   submitItem.appendChild(submitLink);
   
+  // Contact link
+  const contactItem = createElement('li');
+  const contactLink = createElement('a', {
+    href: '#/contact',
+    textContent: 'Contact',
+    className: 'nav-link'
+  });
+  contactItem.appendChild(contactLink);
+  
   navList.appendChild(homeItem);
   navList.appendChild(categoriesItem);
   navList.appendChild(contributeItem);
   navList.appendChild(submitItem);
+  navList.appendChild(contactItem);
   
   // Hamburger menu button for mobile
   const hamburgerButton = createElement('button', {
@@ -211,6 +221,16 @@ export async function createNavigation() {
   mobileSubmitItem.appendChild(mobileSubmitLink);
   mobileMenuList.appendChild(mobileSubmitItem);
   
+  // Contact link
+  const mobileContactItem = createElement('li');
+  const mobileContactLink = createElement('a', {
+    href: '#/contact',
+    textContent: 'Contact',
+    className: 'mobile-nav-link'
+  });
+  mobileContactItem.appendChild(mobileContactLink);
+  mobileMenuList.appendChild(mobileContactItem);
+  
   mobileMenuContent.appendChild(mobileMenuList);
   mobileMenuOverlay.appendChild(mobileMenuBackdrop);
   mobileMenuOverlay.appendChild(mobileMenuContent);
@@ -302,6 +322,9 @@ export function updateActiveLink(nav) {
       link.classList.add('active');
     } else if (linkHash === '#/submit' && currentHash.startsWith('#/submit')) {
       // Match submit and submit/:categoryId
+      link.classList.add('active');
+    } else if (linkHash === '#/contact' && currentHash.startsWith('#/contact')) {
+      // Match contact
       link.classList.add('active');
     }
   });

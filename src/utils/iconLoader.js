@@ -1,5 +1,5 @@
 /**
- * Icon loading utility with caching and fallback support
+ * Icon loading utility with caching
  * Loads item icons for list view and other visualizations
  */
 
@@ -66,7 +66,6 @@ export function getIconUrl(item, categoryId) {
   // Get correct icon directory name
   const iconDir = getIconDirectory(categoryId);
   
-  // Return primary path (fallback handled in loadItemIcon)
   return `/assets/images/${iconDir}/${iconFilename}`;
 }
 
@@ -103,25 +102,16 @@ export async function loadItemIcon(item, categoryId) {
   const directoriesToTry = getIconDirectoriesForCategory(categoryId, iconDir);
   
   for (const dir of directoriesToTry) {
-    // Try primary path first
-    let imagePath = `/assets/images/${dir}/${iconFilename}`;
-    let image;
+    // Try primary path
+    const imagePath = `/assets/images/${dir}/${iconFilename}`;
     
     try {
-      image = await loadImage(imagePath);
+      const image = await loadImage(imagePath);
       iconCache.set(cacheKey, image);
       return image;
     } catch (e) {
-      // Fallback to src path
-      try {
-        imagePath = `/src/assets/images/${dir}/${iconFilename}`;
-        image = await loadImage(imagePath);
-        iconCache.set(cacheKey, image);
-        return image;
-      } catch (error) {
-        // Continue to next directory
-        continue;
-      }
+      // Continue to next directory
+      continue;
     }
   }
   

@@ -47,8 +47,8 @@ export function showTooltip(item, x, y, categoryId = null) {
   // Check if this is a divination card
   const isDivinationCard = categoryId === 'divination-cards' || (item.explicitModifiers && item.flavourText && item.stackSize);
   
-  // Check if this is a tattoo or runegraft item (has replaces, dropRequired, or stackSize properties)
-  const isTattoo = categoryId === 'tattoos' || categoryId === 'runegrafts' || item.replaces || item.dropRequired || (item.stackSize && !item.dropLevel && !isDivinationCard);
+  // Check if this is a tattoo, runegraft, or contract item (has replaces, dropRequired, or stackSize properties)
+  const isTattoo = categoryId === 'tattoos' || categoryId === 'runegrafts' || categoryId === 'contracts' || item.replaces || item.dropRequired || (item.stackSize && !item.dropLevel && !isDivinationCard);
   
   if (isDivinationCard) {
     showDivinationCardTooltip(item, x, y);
@@ -105,6 +105,11 @@ function showTattooTooltip(tattoo, x, y) {
   // Drop required (how to obtain)
   if (tattoo.dropRequired) {
     content += `<div style="margin-top: 0.5rem; color: #888888; font-size: 0.8rem; font-style: italic;">${tattoo.dropRequired}</div>`;
+  }
+  
+  // Help text (e.g., for contracts)
+  if (tattoo.helpText) {
+    content += `<div style="margin-top: 0.5rem; color: #888888; font-size: 0.85rem; font-style: italic;">${tattoo.helpText}</div>`;
   }
   
   tooltip.innerHTML = content;

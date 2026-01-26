@@ -1,0 +1,56 @@
+[
+    {
+        "id": "contract-bunker",
+        "name": "Contract: Bunker",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-underbelly",
+        "name": "Contract: Underbelly",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-mansion",
+        "name": "Contract: Mansion",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-records-office",
+        "name": "Contract: Records Office",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-smugglers-den",
+        "name": "Contract: Smugglers Den",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-repository",
+        "name": "Contract: Repository",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-tunnels",
+        "name": "Contract: Tunnels",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-laboratory",
+        "name": "Contract: Laboratory",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    },
+    {
+        "id": "contract-prohibited-library",
+        "name": "Contract: Prohibited Library",
+        "stackSize": 1,
+        "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist"
+    }
+]

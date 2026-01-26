@@ -8,7 +8,7 @@ import { displayError } from '../utils/errors.js';
 import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
-import { renderListView, filterTattoos, filterRunegrafts, renderListViewWithWeights } from '../visualization/listViewRenderer.js';
+import { renderListView, filterTattoos, filterRunegrafts, filterContracts, renderListViewWithWeights } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
 import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
@@ -227,7 +227,8 @@ function isNewCategory(categoryId) {
   // These are now handled by renderStashTab with grid configurations
   const newCategories = [
     'tattoos',
-    'runegrafts'
+    'runegrafts',
+    'contracts'
   ];
   return newCategories.includes(categoryId);
 }
@@ -264,7 +265,8 @@ function getCategoryDirectory(categoryId) {
     'legion-splinters': 'legionSplinters',
     'oils': 'oils',
     'tattoos': 'tattoos',
-    'runegrafts': 'runegrafts'
+    'runegrafts': 'runegrafts',
+    'contracts': 'contracts'
   };
   
   if (categoryDirMap[categoryId]) {
@@ -307,7 +309,8 @@ function getCategoryFilename(categoryId) {
     'legion': 'legionSplinters/legionSplinters.json', // Merged category - handled in dataLoader
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
-    'runegrafts': 'runegrafts/runegrafts.json'
+    'runegrafts': 'runegrafts/runegrafts.json',
+    'contracts': 'contracts/contracts.json'
   };
   
   if (categoryFileMap[categoryId]) {
@@ -636,8 +639,8 @@ async function renderItemsView(container, categoryId, items) {
         }, 150); // 150ms debounce
       });
     } else if (isNewCategory(categoryId)) {
-      // Special handling for tattoos and runegrafts - create header bar with JSON link and search
-      if (categoryId === 'tattoos' || categoryId === 'runegrafts') {
+      // Special handling for tattoos, runegrafts, and contracts - create header bar with JSON link and search
+      if (categoryId === 'tattoos' || categoryId === 'runegrafts' || categoryId === 'contracts') {
         // Create header bar container
         const headerBar = createElement('div', {
           className: 'tattoos-header-bar'
@@ -654,8 +657,10 @@ async function renderItemsView(container, categoryId, items) {
         // Search input
         const placeholderText = categoryId === 'tattoos' 
           ? 'Search tattoos by name, description, attribute, or drop location...'
-          : 'Search runegrafts by name, description, or drop location...';
-        const searchId = categoryId === 'tattoos' ? 'tattoos-search' : 'runegrafts-search';
+          : categoryId === 'runegrafts'
+          ? 'Search runegrafts by name, description, or drop location...'
+          : 'Search contracts by name or description...';
+        const searchId = categoryId === 'tattoos' ? 'tattoos-search' : categoryId === 'runegrafts' ? 'runegrafts-search' : 'contracts-search';
         const searchInput = createElement('input', {
           type: 'text',
           placeholder: placeholderText,
@@ -718,8 +723,12 @@ async function renderItemsView(container, categoryId, items) {
             let filteredItems;
             if (categoryId === 'tattoos') {
               filteredItems = filterTattoos(originalItems, query);
-            } else {
+            } else if (categoryId === 'runegrafts') {
               filteredItems = filterRunegrafts(originalItems, query);
+            } else if (categoryId === 'contracts') {
+              filteredItems = filterContracts(originalItems, query);
+            } else {
+              filteredItems = originalItems;
             }
             await renderList(filteredItems);
           }, 150); // 150ms debounce

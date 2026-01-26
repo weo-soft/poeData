@@ -145,7 +145,8 @@ function getCategoryFilename(categoryId) {
     'legion': 'legionSplinters/legionSplinters.json', // Merged category - handled in dataLoader
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
-    'runegrafts': 'runegrafts/runegrafts.json'
+    'runegrafts': 'runegrafts/runegrafts.json',
+    'contracts': 'contracts/contracts.json'
   };
   
   if (categoryFileMap[categoryId]) {

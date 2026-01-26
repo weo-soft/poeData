@@ -308,7 +308,8 @@ function getCategoryFilename(categoryId) {
     'fossils': 'fossils/fossils.json',
     'oils': 'oils/oils.json',
     'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
-    'runegrafts': 'runegrafts/runegrafts.json'
+    'runegrafts': 'runegrafts/runegrafts.json',
+    'contracts': 'contracts/contracts.json'
   };
   
   if (categoryFileMap[categoryId]) {
@@ -419,6 +420,11 @@ export async function getAvailableCategories() {
       id: 'runegrafts',
       name: 'Runegrafts',
       description: 'Items that replace mastery passive skills'
+    },
+    {
+      id: 'contracts',
+      name: 'Contracts',
+      description: 'Heist contracts used to embark on heists'
     }
   ];
   

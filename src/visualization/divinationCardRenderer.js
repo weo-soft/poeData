@@ -97,15 +97,12 @@ async function renderCardContent(cardContainer, card, width) {
   cardContainer.style.width = `${width}px`;
   cardContainer.style.height = `${height}px`;
   
-  // Load and add frame image (try public first, then src)
+  // Load and add frame image
   const frameImg = createElement('img', {
     className: 'div-card-frame',
     src: '/assets/images/Divination_card_frame.png',
     alt: 'Divination frame'
   });
-  frameImg.onerror = () => {
-    frameImg.src = '/src/assets/images/Divination_card_frame.png';
-  };
   cardContainer.appendChild(frameImg);
   cardState.elements.frameImg = frameImg;
   
@@ -120,7 +117,7 @@ async function renderCardContent(cardContainer, card, width) {
   cardContainer.appendChild(title);
   cardState.elements.title = title;
   
-  // Add card art if available (use card id as filename, try public first, then src)
+  // Add card art if available (use card id as filename)
   if (card.id) {
     const artImg = createElement('img', {
       className: 'div-card-art',
@@ -128,12 +125,8 @@ async function renderCardContent(cardContainer, card, width) {
       alt: card.name
     });
     artImg.onerror = () => {
-      // Try src path as fallback
-      artImg.src = `/src/assets/images/divinationcards/${card.id}.png`;
-      artImg.onerror = () => {
-        // Hide image if both paths fail
-        artImg.style.display = 'none';
-      };
+      // Hide image if loading fails
+      artImg.style.display = 'none';
     };
     cardContainer.appendChild(artImg);
     cardState.elements.artImg = artImg;
@@ -177,7 +170,7 @@ async function renderCardContent(cardContainer, card, width) {
     cardState.elements.reward = reward;
   }
   
-  // Add separator (try public first, then src)
+  // Add separator
   // Position dynamically based on reward line count and card size
   const separatorTop = calculateSeparatorTop(rewardLineCount, scaleFactor);
   const separator = createElement('img', {
@@ -186,9 +179,6 @@ async function renderCardContent(cardContainer, card, width) {
     alt: 'separator',
     style: `top: ${separatorTop}%;`
   });
-  separator.onerror = () => {
-    separator.src = '/src/assets/images/Divination_card_separator.png';
-  };
   cardContainer.appendChild(separator);
   cardState.elements.separator = separator;
   

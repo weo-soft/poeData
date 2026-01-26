@@ -11,6 +11,7 @@ import { renderItemDetail } from './pages/itemDetail.js';
 import { renderSubmission } from './pages/submission.js';
 import { renderDatasetView } from './pages/datasetView.js';
 import { renderContributions } from './pages/contributions.js';
+import { renderContact } from './pages/contact.js';
 import { createNavigation, updateActiveLink, updateActiveCategoryLink, clearCategoryTitle } from './components/navigation.js';
 
 // Get app container
@@ -85,6 +86,12 @@ if (!app) {
     router.on('/contributions', () => {
       clearCategoryTitle(navigation);
       renderContributions(mainContent, null);
+      updateActiveLink(navigation);
+    });
+    
+    router.on('/contact', () => {
+      clearCategoryTitle(navigation);
+      renderContact(mainContent);
       updateActiveLink(navigation);
     });
     

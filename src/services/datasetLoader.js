@@ -32,7 +32,8 @@ function getCategoryDirectory(categoryId) {
     'legion-splinters': 'legionSplinters',
     'oils': 'oils',
     'tattoos': 'tattoos',
-    'runegrafts': 'runegrafts'
+    'runegrafts': 'runegrafts',
+    'contracts': 'contracts'
   };
   
   if (categoryDirMap[categoryId]) {

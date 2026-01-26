@@ -31,7 +31,8 @@ function getCategoryIdFromDirectory(categoryDir) {
     'legionSplinters': 'legion-splinters',
     'oils': 'oils',
     'tattoos': 'tattoos',
-    'runegrafts': 'runegrafts'
+    'runegrafts': 'runegrafts',
+    'contracts': 'contracts'
   };
   
   return dirToCategoryMap[categoryDir] || categoryDir;
