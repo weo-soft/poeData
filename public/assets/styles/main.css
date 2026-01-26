@@ -998,6 +998,7 @@ input:focus, textarea:focus, select:focus {
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom: 2px solid var(--poe-border);
+  position: relative;
 }
 
 .tab-button {
@@ -1039,6 +1040,95 @@ input:focus, textarea:focus, select:focus {
 
 .json-link:hover {
   text-decoration: underline;
+}
+
+/* Links Dropdown Menu */
+.links-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.links-dropdown-button {
+  position: relative;
+}
+
+.links-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  overflow: hidden;
+}
+
+.links-dropdown-menu.active {
+  display: block;
+}
+
+.links-dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--poe-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--poe-border);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.links-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.links-dropdown-item:hover {
+  background-color: var(--poe-darker-bg);
+  color: var(--poe-accent);
+  text-decoration: none;
+}
+
+/* Category Links Section */
+.category-links-section {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background-color: var(--poe-dark-bg);
+  border: 1px solid var(--poe-border);
+  border-radius: 8px;
+}
+
+.category-links-title {
+  color: var(--poe-text);
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.category-links-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.category-links-list .category-data-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--poe-darker-bg);
+  color: var(--poe-text);
+  text-decoration: none;
+  border: 1px solid var(--poe-border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.category-links-list .category-data-link:hover {
+  border-color: var(--poe-accent);
+  color: var(--poe-accent);
+  background-color: var(--poe-dark-bg);
+  text-decoration: none;
 }
 
 .stash-tab-container {

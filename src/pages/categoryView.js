@@ -19,6 +19,7 @@ import { router } from '../services/router.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
 import { loadContent } from '../services/contributionContentLoader.js';
+import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUrls.js';
 
 let currentItems = [];
 let currentCategoryId = null;
@@ -124,6 +125,10 @@ export async function renderCategoryView(container, params) {
         
         tabsContainer.appendChild(splintersTab);
         tabsContainer.appendChild(stonesTab);
+        
+        // Add links dropdown
+        const linksDropdown = createLinksDropdown(categoryId);
+        tabsContainer.appendChild(linksDropdown);
       } else if (categoryId === 'legion') {
         // For legion category, show two separate dataset tabs
         const subcategory = query.subcategory || 'legion-splinters';
@@ -148,6 +153,10 @@ export async function renderCategoryView(container, params) {
         
         tabsContainer.appendChild(splintersTab);
         tabsContainer.appendChild(emblemsTab);
+        
+        // Add links dropdown
+        const linksDropdown = createLinksDropdown(categoryId);
+        tabsContainer.appendChild(linksDropdown);
       } else {
         // For other categories, show single Datasets tab
         const datasetsTab = createElement('button', {
@@ -161,6 +170,10 @@ export async function renderCategoryView(container, params) {
         });
         
         tabsContainer.appendChild(datasetsTab);
+        
+        // Add links dropdown
+        const linksDropdown = createLinksDropdown(categoryId);
+        tabsContainer.appendChild(linksDropdown);
       }
       
       viewSection.appendChild(tabsContainer);
@@ -527,6 +540,83 @@ async function renderDivinationCardGrid(container, items) {
 }
 
 /**
+ * Create dropdown menu with links for items JSON and calculated values
+ * @param {string} categoryId - Category identifier
+ * @returns {HTMLElement} Dropdown menu element
+ */
+function createLinksDropdown(categoryId) {
+  const dropdownContainer = createElement('div', { className: 'links-dropdown-container' });
+  
+  // Dropdown button
+  const dropdownButton = createElement('button', {
+    className: 'tab-button links-dropdown-button',
+    textContent: 'Links ▼',
+    type: 'button'
+  });
+  
+  // Dropdown menu
+  const dropdownMenu = createElement('div', { className: 'links-dropdown-menu' });
+  
+  // Items JSON link
+  const itemsJsonUrl = `/data/${getCategoryFilename(categoryId)}`;
+  const itemsJsonLink = createElement('a', {
+    href: itemsJsonUrl,
+    textContent: 'Items JSON',
+    className: 'links-dropdown-item',
+    target: '_blank',
+    title: 'View raw items JSON data'
+  });
+  dropdownMenu.appendChild(itemsJsonLink);
+  
+  // MLE calculation link
+  const mleUrl = getMleCalculationUrl(categoryId);
+  const mleLink = createElement('a', {
+    href: mleUrl,
+    textContent: 'MLE Calculation',
+    className: 'links-dropdown-item',
+    target: '_blank',
+    title: 'Download MLE calculation JSON file'
+  });
+  dropdownMenu.appendChild(mleLink);
+  
+  // Bayesian calculation link
+  const bayesianUrl = getBayesianCalculationUrl(categoryId);
+  const bayesianLink = createElement('a', {
+    href: bayesianUrl,
+    textContent: 'Bayesian Calculation',
+    className: 'links-dropdown-item',
+    target: '_blank',
+    title: 'Download Bayesian calculation JSON file'
+  });
+  dropdownMenu.appendChild(bayesianLink);
+  
+  // Toggle dropdown on button click
+  dropdownButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('active');
+  });
+  
+  // Close dropdown when clicking on a link
+  [itemsJsonLink, mleLink, bayesianLink].forEach(link => {
+    link.addEventListener('click', () => {
+      dropdownMenu.classList.remove('active');
+    });
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdownContainer.contains(e.target)) {
+      dropdownMenu.classList.remove('active');
+    }
+  });
+  
+  dropdownContainer.appendChild(dropdownButton);
+  dropdownContainer.appendChild(dropdownMenu);
+  
+  return dropdownContainer;
+}
+
+/**
  * Render items view
  * @param {HTMLElement} container - Container element
  * @param {string} categoryId - Category identifier
@@ -534,15 +624,6 @@ async function renderDivinationCardGrid(container, items) {
  */
 async function renderItemsView(container, categoryId, items) {
   clearElement(container);
-  
-  // JSON link
-  const jsonLink = createElement('a', {
-    href: `/data/${getCategoryFilename(categoryId)}`,
-    textContent: 'View Raw JSON Data',
-    className: 'json-link',
-    target: '_blank'
-  });
-  container.appendChild(jsonLink);
   
   // Statistics charts
   const chartsContainer = createElement('div', {
@@ -570,14 +651,6 @@ async function renderItemsView(container, categoryId, items) {
         className: 'tattoos-header-bar'
       });
       
-      // JSON link
-      const jsonLink = createElement('a', {
-        href: `/data/${getCategoryFilename(categoryId)}`,
-        textContent: 'View Raw JSON Data',
-        className: 'json-link',
-        target: '_blank'
-      });
-      
       // Search input
       const searchInput = createElement('input', {
         type: 'text',
@@ -598,14 +671,7 @@ async function renderItemsView(container, categoryId, items) {
       searchWrapper.appendChild(searchLabel);
       searchWrapper.appendChild(searchInput);
       
-      headerBar.appendChild(jsonLink);
       headerBar.appendChild(searchWrapper);
-      
-      // Replace the JSON link that was added earlier
-      const existingJsonLink = container.querySelector('.json-link');
-      if (existingJsonLink) {
-        existingJsonLink.remove();
-      }
       
       // Initialize filtered cards with all items
       filteredDivinationCards = items;
@@ -646,14 +712,6 @@ async function renderItemsView(container, categoryId, items) {
           className: 'tattoos-header-bar'
         });
         
-        // JSON link
-        const jsonLink = createElement('a', {
-          href: `/data/${getCategoryFilename(categoryId)}`,
-          textContent: 'View Raw JSON Data',
-          className: 'json-link',
-          target: '_blank'
-        });
-        
         // Search input
         const placeholderText = categoryId === 'tattoos' 
           ? 'Search tattoos by name, description, attribute, or drop location...'
@@ -680,14 +738,7 @@ async function renderItemsView(container, categoryId, items) {
         searchWrapper.appendChild(searchLabel);
         searchWrapper.appendChild(searchInput);
         
-        headerBar.appendChild(jsonLink);
         headerBar.appendChild(searchWrapper);
-        
-        // Replace the JSON link that was added earlier
-        const existingJsonLink = container.querySelector('.json-link');
-        if (existingJsonLink) {
-          existingJsonLink.remove();
-        }
         container.insertBefore(headerBar, chartsContainer);
         
         // Create list container
@@ -749,14 +800,6 @@ async function renderItemsView(container, categoryId, items) {
         className: 'tattoos-header-bar'
       });
       
-      // JSON link
-      const jsonLink = createElement('a', {
-        href: `/data/${getCategoryFilename(categoryId)}`,
-        textContent: 'View Raw JSON Data',
-        className: 'json-link',
-        target: '_blank'
-      });
-      
       // Search input
       const searchInput = createElement('input', {
         type: 'text',
@@ -777,14 +820,7 @@ async function renderItemsView(container, categoryId, items) {
       searchWrapper.appendChild(searchLabel);
       searchWrapper.appendChild(searchInput);
       
-      headerBar.appendChild(jsonLink);
       headerBar.appendChild(searchWrapper);
-      
-      // Replace the JSON link that was added earlier
-      const existingJsonLink = container.querySelector('.json-link');
-      if (existingJsonLink) {
-        existingJsonLink.remove();
-      }
       
       // Create views container for grid + list layout
       const viewsContainer = createElement('div', { className: 'category-views-container' });
