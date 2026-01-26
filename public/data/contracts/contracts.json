@@ -6,13 +6,34 @@
         "dropLevel": 48,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Agility", "id": "agility"},
-            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
-            {"name": "Engineering", "id": "engineering"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Lockpicking", "id": "lockpicking"},
-            {"name": "Perception", "id": "perception"},
-            {"name": "Trap disarmament", "id": "trap-disarmament"}
+            {
+                "name": "Agility",
+                "id": "agility"
+            },
+            {
+                "name": "Counter-thaumaturgy",
+                "id": "counter-thaumaturgy"
+            },
+            {
+                "name": "Engineering",
+                "id": "engineering"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Lockpicking",
+                "id": "lockpicking"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            },
+            {
+                "name": "Trap disarmament",
+                "id": "trap-disarmament"
+            }
         ]
     },
     {
@@ -22,12 +43,30 @@
         "dropLevel": 48,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Brute force", "id": "brute-force"},   
-            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Lockpicking", "id": "lockpicking"},
-            {"name": "Trap disarmament", "id": "trap-disarmament"}
+            {
+                "name": "Brute force",
+                "id": "brute-force"
+            },
+            {
+                "name": "Counter-thaumaturgy",
+                "id": "counter-thaumaturgy"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Lockpicking",
+                "id": "lockpicking"
+            },
+            {
+                "name": "Trap disarmament",
+                "id": "trap-disarmament"
+            }
         ]
     },
     {
@@ -37,11 +76,26 @@
         "dropLevel": 50,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Agility", "id": "agility"},
-            {"name": "Brute force", "id": "brute-force"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Lockpicking", "id": "lockpicking"},
-            {"name": "Perception", "id": "perception"}
+            {
+                "name": "Agility",
+                "id": "agility"
+            },
+            {
+                "name": "Brute force",
+                "id": "brute-force"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Lockpicking",
+                "id": "lockpicking"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            }
         ]
     },
     {
@@ -51,11 +105,26 @@
         "dropLevel": 50,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Brute force", "id": "brute-force"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Perception", "id": "perception"},
-            {"name": "Trap disarmament", "id": "trap-disarmament"}
+            {
+                "name": "Brute force",
+                "id": "brute-force"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            },
+            {
+                "name": "Trap disarmament",
+                "id": "trap-disarmament"
+            }
         ]
     },
     {
@@ -65,11 +134,26 @@
         "dropLevel": 50,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Agility", "id": "agility"},
-            {"name": "Brute force", "id": "brute-force"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Engineering", "id": "engineering"}
+            {
+                "name": "Agility",
+                "id": "agility"
+            },
+            {
+                "name": "Brute force",
+                "id": "brute-force"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Engineering",
+                "id": "engineering"
+            }
         ]
     },
     {
@@ -79,11 +163,26 @@
         "dropLevel": 55,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
-            {"name": "Engineering", "id": "engineering"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Perception", "id": "perception"}
+            {
+                "name": "Counter-thaumaturgy",
+                "id": "counter-thaumaturgy"
+            },
+            {
+                "name": "Engineering",
+                "id": "engineering"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            }
         ]
     },
     {
@@ -93,11 +192,26 @@
         "dropLevel": 55,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
-            {"name": "Deception", "id": "deception"},
-            {"name": "Engineering", "id": "engineering"},
-            {"name": "Lockpicking", "id": "lockpicking"},
-            {"name": "Perception", "id": "perception"}
+            {
+                "name": "Counter-thaumaturgy",
+                "id": "counter-thaumaturgy"
+            },
+            {
+                "name": "Deception",
+                "id": "deception"
+            },
+            {
+                "name": "Engineering",
+                "id": "engineering"
+            },
+            {
+                "name": "Lockpicking",
+                "id": "lockpicking"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            }
         ]
     },
     {
@@ -107,11 +221,26 @@
         "dropLevel": 60,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Agility", "id": "agility"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Lockpicking", "id": "lockpicking"},
-            {"name": "Perception", "id": "perception"},
-            {"name": "Trap disarmament", "id": "trap-disarmament"}
+            {
+                "name": "Agility",
+                "id": "agility"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Lockpicking",
+                "id": "lockpicking"
+            },
+            {
+                "name": "Perception",
+                "id": "perception"
+            },
+            {
+                "name": "Trap disarmament",
+                "id": "trap-disarmament"
+            }
         ]
     },
     {
@@ -121,12 +250,30 @@
         "dropLevel": 60,
         "helpText": "Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist",
         "jobs": [
-            {"name": "Agility", "id": "agility"},
-            {"name": "Brute force", "id": "brute-force"},
-            {"name": "Counter-thaumaturgy", "id": "counter-thaumaturgy"},
-            {"name": "Demolition", "id": "demolition"},
-            {"name": "Engineering", "id": "engineering"},
-            {"name": "Trap disarmament", "id": "trap-disarmament"}
+            {
+                "name": "Agility",
+                "id": "agility"
+            },
+            {
+                "name": "Brute force",
+                "id": "brute-force"
+            },
+            {
+                "name": "Counter-thaumaturgy",
+                "id": "counter-thaumaturgy"
+            },
+            {
+                "name": "Demolition",
+                "id": "demolition"
+            },
+            {
+                "name": "Engineering",
+                "id": "engineering"
+            },
+            {
+                "name": "Trap disarmament",
+                "id": "trap-disarmament"
+            }
         ]
     }
 ]
