@@ -445,7 +445,7 @@ input:focus, textarea:focus, select:focus {
 /* Homepage Styles */
 .home {
   text-align: center;
-  padding: 2rem;
+  padding: 0.5rem 2rem 2rem;
 }
 
 .home h1 {
@@ -484,6 +484,84 @@ input:focus, textarea:focus, select:focus {
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--poe-text);
+}
+
+/* Home page category cards */
+.home-categories {
+  margin-bottom: 3rem;
+}
+
+.home-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Medium screens: reduce to 6 columns */
+@media (max-width: 1200px) {
+  .home-categories-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* Small tablets: reduce to 4 columns */
+@media (max-width: 900px) {
+  .home-categories-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.home-category-card {
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: 6px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.home-category-card:hover {
+  border-color: var(--poe-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(175, 96, 37, 0.2);
+}
+
+.home-category-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  min-height: 80px;
+  justify-content: center;
+}
+
+.home-category-icon-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+}
+
+.home-category-icon {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.home-category-name {
+  font-size: 0.75rem;
+  color: var(--poe-text);
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .description {
@@ -735,6 +813,31 @@ input:focus, textarea:focus, select:focus {
   
   .welcome-text p:first-of-type {
     font-size: 1.05rem;
+  }
+  
+  /* Home category cards: responsive grid on mobile */
+  .home-categories {
+    margin-bottom: 2rem;
+  }
+  
+  .home-categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .home-category-link {
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+  
+  .home-category-icon-container {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .home-category-name {
+    font-size: 0.8rem;
   }
   
   /* Category grid: single column on mobile */
