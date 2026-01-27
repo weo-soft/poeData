@@ -9,27 +9,31 @@ import { renderStashTab } from '../../src/visualization/stashTabRenderer.js';
 import { getGridConfig } from '../../src/config/gridConfig.js';
 
 // Mock dataLoader
-vi.mock('../../src/services/dataLoader.js', () => ({
-  loadCategoryData: vi.fn(async (categoryId) => {
-    // Return mock data based on category
-    if (categoryId === 'breach') {
-      return [
-        { id: 'xophs-breachstone', name: "Xoph's Breachstone", dropWeight: 100 },
-        { id: 'tuls-breachstone', name: "Tul's Breachstone", dropWeight: 100 },
-        { id: 'eshs-breachstone', name: "Esh's Breachstone", dropWeight: 100 },
-        { id: 'xophs-splinter', name: "Xoph's Splinter", dropWeight: 50 }
-      ];
-    }
-    if (categoryId === 'essences') {
-      return [
-        { id: 'essence-of-anger', name: 'Essence of Anger', dropWeight: 50 },
-        { id: 'essence-of-contempt', name: 'Essence of Contempt', dropWeight: 50 },
-        { id: 'essence-of-envy', name: 'Essence of Envy', dropWeight: 50 }
-      ];
-    }
-    return [];
-  })
-}));
+vi.mock('../../src/services/dataLoader.js', async () => {
+  const actual = await vi.importActual('../../src/services/dataLoader.js');
+  return {
+    ...actual,
+    loadCategoryData: vi.fn(async (categoryId) => {
+      // Return mock data based on category
+      if (categoryId === 'breach') {
+        return [
+          { id: 'xophs-breachstone', name: "Xoph's Breachstone", dropWeight: 100 },
+          { id: 'tuls-breachstone', name: "Tul's Breachstone", dropWeight: 100 },
+          { id: 'eshs-breachstone', name: "Esh's Breachstone", dropWeight: 100 },
+          { id: 'xophs-splinter', name: "Xoph's Splinter", dropWeight: 50 }
+        ];
+      }
+      if (categoryId === 'essences') {
+        return [
+          { id: 'essence-of-anger', name: 'Essence of Anger', dropWeight: 50 },
+          { id: 'essence-of-contempt', name: 'Essence of Contempt', dropWeight: 50 },
+          { id: 'essence-of-envy', name: 'Essence of Envy', dropWeight: 50 }
+        ];
+      }
+      return [];
+    })
+  };
+});
 
 // Mock chartGenerator
 vi.mock('../../src/visualization/chartGenerator.js', () => ({
@@ -39,13 +43,12 @@ vi.mock('../../src/visualization/chartGenerator.js', () => ({
 // Mock canvas utilities
 vi.mock('../../src/utils/canvasUtils.js', () => ({
   loadImage: vi.fn(async (path) => {
-    // Return mock image
-    const img = {
-      width: 840,
-      height: 794,
-      complete: true
-    };
-    return img;
+    // Return a Canvas element - jsdom's drawImage accepts Canvas elements
+    const canvas = document.createElement('canvas');
+    canvas.width = 840;
+    canvas.height = 794;
+    // Return the canvas as the "image" - drawImage accepts Canvas
+    return canvas;
   }),
   clearCanvas: vi.fn(),
   drawCellHighlight: vi.fn(),
@@ -68,6 +71,20 @@ vi.mock('../../src/visualization/listViewRenderer.js', async () => {
   };
 });
 
+// Mock contributionContentLoader to prevent URL parsing errors
+vi.mock('../../src/services/contributionContentLoader.js', () => ({
+  loadMetadata: vi.fn().mockResolvedValue({
+    categories: {},
+    genericAvailable: true,
+    lastUpdated: '2026-01-24T00:00:00Z'
+  }),
+  loadContent: vi.fn().mockResolvedValue({
+    categoryId: 'generic',
+    html: '<p>Test content</p>',
+    isGeneric: true
+  })
+}));
+
 describe('Category Grid Integration Tests', () => {
   let container;
   let canvas;
@@ -81,7 +98,10 @@ describe('Category Grid Integration Tests', () => {
     canvas = document.createElement('canvas');
     const ctx = {
       scale: vi.fn(),
-      drawImage: vi.fn(),
+      drawImage: vi.fn((...args) => {
+        // Accept any arguments - don't validate them
+        return;
+      }),
       fillRect: vi.fn(),
       clearRect: vi.fn(),
       save: vi.fn(),
@@ -90,7 +110,11 @@ describe('Category Grid Integration Tests', () => {
       rect: vi.fn(),
       stroke: vi.fn(),
       strokeRect: vi.fn(),
-      fill: vi.fn()
+      fill: vi.fn(),
+      fillStyle: '',
+      strokeStyle: '',
+      lineWidth: 0,
+      globalAlpha: 1
     };
     // Override getContext to return our mock context
     Object.defineProperty(canvas, 'getContext', {

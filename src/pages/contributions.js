@@ -12,7 +12,7 @@
 
 import { createElement, clearElement } from '../utils/dom.js';
 import { displayError } from '../utils/errors.js';
-import { loadContent } from '../services/contributionContentLoader.js';
+import { loadContent, loadMetadata } from '../services/contributionContentLoader.js';
 import { getAvailableCategories } from '../services/dataLoader.js';
 
 /**
@@ -56,7 +56,8 @@ export async function renderContributions(container, categoryId = null) {
     }
   } catch (error) {
     clearElement(contributionsSection);
-    displayError(contributionsSection, `Failed to load contribution guide: ${error.message}`);
+    const errorMessage = `Failed to load contribution guide: ${error.message}`;
+    displayError(contributionsSection, errorMessage);
     
     // Add retry button
     const retryButton = createElement('button', {
@@ -88,6 +89,12 @@ async function renderOverview(container) {
   const title = createElement('h1', { textContent: 'How to Contribute Datasets' });
   container.appendChild(title);
   
+  // Load metadata and categories in parallel
+  const [metadata, categories] = await Promise.all([
+    loadMetadata(),
+    getAvailableCategories()
+  ]);
+  
   // Load generic content
   const genericContent = await loadContent(null);
   
@@ -95,6 +102,47 @@ async function renderOverview(container) {
   const overviewSection = createElement('div', { className: 'contribution-overview' });
   overviewSection.innerHTML = genericContent.html;
   container.appendChild(overviewSection);
+  
+  // Category list with availability indicators
+  const categoryList = createElement('div', { className: 'category-guideline-list' });
+  
+  for (const category of categories) {
+    const categoryLink = createElement('a', {
+      href: `#/contributions/${category.id}`,
+      className: 'category-guideline-link'
+    });
+    
+    const categoryName = createElement('span', {
+      textContent: category.name
+    });
+    categoryLink.appendChild(categoryName);
+    
+    // Add availability indicator
+    const categoryInfo = metadata.categories?.[category.id];
+    const isAvailable = categoryInfo?.available === true;
+    
+    const indicator = createElement('span', {
+      className: `guideline-indicator ${isAvailable ? 'available' : 'unavailable'}`,
+      textContent: isAvailable ? ' ✓' : ' ○'
+    });
+    categoryLink.appendChild(indicator);
+    
+    categoryList.appendChild(categoryLink);
+  }
+  
+  container.appendChild(categoryList);
+  
+  // Navigation links
+  const navLinks = createElement('div', { className: 'nav-links' });
+  
+  const submitLink = createElement('a', {
+    href: '#/submit',
+    textContent: 'Submit Dataset →',
+    className: 'primary-link'
+  });
+  navLinks.appendChild(submitLink);
+  
+  container.appendChild(navLinks);
 }
 
 /**

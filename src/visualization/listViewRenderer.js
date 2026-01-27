@@ -818,8 +818,36 @@ export async function renderListViewWithWeights(container, items, categoryId, so
   
   const listView = createElement('div', { className: 'category-list-view' });
   
-  // Create sortable header row if callback is provided
+  // Create sort control if callback is provided
   if (onSortChange) {
+    const sortWrapper = createElement('div', { className: 'category-list-sort-wrapper' });
+    
+    const sortSelect = createElement('select', { className: 'category-list-sort-select' });
+    sortSelect.value = sortOption;
+    
+    const options = [
+      { value: 'weight-desc', text: 'Weight (High to Low)' },
+      { value: 'weight-asc', text: 'Weight (Low to High)' },
+      { value: 'name-asc', text: 'Name (A-Z)' },
+      { value: 'name-desc', text: 'Name (Z-A)' }
+    ];
+    
+    for (const option of options) {
+      const optionElement = createElement('option', {
+        value: option.value,
+        textContent: option.text
+      });
+      sortSelect.appendChild(optionElement);
+    }
+    
+    sortSelect.addEventListener('change', (e) => {
+      onSortChange(e.target.value);
+    });
+    
+    sortWrapper.appendChild(sortSelect);
+    listView.appendChild(sortWrapper);
+    
+    // Also add sortable header row for visual consistency
     const headerRow = createSortableHeader(sortOption, onSortChange);
     listView.appendChild(headerRow);
   }
