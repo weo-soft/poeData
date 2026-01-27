@@ -205,32 +205,9 @@ export async function renderCategoryView(container, params) {
       await renderContributionGuide(contentArea, categoryId);
     }
     
-    // Navigation (outside content area)
-    const navLinks = createElement('div', { className: 'nav-links' });
-    const backLink = createElement('a', {
-      href: '#/categories',
-      textContent: '← Back to Categories',
-      className: 'back-link'
-    });
-    const submitLink = createElement('a', {
-      href: `#/submit/${categoryId}`,
-      textContent: 'Submit New Item →',
-      className: 'submit-link'
-    });
-    navLinks.appendChild(backLink);
-    navLinks.appendChild(submitLink);
-    viewSection.appendChild(navLinks);
-    
   } catch (error) {
     clearElement(viewSection);
     displayError(viewSection, `Failed to load category: ${error.message}`);
-    
-    const backLink = createElement('a', {
-      href: '#/categories',
-      textContent: '← Back to Categories',
-      className: 'back-link'
-    });
-    viewSection.appendChild(backLink);
   }
 }
 
