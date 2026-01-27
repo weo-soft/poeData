@@ -3031,6 +3031,57 @@ input:focus, textarea:focus, select:focus {
   margin-top: 0.25rem;
 }
 
+.contract-card-jobs-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contract-card-job-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.contract-card-job-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  color: var(--poe-text-dim);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: left;
+  min-width: 0; /* Allow text to shrink */
+}
+
+.contract-card-job-weight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--poe-text-dim);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.contract-card-job-weight-value {
+  font-family: 'Courier New', monospace;
+  color: var(--poe-text);
+}
+
+.contract-card-job-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Legacy support for old single-column format */
 .contract-card-job {
   display: flex;
   align-items: center;
@@ -3040,13 +3091,6 @@ input:focus, textarea:focus, select:focus {
   font-size: 0.75rem;
   line-height: 1.2;
   text-align: left;
-}
-
-.contract-card-job-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  flex-shrink: 0;
 }
 
 /* Responsive styles for tattoo grid */

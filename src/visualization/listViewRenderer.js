@@ -324,12 +324,58 @@ async function renderTattoosView(container, items, categoryId) {
 }
 
 /**
+ * Load weights for contract jobs
+ * @param {Array} jobs - Array of job objects or strings
+ * @returns {Promise<Map<string, number>>} Map of job ID to weight
+ */
+async function loadJobWeights(jobs) {
+  const weightMap = new Map();
+  
+  try {
+    // Try to load weights from calculation files
+    // First try MLE weights (more commonly available)
+    const mleResponse = await fetch('/data/contracts/calculations/mle.json');
+    if (mleResponse.ok) {
+      const mleData = await mleResponse.json();
+      if (mleData.items && Array.isArray(mleData.items)) {
+        mleData.items.forEach(item => {
+          if (item.id && item.weight !== undefined) {
+            weightMap.set(item.id, item.weight);
+          }
+        });
+      }
+    }
+    
+    // If MLE weights not found, try Bayesian weights
+    if (weightMap.size === 0) {
+      const bayesianResponse = await fetch('/data/contracts/calculations/bayesian.json');
+      if (bayesianResponse.ok) {
+        const bayesianData = await bayesianResponse.json();
+        if (bayesianData.items && Array.isArray(bayesianData.items)) {
+          bayesianData.items.forEach(item => {
+            if (item.id && item.weight !== undefined) {
+              weightMap.set(item.id, item.weight);
+            }
+          });
+        }
+      }
+    }
+  } catch (error) {
+    // Silently fail - weights are optional
+    console.debug('Could not load job weights:', error);
+  }
+  
+  return weightMap;
+}
+
+/**
  * Render a single tattoo card
  * @param {HTMLElement} container - Container to append card to
  * @param {Object} tattoo - Tattoo item object
  * @param {string} categoryId - Category identifier
+ * @param {Map<string, number>|undefined} jobWeights - Optional pre-loaded job weights map (for contracts)
  */
-async function renderTattooCard(container, tattoo, categoryId) {
+async function renderTattooCard(container, tattoo, categoryId, jobWeights = undefined) {
   // Create card element
   const card = createElement('div', {
     className: 'tattoo-card'
@@ -387,13 +433,27 @@ async function renderTattooCard(container, tattoo, categoryId) {
     const jobsContainer = createElement('div', {
       className: 'contract-card-jobs'
     });
+    
+    // Create two-column layout
+    const jobsTable = createElement('div', {
+      className: 'contract-card-jobs-table'
+    });
+    
+    // Use provided weights or load them if not provided
+    const weights = jobWeights || await loadJobWeights(tattoo.jobs);
+    
     tattoo.jobs.forEach(job => {
       // Handle both old format (string) and new format (object with name and id)
       const jobName = typeof job === 'string' ? job : job.name;
       const jobId = typeof job === 'string' ? job.toLowerCase().replace(/\s+/g, '-') : job.id;
       
-      const jobItem = createElement('div', {
-        className: 'contract-card-job'
+      const jobRow = createElement('div', {
+        className: 'contract-card-job-row'
+      });
+      
+      // First column: job icon and name
+      const jobInfoColumn = createElement('div', {
+        className: 'contract-card-job-info'
       });
       
       // Add job icon
@@ -413,10 +473,31 @@ async function renderTattooCard(container, tattoo, categoryId) {
         textContent: jobName
       });
       
-      jobItem.appendChild(jobIcon);
-      jobItem.appendChild(jobNameSpan);
-      jobsContainer.appendChild(jobItem);
+      jobInfoColumn.appendChild(jobIcon);
+      jobInfoColumn.appendChild(jobNameSpan);
+      
+      // Second column: weight
+      const jobWeightColumn = createElement('div', {
+        className: 'contract-card-job-weight'
+      });
+      
+      const weight = weights.get(jobId);
+      const weightText = weight !== undefined && weight !== null 
+        ? weight.toFixed(4) 
+        : '—';
+      const weightSpan = createElement('span', {
+        className: 'contract-card-job-weight-value',
+        textContent: weightText
+      });
+      
+      jobWeightColumn.appendChild(weightSpan);
+      
+      jobRow.appendChild(jobInfoColumn);
+      jobRow.appendChild(jobWeightColumn);
+      jobsTable.appendChild(jobRow);
     });
+    
+    jobsContainer.appendChild(jobsTable);
     nameContainer.appendChild(jobsContainer);
   }
   
@@ -494,8 +575,23 @@ async function renderContractsView(container, items, categoryId) {
     className: 'contract-grid-container'
   });
   
-  // Render each contract as a card
-  const contractPromises = items.map(contract => renderTattooCard(gridContainer, contract, categoryId));
+  // Load job weights once for all contracts (optimization)
+  // Collect all unique job IDs from all contracts
+  const allJobIds = new Set();
+  items.forEach(contract => {
+    if (contract.jobs && Array.isArray(contract.jobs)) {
+      contract.jobs.forEach(job => {
+        const jobId = typeof job === 'string' ? job.toLowerCase().replace(/\s+/g, '-') : job.id;
+        allJobIds.add(jobId);
+      });
+    }
+  });
+  
+  // Load weights once
+  const jobWeights = await loadJobWeights(Array.from(allJobIds));
+  
+  // Render each contract as a card, passing the weights
+  const contractPromises = items.map(contract => renderTattooCard(gridContainer, contract, categoryId, jobWeights));
   await Promise.all(contractPromises);
   
   container.appendChild(gridContainer);
