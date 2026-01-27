@@ -730,49 +730,70 @@ function sortItems(items, sortOption) {
 }
 
 /**
- * Create sort control dropdown
+ * Create sortable header row for list view
  * @param {string} currentSort - Current sort option
  * @param {Function} onSortChange - Callback when sort changes
- * @returns {HTMLElement} Sort control element
+ * @returns {HTMLElement} Header row element
  */
-function createSortControl(currentSort, onSortChange) {
-  const sortWrapper = createElement('div', { className: 'category-list-sort-wrapper' });
+function createSortableHeader(currentSort, onSortChange) {
+  const headerRow = createElement('div', { className: 'category-list-header' });
   
-  const sortLabel = createElement('label', {
-    textContent: 'Sort by:',
-    className: 'category-list-sort-label',
-    htmlFor: 'category-list-sort-select'
+  // Determine current sort state
+  const isNameSort = currentSort.startsWith('name-');
+  const isWeightSort = currentSort.startsWith('weight-');
+  const isAscending = currentSort.endsWith('-asc');
+  const isDescending = currentSort.endsWith('-desc');
+  
+  // Name header
+  const nameHeader = createElement('div', {
+    className: `category-list-header-name ${isNameSort ? 'active' : ''}`,
+    textContent: 'Name'
   });
   
-  const sortSelect = createElement('select', {
-    id: 'category-list-sort-select',
-    className: 'category-list-sort-select'
-  });
-  
-  const sortOptions = [
-    { value: 'weight-desc', label: 'Weight (High to Low)' },
-    { value: 'weight-asc', label: 'Weight (Low to High)' },
-    { value: 'name-asc', label: 'Name (A-Z)' },
-    { value: 'name-desc', label: 'Name (Z-A)' }
-  ];
-  
-  sortOptions.forEach(option => {
-    const optionElement = createElement('option', {
-      value: option.value,
-      textContent: option.label,
-      selected: option.value === currentSort
+  // Add sort indicator to name header
+  if (isNameSort) {
+    const indicator = createElement('span', {
+      className: 'sort-indicator',
+      textContent: isAscending ? ' ↑' : ' ↓'
     });
-    sortSelect.appendChild(optionElement);
+    nameHeader.appendChild(indicator);
+  }
+  
+  nameHeader.addEventListener('click', () => {
+    // If already sorting by name, toggle direction; otherwise start with descending
+    const newSort = isNameSort 
+      ? (isAscending ? 'name-desc' : 'name-asc')
+      : 'name-desc';
+    onSortChange(newSort);
   });
   
-  sortSelect.addEventListener('change', (e) => {
-    onSortChange(e.target.value);
+  // Weight header
+  const weightHeader = createElement('div', {
+    className: `category-list-header-weight ${isWeightSort ? 'active' : ''}`,
+    textContent: 'Weight'
   });
   
-  sortWrapper.appendChild(sortLabel);
-  sortWrapper.appendChild(sortSelect);
+  // Add sort indicator to weight header
+  if (isWeightSort) {
+    const indicator = createElement('span', {
+      className: 'sort-indicator',
+      textContent: isAscending ? ' ↑' : ' ↓'
+    });
+    weightHeader.appendChild(indicator);
+  }
   
-  return sortWrapper;
+  weightHeader.addEventListener('click', () => {
+    // If already sorting by weight, toggle direction; otherwise start with descending
+    const newSort = isWeightSort 
+      ? (isAscending ? 'weight-desc' : 'weight-asc')
+      : 'weight-desc';
+    onSortChange(newSort);
+  });
+  
+  headerRow.appendChild(nameHeader);
+  headerRow.appendChild(weightHeader);
+  
+  return headerRow;
 }
 
 /**
@@ -792,16 +813,16 @@ export async function renderListViewWithWeights(container, items, categoryId, so
     return;
   }
   
-  // Create sort control if callback is provided
-  if (onSortChange) {
-    const sortControl = createSortControl(sortOption, onSortChange);
-    container.appendChild(sortControl);
-  }
-  
   // Sort items based on sort option
   const sortedItems = sortItems(items, sortOption);
   
   const listView = createElement('div', { className: 'category-list-view' });
+  
+  // Create sortable header row if callback is provided
+  if (onSortChange) {
+    const headerRow = createSortableHeader(sortOption, onSortChange);
+    listView.appendChild(headerRow);
+  }
   
   for (const item of sortedItems) {
     const entry = createListViewEntry(item, categoryId);

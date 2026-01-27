@@ -85,10 +85,14 @@ export async function renderCategoryView(container, params) {
       viewSection.appendChild(header);
     }
     
+    // Declare tabsContainer outside the if block so it's accessible
+    let tabsContainer = null;
+    
     // Only show tabs when NOT in datasets view
     if (viewType !== 'datasets') {
       // Tabs for Items/Datasets
-      const tabsContainer = createElement('div', { className: 'category-tabs' });
+      tabsContainer = createElement('div', { className: 'category-tabs' });
+      const tabsButtonsContainer = createElement('div', { className: 'category-tabs-buttons' });
       const itemsTab = createElement('button', {
         className: `tab-button ${viewType === 'items' ? 'active' : ''}`,
         textContent: 'Items',
@@ -99,7 +103,7 @@ export async function renderCategoryView(container, params) {
         router.navigate(`/category/${categoryId}?view=items`);
       });
       
-      tabsContainer.appendChild(itemsTab);
+      tabsButtonsContainer.appendChild(itemsTab);
       
       // For breach category, show two separate dataset tabs
       if (categoryId === 'breach') {
@@ -123,12 +127,12 @@ export async function renderCategoryView(container, params) {
           router.navigate(`/category/${categoryId}?view=datasets&subcategory=breachstones`);
         });
         
-        tabsContainer.appendChild(splintersTab);
-        tabsContainer.appendChild(stonesTab);
+        tabsButtonsContainer.appendChild(splintersTab);
+        tabsButtonsContainer.appendChild(stonesTab);
         
         // Add links dropdown
         const linksDropdown = createLinksDropdown(categoryId);
-        tabsContainer.appendChild(linksDropdown);
+        tabsButtonsContainer.appendChild(linksDropdown);
       } else if (categoryId === 'legion') {
         // For legion category, show two separate dataset tabs
         const subcategory = query.subcategory || 'legion-splinters';
@@ -151,12 +155,12 @@ export async function renderCategoryView(container, params) {
           router.navigate(`/category/${categoryId}?view=datasets&subcategory=legion-emblems`);
         });
         
-        tabsContainer.appendChild(splintersTab);
-        tabsContainer.appendChild(emblemsTab);
+        tabsButtonsContainer.appendChild(splintersTab);
+        tabsButtonsContainer.appendChild(emblemsTab);
         
         // Add links dropdown
         const linksDropdown = createLinksDropdown(categoryId);
-        tabsContainer.appendChild(linksDropdown);
+        tabsButtonsContainer.appendChild(linksDropdown);
       } else {
         // For other categories, show single Datasets tab
         const datasetsTab = createElement('button', {
@@ -169,13 +173,14 @@ export async function renderCategoryView(container, params) {
           router.navigate(`/category/${categoryId}?view=datasets`);
         });
         
-        tabsContainer.appendChild(datasetsTab);
+        tabsButtonsContainer.appendChild(datasetsTab);
         
         // Add links dropdown
         const linksDropdown = createLinksDropdown(categoryId);
-        tabsContainer.appendChild(linksDropdown);
+        tabsButtonsContainer.appendChild(linksDropdown);
       }
       
+      tabsContainer.appendChild(tabsButtonsContainer);
       viewSection.appendChild(tabsContainer);
     }
     
@@ -194,7 +199,7 @@ export async function renderCategoryView(container, params) {
       }
       await renderDatasetsView(contentArea, subcategory, categoryId);
     } else {
-      await renderItemsView(contentArea, categoryId, items);
+      await renderItemsView(contentArea, categoryId, items, tabsContainer);
       
       // Add contribution guide section (only in items view)
       await renderContributionGuide(contentArea, categoryId);
@@ -621,8 +626,9 @@ function createLinksDropdown(categoryId) {
  * @param {HTMLElement} container - Container element
  * @param {string} categoryId - Category identifier
  * @param {Array} items - Array of items
+ * @param {HTMLElement|null} tabsContainer - Tabs container to add search bar to (optional)
  */
-async function renderItemsView(container, categoryId, items) {
+async function renderItemsView(container, categoryId, items, tabsContainer = null) {
   clearElement(container);
   
   // Statistics charts
@@ -646,11 +652,6 @@ async function renderItemsView(container, categoryId, items) {
   } else {
     // Render visualizations based on category type
     if (categoryId === 'divination-cards') {
-      // Create header bar container (same style as tattoos/runegrafts)
-      const headerBar = createElement('div', {
-        className: 'tattoos-header-bar'
-      });
-      
       // Search input
       const searchInput = createElement('input', {
         type: 'text',
@@ -671,7 +672,17 @@ async function renderItemsView(container, categoryId, items) {
       searchWrapper.appendChild(searchLabel);
       searchWrapper.appendChild(searchInput);
       
-      headerBar.appendChild(searchWrapper);
+      // Add search wrapper to tabs container if available
+      if (tabsContainer) {
+        tabsContainer.appendChild(searchWrapper);
+      } else {
+        // Fallback: create header bar if tabs container not available
+        const headerBar = createElement('div', {
+          className: 'tattoos-header-bar'
+        });
+        headerBar.appendChild(searchWrapper);
+        container.insertBefore(headerBar, chartsContainer);
+      }
       
       // Initialize filtered cards with all items
       filteredDivinationCards = items;
@@ -682,8 +693,7 @@ async function renderItemsView(container, categoryId, items) {
         id: 'divination-cards-grid'
       });
       
-      // Add header bar before grid
-      container.insertBefore(headerBar, chartsContainer);
+      // Add grid before charts
       container.insertBefore(cardsGrid, chartsContainer);
       
       // Initial render
@@ -707,11 +717,6 @@ async function renderItemsView(container, categoryId, items) {
     } else if (isNewCategory(categoryId)) {
       // Special handling for tattoos, runegrafts, and contracts - create header bar with JSON link and search
       if (categoryId === 'tattoos' || categoryId === 'runegrafts' || categoryId === 'contracts') {
-        // Create header bar container
-        const headerBar = createElement('div', {
-          className: 'tattoos-header-bar'
-        });
-        
         // Search input
         const placeholderText = categoryId === 'tattoos' 
           ? 'Search tattoos by name, description, attribute, or drop location...'
@@ -738,8 +743,17 @@ async function renderItemsView(container, categoryId, items) {
         searchWrapper.appendChild(searchLabel);
         searchWrapper.appendChild(searchInput);
         
-        headerBar.appendChild(searchWrapper);
-        container.insertBefore(headerBar, chartsContainer);
+        // Add search wrapper to tabs container if available
+        if (tabsContainer) {
+          tabsContainer.appendChild(searchWrapper);
+        } else {
+          // Fallback: create header bar if tabs container not available
+          const headerBar = createElement('div', {
+            className: 'tattoos-header-bar'
+          });
+          headerBar.appendChild(searchWrapper);
+          container.insertBefore(headerBar, chartsContainer);
+        }
         
         // Create list container
         const listContainer = createElement('div', {
@@ -795,11 +809,6 @@ async function renderItemsView(container, categoryId, items) {
       }
     } else {
       // Render stash tab visualization for other categories with search/filter
-      // Create header bar container (same style as tattoos/runegrafts)
-      const headerBar = createElement('div', {
-        className: 'tattoos-header-bar'
-      });
-      
       // Search input
       const searchInput = createElement('input', {
         type: 'text',
@@ -820,7 +829,17 @@ async function renderItemsView(container, categoryId, items) {
       searchWrapper.appendChild(searchLabel);
       searchWrapper.appendChild(searchInput);
       
-      headerBar.appendChild(searchWrapper);
+      // Add search wrapper to tabs container if available
+      if (tabsContainer) {
+        tabsContainer.appendChild(searchWrapper);
+      } else {
+        // Fallback: create header bar if tabs container not available
+        const headerBar = createElement('div', {
+          className: 'tattoos-header-bar'
+        });
+        headerBar.appendChild(searchWrapper);
+        container.insertBefore(headerBar, chartsContainer);
+      }
       
       // Create views container for grid + list layout
       const viewsContainer = createElement('div', { className: 'category-views-container' });
@@ -843,8 +862,7 @@ async function renderItemsView(container, categoryId, items) {
       viewsContainer.appendChild(gridContainer);
       viewsContainer.appendChild(listContainer);
       
-      // Add header bar before views container
-      container.insertBefore(headerBar, chartsContainer);
+      // Add views container before charts
       container.insertBefore(viewsContainer, chartsContainer);
       
       // Store original items for filtering
