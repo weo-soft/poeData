@@ -1,69 +1,53 @@
-<h1>How to Contribute Datasets</h1>
-
 <h2>Why Your Contributions Matter</h2>
 
-<p>To accurately calculate item weightings and probabilities, we need as many datasets as possible. Each dataset you contribute helps improve the accuracy of weight calculations for the entire community.</p>
+<p>To accurately calculate item weightings and probabilities, we need as many datasets as possible. Each dataset you
+    contribute helps improve the accuracy of weight calculations for the entire community.</p>
 
-<p>More datasets = More accurate calculations = Better data for everyone!</p>
+<p>More datasets = More accurate calculations</p>
 
-<h2>Dataset Structure</h2>
+<h2>How to collect data</h2>
 
-<p>Your dataset should include the following information:</p>
+<p>The most basic information that are needed in the dataset are the <strong></strong>items that were used as
+    input</strong> and the <strong>items that were received as output</strong>.</p>
+<p>In general you should only use one item as an input per dataset, different inputs should be treated as different
+    datasets.</p>
+
+<p>There are two main approaches to collect data on the weight of the items:
+<ul>
+    <li>Using a Vendor recipe (3-to-1)</li>
+    <li>Rerolling the item using the Harvest Bench.</li>
+</ul>
+</p>
+<p>The Vendor recipe in general accepts any combination of items of the same type, though you should only use the same
+    item as input per dataset to recieve accurate results.</p>
+<p>The same approach, of only using one item as an input per dataset, applies to the harvest bench as well.</p>
+<p>When using the Harvest Bench to reroll items it is recommended to use single items to reroll, since using stacks does
+    not provide any additional information about the weight, but increases the costs per transaction while reducing the
+    number of transactions for the same amount of items.</p>
+
+<p><Strong>Note:</Strong> There are certain item categories that have slightly different or additional approaches on collecting data, notably Scarabs, Divination Cards and Contracts, the Details are located in the respective category pages.</p>
+
+<h2>Submitting your data</h2>
+
+<p>When submitting your dataset, you should include the following information:</p>
 
 <ul>
-<li><strong>Name</strong>: A descriptive name for your dataset</li>
-<li><strong>Description</strong>: Optional description of the dataset</li>
-<li><strong>Date</strong>: The date when the data was collected (format: YYYY-MM-DD)</li>
-<li><strong>Patch</strong>: The game patch version (e.g., "3.26.0")</li>
-<li><strong>Sources</strong>: Where the data came from (Discord threads, forum posts, etc.)</li>
-<li><strong>Input Items</strong>: The items you used as input</li>
-<li><strong>Items</strong>: The output items with their counts</li>
+    <li><strong>Input Items</strong>: The items you used as input</li>
+    <li><strong>Items</strong>: The output items with their counts</li>
+    <li><strong>Description</strong>: A short description of how the data was obtained</li>
+    <li><strong>Date</strong>: The date when the data was collected (format: YYYY-MM-DD)</li>
+    <li><strong>Patch</strong>: (Optional) The game patch version (e.g., "3.26.0")</li>
 </ul>
 
-<h2>Quality Guidelines</h2>
+<p>If you made a post, eg. on reddit or discord, you can also include the link to the post in the submission.</p>
 
-<p>To ensure your dataset is useful for weight calculations, follow these quality standards:</p>
+<h2>Dataset size recommendations</h2>
 
-<h3>Minimum Sample Size</h3>
+<p>Since we are trying to calculate/estimate probabilities we need datasets with as many transactions as possible. The more transactions you have, the more accurate the results will be.</p>
 
-<ul>
-<li><strong>Recommended</strong>: At least 100+ input items for meaningful statistical results</li>
-<li><strong>Minimum</strong>: 50+ input items for basic calculations</li>
-<li><strong>Ideal</strong>: 500+ input items for highly accurate weight estimates</li>
-<li><strong>Why it matters</strong>: Larger sample sizes reduce statistical uncertainty and improve calculation accuracy</li>
-</ul>
+<p>It is recommend to collect at least 1000+ input items for basic results, and 10000+ for better accuracy.</p>
 
-<h3>Data Accuracy</h3>
-
-<ul>
-<li><strong>Count Accuracy</strong>: Ensure all item counts are accurate and verified</li>
-<li><strong>No Missing Data</strong>: Record all output items, including those with zero counts</li>
-<li><strong>Consistent Methodology</strong>: Use the same data collection approach throughout</li>
-<li><strong>Verification</strong>: Double-check your counts before submission</li>
-</ul>
-
-<h3>Completeness Requirements</h3>
-
-<ul>
-<li><strong>All Output Items</strong>: Include every possible output item, even if count is 0</li>
-<li><strong>Complete Metadata</strong>: Provide name, description, date, patch version, and sources</li>
-<li><strong>Source Documentation</strong>: Clearly document where data came from (Discord, forum, personal collection)</li>
-<li><strong>Input Items</strong>: Specify exactly which items were used as input</li>
-</ul>
-
-<h3>Data Quality Checklist</h3>
-
-<p>Before submitting, verify your dataset has:</p>
-
-<ul>
-<li>At least 50+ input items (100+ recommended)</li>
-<li>Accurate counts for all output items</li>
-<li>All possible output items included (even with 0 count)</li>
-<li>Complete metadata (name, date, patch, sources)</li>
-<li>Clear source documentation</li>
-<li>Consistent data collection methodology</li>
-</ul>
 
 <h2>How to Submit</h2>
 
-<p>Ready to submit your dataset? Use our <a href="#/submit">dataset submission interface</a> to upload your data.</p>
+<p>Datasets can be submitted by using the <a href="#/submit">dataset submission interface</a> to either using the form to directly fill in your data or by providing your data via a file or link.</p>

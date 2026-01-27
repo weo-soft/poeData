@@ -12,7 +12,7 @@
 
 import { createElement, clearElement } from '../utils/dom.js';
 import { displayError } from '../utils/errors.js';
-import { loadMetadata, loadContent } from '../services/contributionContentLoader.js';
+import { loadContent } from '../services/contributionContentLoader.js';
 import { getAvailableCategories } from '../services/dataLoader.js';
 
 /**
@@ -88,87 +88,13 @@ async function renderOverview(container) {
   const title = createElement('h1', { textContent: 'How to Contribute Datasets' });
   container.appendChild(title);
   
-  // Load metadata and generic content
-  const [metadata, genericContent] = await Promise.all([
-    loadMetadata(),
-    loadContent(null)
-  ]);
+  // Load generic content
+  const genericContent = await loadContent(null);
   
   // Overview section
   const overviewSection = createElement('div', { className: 'contribution-overview' });
   overviewSection.innerHTML = genericContent.html;
   container.appendChild(overviewSection);
-  
-  // Category list section
-  const categoriesSection = createElement('div', { className: 'contribution-categories' });
-  const categoriesTitle = createElement('h2', { textContent: 'Category-Specific Guidelines' });
-  categoriesSection.appendChild(categoriesTitle);
-  
-  const categoriesDescription = createElement('p', {
-    textContent: 'Some categories have specific guidelines tailored to their data collection requirements. Click on a category to view its contribution guide.',
-    className: 'categories-description'
-  });
-  categoriesSection.appendChild(categoriesDescription);
-  
-  // Get available categories
-  const categories = await getAvailableCategories();
-  
-  const categoryList = createElement('ul', { className: 'category-guideline-list' });
-  
-  categories.forEach(category => {
-    const listItem = createElement('li', { className: 'category-guideline-item' });
-    const categoryLink = createElement('a', {
-      href: `#/contributions/${category.id}`,
-      textContent: category.name,
-      className: 'category-guideline-link'
-    });
-    
-    // Check if category has specific guidelines
-    const hasSpecific = metadata.categories?.[category.id]?.available === true;
-    if (hasSpecific) {
-      const indicator = createElement('span', {
-        textContent: '✓',
-        className: 'guideline-indicator available',
-        title: 'Category-specific guidelines available'
-      });
-      categoryLink.appendChild(indicator);
-    } else {
-      const indicator = createElement('span', {
-        textContent: '→',
-        className: 'guideline-indicator generic',
-        title: 'Uses generic guidelines'
-      });
-      categoryLink.appendChild(indicator);
-    }
-    
-    listItem.appendChild(categoryLink);
-    categoryList.appendChild(listItem);
-  });
-  
-  categoriesSection.appendChild(categoryList);
-  container.appendChild(categoriesSection);
-  
-  // Navigation links
-  const navLinks = createElement('div', { className: 'nav-links' });
-  const submitLink = createElement('a', {
-    href: '#/submit',
-    textContent: 'Submit Dataset →',
-    className: 'primary-link'
-  });
-  const categoriesLink = createElement('a', {
-    href: '#/categories',
-    textContent: 'Browse Categories',
-    className: 'secondary-link'
-  });
-  const homeLink = createElement('a', {
-    href: '#/',
-    textContent: '← Back to Home',
-    className: 'back-link'
-  });
-  navLinks.appendChild(homeLink);
-  navLinks.appendChild(categoriesLink);
-  navLinks.appendChild(submitLink);
-  container.appendChild(navLinks);
 }
 
 /**
