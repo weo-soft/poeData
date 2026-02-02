@@ -1,0 +1,45 @@
+/* Divination card – PoE item styling metadata (colors + sizes).
+   Base typography is set on .div-card-reward; these override color/size only. */
+
+/* Base: most item types are uppercase, bold */
+.div-card-reward [class*="poe-style-"]:not([class*="poe-style-default"]):not([class*="poe-style-normal"]):not([class*="poe-style-augmented"]):not([class*="poe-style-enchanted"]) {
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+.div-card-reward .poe-style-default,
+.div-card-reward .poe-style-normal,
+.div-card-reward .poe-style-augmented,
+.div-card-reward .poe-style-enchanted {
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+.div-card-reward .poe-style-augmented {
+  text-transform: uppercase !important;
+}
+
+/* Colors only */
+.div-card-reward .poe-style-uniqueitem { color: #ff8c42 !important; }
+.div-card-reward .poe-style-rareitem { color: #ffeb3b !important; }
+.div-card-reward .poe-style-magicitem { color: #8888ff !important; }
+.div-card-reward .poe-style-whiteitem { color: #ffffff !important; text-transform: none !important; }
+.div-card-reward .poe-style-currencyitem { color: #d7a14d !important; }
+.div-card-reward .poe-style-gemitem { color: #1ba29b !important; }
+.div-card-reward .poe-style-divination { color: #5fb3d3 !important; }
+.div-card-reward .poe-style-default,
+.div-card-reward .poe-style-normal,
+.div-card-reward .poe-style-enchanted { color: #888888 !important; }
+.div-card-reward .poe-style-augmented { color: #a080ff !important; }
+.div-card-reward .poe-style-corrupted { color: #e00000 !important; }
+.div-card-reward .poe-style-fractured { color: #b8860b !important; }
+
+/* Size modifiers: (sizeValue / 32) relative to parent font size */
+.div-card-reward .poe-style-size-24 { font-size: calc(24 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-25 { font-size: calc(25 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-26 { font-size: calc(26 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-27 { font-size: calc(27 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-28 { font-size: calc(28 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-29 { font-size: calc(29 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-30 { font-size: calc(30 / 32 * 1em) !important; }
+.div-card-reward .poe-style-size-31 { font-size: calc(31 / 32 * 1em) !important; }

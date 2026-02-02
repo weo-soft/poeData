@@ -1,25 +1,10 @@
-/* Path of Exile Item Data Browser - Main Styles */
+@import "_variables.css";
 
 /* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  /* PoE-inspired color palette */
-  --poe-dark-bg: #1a1a1a;
-  --poe-darker-bg: #0f0f0f;
-  --poe-border: #3a3a3a;
-  --poe-text: #d4d4d4;
-  --poe-text-dim: #888888;
-  --poe-accent: #af6025;
-  --poe-accent-hover: #c77a3a;
-  --poe-rare: #ffff77;
-  --poe-unique: #af6025;
-  --poe-magic: #8888ff;
-  --poe-normal: #c8c8c8;
 }
 
 /* ============================================================================
@@ -209,7 +194,7 @@ img {
 nav.global-nav {
   background-color: var(--poe-dark-bg);
   border-bottom: 2px solid var(--poe-border);
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -366,7 +351,7 @@ nav.global-nav .nav-link.active::after {
 /* Main Content */
 main {
   flex: 1;
-  padding: 2rem;
+  padding: 0.25rem 2rem 2rem;
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
@@ -376,7 +361,7 @@ main {
 /* Mobile: Reduce main padding */
 @media (max-width: 767px) {
   main {
-    padding: 1rem;
+    padding: 0.25rem 1rem 1rem;
   }
 }
 
@@ -445,7 +430,7 @@ input:focus, textarea:focus, select:focus {
 /* Homepage Styles */
 .home {
   text-align: center;
-  padding: 0.5rem 2rem 2rem;
+  padding: 0.25rem 2rem 2rem;
 }
 
 .home h1 {
@@ -488,13 +473,13 @@ input:focus, textarea:focus, select:focus {
 
 /* Home page category cards */
 .home-categories {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .home-categories-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 0.5rem;
+  gap: 0.35rem;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -503,7 +488,7 @@ input:focus, textarea:focus, select:focus {
 @media (max-width: 1200px) {
   .home-categories-grid {
     grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 }
 
@@ -532,10 +517,10 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.35rem;
   text-decoration: none;
   color: inherit;
-  min-height: 80px;
+  min-height: 68px;
   justify-content: center;
 }
 
@@ -749,7 +734,7 @@ input:focus, textarea:focus, select:focus {
   }
   
   nav.global-nav {
-    padding: 1rem;
+    padding: 0.05rem;
   }
   
   nav.global-nav .nav-container {
@@ -790,12 +775,24 @@ input:focus, textarea:focus, select:focus {
 
 @media (max-width: 767px) {
   .home {
-    padding: 1rem;
+    padding: 0.25rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  /* On mobile: show Welcoming Text (title + container) first, then Category Cards below */
   .home h1 {
+    order: 1;
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
+  }
+
+  .home .welcome-text {
+    order: 2;
+  }
+
+  .home .home-categories {
+    order: 3;
   }
   
   .welcome-text {
@@ -817,17 +814,17 @@ input:focus, textarea:focus, select:focus {
   
   /* Home category cards: responsive grid on mobile */
   .home-categories {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   
   .home-categories-grid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
   
   .home-category-link {
-    padding: 0.75rem;
-    min-height: 100px;
+    padding: 0.5rem;
+    min-height: 88px;
   }
   
   .home-category-icon-container {
@@ -898,9 +895,16 @@ input:focus, textarea:focus, select:focus {
 
 @media (max-width: 767px) {
   .category-view {
-    padding: 1rem;
+    padding: 0.25rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  /* On mobile: show header, tabs, content (incl. contribution guide) first, then Category Cards below – same as home */
+  .category-view .home-categories {
+    order: 4;
+  }
+
   /* List view: single column on mobile */
   .list-view-container {
     grid-template-columns: 1fr;
@@ -1078,7 +1082,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Category View Styles */
 .category-view {
-  padding: 2rem;
+  padding: 0.25rem 2rem 2rem;
 }
 
 .category-header {
@@ -1095,13 +1099,13 @@ input:focus, textarea:focus, select:focus {
   margin: 0;
 }
 
-/* Category Tabs */
+/* Category Tabs – reduced bottom margin so gap to grid/list matches list-only category views */
 .category-tabs {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   border-bottom: 2px solid var(--poe-border);
   position: relative;
   flex-wrap: wrap;
@@ -1113,9 +1117,10 @@ input:focus, textarea:focus, select:focus {
   flex-wrap: wrap;
 }
 
+/* Shared tab button (category tabs, submission tabs, etc.) */
 .tab-button {
   padding: 0.75rem 1.5rem;
-  background-color: transparent;
+  background: none;
   border: none;
   border-bottom: 2px solid transparent;
   color: var(--poe-text-dim);
@@ -1135,7 +1140,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .category-content {
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
 }
 
 .json-link {
@@ -1503,25 +1508,6 @@ input:focus, textarea:focus, select:focus {
   gap: 1rem;
   margin-bottom: 2rem;
   border-bottom: 2px solid var(--poe-border);
-}
-
-.tab-button {
-  background: none;
-  border: none;
-  padding: 1rem 2rem;
-  cursor: pointer;
-  color: var(--poe-text-dim);
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s;
-}
-
-.tab-button:hover {
-  color: var(--poe-text);
-}
-
-.tab-button.active {
-  color: var(--poe-accent);
-  border-bottom-color: var(--poe-accent);
 }
 
 .tab-content {
@@ -2199,171 +2185,15 @@ input:focus, textarea:focus, select:focus {
   text-shadow: 0 1px 0 rgba(255,255,255,0.4), 0 -1px 0 rgba(0,0,0,0.3);
 }
 
-/* Path of Exile styling metadata classes */
-.div-card-reward .poe-style-uniqueitem {
-  color: #ff8c42 !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
+@import "_divination-poe-styles.css";
 
-.div-card-reward .poe-style-rareitem {
-  color: #ffeb3b !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-magicitem {
-  color: #8888ff !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-whiteitem {
-  color: #ffffff !important;
-  text-transform: none !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-currencyitem {
-  color: #d7a14d !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-gemitem {
-  color: #1ba29b !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-divination {
-  color: #5fb3d3 !important;
-  text-transform: uppercase !important;
-  font-weight: 700 !important;
-}
-
-.div-card-reward .poe-style-default {
-  color: #888888 !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-}
-
-.div-card-reward .poe-style-normal {
-  color: #888888 !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-}
-
-.div-card-reward .poe-style-augmented {
-  color: #a080ff !important;
-  font-weight: 400 !important;
-  text-transform: uppercase !important;
-}
-
-.div-card-reward .poe-style-corrupted {
-  color: #e00000 !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-}
-
-.div-card-reward .poe-style-fractured {
-  color: #b8860b !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-}
-
-.div-card-reward .poe-style-enchanted {
-  color: #888888 !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-}
-
-/* Size modifiers - calculated as (sizeValue / 32) relative to parent font size */
-.div-card-reward .poe-style-size-24 {
-  font-size: calc(24 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-25 {
-  font-size: calc(25 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-26 {
-  font-size: calc(26 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-27 {
-  font-size: calc(27 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-28 {
-  font-size: calc(28 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-29 {
-  font-size: calc(29 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-30 {
-  font-size: calc(30 / 32 * 1em) !important;
-}
-
-.div-card-reward .poe-style-size-31 {
-  font-size: calc(31 / 32 * 1em) !important;
-}
-
-/* Divination Card Search/Filter */
-.divination-cards-search-container {
-  margin: 1.5rem 0;
-}
-
-.divination-cards-search-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.divination-cards-search-label {
-  color: var(--poe-text);
-  font-size: 1rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.divination-cards-search-input {
-  flex: 1;
-  min-width: 250px;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  background-color: var(--poe-dark-bg, #1a1a1a);
-  border: 2px solid var(--poe-border, #3a3a3a);
-  border-radius: 6px;
-  color: var(--poe-text);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.divination-cards-search-input:focus {
-  outline: none;
-  border-color: var(--poe-accent, #c8aa6e);
-  box-shadow: 0 0 0 3px rgba(200, 170, 110, 0.1);
-}
-
-.divination-cards-search-input::placeholder {
-  color: var(--poe-text-dim, #888);
-}
-
-.divination-cards-no-results {
-  text-align: center;
-  padding: 2rem;
-  color: var(--poe-text-dim, #888);
-  font-size: 1.1rem;
-}
-
-/* Generic Category Search/Filter (for grid view categories) */
+/* Divination Card Search / Category Search (shared pattern) */
+.divination-cards-search-container,
 .category-search-container {
   margin: 1.5rem 0;
 }
 
+.divination-cards-search-wrapper,
 .category-search-wrapper {
   display: flex;
   align-items: center;
@@ -2371,6 +2201,7 @@ input:focus, textarea:focus, select:focus {
   flex-wrap: wrap;
 }
 
+.divination-cards-search-label,
 .category-search-label {
   color: var(--poe-text);
   font-size: 1rem;
@@ -2378,34 +2209,49 @@ input:focus, textarea:focus, select:focus {
   white-space: nowrap;
 }
 
+.divination-cards-search-input,
 .category-search-input {
   flex: 1;
   min-width: 250px;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  background-color: var(--poe-dark-bg, #1a1a1a);
-  border: 2px solid var(--poe-border, #3a3a3a);
-  border-radius: 6px;
+  background-color: var(--poe-dark-bg);
+  border: 2px solid var(--poe-border);
+  border-radius: var(--radius-lg, 6px);
   color: var(--poe-text);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.divination-cards-search-input:focus,
 .category-search-input:focus {
   outline: none;
-  border-color: var(--poe-accent, #c8aa6e);
-  box-shadow: 0 0 0 3px rgba(200, 170, 110, 0.1);
+  border-color: var(--poe-accent);
+  box-shadow: var(--shadow-focus, 0 0 0 3px rgba(200, 170, 110, 0.1));
 }
 
+.divination-cards-search-input::placeholder,
 .category-search-input::placeholder {
-  color: var(--poe-text-dim, #888);
+  color: var(--poe-text-dim);
 }
 
-/* Category Views Container (Grid + List Layout) */
+.divination-cards-no-results {
+  text-align: center;
+  padding: 2rem;
+  color: var(--poe-text-dim);
+  font-size: 1.1rem;
+}
+
+/* Category Views Container (Grid + List Layout) – reduced top margin to match list/category spacing below tabs */
 .category-views-container {
   display: flex;
   gap: 1.5rem;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
   flex-wrap: wrap;
+}
+
+/* Remove top margin from grid/list content so gap below tabs matches list-only category views */
+.category-views-container .stash-tab-container {
+  margin-top: 0;
 }
 
 /* Desktop: side-by-side - grid maintains original width, list takes remaining space */
@@ -2485,12 +2331,12 @@ input:focus, textarea:focus, select:focus {
   color: var(--poe-text, #fff);
 }
 
-/* List View */
+/* List View - default taller height for grid+list category views (essences, breach, catalysts, legion, etc.) */
 .category-list-view {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-height: 600px;
+  max-height: 864px;
   overflow-y: auto;
   padding: 0.5rem;
   background-color: var(--poe-dark-bg, #1a1a1a);
@@ -2582,7 +2428,7 @@ input:focus, textarea:focus, select:focus {
   white-space: nowrap;
 }
 
-/* Divination Card Grid (Category View) */
+/* Divination Card Grid (Category View) - 3 rows visible, scrollable container */
 .divination-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -2593,6 +2439,35 @@ input:focus, textarea:focus, select:focus {
   background-color: var(--poe-dark-bg, #1a1a1a);
   border: 2px solid var(--poe-border, #3a3a3a);
   border-radius: 8px;
+  /* 3 rows: card height 150*(455/300) ≈ 227.5px per row + gaps */
+  max-height: calc(3 * (150px * 455 / 300) + 2 * 0.1rem + 0.4rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Divination cards view: match grid and list container height (3 rows) */
+.category-views-container.divination-cards-views {
+  align-items: stretch;
+}
+
+.category-views-container.divination-cards-views .category-grid-container,
+.category-views-container.divination-cards-views .category-list-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(3 * (150px * 455 / 300) + 2 * 0.1rem + 0.4rem);
+  min-height: 0;
+}
+
+.category-views-container.divination-cards-views .divination-cards-grid {
+  flex: 1;
+  min-height: 0;
+}
+
+.category-views-container.divination-cards-views .category-list-container .category-list-view {
+  flex: 1;
+  min-height: 0;
+  max-height: none !important; /* override grid-list height so divination keeps its own height */
+  overflow-y: auto;
 }
 
 .divination-card-mini-wrapper {
@@ -3006,6 +2881,22 @@ input:focus, textarea:focus, select:focus {
   line-height: 1.3;
 }
 
+/* Tattoo / runegraft card calculated weight (similar to contract job weights) */
+.tattoo-card-weight {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.tattoo-card-weight-label {
+  color: var(--poe-text-dim);
+}
+
+.tattoo-card-weight-value {
+  font-family: 'Courier New', monospace;
+  color: var(--poe-text);
+}
+
 /* Contract grid container - 4 columns for wider cards */
 .contract-grid-container {
   display: grid;
@@ -3140,7 +3031,7 @@ input:focus, textarea:focus, select:focus {
 /* Runegrafts Grid Container - Wider cards for longer names */
 .runegraft-grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
   padding: 1rem 0;
   width: 100%;
@@ -3155,7 +3046,7 @@ input:focus, textarea:focus, select:focus {
 /* Responsive styles for runegraft grid */
 @media (max-width: 1200px) {
   .runegraft-grid-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
@@ -3199,7 +3090,7 @@ input:focus, textarea:focus, select:focus {
 
 /* When search wrapper is inside category-tabs, adjust styling */
 .category-tabs .tattoos-search-wrapper {
-  margin-left: auto;
+  margin-left: 1.5rem;
   max-width: 500px;
 }
 
@@ -3681,7 +3572,7 @@ input:focus, textarea:focus, select:focus {
 /* Responsive Design for Navigation */
 @media (max-width: 768px) {
   nav.global-nav {
-    padding: 1rem;
+    padding: 0.05rem;
   }
   
   nav.global-nav .nav-list {
@@ -3695,7 +3586,7 @@ input:focus, textarea:focus, select:focus {
   }
   
   main {
-    padding: 1rem;
+    padding: 0.25rem 1rem 1rem;
   }
 }
 

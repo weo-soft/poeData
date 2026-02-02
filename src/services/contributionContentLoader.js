@@ -4,7 +4,7 @@
  * 
  * This service provides functions to load contribution guide metadata and content
  * from static HTML files. It implements caching to avoid repeated network requests
- * and provides fallback to generic guidelines when category-specific content is unavailable.
+ * Category-specific content is required; no fallback is used when it is missing.
  * 
  * @module services/contributionContentLoader
  */
@@ -101,21 +101,22 @@ export async function loadMetadata() {
  * Load contribution guide content for a specific category
  * 
  * Loads HTML content for the specified category and returns a content object.
- * If category-specific content is not available, falls back to generic guidelines.
+ * When categoryId is provided, only category-specific content is loaded; no fallback
+ * to generic guidelines. When categoryId is null, loads the generic overview content.
  * Results are cached in memory.
  * 
- * @param {string|null} categoryId - Category identifier, or null for generic content
+ * @param {string|null} categoryId - Category identifier, or null for generic overview content
  * @returns {Promise<Object>} Content object with the following structure:
  *   - categoryId: string - Category ID or "generic"
  *   - html: string - HTML content
- *   - isGeneric: boolean - Whether this is generic (fallback) content
+ *   - isGeneric: boolean - True only when categoryId was null (generic overview)
  * @throws {ContentLoadError} If content file cannot be loaded
  * @example
  * // Load category-specific content
  * const content = await loadContent('scarabs');
  * // { categoryId: 'scarabs', html: '<h1>Guide...</h1>', isGeneric: false }
  * 
- * // Load generic content
+ * // Load generic overview content
  * const generic = await loadContent(null);
  * // { categoryId: 'generic', html: '<h1>Generic...</h1>', isGeneric: true }
  */
@@ -132,7 +133,7 @@ export async function loadContent(categoryId) {
     let isGeneric = false;
     let actualCategoryId = categoryId || 'generic';
     
-    // If categoryId is null, load generic content
+    // If categoryId is null, load generic overview content
     if (categoryId === null) {
       const response = await fetch('/contributions/generic.html');
       if (!response.ok) {
@@ -145,59 +146,26 @@ export async function loadContent(categoryId) {
       html = await response.text();
       isGeneric = true;
     } else {
-      // Check metadata to see if category-specific content is available
+      // Load category-specific content only; no fallback
       const metadata = await loadMetadata();
       const categoryInfo = metadata.categories?.[categoryId];
-      
-      if (categoryInfo?.available) {
-        // Try to load category-specific content
-        try {
-          const response = await fetch(`/contributions/categories/${categoryId}.html`);
-          if (response.ok) {
-            html = await response.text();
-            isGeneric = false;
-          } else {
-            // Category file not found, fallback to generic
-            const genericResponse = await fetch('/contributions/generic.html');
-            if (!genericResponse.ok) {
-              throw new ContentLoadError(
-                `Failed to load generic fallback: ${genericResponse.statusText}`,
-                categoryId,
-                genericResponse.status
-              );
-            }
-            html = await genericResponse.text();
-            isGeneric = true;
-            actualCategoryId = 'generic';
-          }
-        } catch (error) {
-          // Network error loading category file, try generic fallback
-          const genericResponse = await fetch('/contributions/generic.html');
-          if (!genericResponse.ok) {
-            throw new ContentLoadError(
-              `Failed to load generic fallback: ${genericResponse.statusText}`,
-              categoryId,
-              genericResponse.status
-            );
-          }
-          html = await genericResponse.text();
-          isGeneric = true;
-          actualCategoryId = 'generic';
-        }
-      } else {
-        // Category not available, load generic
-        const response = await fetch('/contributions/generic.html');
-        if (!response.ok) {
-          throw new ContentLoadError(
-            `Failed to load generic content: ${response.statusText}`,
-            categoryId,
-            response.status
-          );
-        }
-        html = await response.text();
-        isGeneric = true;
-        actualCategoryId = 'generic';
+      if (!categoryInfo?.available) {
+        throw new ContentLoadError(
+          `No contribution guidelines available for category: ${categoryId}`,
+          categoryId,
+          null
+        );
       }
+      const response = await fetch(`/contributions/categories/${categoryId}.html`);
+      if (!response.ok) {
+        throw new ContentLoadError(
+          `Failed to load contribution guide: ${response.statusText}`,
+          categoryId,
+          response.status
+        );
+      }
+      html = await response.text();
+      actualCategoryId = categoryId;
     }
     
     // Create content object

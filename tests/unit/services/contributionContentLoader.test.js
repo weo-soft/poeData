@@ -114,7 +114,7 @@ describe('contributionContentLoader', () => {
       expect(global.fetch).toHaveBeenCalledWith('/contributions/categories/scarabs.html');
     });
 
-    it('should fallback to generic when category not available', async () => {
+    it('should throw when category not available in metadata', async () => {
       const mockMetadata = {
         categories: {
           newcategory: { available: false }
@@ -122,26 +122,35 @@ describe('contributionContentLoader', () => {
         genericAvailable: true
       };
 
-      const mockHtml = '<h1>Generic Guide</h1>\n<p>Content here.</p>';
-
-      // Mock metadata load
       global.fetch.mockResolvedValueOnce({
         ok: true,
         json: async () => mockMetadata
       });
 
-      // Mock generic content load
+      await expect(loadContent('newcategory')).rejects.toThrow(ContentLoadError);
+      expect(global.fetch).not.toHaveBeenCalledWith('/contributions/generic.html');
+    });
+
+    it('should throw when category file returns 404', async () => {
+      const mockMetadata = {
+        categories: {
+          scarabs: { available: true }
+        },
+        genericAvailable: true
+      };
+
       global.fetch.mockResolvedValueOnce({
         ok: true,
-        text: async () => mockHtml
+        json: async () => mockMetadata
+      });
+      global.fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found'
       });
 
-      const result = await loadContent('newcategory');
-
-      expect(result.categoryId).toBe('generic');
-      expect(result.html).toBe(mockHtml);
-      expect(result.isGeneric).toBe(true);
-      expect(global.fetch).toHaveBeenCalledWith('/contributions/generic.html');
+      await expect(loadContent('scarabs')).rejects.toThrow(ContentLoadError);
+      expect(global.fetch).not.toHaveBeenCalledWith('/contributions/generic.html');
     });
 
     it('should cache loaded content', async () => {

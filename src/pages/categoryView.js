@@ -20,6 +20,7 @@ import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
 import { showTooltip, hideTooltip, updateTooltipPosition } from '../utils/tooltip.js';
 import { loadContent } from '../services/contributionContentLoader.js';
 import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUrls.js';
+import { renderCategoryCards } from '../components/categoryCards.js';
 
 let currentItems = [];
 let currentCategoryId = null;
@@ -57,7 +58,10 @@ export async function renderCategoryView(container, params) {
     
     // Clear loading
     clearElement(viewSection);
-    
+
+    // Category cards (same as home – always visible)
+    await renderCategoryCards(viewSection);
+
     // Update navbar with category title
     const navigation = document.querySelector('.global-nav');
     if (navigation) {
@@ -664,17 +668,38 @@ async function renderItemsView(container, categoryId, items, tabsContainer = nul
       // Initialize filtered cards with all items
       filteredDivinationCards = items;
       
-      // Render divination card grid
+      // Create views container for grid + list layout (same as scarabs)
+      const viewsContainer = createElement('div', { className: 'category-views-container divination-cards-views' });
+      const gridContainer = createElement('div', { className: 'category-grid-container' });
+      const listContainer = createElement('div', { className: 'category-list-container' });
+      
+      // Divination card grid
       const cardsGrid = createElement('div', {
         className: 'divination-cards-grid',
         id: 'divination-cards-grid'
       });
+      gridContainer.appendChild(cardsGrid);
+      viewsContainer.appendChild(gridContainer);
+      viewsContainer.appendChild(listContainer);
+      container.insertBefore(viewsContainer, chartsContainer);
       
-      // Add grid before charts
-      container.insertBefore(cardsGrid, chartsContainer);
+      let currentSortOption = 'weight-desc';
+      const renderList = async () => {
+        await renderListViewWithWeights(
+          listContainer,
+          filteredDivinationCards,
+          categoryId,
+          currentSortOption,
+          (newSortOption) => {
+            currentSortOption = newSortOption;
+            renderList();
+          }
+        );
+      };
       
-      // Initial render
+      // Initial render: grid and list
       await renderDivinationCardGrid(cardsGrid, filteredDivinationCards);
+      await renderList();
       
       // Add search event listener
       let searchTimeout = null;
@@ -689,6 +714,7 @@ async function renderItemsView(container, categoryId, items, tabsContainer = nul
         searchTimeout = setTimeout(async () => {
           filteredDivinationCards = filterDivinationCards(items, query);
           await renderDivinationCardGrid(cardsGrid, filteredDivinationCards);
+          await renderList();
         }, 150); // 150ms debounce
       });
     } else if (isNewCategory(categoryId)) {
@@ -818,8 +844,8 @@ async function renderItemsView(container, categoryId, items, tabsContainer = nul
         container.insertBefore(headerBar, chartsContainer);
       }
       
-      // Create views container for grid + list layout
-      const viewsContainer = createElement('div', { className: 'category-views-container' });
+      // Create views container for grid + list layout (class for list height targeting)
+      const viewsContainer = createElement('div', { className: 'category-views-container grid-list-views' });
       const gridContainer = createElement('div', { className: 'category-grid-container' });
       const listContainer = createElement('div', { className: 'category-list-container' });
       
@@ -1351,17 +1377,6 @@ async function renderContributionGuide(container, categoryId) {
     });
     guideHeader.appendChild(guideTitle);
     guideSection.appendChild(guideHeader);
-    
-    // Generic content banner (if using fallback)
-    if (content.isGeneric) {
-      const banner = createElement('div', { className: 'generic-content-banner' });
-      const bannerText = createElement('p', {
-        textContent: 'ℹ️ Viewing generic guidelines. Category-specific guidelines coming soon.',
-        className: 'banner-text'
-      });
-      banner.appendChild(bannerText);
-      guideSection.appendChild(banner);
-    }
     
     // Content
     const contentSection = createElement('div', { className: 'contribution-content' });

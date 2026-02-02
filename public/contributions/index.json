@@ -8,9 +8,17 @@
       "available": true,
       "lastUpdated": "2026-01-27"
     },
+    "contracts": {
+      "available": true,
+      "lastUpdated": "2026-02-02"
+    },
     "delirium-orbs": {
       "available": true,
       "lastUpdated": "2026-01-27"
+    },
+    "divination-cards": {
+      "available": true,
+      "lastUpdated": "2026-02-02"
     },
     "essences": {
       "available": true,
@@ -31,6 +39,14 @@
     "scarabs": {
       "available": true,
       "lastUpdated": "2026-01-24"
+    },
+    "runegrafts": {
+      "available": true,
+      "lastUpdated": "2026-02-02"
+    },
+    "tattoos": {
+      "available": true,
+      "lastUpdated": "2026-02-02"
     }
   },
   "genericAvailable": true,

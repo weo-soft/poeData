@@ -428,6 +428,25 @@ async function renderTattooCard(container, tattoo, categoryId, jobWeights = unde
   });
   nameContainer.appendChild(itemName);
   
+  // Add calculated weight for tattoos and runegrafts (always show, use "—" when no value, like contract cards)
+  if (categoryId === 'tattoos' || categoryId === 'runegrafts') {
+    const weightText = formatWeightForDisplay(tattoo);
+    const weightContainer = createElement('div', {
+      className: 'tattoo-card-weight'
+    });
+    const weightLabel = createElement('span', {
+      className: 'tattoo-card-weight-label',
+      textContent: 'Weight: '
+    });
+    const weightValue = createElement('span', {
+      className: 'tattoo-card-weight-value',
+      textContent: weightText === 'N/A' ? '—' : weightText
+    });
+    weightContainer.appendChild(weightLabel);
+    weightContainer.appendChild(weightValue);
+    nameContainer.appendChild(weightContainer);
+  }
+  
   // Add jobs for contracts
   if (categoryId === 'contracts' && tattoo.jobs && Array.isArray(tattoo.jobs) && tattoo.jobs.length > 0) {
     const jobsContainer = createElement('div', {
@@ -540,7 +559,7 @@ async function renderRunegraftsView(container, items, categoryId) {
     return;
   }
   
-  // Create grid container for runegrafts (4 per line for wider cards)
+  // Create grid container for runegrafts (5 per line)
   const gridContainer = createElement('div', {
     className: 'runegraft-grid-container'
   });
@@ -914,36 +933,8 @@ export async function renderListViewWithWeights(container, items, categoryId, so
   
   const listView = createElement('div', { className: 'category-list-view' });
   
-  // Create sort control if callback is provided
+  // Add sortable header row when callback is provided (sorting via column header clicks)
   if (onSortChange) {
-    const sortWrapper = createElement('div', { className: 'category-list-sort-wrapper' });
-    
-    const sortSelect = createElement('select', { className: 'category-list-sort-select' });
-    sortSelect.value = sortOption;
-    
-    const options = [
-      { value: 'weight-desc', text: 'Weight (High to Low)' },
-      { value: 'weight-asc', text: 'Weight (Low to High)' },
-      { value: 'name-asc', text: 'Name (A-Z)' },
-      { value: 'name-desc', text: 'Name (Z-A)' }
-    ];
-    
-    for (const option of options) {
-      const optionElement = createElement('option', {
-        value: option.value,
-        textContent: option.text
-      });
-      sortSelect.appendChild(optionElement);
-    }
-    
-    sortSelect.addEventListener('change', (e) => {
-      onSortChange(e.target.value);
-    });
-    
-    sortWrapper.appendChild(sortSelect);
-    listView.appendChild(sortWrapper);
-    
-    // Also add sortable header row for visual consistency
     const headerRow = createSortableHeader(sortOption, onSortChange);
     listView.appendChild(headerRow);
   }

@@ -4,7 +4,7 @@
  * 
  * This module provides the main page component for the contribution guide feature.
  * It supports two modes:
- * - Overview mode: Displays general contribution information and category list
+ * - Overview mode: Displays general contribution information
  * - Category-specific mode: Displays category-specific contribution guidelines
  * 
  * @module pages/contributions
@@ -12,7 +12,7 @@
 
 import { createElement, clearElement } from '../utils/dom.js';
 import { displayError } from '../utils/errors.js';
-import { loadContent, loadMetadata } from '../services/contributionContentLoader.js';
+import { loadContent } from '../services/contributionContentLoader.js';
 import { getAvailableCategories } from '../services/dataLoader.js';
 
 /**
@@ -76,7 +76,6 @@ export async function renderContributions(container, categoryId = null) {
  * 
  * Displays the contribution guide overview page with:
  * - Generic contribution guidelines
- * - List of all categories with guideline availability indicators
  * - Navigation links to submission interface and other pages
  * 
  * @param {HTMLElement} container - Container element to render into
@@ -89,12 +88,6 @@ async function renderOverview(container) {
   const title = createElement('h1', { textContent: 'How to Contribute Datasets' });
   container.appendChild(title);
   
-  // Load metadata and categories in parallel
-  const [metadata, categories] = await Promise.all([
-    loadMetadata(),
-    getAvailableCategories()
-  ]);
-  
   // Load generic content
   const genericContent = await loadContent(null);
   
@@ -102,35 +95,6 @@ async function renderOverview(container) {
   const overviewSection = createElement('div', { className: 'contribution-overview' });
   overviewSection.innerHTML = genericContent.html;
   container.appendChild(overviewSection);
-  
-  // Category list with availability indicators
-  const categoryList = createElement('div', { className: 'category-guideline-list' });
-  
-  for (const category of categories) {
-    const categoryLink = createElement('a', {
-      href: `#/contributions/${category.id}`,
-      className: 'category-guideline-link'
-    });
-    
-    const categoryName = createElement('span', {
-      textContent: category.name
-    });
-    categoryLink.appendChild(categoryName);
-    
-    // Add availability indicator
-    const categoryInfo = metadata.categories?.[category.id];
-    const isAvailable = categoryInfo?.available === true;
-    
-    const indicator = createElement('span', {
-      className: `guideline-indicator ${isAvailable ? 'available' : 'unavailable'}`,
-      textContent: isAvailable ? ' ✓' : ' ○'
-    });
-    categoryLink.appendChild(indicator);
-    
-    categoryList.appendChild(categoryLink);
-  }
-  
-  container.appendChild(categoryList);
   
   // Navigation links
   const navLinks = createElement('div', { className: 'nav-links' });
@@ -150,7 +114,7 @@ async function renderOverview(container) {
  * 
  * Displays category-specific contribution guidelines with:
  * - Breadcrumb navigation
- * - Category-specific content (or generic fallback with banner)
+ * - Category-specific content
  * - Navigation links to submission form and category view
  * 
  * @param {HTMLElement} container - Container element to render into
@@ -161,7 +125,7 @@ async function renderOverview(container) {
 async function renderCategoryGuide(container, categoryId) {
   clearElement(container);
   
-  // Load content (will fallback to generic if category-specific not available)
+  // Load category-specific content (throws if not available)
   const content = await loadContent(categoryId);
   
   // Get category name
@@ -195,17 +159,6 @@ async function renderCategoryGuide(container, categoryId) {
     textContent: `Contributing ${categoryName} Datasets`
   });
   container.appendChild(title);
-  
-  // Generic content banner (if using fallback)
-  if (content.isGeneric) {
-    const banner = createElement('div', { className: 'generic-content-banner' });
-    const bannerText = createElement('p', {
-      textContent: 'ℹ️ Viewing generic guidelines. Category-specific guidelines coming soon.',
-      className: 'banner-text'
-    });
-    banner.appendChild(bannerText);
-    container.appendChild(banner);
-  }
   
   // Content
   const contentSection = createElement('div', { className: 'contribution-content' });

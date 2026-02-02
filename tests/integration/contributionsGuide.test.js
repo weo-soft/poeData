@@ -77,26 +77,7 @@ describe('Contribution Guide Integration Tests', () => {
       expect(container.querySelector('h1')).toBeTruthy();
       expect(container.querySelector('h1').textContent).toContain('How to Contribute');
       
-      expect(loadMetadata).toHaveBeenCalled();
       expect(loadContent).toHaveBeenCalledWith(null);
-      expect(getAvailableCategories).toHaveBeenCalled();
-    });
-
-    it('should display category list with availability indicators', async () => {
-      await renderContributions(container, null);
-
-      const categoryList = container.querySelector('.category-guideline-list');
-      expect(categoryList).toBeTruthy();
-      
-      const categoryLinks = categoryList.querySelectorAll('.category-guideline-link');
-      expect(categoryLinks.length).toBeGreaterThan(0);
-      
-      // Check that scarabs has available indicator
-      const scarabsLink = Array.from(categoryLinks).find(link => 
-        link.textContent.includes('Scarabs')
-      );
-      expect(scarabsLink).toBeTruthy();
-      expect(scarabsLink.querySelector('.guideline-indicator.available')).toBeTruthy();
     });
 
     it('should display navigation links to submission interface', async () => {
@@ -117,12 +98,11 @@ describe('Contribution Guide Integration Tests', () => {
       
       // After loading completes, content should be displayed
       expect(container.querySelector('.contribution-overview')).toBeTruthy();
-      expect(loadMetadata).toHaveBeenCalled();
       expect(loadContent).toHaveBeenCalled();
     });
 
     it('should display error state with retry option on failure', async () => {
-      loadMetadata.mockRejectedValue(new Error('Failed to load'));
+      loadContent.mockRejectedValue(new Error('Failed to load'));
       
       await renderContributions(container, null);
 
@@ -147,20 +127,14 @@ describe('Contribution Guide Integration Tests', () => {
       expect(loadContent).toHaveBeenCalledWith('scarabs');
     });
 
-    it('should display generic fallback with banner when category-specific not available', async () => {
-      const fallbackContent = {
-        ...mockGenericContent,
-        categoryId: 'generic',
-        isGeneric: true
-      };
-      loadContent.mockResolvedValue(fallbackContent);
+    it('should display error with retry when category has no guidelines', async () => {
+      loadContent.mockRejectedValue(new Error('No contribution guidelines available for category: breach'));
       
       await renderContributions(container, 'breach');
 
-      const banner = container.querySelector('.generic-content-banner');
-      expect(banner).toBeTruthy();
-      expect(banner.textContent).toContain('generic guidelines');
-      
+      expect(container.textContent).toContain('Failed to load');
+      const retryButton = container.querySelector('.retry-button');
+      expect(retryButton).toBeTruthy();
       expect(loadContent).toHaveBeenCalledWith('breach');
     });
 
@@ -203,18 +177,13 @@ describe('Contribution Guide Integration Tests', () => {
       expect(categoryLink).toBeTruthy();
     });
 
-    it('should handle invalid categoryId gracefully', async () => {
-      const fallbackContent = {
-        ...mockGenericContent,
-        categoryId: 'generic',
-        isGeneric: true
-      };
-      loadContent.mockResolvedValue(fallbackContent);
+    it('should display error with retry when categoryId has no guidelines', async () => {
+      loadContent.mockRejectedValue(new Error('No contribution guidelines available for category: invalid-category'));
       
       await renderContributions(container, 'invalid-category');
 
-      // Should still render with generic fallback
-      expect(container.querySelector('.contributions')).toBeTruthy();
+      expect(container.textContent).toContain('Failed to load');
+      expect(container.querySelector('.retry-button')).toBeTruthy();
       expect(loadContent).toHaveBeenCalledWith('invalid-category');
     });
   });

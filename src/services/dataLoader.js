@@ -79,7 +79,9 @@ function getCalculationDirectory(categoryId) {
     'catalysts': 'catalysts',
     'delirium-orbs': 'deliriumOrbs',
     'fossils': 'fossils',
-    'legion-splinters': 'legionSplinters'
+    'legion-splinters': 'legionSplinters',
+    'tattoos': 'tattoos',
+    'runegrafts': 'runegrafts'
   };
   
   return categoryToDirMap[categoryId] || null;

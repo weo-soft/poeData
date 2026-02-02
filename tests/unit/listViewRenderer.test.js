@@ -330,7 +330,7 @@ describe('renderListViewWithWeights', () => {
     expect(entries[2].querySelector('.category-list-entry-name').textContent).toBe('High Weight');
   });
 
-  it('should show sort control when onSortChange callback is provided', async () => {
+  it('should show sortable header row when onSortChange callback is provided', async () => {
     const items = [
       { id: 'item1', name: 'Item 1', dropWeight: 0.025 }
     ];
@@ -339,15 +339,14 @@ describe('renderListViewWithWeights', () => {
 
     await renderListViewWithWeights(container, items, categoryId, 'weight-desc', onSortChange);
 
-    const sortControl = container.querySelector('.category-list-sort-wrapper');
-    expect(sortControl).toBeTruthy();
-    
-    const sortSelect = container.querySelector('.category-list-sort-select');
-    expect(sortSelect).toBeTruthy();
-    expect(sortSelect.value).toBe('weight-desc');
+    const headerRow = container.querySelector('.category-list-header');
+    expect(headerRow).toBeTruthy();
+    expect(container.querySelector('.category-list-header-name')).toBeTruthy();
+    expect(container.querySelector('.category-list-header-weight')).toBeTruthy();
+    expect(container.querySelector('.category-list-sort-wrapper')).toBeFalsy();
   });
 
-  it('should call onSortChange when sort option changes', async () => {
+  it('should call onSortChange when column header is clicked', async () => {
     const items = [
       { id: 'item1', name: 'Item 1', dropWeight: 0.025 }
     ];
@@ -356,11 +355,10 @@ describe('renderListViewWithWeights', () => {
 
     await renderListViewWithWeights(container, items, categoryId, 'weight-desc', onSortChange);
 
-    const sortSelect = container.querySelector('.category-list-sort-select');
-    sortSelect.value = 'name-asc';
-    sortSelect.dispatchEvent(new Event('change'));
+    const nameHeader = container.querySelector('.category-list-header-name');
+    nameHeader.click();
 
-    expect(onSortChange).toHaveBeenCalledWith('name-asc');
+    expect(onSortChange).toHaveBeenCalledWith('name-desc');
     expect(onSortChange).toHaveBeenCalledTimes(1);
   });
 });
