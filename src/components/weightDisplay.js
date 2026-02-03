@@ -338,7 +338,14 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
  * @returns {HTMLElement} Tabs container
  */
 function createVisualizationTabs(weights, items, categoryId, defaultView) {
-  const tabsContainer = createElement('div', { className: 'visualization-tabs' });
+  const tabsContainer = createElement('div', { 
+    className: 'visualization-tabs',
+    style: 'display: flex; justify-content: space-between; align-items: center;'
+  });
+  
+  const tabsWrapper = createElement('div', {
+    style: 'display: flex; gap: 0.5rem;'
+  });
   
   const tabTypes = [
     { id: 'table', label: 'Table' },
@@ -359,8 +366,37 @@ function createVisualizationTabs(weights, items, categoryId, defaultView) {
       handleTabClick(tab.id);
     });
     
-    tabsContainer.appendChild(tabElement);
+    tabsWrapper.appendChild(tabElement);
   });
+
+  tabsContainer.appendChild(tabsWrapper);
+
+  // Add info icon for MLE explanation
+  const infoIconContainer = createElement('div', {
+    className: 'bayesian-info-icon-container'
+  });
+  
+  const infoIcon = createElement('button', {
+    className: 'bayesian-info-icon',
+    title: 'Show MLE Calculation Explanation',
+    'aria-label': 'Show MLE Calculation Explanation'
+  });
+  
+  // Use Unicode icon (avoids SVG namespace issues)
+  const infoGlyph = createElement('span', {
+    className: 'bayesian-info-glyph',
+    textContent: 'ⓘ',
+    'aria-hidden': 'true'
+  });
+  infoIcon.appendChild(infoGlyph);
+  
+  infoIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showMleExplanationModal();
+  });
+  
+  infoIconContainer.appendChild(infoIcon);
+  tabsContainer.appendChild(infoIconContainer);
 
   return tabsContainer;
 }
@@ -614,6 +650,204 @@ function renderTableView(container, weights, items, categoryId) {
 
   weightTable.appendChild(tbody);
   container.appendChild(weightTable);
+}
+
+/**
+ * Show MLE explanation in a modal dialog
+ */
+function showMleExplanationModal() {
+  // Remove existing modal if present
+  const existingModal = document.querySelector('.mle-explanation-modal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  // Create overlay structure (reusing datasets-overlay pattern)
+  const overlay = createElement('div', {
+    className: 'datasets-overlay mle-explanation-modal',
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-labelledby': 'mle-explanation-modal-title'
+  });
+  
+  const backdrop = createElement('div', {
+    className: 'datasets-overlay-backdrop',
+    'aria-hidden': 'true'
+  });
+  
+  const content = createElement('div', {
+    className: 'datasets-overlay-content mle-explanation-content',
+    role: 'document',
+    style: 'max-width: 800px;'
+  });
+
+  // Header with close button
+  const header = createElement('div', { className: 'datasets-overlay-header' });
+  const title = createElement('h2', {
+    id: 'mle-explanation-modal-title',
+    className: 'datasets-overlay-title',
+    textContent: 'Deterministic (MLE) Calculation'
+  });
+  const closeButton = createElement('button', {
+    className: 'datasets-overlay-close',
+    textContent: '×',
+    title: 'Close',
+    'aria-label': 'Close'
+  });
+  
+  header.appendChild(title);
+  header.appendChild(closeButton);
+  content.appendChild(header);
+
+  // Body with explanation content
+  const body = createElement('div', {
+    className: 'datasets-overlay-body mle-explanation-body',
+    style: 'padding: 1rem; overflow-y: auto; flex: 1; min-height: 0;'
+  });
+  
+  // Render MLE explanation
+  renderMleExplanation(body);
+  
+  content.appendChild(body);
+
+  // Assemble overlay
+  overlay.appendChild(backdrop);
+  overlay.appendChild(content);
+  document.body.appendChild(overlay);
+
+  // Event listeners
+  const closeModal = () => {
+    overlay.remove();
+  };
+  
+  backdrop.addEventListener('click', closeModal);
+  closeButton.addEventListener('click', closeModal);
+  
+  // Keyboard handler
+  const escHandler = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', escHandler);
+    }
+  };
+  document.addEventListener('keydown', escHandler);
+}
+
+/**
+ * Render explanation of how Deterministic MLE calculation works
+ * @param {HTMLElement} container - Container element
+ */
+function renderMleExplanation(container) {
+  const explanationDiv = createElement('div', {
+    className: 'mle-explanation'
+  });
+
+  // Introduction
+  const intro = createElement('p', {
+    style: 'margin-bottom: 1rem; line-height: 1.6;',
+    textContent: 'The Deterministic (MLE) method uses Maximum Likelihood Estimation to calculate item drop weights from transformation data. It provides point estimates of weights based on observed counts, assuming the observed frequencies represent the true underlying probabilities.'
+  });
+  explanationDiv.appendChild(intro);
+
+  // How it works section
+  const howItWorksTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'How It Works'
+  });
+  explanationDiv.appendChild(howItWorksTitle);
+
+  const stepsList = createElement('ol', {
+    style: 'margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;'
+  });
+
+  const steps = [
+    {
+      title: 'Data Collection',
+      text: 'The method analyzes transformation datasets where items are transformed into other items. Each dataset contains counts of how many times each output item was observed.'
+    },
+    {
+      title: 'Frequency Calculation',
+      text: 'For each item, the method calculates its frequency by summing all observed counts across all datasets and dividing by the total number of transformations observed.'
+    },
+    {
+      title: 'Normalization',
+      text: 'The frequencies are normalized so that all item weights sum to 1.0 (100%), ensuring they represent valid probability distributions.'
+    },
+    {
+      title: 'Maximum Likelihood Estimate',
+      text: 'The normalized frequencies serve as the Maximum Likelihood Estimate (MLE) - the weight values that make the observed data most probable under the assumed statistical model.'
+    }
+  ];
+
+  steps.forEach((step, index) => {
+    const li = createElement('li', {
+      style: 'margin-bottom: 0.75rem;'
+    });
+    
+    const stepTitle = createElement('strong', {
+      style: 'color: var(--poe-accent);',
+      textContent: `${step.title}: `
+    });
+    li.appendChild(stepTitle);
+    
+    const stepText = document.createTextNode(step.text);
+    li.appendChild(stepText);
+    
+    stepsList.appendChild(li);
+  });
+
+  explanationDiv.appendChild(stepsList);
+
+  // Key characteristics
+  const characteristicsTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'Key Characteristics'
+  });
+  explanationDiv.appendChild(characteristicsTitle);
+
+  const characteristicsList = createElement('ul', {
+    style: 'margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;'
+  });
+
+  const characteristics = [
+    'Point Estimates: Provides single weight values rather than probability distributions',
+    'Fast Computation: Calculates instantly without iterative sampling',
+    'Data-Driven: Weights directly reflect observed frequencies in your datasets',
+    'No Uncertainty: Does not provide confidence intervals or uncertainty ranges',
+    'Requires Sufficient Data: Accuracy improves with larger sample sizes'
+  ];
+
+  characteristics.forEach(characteristic => {
+    const li = createElement('li', {
+      style: 'margin-bottom: 0.5rem;',
+      textContent: characteristic
+    });
+    characteristicsList.appendChild(li);
+  });
+
+  explanationDiv.appendChild(characteristicsList);
+
+  // When to use section
+  const whenToUseTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'When to Use MLE'
+  });
+  explanationDiv.appendChild(whenToUseTitle);
+
+  const whenToUse = createElement('p', {
+    style: 'line-height: 1.8; margin-bottom: 1rem;',
+    textContent: 'MLE is ideal when you have large datasets with many observations, need quick results, and want straightforward point estimates. It works best when the observed frequencies are stable and representative of the true underlying probabilities.'
+  });
+  explanationDiv.appendChild(whenToUse);
+
+  // Comparison note
+  const comparisonNote = createElement('p', {
+    style: 'margin-top: 1.5rem; padding: 0.75rem; background-color: rgba(175, 96, 37, 0.1); border-left: 3px solid var(--poe-accent); border-radius: 4px; font-style: italic;',
+    textContent: 'Tip: For uncertainty quantification and better handling of small datasets, consider using the Bayesian (MCMC) method, which provides probability distributions and credible intervals for each weight estimate.'
+  });
+  explanationDiv.appendChild(comparisonNote);
+
+  container.appendChild(explanationDiv);
 }
 
 /**

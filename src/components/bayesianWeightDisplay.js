@@ -256,20 +256,12 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     currentContentArea = contentArea; // Store reference for tab switching
 
     // Display default view (table with statistics)
-    renderBayesianResults(contentArea, currentBayesianResult, items, categoryId);
+    renderBayesianResults(contentArea, currentBayesianResult, items, categoryId, result.modelAssumptions, datasets);
 
     // Display convergence diagnostics if available
     if (result.convergenceDiagnostics) {
       renderConvergenceDiagnostics(bayesianDisplay, result.convergenceDiagnostics);
     }
-
-    // Display model assumptions if available
-    if (result.modelAssumptions) {
-      renderModelAssumptions(bayesianDisplay, result.modelAssumptions);
-    }
-
-    // Display exclusion constraint information
-    renderExclusionConstraintInfo(bayesianDisplay, datasets);
 
   } catch (error) {
     isLoading = false;
@@ -367,8 +359,10 @@ function mapDatasetIdToCategoryId(datasetItemId, categoryItems) {
  * @param {Object} result - Bayesian result object
  * @param {Array<Object>} items - Item metadata
  * @param {string} categoryId - Category identifier
+ * @param {Object} modelAssumptions - Model assumptions object (optional)
+ * @param {Array<Object>} datasets - Dataset objects (optional, for exclusion constraint)
  */
-function renderBayesianResults(container, result, items, categoryId) {
+function renderBayesianResults(container, result, items, categoryId, modelAssumptions = null, datasets = null) {
   const { summaryStatistics } = result;
 
   if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
@@ -617,8 +611,15 @@ function renderModelAssumptions(container, assumptions) {
  * @returns {HTMLElement} Tabs container
  */
 function createBayesianVisualizationTabs(result, items) {
-  const tabsContainer = createElement('div', { className: 'bayesian-visualization-tabs' });
-  
+  const tabsContainer = createElement('div', {
+    className: 'bayesian-visualization-tabs',
+    style: 'display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;'
+  });
+
+  const tabsWrapper = createElement('div', {
+    style: 'display: flex; gap: 0.5rem; flex-wrap: wrap;'
+  });
+
   const tabTypes = [
     { id: 'table', label: 'Statistics Table' },
     { id: 'density', label: 'Density Plot' },
@@ -637,8 +638,17 @@ function createBayesianVisualizationTabs(result, items) {
       await handleBayesianTabClick(tab.id, currentBayesianResult, currentItems);
     });
     
-    tabsContainer.appendChild(tabElement);
+    tabsWrapper.appendChild(tabElement);
   });
+
+  tabsContainer.appendChild(tabsWrapper);
+
+  // Info icon aligned right (same row as tab buttons)
+  if (result?.modelAssumptions) {
+    tabsContainer.appendChild(
+      createModelAssumptionsInfoButton(result.modelAssumptions, currentDatasets, { inline: true })
+    );
+  }
 
   return tabsContainer;
 }
@@ -696,9 +706,13 @@ async function renderBayesianVisualization(container, viewType, result, items) {
 
   switch (viewType) {
     case 'table':
-      renderBayesianResults(container, result, items, currentCategoryId);
+      renderBayesianResults(container, result, items, currentCategoryId, result.modelAssumptions, currentDatasets);
       break;
     case 'density': {
+      // Render density plot into a sub-container so the chart code can clear safely
+      const vizBody = createElement('div', { className: 'bayesian-visualization-body' });
+      container.appendChild(vizBody);
+
       // Check if posteriorSamples exist and are not empty
       const hasPosteriorSamples = result.posteriorSamples && 
                                    Object.keys(result.posteriorSamples).length > 0;
@@ -724,18 +738,18 @@ async function renderBayesianVisualization(container, viewType, result, items) {
         progressBar.appendChild(progressFill);
         loadingDiv.appendChild(loadingText);
         loadingDiv.appendChild(progressBar);
-        container.appendChild(loadingDiv);
+        vizBody.appendChild(loadingDiv);
 
         // Render density plot asynchronously with progress updates
         try {
-          currentChartInstance = await renderDensityPlot(container, result.posteriorSamples, items, {
+          currentChartInstance = await renderDensityPlot(vizBody, result.posteriorSamples, items, {
             summaryStatistics: result.summaryStatistics,
             onProgress: (progress) => {
               progressFill.style.width = `${progress}%`;
               if (progress >= 100) {
                 // Keep loading indicator visible briefly after completion
                 setTimeout(() => {
-                  if (loadingDiv.parentElement === container) {
+                  if (loadingDiv.parentElement === vizBody) {
                     loadingDiv.remove();
                   }
                 }, 300);
@@ -750,7 +764,7 @@ async function renderBayesianVisualization(container, viewType, result, items) {
             style: 'padding: 20px; text-align: center; color: #ff6b6b;',
             textContent: `Failed to render density plot: ${error.message}`
           });
-          container.appendChild(errorState);
+          vizBody.appendChild(errorState);
           console.error('Density plot rendering error:', error);
         }
       } else {
@@ -762,25 +776,294 @@ async function renderBayesianVisualization(container, viewType, result, items) {
             ? 'Density plot requires full posterior samples. Please recalculate Bayesian weights to view the density plot.'
             : 'No posterior samples available for density plot'
         });
-        container.appendChild(emptyState);
+        vizBody.appendChild(emptyState);
       }
       break;
     }
     case 'ranked': {
+      const vizBody = createElement('div', { className: 'bayesian-visualization-body' });
+      container.appendChild(vizBody);
+
       if (result.summaryStatistics) {
-        currentChartInstance = renderRankedProbabilityChart(container, result.summaryStatistics, items);
+        currentChartInstance = renderRankedProbabilityChart(vizBody, result.summaryStatistics, items);
       } else {
         const emptyState = createElement('div', {
           className: 'visualization-placeholder',
           textContent: 'No summary statistics available for ranked probability chart'
         });
-        container.appendChild(emptyState);
+        vizBody.appendChild(emptyState);
       }
       break;
     }
     default:
-      renderBayesianResults(container, result, items, currentCategoryId);
+      renderBayesianResults(container, result, items, currentCategoryId, result.modelAssumptions, currentDatasets);
   }
+}
+
+/**
+ * Create a right-aligned info button that opens model assumptions
+ * @param {Object} modelAssumptions - Model assumptions object
+ * @param {Array<Object>} datasets - Dataset objects (optional, for exclusion constraint)
+ * @returns {HTMLElement}
+ */
+function createModelAssumptionsInfoButton(modelAssumptions, datasets = null, options = {}) {
+  const infoIconContainer = createElement('div', {
+    className: 'bayesian-info-icon-container',
+    style: options.inline ? 'margin-bottom: 0; justify-content: flex-end;' : undefined
+  });
+
+  const infoIcon = createElement('button', {
+    className: 'bayesian-info-icon',
+    title: 'Show Model Assumptions',
+    'aria-label': 'Show Model Assumptions'
+  });
+
+  // Use Unicode icon (avoids SVG namespace issues)
+  const infoGlyph = createElement('span', {
+    className: 'bayesian-info-glyph',
+    textContent: 'ⓘ',
+    'aria-hidden': 'true'
+  });
+  infoIcon.appendChild(infoGlyph);
+
+  infoIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showModelAssumptionsModal(modelAssumptions, datasets);
+  });
+
+  infoIconContainer.appendChild(infoIcon);
+  return infoIconContainer;
+}
+
+/**
+ * Render explanation of how Bayesian MCMC calculation works
+ * @param {HTMLElement} container - Container element
+ */
+function renderBayesianMcmcExplanation(container) {
+  const explanationDiv = createElement('div', {
+    className: 'bayesian-mcmc-explanation'
+  });
+
+  // Introduction
+  const intro = createElement('p', {
+    style: 'margin-bottom: 1rem; line-height: 1.6;',
+    textContent: 'The Bayesian (MCMC) method uses Markov Chain Monte Carlo sampling to estimate item drop weights with uncertainty quantification. Unlike deterministic methods that provide point estimates, Bayesian inference produces probability distributions over possible weight values.'
+  });
+  explanationDiv.appendChild(intro);
+
+  // How it works section
+  const howItWorksTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'How It Works'
+  });
+  explanationDiv.appendChild(howItWorksTitle);
+
+  const stepsList = createElement('ol', {
+    style: 'margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;'
+  });
+
+  const steps = [
+    {
+      title: 'Prior Distribution',
+      text: 'The method starts with a prior belief about item weights. For items with known inputs, it uses that information; for unknown inputs, it assumes a uniform prior over all possible items.'
+    },
+    {
+      title: 'Likelihood Function',
+      text: 'The observed transformation counts from your datasets are used to construct a likelihood function, which describes how probable the observed data is given different weight values.'
+    },
+    {
+      title: 'MCMC Sampling',
+      text: 'Markov Chain Monte Carlo (MCMC) sampling generates thousands of samples from the posterior distribution. Each sample represents a plausible set of weight values that could explain the observed data.'
+    },
+    {
+      title: 'Posterior Statistics',
+      text: 'From these samples, we compute summary statistics: the median (50th percentile), MAP estimate (most probable value), and credible intervals (uncertainty ranges).'
+    }
+  ];
+
+  steps.forEach((step, index) => {
+    const li = createElement('li', {
+      style: 'margin-bottom: 0.75rem;'
+    });
+    
+    const stepTitle = createElement('strong', {
+      style: 'color: var(--poe-accent);',
+      textContent: `${step.title}: `
+    });
+    li.appendChild(stepTitle);
+    
+    const stepText = document.createTextNode(step.text);
+    li.appendChild(stepText);
+    
+    stepsList.appendChild(li);
+  });
+
+  explanationDiv.appendChild(stepsList);
+
+  // Key advantages
+  const advantagesTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'Key Advantages'
+  });
+  explanationDiv.appendChild(advantagesTitle);
+
+  const advantagesList = createElement('ul', {
+    style: 'margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;'
+  });
+
+  const advantages = [
+    'Uncertainty Quantification: Provides credible intervals showing the range of plausible weight values',
+    'Handles Small Samples: Better performance with limited data compared to deterministic methods',
+    'Incorporates Prior Knowledge: Can use information about known input items to improve estimates',
+    'Exclusion Constraints: Enforces that input items cannot be returned as outputs in the same transformation'
+  ];
+
+  advantages.forEach(advantage => {
+    const li = createElement('li', {
+      style: 'margin-bottom: 0.5rem;',
+      textContent: advantage
+    });
+    advantagesList.appendChild(li);
+  });
+
+  explanationDiv.appendChild(advantagesList);
+
+  // Interpretation section
+  const interpretationTitle = createElement('h3', {
+    style: 'margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--poe-accent);',
+    textContent: 'Interpreting the Results'
+  });
+  explanationDiv.appendChild(interpretationTitle);
+
+  const interpretation = createElement('div', {
+    style: 'line-height: 1.8;'
+  });
+
+  const interpretationPoints = [
+    {
+      term: 'Posterior Median:',
+      desc: 'The 50th percentile of the weight distribution - half of all samples are above this value, half below.'
+    },
+    {
+      term: 'MAP Estimate:',
+      desc: 'The Maximum A Posteriori estimate - the single most probable weight value given the data.'
+    },
+    {
+      term: '95% Credible Interval:',
+      desc: 'The range containing 95% of the posterior samples. There is a 95% probability that the true weight falls within this range.'
+    }
+  ];
+
+  interpretationPoints.forEach(point => {
+    const p = createElement('p', {
+      style: 'margin-bottom: 0.75rem;'
+    });
+    
+    const term = createElement('strong', {
+      style: 'color: var(--poe-accent);',
+      textContent: point.term + ' '
+    });
+    p.appendChild(term);
+    
+    const desc = document.createTextNode(point.desc);
+    p.appendChild(desc);
+    
+    interpretation.appendChild(p);
+  });
+
+  explanationDiv.appendChild(interpretation);
+
+  // Note about computation
+  const note = createElement('p', {
+    style: 'margin-top: 1.5rem; padding: 0.75rem; background-color: rgba(175, 96, 37, 0.1); border-left: 3px solid var(--poe-accent); border-radius: 4px; font-style: italic;',
+    textContent: 'Note: This calculation runs entirely in your browser using client-side JavaScript. The MCMC sampling may take 10-30 seconds depending on the number of items and datasets.'
+  });
+  explanationDiv.appendChild(note);
+
+  container.appendChild(explanationDiv);
+}
+
+/**
+ * Show model assumptions in a modal dialog
+ * @param {Object} assumptions - Model assumptions object (kept for compatibility, not used)
+ * @param {Array<Object>} datasets - Dataset objects (kept for compatibility, not used)
+ */
+function showModelAssumptionsModal(assumptions, datasets = null) {
+  // Remove existing modal if present
+  const existingModal = document.querySelector('.model-assumptions-modal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  // Create overlay structure (reusing datasets-overlay pattern)
+  const overlay = createElement('div', {
+    className: 'datasets-overlay model-assumptions-modal',
+    role: 'dialog',
+    'aria-modal': 'true',
+    'aria-labelledby': 'model-assumptions-modal-title'
+  });
+  
+  const backdrop = createElement('div', {
+    className: 'datasets-overlay-backdrop',
+    'aria-hidden': 'true'
+  });
+  
+  const content = createElement('div', {
+    className: 'datasets-overlay-content model-assumptions-content',
+    role: 'document',
+    style: 'max-width: 800px;'
+  });
+
+  // Header with close button
+  const header = createElement('div', { className: 'datasets-overlay-header' });
+  const title = createElement('h2', {
+    id: 'model-assumptions-modal-title',
+    className: 'datasets-overlay-title',
+    textContent: 'Bayesian (MCMC) Calculation'
+  });
+  const closeButton = createElement('button', {
+    className: 'datasets-overlay-close',
+    textContent: '×',
+    title: 'Close',
+    'aria-label': 'Close'
+  });
+  
+  header.appendChild(title);
+  header.appendChild(closeButton);
+  content.appendChild(header);
+
+  // Body with explanation content
+  const body = createElement('div', {
+    className: 'datasets-overlay-body model-assumptions-body',
+    style: 'padding: 1rem; overflow-y: auto; flex: 1; min-height: 0;'
+  });
+  
+  // Render Bayesian MCMC explanation
+  renderBayesianMcmcExplanation(body);
+  
+  content.appendChild(body);
+
+  // Assemble overlay
+  overlay.appendChild(backdrop);
+  overlay.appendChild(content);
+  document.body.appendChild(overlay);
+
+  // Event listeners
+  const closeModal = () => {
+    overlay.remove();
+  };
+  
+  backdrop.addEventListener('click', closeModal);
+  closeButton.addEventListener('click', closeModal);
+  
+  // Keyboard handler
+  const escHandler = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', escHandler);
+    }
+  };
+  document.addEventListener('keydown', escHandler);
 }
 
 /**

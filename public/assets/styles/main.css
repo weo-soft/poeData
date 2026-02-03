@@ -3286,6 +3286,30 @@ input:focus, textarea:focus, select:focus {
   overflow: hidden;
 }
 
+/* Model assumptions modal - wider than default */
+.model-assumptions-content {
+  max-width: 800px !important;
+}
+
+/* MLE explanation modal - wider than default */
+.mle-explanation-content {
+  max-width: 800px !important;
+}
+
+/* Model assumptions modal body - scrollable single column */
+.model-assumptions-body {
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* MLE explanation modal body - scrollable single column */
+.mle-explanation-body {
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
 .datasets-overlay-sidebar {
   flex: 0 0 300px;
   width: 300px;
@@ -4184,6 +4208,46 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Bayesian Results Table Styles (consistent with weight-table and items-table) */
+.bayesian-results-wrapper {
+  width: 100%;
+}
+
+.bayesian-info-icon-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.bayesian-info-icon {
+  background: none;
+  border: none;
+  color: #d4d4d4;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  border-radius: 4px;
+}
+
+.bayesian-info-icon:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+  background-color: rgba(212, 212, 212, 0.1);
+}
+
+.bayesian-info-icon:focus {
+  outline: 2px solid #af6025;
+  outline-offset: 2px;
+}
+
+.bayesian-info-glyph {
+  display: inline-block;
+  line-height: 1;
+}
+
 .bayesian-results-table {
   width: 100%;
   border-collapse: collapse;
