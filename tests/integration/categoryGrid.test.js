@@ -31,6 +31,23 @@ vi.mock('../../src/services/dataLoader.js', async () => {
         ];
       }
       return [];
+    }),
+    getAvailableCategories: vi.fn(async () => {
+      // Return mock categories without trying to load data for all of them
+      return [
+        { id: 'scarabs', name: 'Scarabs', description: 'Scarabs modify map areas', itemCount: 0 },
+        { id: 'divination-cards', name: 'Divination Cards', description: 'Collectible cards', itemCount: 0 },
+        { id: 'breach', name: 'Breach', description: 'Breach items', itemCount: 4 },
+        { id: 'catalysts', name: 'Catalysts', description: 'Catalysts description', itemCount: 0 },
+        { id: 'delirium-orbs', name: 'Delirium Orbs', description: 'Delirium orbs description', itemCount: 0 },
+        { id: 'essences', name: 'Essences', description: 'Essences description', itemCount: 3 },
+        { id: 'fossils', name: 'Fossils', description: 'Fossils description', itemCount: 0 },
+        { id: 'legion', name: 'Legion', description: 'Legion items', itemCount: 0 },
+        { id: 'oils', name: 'Oils', description: 'Oils description', itemCount: 0 },
+        { id: 'tattoos', name: 'Tattoos', description: 'Tattoos description', itemCount: 0 },
+        { id: 'runegrafts', name: 'Runegrafts', description: 'Runegrafts description', itemCount: 0 },
+        { id: 'contracts', name: 'Contracts', description: 'Contracts description', itemCount: 0 }
+      ];
     })
   };
 });
