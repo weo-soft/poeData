@@ -111,7 +111,7 @@ describe('Bayesian Weight Display Integration', () => {
     expect(container.textContent).toContain('Convergence Warnings');
   });
 
-  it('should display exclusion constraint information when datasets have known inputs', async () => {
+  it('should display info icon button when model assumptions are available', async () => {
     const datasets = [
       {
         inputItems: [{ id: 'esh' }],
@@ -152,13 +152,16 @@ describe('Bayesian Weight Display Integration', () => {
 
     await renderBayesianWeightDisplay(container, datasets, 'test', []);
 
-    // Verify exclusion constraint information is displayed
-    expect(container.querySelector('.bayesian-exclusion-constraint')).toBeTruthy();
-    expect(container.textContent).toContain('Model Constraint: Exclusion');
-    expect(container.textContent).toContain('input items cannot be returned');
+    // Verify info icon button is displayed (information is now in modal)
+    const infoIcon = container.querySelector('.bayesian-info-icon');
+    expect(infoIcon).toBeTruthy();
+    expect(infoIcon.getAttribute('title')).toContain('Model Assumptions');
+    
+    // Verify exclusion constraint information is NOT directly on the page (moved to modal)
+    expect(container.querySelector('.bayesian-exclusion-constraint')).toBeFalsy();
   });
 
-  it('should not display exclusion constraint info when no datasets have known inputs', async () => {
+  it('should display info icon button even when no datasets have known inputs (for MCMC explanation)', async () => {
     const datasets = [
       {
         inputItems: [],
@@ -199,8 +202,72 @@ describe('Bayesian Weight Display Integration', () => {
 
     await renderBayesianWeightDisplay(container, datasets, 'test', []);
 
-    // Verify exclusion constraint info is NOT displayed when no known inputs
+    // Verify info icon button is displayed (shows MCMC explanation modal)
+    const infoIcon = container.querySelector('.bayesian-info-icon');
+    expect(infoIcon).toBeTruthy();
+    
+    // Verify exclusion constraint info is NOT directly on the page (moved to modal)
     expect(container.querySelector('.bayesian-exclusion-constraint')).toBeFalsy();
+  });
+
+  it('should open modal with MCMC explanation when info icon is clicked', async () => {
+    const datasets = [
+      {
+        inputItems: [{ id: 'esh' }],
+        items: [
+          { id: 'tul', count: 100 },
+          { id: 'xoph', count: 80 }
+        ]
+      }
+    ];
+
+    const mockResult = {
+      posteriorSamples: {
+        'tul': Array.from({ length: 100 }, () => 0.5),
+        'xoph': Array.from({ length: 100 }, () => 0.5)
+      },
+      summaryStatistics: {
+        'tul': {
+          median: 0.5,
+          map: 0.5,
+          credibleInterval: { lower: 0.4, upper: 0.6 }
+        },
+        'xoph': {
+          median: 0.5,
+          map: 0.5,
+          credibleInterval: { lower: 0.4, upper: 0.6 }
+        }
+      },
+      convergenceDiagnostics: { overall: { converged: true } },
+      modelAssumptions: {
+        singleKnownInput: 1,
+        multipleKnownInputs: 0,
+        unknownInputs: 0
+      },
+      metadata: {}
+    };
+
+    inferWeights.mockResolvedValue(mockResult);
+
+    await renderBayesianWeightDisplay(container, datasets, 'test', []);
+
+    // Find and click the info icon
+    const infoIcon = container.querySelector('.bayesian-info-icon');
+    expect(infoIcon).toBeTruthy();
+    
+    infoIcon.click();
+    
+    // Wait for modal to appear
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Verify modal is displayed
+    const modal = document.querySelector('.model-assumptions-modal');
+    expect(modal).toBeTruthy();
+    
+    // Verify modal contains MCMC explanation
+    expect(modal.textContent).toContain('Bayesian (MCMC) Calculation');
+    expect(modal.textContent).toContain('MCMC');
+    expect(modal.textContent).toContain('Prior Distribution');
   });
 
   it('should display comparison view with both deterministic and Bayesian results', async () => {
