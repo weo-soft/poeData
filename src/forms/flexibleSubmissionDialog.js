@@ -353,6 +353,21 @@ export class FlexibleSubmissionDialog {
   }
 
   /**
+   * Update only the footer (for real-time button state updates)
+   */
+  updateFooter() {
+    if (!this.content) {
+      return;
+    }
+
+    const footer = this.content.querySelector('.flexible-submission-footer');
+    if (footer) {
+      const newFooter = this.renderFooter();
+      footer.parentNode.replaceChild(newFooter, footer);
+    }
+  }
+
+  /**
    * Render file upload section
    * @returns {HTMLElement} File section element
    */
@@ -456,6 +471,8 @@ export class FlexibleSubmissionDialog {
     urlInput.addEventListener('input', (e) => {
       this.url = e.target.value;
       this.urlError = null;
+      // Update footer to enable/disable submit button based on URL validity
+      this.updateFooter();
     });
     urlInput.addEventListener('blur', () => {
       if (this.url.trim()) {
