@@ -375,7 +375,8 @@ describe('estimateItemWeights', () => {
     });
 
     expect(typeof weights).toBe('object');
-    expect(weights).toHaveProperty('esh');
+    // Input items that don't appear as outputs should be excluded from weights
+    expect(weights).not.toHaveProperty('esh');
     expect(weights).toHaveProperty('tul');
     expect(weights).toHaveProperty('xoph');
     
@@ -385,7 +386,7 @@ describe('estimateItemWeights', () => {
       expect(w).toBeLessThanOrEqual(1);
     });
     
-    // Sum should be approximately 1.0
+    // Sum should be approximately 1.0 (only for output items)
     const sum = Object.values(weights).reduce((a, b) => a + b, 0);
     expect(sum).toBeCloseTo(1.0, 3);
   });
