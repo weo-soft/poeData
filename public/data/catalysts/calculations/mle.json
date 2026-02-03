@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Catalysts",
   "description": "Calculated item weights for Catalysts using MLE method from 6 datasets",
-  "date": "2026-01-23",
+  "date": "2026-02-03",
   "patch": "3.25.0",
   "sources": [
     {
@@ -68,43 +68,43 @@
   "items": [
     {
       "id": "intrinsic-catalyst",
-      "weight": 0.2789559767800786
+      "weight": 0.27895597678007855
     },
     {
       "id": "turbulent-catalyst",
-      "weight": 0.1562748121292646
+      "weight": 0.15627481212926458
     },
     {
       "id": "noxious-catalyst",
-      "weight": 0.14653615073200305
+      "weight": 0.14653615073200302
     },
     {
       "id": "abrasive-catalyst",
-      "weight": 0.1445706075514775
+      "weight": 0.14457060755147746
     },
     {
       "id": "imbued-catalyst",
-      "weight": 0.13836471733654843
+      "weight": 0.1383647173365484
     },
     {
       "id": "fertile-catalyst",
-      "weight": 0.03490394264206235
+      "weight": 0.03490394264206234
     },
     {
       "id": "prismatic-catalyst",
-      "weight": 0.03490394264206235
+      "weight": 0.03490394264206234
     },
     {
       "id": "tempering-catalyst",
-      "weight": 0.034722043138128184
+      "weight": 0.03472204313812818
     },
     {
       "id": "unstable-catalyst",
-      "weight": 0.015796352562492903
+      "weight": 0.0157963525624929
     },
     {
       "id": "accelerating-catalyst",
-      "weight": 0.014971454485882168
+      "weight": 0.014971454485882165
     }
   ],
   "inputItems": [

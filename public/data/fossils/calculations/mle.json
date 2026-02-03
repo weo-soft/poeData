@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Fossils",
   "description": "Calculated item weights for Fossils using MLE method from 9 datasets",
-  "date": "2026-01-23",
+  "date": "2026-02-03",
   "patch": "3.19.0",
   "sources": [
     {
@@ -83,107 +83,107 @@
   "items": [
     {
       "id": "jagged-fossil",
-      "weight": 0.11577070751602904
+      "weight": 0.11577070751602907
     },
     {
       "id": "pristine-fossil",
-      "weight": 0.11484330531963828
+      "weight": 0.11484330531963831
     },
     {
       "id": "metallic-fossil",
-      "weight": 0.11086950862390794
+      "weight": 0.11086950862390797
     },
     {
       "id": "dense-fossil",
-      "weight": 0.10819692291217149
+      "weight": 0.10819692291217152
     },
     {
       "id": "aberrant-fossil",
-      "weight": 0.10729999296889657
+      "weight": 0.1072999929688966
     },
     {
       "id": "frigid-fossil",
-      "weight": 0.1047181991444448
+      "weight": 0.10471819914444483
     },
     {
       "id": "scorched-fossil",
-      "weight": 0.1012414064392411
+      "weight": 0.10124140643924112
     },
     {
       "id": "shuddering-fossil",
-      "weight": 0.025658127433396582
+      "weight": 0.02565812743339659
     },
     {
       "id": "serrated-fossil",
-      "weight": 0.024730725237005806
+      "weight": 0.024730725237005813
     },
     {
       "id": "corroded-fossil",
-      "weight": 0.023803323040615023
+      "weight": 0.02380332304061503
     },
     {
       "id": "deft-fossil",
-      "weight": 0.023803323040615023
+      "weight": 0.02380332304061503
     },
     {
       "id": "aetheric-fossil",
-      "weight": 0.023803323040615023
+      "weight": 0.02380332304061503
     },
     {
       "id": "bound-fossil",
-      "weight": 0.022412219746028843
+      "weight": 0.022412219746028847
     },
     {
       "id": "fundamental-fossil",
-      "weight": 0.021484817549638047
+      "weight": 0.02148481754963805
     },
     {
       "id": "lucent-fossil",
-      "weight": 0.021476808777223477
+      "weight": 0.02147680877722348
     },
     {
       "id": "prismatic-fossil",
-      "weight": 0.020866549418710845
+      "weight": 0.02086654941871085
     },
     {
       "id": "perfect-fossil",
-      "weight": 0.018393476895002002
+      "weight": 0.018393476895002005
     },
     {
       "id": "opulent-fossil",
-      "weight": 0.003245907687274663
+      "weight": 0.003245907687274664
     },
     {
       "id": "glyphic-fossil",
-      "weight": 0.001700237359937944
+      "weight": 0.0017002373599379445
     },
     {
       "id": "gilded-fossil",
-      "weight": 0.0015078079641685578
+      "weight": 0.0015078079641685583
     },
     {
       "id": "sanctified-fossil",
-      "weight": 0.0013911032944626772
+      "weight": 0.0013911032944626774
     },
     {
       "id": "faceted-fossil",
-      "weight": 0.0007728351634297021
+      "weight": 0.0007728351634297023
     },
     {
       "id": "fractured-fossil",
-      "weight": 0.0006182681304970711
+      "weight": 0.0006182681304970712
     },
     {
       "id": "hollow-fossil",
-      "weight": 0.0004637010990164428
+      "weight": 0.0004637010990164429
     },
     {
       "id": "bloodstained-fossil",
-      "weight": 0.0004637010990164428
+      "weight": 0.0004637010990164429
     },
     {
       "id": "tangled-fossil",
-      "weight": 0.0004637010990164428
+      "weight": 0.0004637010990164429
     }
   ],
   "inputItems": [

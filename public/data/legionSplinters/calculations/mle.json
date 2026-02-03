@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Legion Splinters",
   "description": "Calculated item weights for Legion Splinters using MLE method from 5 datasets",
-  "date": "2026-01-23",
+  "date": "2026-02-03",
   "patch": "3.25.0",
   "sources": [
     {

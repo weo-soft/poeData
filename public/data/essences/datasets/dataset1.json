@@ -1,0 +1,101 @@
+{
+    "name": "Dataset 1",
+    "description": "Dataset 1",
+    "date": "2023-02-02",
+    "patch": "3.20.0",
+    "sources": [
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/991092200957952152/1070749639453716650",
+            "author": "ani9040"
+        },
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/1SfLctFks-quZwc4ZukiMIuuWb__wP_efoFhU1m3BtBg/edit?gid=0#gid=0",
+            "author": "ani9040"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "deafening-essence-of-doubt"
+        }
+    ],
+    "items": [
+        {
+            "id": "deafening-essence-of-loathing",
+            "count": 92
+        },
+        {
+            "id": "deafening-essence-of-contempt",
+            "count": 79
+        },
+        {
+            "id": "deafening-essence-of-rage",
+            "count": 90
+        },
+        {
+            "id": "deafening-essence-of-scorn",
+            "count": 85
+        },
+        {
+            "id": "deafening-essence-of-woe",
+            "count": 102
+        },
+        {
+            "id": "deafening-essence-of-envy",
+            "count": 82
+        },
+        {
+            "id": "deafening-essence-of-spite",
+            "count": 81
+        },
+        {
+            "id": "deafening-essence-of-zeal",
+            "count": 81
+        },
+        {
+            "id": "deafening-essence-of-sorrow",
+            "count": 78
+        },
+        {
+            "id": "deafening-essence-of-hatred",
+            "count": 97
+        },
+        {
+            "id": "deafening-essence-of-greed",
+            "count": 80
+        },
+        {
+            "id": "deafening-essence-of-torment",
+            "count": 87
+        },
+        {
+            "id": "deafening-essence-of-fear",
+            "count": 96
+        },
+        {
+            "id": "deafening-essence-of-misery",
+            "count": 82
+        },
+        {
+            "id": "deafening-essence-of-anger",
+            "count": 80
+        },
+        {
+            "id": "deafening-essence-of-wrath",
+            "count": 74
+        },
+        {
+            "id": "deafening-essence-of-dread",
+            "count": 74
+        },
+        {
+            "id": "deafening-essence-of-anguish",
+            "count": 95
+        },
+        {
+            "id": "deafening-essence-of-suffering",
+            "count": 85
+        }
+    ]
+}

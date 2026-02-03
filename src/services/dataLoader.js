@@ -78,6 +78,7 @@ function getCalculationDirectory(categoryId) {
     'breachstones': 'breachstones',
     'catalysts': 'catalysts',
     'delirium-orbs': 'deliriumOrbs',
+    'essences': 'essences',
     'fossils': 'fossils',
     'legion-splinters': 'legionSplinters',
     'tattoos': 'tattoos',

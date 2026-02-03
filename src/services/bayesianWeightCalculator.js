@@ -32,6 +32,8 @@ export async function inferWeights(datasets, options = {}) {
 
   try {
     // Run client-side MCMC sampling
+    // Note: runMcmcSampling already only includes output items in itemIds,
+    // so input items that don't appear as outputs are automatically excluded
     const result = await runMcmcSampling(datasets, {
       numSamples,
       numChains,
@@ -39,14 +41,56 @@ export async function inferWeights(datasets, options = {}) {
       onProgress
     });
 
-    // Compute summary statistics
-    const summaryStatistics = computeStatistics(result.posteriorSamples);
+    // Collect all output item IDs (items that appear in output items list)
+    const outputItemIds = new Set();
+    for (const ds of datasets) {
+      if (ds.items && Array.isArray(ds.items)) {
+        for (const item of ds.items) {
+          if (item && item.id) {
+            outputItemIds.add(item.id);
+          }
+        }
+      }
+    }
 
-    // Compute simplified convergence diagnostics
-    const convergenceDiagnostics = computeConvergenceDiagnostics(result.posteriorSamples);
+    // Filter posterior samples to only include output items (in case any input items slipped through)
+    const filteredPosteriorSamples = {};
+    for (const [itemId, samples] of Object.entries(result.posteriorSamples)) {
+      if (outputItemIds.has(itemId)) {
+        filteredPosteriorSamples[itemId] = samples;
+      }
+    }
+
+    // Compute summary statistics from filtered samples
+    const summaryStatistics = computeStatistics(filteredPosteriorSamples);
+
+    // Note: Each MCMC sample already sums to 1.0, so the statistics should already be normalized.
+    // However, due to sampling variability and the fact that medians don't preserve sums,
+    // the medians might not sum exactly to 1.0. We always renormalize to ensure consistency.
+    let weightSum = 0;
+    for (const [itemId, stats] of Object.entries(summaryStatistics)) {
+      weightSum += stats.median || stats.map || 0;
+    }
+    if (weightSum > 0) {
+      // Renormalize to ensure weights sum to exactly 1.0
+      for (const itemId in summaryStatistics) {
+        const stats = summaryStatistics[itemId];
+        if (stats.median !== undefined) stats.median /= weightSum;
+        if (stats.map !== undefined) stats.map /= weightSum;
+        if (stats.mean !== undefined) stats.mean /= weightSum;
+        if (stats.credibleInterval) {
+          stats.credibleInterval.lower /= weightSum;
+          stats.credibleInterval.upper /= weightSum;
+        }
+      }
+    }
+
+    // Compute simplified convergence diagnostics from filtered samples
+    const convergenceDiagnostics = computeConvergenceDiagnostics(filteredPosteriorSamples);
 
     return {
       ...result,
+      posteriorSamples: filteredPosteriorSamples,
       summaryStatistics,
       convergenceDiagnostics
     };

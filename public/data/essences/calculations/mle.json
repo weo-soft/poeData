@@ -1,0 +1,101 @@
+{
+  "name": "Calculated Weights for Essences",
+  "description": "Calculated item weights for Essences using MLE method from 1 dataset",
+  "date": "2026-02-03",
+  "patch": "3.20.0",
+  "sources": [
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/991092200957952152/1070749639453716650",
+      "author": "ani9040"
+    },
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/1SfLctFks-quZwc4ZukiMIuuWb__wP_efoFhU1m3BtBg/edit?gid=0#gid=0",
+      "author": "ani9040"
+    }
+  ],
+  "items": [
+    {
+      "id": "deafening-essence-of-woe",
+      "weight": 0.06296296296296297
+    },
+    {
+      "id": "deafening-essence-of-hatred",
+      "weight": 0.059876543209876544
+    },
+    {
+      "id": "deafening-essence-of-fear",
+      "weight": 0.05925925925925926
+    },
+    {
+      "id": "deafening-essence-of-anguish",
+      "weight": 0.058641975308641986
+    },
+    {
+      "id": "deafening-essence-of-loathing",
+      "weight": 0.05679012345679013
+    },
+    {
+      "id": "deafening-essence-of-rage",
+      "weight": 0.055555555555555566
+    },
+    {
+      "id": "deafening-essence-of-torment",
+      "weight": 0.053703703703703705
+    },
+    {
+      "id": "deafening-essence-of-scorn",
+      "weight": 0.05246913580246914
+    },
+    {
+      "id": "deafening-essence-of-suffering",
+      "weight": 0.05246913580246914
+    },
+    {
+      "id": "deafening-essence-of-envy",
+      "weight": 0.05061728395061729
+    },
+    {
+      "id": "deafening-essence-of-misery",
+      "weight": 0.05061728395061729
+    },
+    {
+      "id": "deafening-essence-of-spite",
+      "weight": 0.05
+    },
+    {
+      "id": "deafening-essence-of-zeal",
+      "weight": 0.05
+    },
+    {
+      "id": "deafening-essence-of-greed",
+      "weight": 0.04938271604938272
+    },
+    {
+      "id": "deafening-essence-of-anger",
+      "weight": 0.04938271604938272
+    },
+    {
+      "id": "deafening-essence-of-contempt",
+      "weight": 0.04876543209876543
+    },
+    {
+      "id": "deafening-essence-of-sorrow",
+      "weight": 0.048148148148148155
+    },
+    {
+      "id": "deafening-essence-of-wrath",
+      "weight": 0.04567901234567902
+    },
+    {
+      "id": "deafening-essence-of-dread",
+      "weight": 0.04567901234567902
+    }
+  ],
+  "inputItems": [
+    {
+      "id": "deafening-essence-of-doubt"
+    }
+  ]
+}

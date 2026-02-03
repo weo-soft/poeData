@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Breach Splinters",
   "description": "Calculated item weights for Breach Splinters using BAYESIAN method from 5 datasets",
-  "date": "2026-01-23",
+  "date": "2026-02-03",
   "patch": "3.26.0",
   "sources": [
     {
@@ -33,23 +33,23 @@
   "items": [
     {
       "id": "splinter-of-esh",
-      "weight": 0.28206659646693144
+      "weight": 0.2793172715945681
     },
     {
       "id": "splinter-of-tul",
-      "weight": 0.27370141198804654
+      "weight": 0.2742867530975318
     },
     {
       "id": "splinter-of-xoph",
-      "weight": 0.27314704739223783
+      "weight": 0.2729761604431087
     },
     {
       "id": "splinter-of-uul-netol",
-      "weight": 0.10960934838051582
+      "weight": 0.11067727150470304
     },
     {
       "id": "splinter-of-chayula",
-      "weight": 0.06123725773500298
+      "weight": 0.06274254336008826
     }
   ],
   "inputItems": [

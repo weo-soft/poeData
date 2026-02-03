@@ -270,10 +270,35 @@ export function estimateItemWeights(datasets, options = {}) {
   // Estimate weights
   const weights = estimateWeightsFromCounts({ counts, itemIndex }, options);
 
-  // Convert to item ID -> weight mapping
+  // Collect all output item IDs (items that appear in output items list)
+  const outputItemIds = new Set();
+  for (const ds of datasets) {
+    if (ds.items && Array.isArray(ds.items)) {
+      for (const item of ds.items) {
+        if (item && item.id) {
+          outputItemIds.add(item.id);
+        }
+      }
+    }
+  }
+
+  // Convert to item ID -> weight mapping, but only include output items
   const result = {};
+  let outputWeightSum = 0;
+  
   for (const [id, idx] of itemIndex.entries()) {
-    result[id] = weights[idx];
+    // Only include items that appear as outputs
+    if (outputItemIds.has(id)) {
+      result[id] = weights[idx];
+      outputWeightSum += weights[idx];
+    }
+  }
+
+  // Renormalize weights so they sum to 1.0 (only for output items)
+  if (outputWeightSum > 0) {
+    for (const id in result) {
+      result[id] /= outputWeightSum;
+    }
   }
 
   return result;

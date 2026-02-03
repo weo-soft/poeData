@@ -110,7 +110,7 @@ function computeLogLikelihood(weights, datasets, itemIds) {
       // Known input: multinomial with exclusion
       const inputIdx = itemIds.indexOf(ds.inputItems[0].id);
       if (inputIdx >= 0) {
-        // Create probability vector excluding input
+        // Input is in output list: create probability vector excluding input
         const prob = new Array(itemIds.length);
         let probSum = 0;
 
@@ -134,6 +134,14 @@ function computeLogLikelihood(weights, datasets, itemIds) {
         for (let i = 0; i < itemIds.length; i++) {
           if (counts[i] > 0 && prob[i] > 0) {
             logLik += counts[i] * Math.log(prob[i]);
+          }
+        }
+      } else {
+        // Input is known but not in output list: use weights directly
+        // The weights already represent probabilities for output items only
+        for (let i = 0; i < itemIds.length; i++) {
+          if (counts[i] > 0 && weights[i] > 0) {
+            logLik += counts[i] * Math.log(weights[i]);
           }
         }
       }
