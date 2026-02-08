@@ -51,12 +51,15 @@ export class DatasetSubmissionForm {
     this.loading = true;
     try {
       this.items = await loadCategoryData(this.categoryId);
-      // Initialize itemCounts with all items set to 0 or empty
-      this.items.forEach(item => {
-        if (!(item.id in this.itemCounts)) {
-          this.itemCounts[item.id] = '';
-        }
-      });
+      // For contracts: itemCounts are keyed by job id (filled when user selects a contract)
+      // For other categories: initialize itemCounts with all items set to 0 or empty
+      if (this.categoryId !== 'contracts') {
+        this.items.forEach(item => {
+          if (!(item.id in this.itemCounts)) {
+            this.itemCounts[item.id] = '';
+          }
+        });
+      }
     } catch (error) {
       console.error('Error loading items:', error);
       throw error;
@@ -66,21 +69,55 @@ export class DatasetSubmissionForm {
   }
 
   /**
+   * Get the currently selected contract (for contracts category). Returns null if none or not contracts.
+   * @returns {Object|null} Contract item with .jobs array, or null
+   */
+  getSelectedContract() {
+    if (this.categoryId !== 'contracts' || this.selectedInputItems.length === 0) {
+      return null;
+    }
+    const contractId = this.selectedInputItems[0];
+    return this.items.find(i => i.id === contractId) || null;
+  }
+
+  /**
+   * Initialize itemCounts for the selected contract's jobs (contracts category only).
+   */
+  initJobCountsForSelectedContract() {
+    const contract = this.getSelectedContract();
+    if (!contract || !Array.isArray(contract.jobs)) return;
+    contract.jobs.forEach(job => {
+      if (!(job.id in this.itemCounts)) {
+        this.itemCounts[job.id] = '';
+      }
+    });
+  }
+
+  /**
    * Convert form state to dataset object (for validation and submission)
    * @returns {Object} Dataset object matching JSON schema
    */
   toDatasetObject() {
-    // Filter items with valid counts (>= 0, but at least one must be > 0)
-    // Note: datasetParser requires count > 0, so we filter out 0 counts
-    const items = Object.entries(this.itemCounts)
-      .filter(([_id, count]) => {
-        const numCount = Number(count);
-        return !isNaN(numCount) && numCount > 0;
-      })
-      .map(([id, count]) => ({
-        id,
-        count: Number(count)
-      }));
+    // For contracts: items = job id/count for selected contract; for others: all item id/count
+    let items;
+    if (this.categoryId === 'contracts') {
+      const contract = this.getSelectedContract();
+      const jobIds = contract && Array.isArray(contract.jobs) ? contract.jobs.map(j => j.id) : [];
+      items = Object.entries(this.itemCounts)
+        .filter(([id, count]) => {
+          if (!jobIds.includes(id)) return false;
+          const numCount = Number(count);
+          return !isNaN(numCount) && numCount > 0;
+        })
+        .map(([id, count]) => ({ id, count: Number(count) }));
+    } else {
+      items = Object.entries(this.itemCounts)
+        .filter(([_id, count]) => {
+          const numCount = Number(count);
+          return !isNaN(numCount) && numCount > 0;
+        })
+        .map(([id, count]) => ({ id, count: Number(count) }));
+    }
 
     const dataset = {
       items
@@ -169,6 +206,27 @@ export class DatasetSubmissionForm {
    * @returns {Object} Validation result with { isValid: boolean, errors: Array }
    */
   validate() {
+    if (this.categoryId === 'contracts') {
+      if (this.selectedInputItems.length === 0) {
+        return {
+          isValid: false,
+          errors: [{ field: 'dataset', message: 'Select a contract type.', code: 'VALIDATION_ERROR' }]
+        };
+      }
+      const contract = this.getSelectedContract();
+      const jobIds = contract && Array.isArray(contract.jobs) ? contract.jobs.map(j => j.id) : [];
+      const hasAnyJobCount = jobIds.some(jid => {
+        const n = Number(this.itemCounts[jid]);
+        return !isNaN(n) && n > 0;
+      });
+      if (!hasAnyJobCount) {
+        return {
+          isValid: false,
+          errors: [{ field: 'dataset', message: 'Enter at least one job count.', code: 'VALIDATION_ERROR' }]
+        };
+      }
+    }
+
     const dataset = this.toDatasetObject();
     const validation = validateDataset(dataset);
     
@@ -591,41 +649,81 @@ export class DatasetSubmissionForm {
   }
 
   /**
-   * Render Input Items section with compact multi-select dropdown
+   * Render Input Items section with compact multi-select dropdown (or single Contract Type for contracts)
    * @returns {HTMLElement} Section element
    */
   renderInputItemsSection() {
     const section = createElement('div', { className: 'form-section input-items-section compact-section' });
-    
+    const isContracts = this.categoryId === 'contracts';
+
+    if (isContracts) {
+      const title = createElement('h2', { textContent: 'Input Item' });
+      section.appendChild(title);
+      const helpText = createElement('p', {
+        className: 'section-help',
+        textContent: 'Select the contract type this dataset is for. Output will be job counts valid for this contract.'
+      });
+      section.appendChild(helpText);
+
+      const select = createElement('select', {
+        id: 'input-items-select',
+        className: 'form-input input-items-select',
+        'aria-label': 'Select contract type'
+      });
+      const defaultOption = createElement('option', {
+        value: '',
+        textContent: '-- Select contract type --',
+        disabled: true,
+        selected: this.selectedInputItems.length === 0
+      });
+      select.appendChild(defaultOption);
+      this.items.forEach(item => {
+        const option = createElement('option', {
+          value: item.id,
+          textContent: item.name || item.id,
+          selected: this.selectedInputItems[0] === item.id
+        });
+        select.appendChild(option);
+      });
+      select.addEventListener('change', (e) => {
+        const selectedValue = e.target.value;
+        this.selectedInputItems = selectedValue ? [selectedValue] : [];
+        // Keep only job counts for the selected contract's jobs; clear others
+        const contract = this.getSelectedContract();
+        const newCounts = {};
+        if (contract && Array.isArray(contract.jobs)) {
+          contract.jobs.forEach(job => {
+            newCounts[job.id] = this.itemCounts[job.id] ?? '';
+          });
+        }
+        this.itemCounts = newCounts;
+        this.render(document.querySelector('#dataset-submission-form').parentElement);
+      });
+      section.appendChild(select);
+      return section;
+    }
+
     const title = createElement('h2', { textContent: 'Input Items' });
     section.appendChild(title);
-
     const helpText = createElement('p', {
       className: 'section-help',
       textContent: 'Select items that were consumed/used as input (optional)'
     });
     section.appendChild(helpText);
 
-    // Multi-select dropdown container
     const selectContainer = createElement('div', { className: 'input-items-select-container' });
-    
-    // Dropdown select element
     const select = createElement('select', {
       id: 'input-items-select',
       className: 'form-input input-items-select',
       'aria-label': 'Select input items'
     });
-    
-    // Default option
-    const defaultOption = createElement('option', {
+    const defaultOpt = createElement('option', {
       value: '',
       textContent: '-- Select an item to add --',
       disabled: true,
       selected: true
     });
-    select.appendChild(defaultOption);
-    
-    // Add all items that aren't already selected
+    select.appendChild(defaultOpt);
     this.items.forEach(item => {
       if (!this.selectedInputItems.includes(item.id)) {
         const option = createElement('option', {
@@ -635,41 +733,26 @@ export class DatasetSubmissionForm {
         select.appendChild(option);
       }
     });
-    
-    // Automatically add item when selected from dropdown
     select.addEventListener('change', (e) => {
       const selectedValue = e.target.value;
       if (selectedValue && !this.selectedInputItems.includes(selectedValue)) {
         this.selectInputItem(selectedValue);
-        // Reset dropdown to default option
         e.target.value = '';
-        // Re-render form to update UI
         this.render(document.querySelector('#dataset-submission-form').parentElement);
       }
     });
-    
     selectContainer.appendChild(select);
-    
-    // Selected items display (compact tags/pills)
+
     const selectedContainer = createElement('div', {
       className: 'selected-input-items',
       id: 'selected-input-items'
     });
-    
     if (this.selectedInputItems.length > 0) {
       this.selectedInputItems.forEach(itemId => {
         const item = this.items.find(i => i.id === itemId);
         if (item) {
-          const tag = createElement('span', {
-            className: 'input-item-tag',
-            'data-item-id': itemId
-          });
-          
-          const tagText = createElement('span', {
-            className: 'tag-text',
-            textContent: item.name || item.id
-          });
-          
+          const tag = createElement('span', { className: 'input-item-tag', 'data-item-id': itemId });
+          const tagText = createElement('span', { className: 'tag-text', textContent: item.name || item.id });
           const removeBtn = createElement('button', {
             type: 'button',
             className: 'tag-remove',
@@ -680,35 +763,121 @@ export class DatasetSubmissionForm {
             this.deselectInputItem(itemId);
             this.render(document.querySelector('#dataset-submission-form').parentElement);
           });
-          
           tag.appendChild(tagText);
           tag.appendChild(removeBtn);
           selectedContainer.appendChild(tag);
         }
       });
     } else {
-      const emptyMsg = createElement('span', {
-        className: 'empty-selection',
-        textContent: 'No input items selected'
-      });
+      const emptyMsg = createElement('span', { className: 'empty-selection', textContent: 'No input items selected' });
       selectedContainer.appendChild(emptyMsg);
     }
-    
     selectContainer.appendChild(selectedContainer);
     section.appendChild(selectContainer);
-    
     return section;
   }
 
   /**
-   * Render Output Items section
+   * Render Output Items section (for contracts: jobs per selected contract; otherwise all items)
    * @returns {HTMLElement} Section element
    */
   renderOutputItemsSection() {
     const section = createElement('div', { className: 'form-section output-items-section compact-section' });
-    
-    const title = createElement('h2', { textContent: 'Output Items *' });
+    const isContracts = this.categoryId === 'contracts';
+    const selectedContract = this.getSelectedContract();
+
+    const title = createElement('h2', {
+      textContent: isContracts ? 'Available Jobs per Contract *' : 'Output Items *'
+    });
     section.appendChild(title);
+
+    if (isContracts) {
+      const helpText = createElement('p', {
+        className: 'section-help',
+        textContent: 'Enter the count observed for each job valid for the selected contract type.'
+      });
+      section.appendChild(helpText);
+
+      if (!selectedContract) {
+        const message = createElement('p', {
+          className: 'section-help empty-output-message',
+          textContent: 'Select a contract type above to enter job counts.'
+        });
+        section.appendChild(message);
+        return section;
+      }
+
+      // Ensure job count keys exist for this contract
+      this.initJobCountsForSelectedContract();
+
+      const tableContainer = createElement('div', { className: 'items-table-container' });
+      const itemsTable = createElement('table', {
+        className: 'items-count-table compact-table',
+        'aria-label': 'Job counts for selected contract'
+      });
+      const thead = createElement('thead');
+      const headerRow = createElement('tr');
+      headerRow.appendChild(createElement('th', { textContent: 'Job' }));
+      headerRow.appendChild(createElement('th', { textContent: 'Count' }));
+      thead.appendChild(headerRow);
+      itemsTable.appendChild(thead);
+
+      const tbody = createElement('tbody');
+      (selectedContract.jobs || []).forEach(job => {
+        const row = createElement('tr');
+        const nameCell = createElement('td');
+        nameCell.textContent = job.name || job.id;
+        row.appendChild(nameCell);
+
+        const countCell = createElement('td');
+        const countInput = createElement('input', {
+          type: 'text',
+          inputmode: 'numeric',
+          pattern: '[0-9]*',
+          className: 'form-input count-input',
+          value: this.itemCounts[job.id] || '',
+          placeholder: '0',
+          'aria-label': `Count for ${job.name || job.id}`,
+          'aria-describedby': `item-${job.id}-count-help`
+        });
+        if (this.validationErrors[`item-${job.id}-count`]) {
+          countInput.setAttribute('aria-invalid', 'true');
+          countInput.setAttribute('aria-describedby', `item-${job.id}-count-help item-${job.id}-count-error`);
+        } else {
+          countInput.setAttribute('aria-invalid', 'false');
+        }
+        countInput.addEventListener('beforeinput', (e) => {
+          if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward' ||
+              e.inputType === 'deleteByDrag' || e.inputType === 'deleteByCut') return;
+          if (e.data && !/^\d+$/.test(e.data)) e.preventDefault();
+        });
+        countInput.addEventListener('input', (e) => {
+          const numericValue = e.target.value.replace(/[^0-9]/g, '');
+          if (e.target.value !== numericValue) e.target.value = numericValue;
+          this.setItemCount(job.id, numericValue);
+          this.validateField(`item-${job.id}-count`);
+          this.updateValidationDisplay();
+        });
+        countCell.appendChild(countInput);
+        row.appendChild(countCell);
+        if (this.validationErrors[`item-${job.id}-count`]) {
+          const errorCell = createElement('td', { className: 'error-cell' });
+          errorCell.appendChild(createElement('div', {
+            id: `item-${job.id}-count-error`,
+            className: 'field-error',
+            role: 'alert',
+            'aria-live': 'polite',
+            textContent: this.validationErrors[`item-${job.id}-count`]
+          }));
+          row.appendChild(errorCell);
+        }
+        tbody.appendChild(row);
+      });
+      itemsTable.appendChild(tbody);
+      tableContainer.appendChild(itemsTable);
+      section.appendChild(tableContainer);
+      return section;
+    }
 
     const helpText = createElement('p', {
       className: 'section-help',
@@ -716,9 +885,7 @@ export class DatasetSubmissionForm {
     });
     section.appendChild(helpText);
 
-    // Compact scrollable container for large item lists
     const tableContainer = createElement('div', { className: 'items-table-container' });
-    
     const itemsTable = createElement('table', {
       className: 'items-count-table compact-table',
       'aria-label': 'Output items with counts'
@@ -735,14 +902,10 @@ export class DatasetSubmissionForm {
       const row = createElement('tr', {
         className: this.selectedInputItems.includes(item.id) ? 'input-item-row' : ''
       });
-      
       const nameCell = createElement('td');
       nameCell.textContent = item.name || item.id;
       if (this.selectedInputItems.includes(item.id)) {
-        const badge = createElement('span', {
-          className: 'input-badge',
-          textContent: ' (Input)'
-        });
+        const badge = createElement('span', { className: 'input-badge', textContent: ' (Input)' });
         nameCell.appendChild(badge);
       }
       row.appendChild(nameCell);
@@ -764,60 +927,36 @@ export class DatasetSubmissionForm {
       } else {
         countInput.setAttribute('aria-invalid', 'false');
       }
-      
-      // Use beforeinput event (modern API) to prevent non-numeric input
       countInput.addEventListener('beforeinput', (e) => {
-        // Allow control/command keys (backspace, delete, select all, etc.)
-        if (e.inputType === 'deleteContentBackward' || 
-            e.inputType === 'deleteContentForward' || 
-            e.inputType === 'deleteByDrag' ||
-            e.inputType === 'deleteByCut') {
-          return; // Allow deletion
-        }
-        
-        // Check if the input data contains non-numeric characters
-        if (e.data && !/^\d+$/.test(e.data)) {
-          e.preventDefault(); // Prevent non-numeric input
-        }
+        if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward' ||
+            e.inputType === 'deleteByDrag' || e.inputType === 'deleteByCut') return;
+        if (e.data && !/^\d+$/.test(e.data)) e.preventDefault();
       });
-      
-      // Fallback: Filter input to only allow numeric characters
-      // This handles cases where beforeinput isn't supported or other input methods
       countInput.addEventListener('input', (e) => {
-        // Remove any non-numeric characters
         const numericValue = e.target.value.replace(/[^0-9]/g, '');
-        if (e.target.value !== numericValue) {
-          e.target.value = numericValue;
-        }
+        if (e.target.value !== numericValue) e.target.value = numericValue;
         this.setItemCount(item.id, numericValue);
         this.validateField(`item-${item.id}-count`);
-        // Update validation display after field validation
         this.updateValidationDisplay();
       });
       countCell.appendChild(countInput);
-      
-      // Add error message cell if validation error exists
+      row.appendChild(countCell);
       if (this.validationErrors[`item-${item.id}-count`]) {
         const errorCell = createElement('td', { className: 'error-cell' });
-        const errorMsg = createElement('div', {
+        errorCell.appendChild(createElement('div', {
           id: `item-${item.id}-count-error`,
           className: 'field-error',
           role: 'alert',
           'aria-live': 'polite',
           textContent: this.validationErrors[`item-${item.id}-count`]
-        });
-        errorCell.appendChild(errorMsg);
+        }));
         row.appendChild(errorCell);
       }
-      
-      row.appendChild(countCell);
-
       tbody.appendChild(row);
     });
     itemsTable.appendChild(tbody);
     tableContainer.appendChild(itemsTable);
     section.appendChild(tableContainer);
-
     return section;
   }
 
