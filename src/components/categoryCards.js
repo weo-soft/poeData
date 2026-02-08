@@ -69,11 +69,14 @@ export async function renderCategoryCards(container) {
 
       const categoryCard = createElement('div', { className: 'home-category-card' });
 
-      // Contracts: weights are per input item (per contract type), so effectively one dataset per item → low confidence
-      const isLowConfidence = category.id === 'contracts' ||
+      // Contracts: per input item → low confidence. Legion: joint category, only Splinters have datasets → low confidence
+      const isLowConfidence = category.id === 'contracts' || category.id === 'legion' ||
         (datasetCount > 0 && datasetCount <= LOW_CONFIDENCE_DATASET_THRESHOLD);
 
-      if (datasetCount === 0) {
+      if (category.id === 'legion') {
+        categoryCard.appendChild(createConfidenceIcon('low',
+          'Low confidence: weight estimates are available for Legion Splinters only; no data for Legion Emblems.'));
+      } else if (datasetCount === 0) {
         categoryCard.appendChild(createConfidenceIcon('none',
           'No data: this category has no datasets, so no calculated weights are available.'));
       } else if (isLowConfidence) {
