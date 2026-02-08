@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Delirium Orbs",
   "description": "Calculated item weights for Delirium Orbs using MLE method from 5 datasets",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.22.0",
   "sources": [
     {

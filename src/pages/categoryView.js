@@ -13,7 +13,7 @@ import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader
 import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
 import { renderWeightDisplay } from '../components/weightDisplay.js';
-import { estimateItemWeights } from '../services/weightCalculator.js';
+import { estimateItemWeights, estimateItemWeightsPerInputItem } from '../services/weightCalculator.js';
 import { downloadDataset } from '../utils/download.js';
 import { router } from '../services/router.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
@@ -1196,8 +1196,11 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
           // Store full datasets for Bayesian calculation
           fullDatasetsForWeights = fullDatasets;
           
-          // Calculate weights
-          calculatedWeights = estimateItemWeights(fullDatasets);
+          // Calculate weights (contracts: per input item; others: single set)
+          const usePerInputCalculation = categoryId === 'contracts';
+          calculatedWeights = usePerInputCalculation
+            ? estimateItemWeightsPerInputItem(fullDatasets)
+            : estimateItemWeights(fullDatasets);
           
           // Cache the calculated weights
           if (indexData) {

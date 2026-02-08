@@ -4,7 +4,7 @@
  */
 
 import { createElement, clearElement } from '../utils/dom.js';
-import { inferWeights } from '../services/bayesianWeightCalculator.js';
+import { inferWeights, inferWeightsPerInputItem } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 import { renderDensityPlot, renderRankedProbabilityChart } from '../visualization/bayesianVisualizations.js';
 import { getCachedWeights, setCachedWeights } from '../services/weightCache.js';
@@ -13,6 +13,24 @@ import { router } from '../services/router.js';
 
 // Module-level state
 let currentBayesianResult = null;
+
+/** Detect if deterministic weights are per-input (e.g. contracts). */
+function isPerInputBayesianWeights(weights) {
+  if (!weights || typeof weights !== 'object') return false;
+  const keys = Object.keys(weights);
+  if (keys.length === 0) return false;
+  const first = weights[keys[0]];
+  return typeof first === 'object' && first !== null && !Array.isArray(first) && Object.values(first).some(v => typeof v === 'number');
+}
+
+/** Detect if Bayesian result is per-input (one result per input item). */
+function isPerInputBayesianResult(result) {
+  if (!result || typeof result !== 'object') return false;
+  const keys = Object.keys(result);
+  if (keys.length === 0) return false;
+  const first = result[keys[0]];
+  return first && typeof first === 'object' && first.summaryStatistics;
+}
 let currentItems = null;
 let currentContentArea = null;
 let currentChartInstance = null;
@@ -141,8 +159,10 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
         console.log('[BayesianWeightDisplay] Cache hit for Bayesian weights');
         isFromCache = true;
         
-        // Check if we have full result with posterior samples
-        if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
+        // Per-input result (e.g. contracts: one result per input item)
+        if (isPerInputBayesianResult(cachedData)) {
+          result = cachedData;
+        } else if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
           // Full result with posterior samples - use directly
           result = {
             posteriorSamples: cachedData.posteriorSamples,
@@ -158,6 +178,7 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
           // Legacy cache format - only median weights, reconstruct summaryStatistics
           const summaryStatistics = {};
           for (const [itemId, median] of Object.entries(cachedData)) {
+            if (typeof median !== 'number') continue;
             summaryStatistics[itemId] = {
               median: median,
               map: median, // Use median as MAP approximation
@@ -171,7 +192,7 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
             posteriorSamples: {}, // Not available in legacy cache
             metadata: {
               cached: true,
-              numItems: Object.keys(cachedData).length,
+              numItems: Object.keys(summaryStatistics).length,
               numDatasets: datasets.length
             }
           };
@@ -194,38 +215,54 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     }
     
     // If no cache hit, calculate Bayesian weights
+    const perInputMode = isPerInputBayesianWeights(options.deterministicWeights);
     if (!result) {
-      // Execute client-side MCMC inference
-      result = await inferWeights(datasets, {
-        ...(options.jagsOptions || {}),
-        onProgress: (progress) => {
-          currentProgress = progress;
+      if (perInputMode) {
+        result = await inferWeightsPerInputItem(datasets, {
+          ...(options.jagsOptions || {}),
+          onProgress: (progress) => {
+            currentProgress = progress;
+          }
+        });
+      } else {
+        result = await inferWeights(datasets, {
+          ...(options.jagsOptions || {}),
+          onProgress: (progress) => {
+            currentProgress = progress;
+          }
+        });
+      }
+      // Cache the full Bayesian result
+      if (options.indexData && options.normalizedDatasets) {
+        const hasSummary = perInputMode
+          ? Object.values(result).some(r => r && r.summaryStatistics)
+          : result.summaryStatistics;
+        if (hasSummary) {
+          await setCachedWeights(
+            categoryId,
+            options.normalizedDatasets,
+            'bayesian',
+            result,
+            options.indexData
+          );
         }
-      });
-      
-      // Cache the full Bayesian result (including posterior samples for density plot)
-      if (options.indexData && options.normalizedDatasets && result.summaryStatistics) {
-        // Store full result including posterior samples
-        await setCachedWeights(
-          categoryId,
-          options.normalizedDatasets,
-          'bayesian',
-          result, // Store full result object
-          options.indexData
-        );
       }
     }
 
-    // Compute summary statistics if not already computed
-    let summaryStatistics = result.summaryStatistics;
-    if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
-      summaryStatistics = computeStatistics(result.posteriorSamples);
+    // Normalize result shape: per-input has result[inputId].summaryStatistics; single has result.summaryStatistics
+    const isPerInputResult = isPerInputBayesianResult(result);
+    let currentResultNormalized;
+    if (isPerInputResult) {
+      currentResultNormalized = result; // Keep as { inputId: { summaryStatistics, ... } }
+    } else {
+      let summaryStatistics = result.summaryStatistics;
+      if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
+        summaryStatistics = computeStatistics(result.posteriorSamples || {});
+      }
+      currentResultNormalized = { ...result, summaryStatistics };
     }
 
-    currentBayesianResult = {
-      ...result,
-      summaryStatistics
-    };
+    currentBayesianResult = currentResultNormalized;
 
     isLoading = false;
     if (progressInterval) {
@@ -235,32 +272,45 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     progressFill.style.width = '100%';
     clearElement(bayesianDisplay);
 
-    // Rebuild header if it exists
     if (header) {
       bayesianDisplay.appendChild(header);
     }
 
-      // Store items, datasets, and result for visualization switching
-      currentItems = items;
-      currentDatasets = datasets;
-      currentCategoryId = categoryId;
-      currentOptions = options;
+    currentItems = items;
+    currentDatasets = datasets;
+    currentCategoryId = categoryId;
+    currentOptions = options;
 
-    // Create visualization tabs
-    const tabsContainer = createBayesianVisualizationTabs(currentBayesianResult, items);
-    bayesianDisplay.appendChild(tabsContainer);
-
-    // Create content area for visualizations
-    const contentArea = createElement('div', { className: 'bayesian-visualization-content' });
-    bayesianDisplay.appendChild(contentArea);
-    currentContentArea = contentArea; // Store reference for tab switching
-
-    // Display default view (table with statistics)
-    renderBayesianResults(contentArea, currentBayesianResult, items, categoryId, result.modelAssumptions, datasets);
-
-    // Display convergence diagnostics if available
-    if (result.convergenceDiagnostics) {
-      renderConvergenceDiagnostics(bayesianDisplay, result.convergenceDiagnostics);
+    if (isPerInputResult) {
+      // Per-input: one section per input item
+      const sectionsWrapper = createElement('div', { className: 'bayesian-per-input-sections' });
+      for (const inputId of Object.keys(result)) {
+        const singleResult = result[inputId];
+        if (!singleResult || !singleResult.summaryStatistics) continue;
+        const contractName = items.find(i => i.id === inputId)?.name || inputId;
+        const jobItems = (items.find(i => i.id === inputId)?.jobs) || [];
+        const section = createElement('div', { className: 'bayesian-per-input-section' });
+        section.appendChild(createElement('h3', { className: 'per-input-section-title', textContent: contractName, style: 'margin: 1rem 0 0.5rem 0; font-size: 1.1rem;' }));
+        const contentArea = createElement('div', { className: 'bayesian-visualization-content', 'data-input-id': inputId });
+        section.appendChild(contentArea);
+        renderBayesianResults(contentArea, singleResult, jobItems, categoryId, singleResult.modelAssumptions, datasets);
+        sectionsWrapper.appendChild(section);
+        if (singleResult.convergenceDiagnostics) {
+          renderConvergenceDiagnostics(section, singleResult.convergenceDiagnostics);
+        }
+      }
+      bayesianDisplay.appendChild(sectionsWrapper);
+      currentContentArea = null; // Multiple content areas
+    } else {
+      const tabsContainer = createBayesianVisualizationTabs(currentBayesianResult, items);
+      bayesianDisplay.appendChild(tabsContainer);
+      const contentArea = createElement('div', { className: 'bayesian-visualization-content' });
+      bayesianDisplay.appendChild(contentArea);
+      currentContentArea = contentArea;
+      renderBayesianResults(contentArea, currentBayesianResult, items, categoryId, result.modelAssumptions, datasets);
+      if (result.convergenceDiagnostics) {
+        renderConvergenceDiagnostics(bayesianDisplay, result.convergenceDiagnostics);
+      }
     }
 
   } catch (error) {

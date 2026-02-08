@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Legion Splinters",
   "description": "Calculated item weights for Legion Splinters using BAYESIAN method from 5 datasets",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.25.0",
   "sources": [
     {
@@ -33,23 +33,23 @@
   "items": [
     {
       "id": "timeless-eternal-empire-splinter",
-      "weight": 0.2931547966017134
+      "weight": 0.2919729371577461
     },
     {
       "id": "timeless-karui-splinter",
-      "weight": 0.2848775464859975
+      "weight": 0.2858817680285652
     },
     {
       "id": "timeless-vaal-splinter",
-      "weight": 0.24024975562716402
+      "weight": 0.24043217862848335
     },
     {
       "id": "timeless-templar-splinter",
-      "weight": 0.11995608788166177
+      "weight": 0.12019656409390285
     },
     {
       "id": "timeless-maraketh-splinter",
-      "weight": 0.0617618134034633
+      "weight": 0.061516552091302454
     }
   ],
   "inputItems": [

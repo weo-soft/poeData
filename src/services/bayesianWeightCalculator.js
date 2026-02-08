@@ -100,6 +100,67 @@ export async function inferWeights(datasets, options = {}) {
 }
 
 /**
+ * Group datasets by their single input item ID (same logic as weightCalculator).
+ * Only datasets with exactly one inputItem are included.
+ * @param {Array<Object>} datasets - Array of dataset objects
+ * @returns {Map<string, Array<Object>>} Map of inputItemId -> datasets
+ */
+function groupDatasetsByInputItem(datasets) {
+  const byInput = new Map();
+  for (const ds of datasets) {
+    if (!ds.inputItems || !Array.isArray(ds.inputItems) || ds.inputItems.length !== 1) {
+      continue;
+    }
+    const inputId = ds.inputItems[0].id;
+    if (!inputId) continue;
+    if (!byInput.has(inputId)) {
+      byInput.set(inputId, []);
+    }
+    byInput.get(inputId).push(ds);
+  }
+  return byInput;
+}
+
+/**
+ * Execute Bayesian weight inference separately per input item (e.g. for contracts: one inference per contract type).
+ * Use this when the transformation model differs by input (e.g. contract type -> job weights).
+ *
+ * @param {Array<Object>} datasets - Array of dataset objects (each with a single inputItem)
+ * @param {Object} options - Same as inferWeights (numSamples, numChains, burnIn, onProgress)
+ * @returns {Promise<Object>} { [inputItemId: string]: { weights, summaryStatistics, posteriorSamples, convergenceDiagnostics, ... } }
+ * @throws {Error} If datasets array is empty or inference fails
+ */
+export async function inferWeightsPerInputItem(datasets, options = {}) {
+  if (!datasets || datasets.length === 0) {
+    throw new Error('Datasets array cannot be empty');
+  }
+
+  const byInput = groupDatasetsByInputItem(datasets);
+  const result = {};
+  const inputIds = Array.from(byInput.keys());
+
+  for (const inputItemId of inputIds) {
+    const group = byInput.get(inputItemId);
+    if (!group || group.length === 0) continue;
+
+    const inferenceResult = await inferWeights(group, options);
+    const weights = {};
+    if (inferenceResult.summaryStatistics) {
+      for (const [itemId, stats] of Object.entries(inferenceResult.summaryStatistics)) {
+        const w = stats.median != null ? stats.median : stats.map;
+        if (typeof w === 'number') weights[itemId] = w;
+      }
+    }
+    result[inputItemId] = {
+      ...inferenceResult,
+      weights
+    };
+  }
+
+  return result;
+}
+
+/**
  * Compute simplified convergence diagnostics
  * @param {Object} posteriorSamples - Posterior samples per item
  * @returns {Object} Convergence diagnostics

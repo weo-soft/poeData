@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Essences",
   "description": "Calculated item weights for Essences using BAYESIAN method from 1 dataset",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.20.0",
   "sources": [
     {
@@ -18,79 +18,79 @@
   "items": [
     {
       "id": "deafening-essence-of-woe",
-      "weight": 0.0638823134416817
-    },
-    {
-      "id": "deafening-essence-of-fear",
-      "weight": 0.05972936426932449
+      "weight": 0.06467198578889269
     },
     {
       "id": "deafening-essence-of-hatred",
-      "weight": 0.05892612942519257
+      "weight": 0.05974910957580441
     },
     {
       "id": "deafening-essence-of-anguish",
-      "weight": 0.058620385570713786
+      "weight": 0.05871557793350649
+    },
+    {
+      "id": "deafening-essence-of-fear",
+      "weight": 0.05741808926063679
     },
     {
       "id": "deafening-essence-of-loathing",
-      "weight": 0.057877771989963425
+      "weight": 0.05691266721708734
     },
     {
       "id": "deafening-essence-of-rage",
-      "weight": 0.05726007253651336
-    },
-    {
-      "id": "deafening-essence-of-scorn",
-      "weight": 0.05326689495304569
+      "weight": 0.05579125448310105
     },
     {
       "id": "deafening-essence-of-torment",
-      "weight": 0.05279370792954061
+      "weight": 0.054748341360728335
+    },
+    {
+      "id": "deafening-essence-of-scorn",
+      "weight": 0.052403309890238725
     },
     {
       "id": "deafening-essence-of-suffering",
-      "weight": 0.051577217315768385
-    },
-    {
-      "id": "deafening-essence-of-greed",
-      "weight": 0.0506021570333794
-    },
-    {
-      "id": "deafening-essence-of-zeal",
-      "weight": 0.05031972114765405
-    },
-    {
-      "id": "deafening-essence-of-anger",
-      "weight": 0.0502034526605597
-    },
-    {
-      "id": "deafening-essence-of-spite",
-      "weight": 0.04956429556952753
-    },
-    {
-      "id": "deafening-essence-of-envy",
-      "weight": 0.04898995007031103
+      "weight": 0.051522143331555324
     },
     {
       "id": "deafening-essence-of-misery",
-      "weight": 0.04880620522994374
+      "weight": 0.05100626072930173
+    },
+    {
+      "id": "deafening-essence-of-greed",
+      "weight": 0.05033484985870361
+    },
+    {
+      "id": "deafening-essence-of-zeal",
+      "weight": 0.05011401214338188
+    },
+    {
+      "id": "deafening-essence-of-anger",
+      "weight": 0.04990836087184971
+    },
+    {
+      "id": "deafening-essence-of-envy",
+      "weight": 0.04958381643122721
+    },
+    {
+      "id": "deafening-essence-of-spite",
+      "weight": 0.04886567369045007
     },
     {
       "id": "deafening-essence-of-contempt",
-      "weight": 0.04824858051805413
+      "weight": 0.04876718113508217
     },
     {
       "id": "deafening-essence-of-sorrow",
-      "weight": 0.046754207651787845
+      "weight": 0.04825338308201498
     },
     {
       "id": "deafening-essence-of-dread",
-      "weight": 0.04669203115019944
+      "weight": 0.04621059324427314
     },
     {
       "id": "deafening-essence-of-wrath",
-      "weight": 0.0458855415368391
+      "weight": 0.04502338997216448
     }
   ],
   "inputItems": [

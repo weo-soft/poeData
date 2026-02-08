@@ -1,0 +1,231 @@
+{
+  "name": "Calculated Weights for Contracts",
+  "description": "Per-input item weights for Contracts using BAYESIAN (one calculation per input item) from 9 datasets",
+  "date": "2026-02-08",
+  "patch": "3.27.0",
+  "sources": [
+    {
+      "name": "Google Sheet",
+      "url": "https://docs.google.com/spreadsheets/d/13WnAx8grPj9tKtaeQr6tzfEg8d8JN56CUSXGCOJe9_Y/edit?usp=sharing",
+      "author": "Weo"
+    },
+    {
+      "name": "Discord Thread",
+      "url": "https://discord.com/channels/991073626721763429/991092346651287623/1469982683458306160",
+      "author": "Weo"
+    }
+  ],
+  "perInput": true,
+  "weightsByInput": {
+    "contract-bunker": [
+      {
+        "id": "engineering",
+        "weight": 0.2762002143837554
+      },
+      {
+        "id": "agility",
+        "weight": 0.18099864416737785
+      },
+      {
+        "id": "perception",
+        "weight": 0.14694688348502224
+      },
+      {
+        "id": "trap-disarmament",
+        "weight": 0.14553389206994125
+      },
+      {
+        "id": "lockpicking",
+        "weight": 0.11057211205980967
+      },
+      {
+        "id": "demolition",
+        "weight": 0.08493274412759515
+      },
+      {
+        "id": "counter-thaumaturgy",
+        "weight": 0.054815509706498365
+      }
+    ],
+    "contract-underbelly": [
+      {
+        "id": "brute-force",
+        "weight": 0.255634723426594
+      },
+      {
+        "id": "engineering",
+        "weight": 0.20610947977128494
+      },
+      {
+        "id": "deception",
+        "weight": 0.18691823585753403
+      },
+      {
+        "id": "agility",
+        "weight": 0.17963763118957493
+      },
+      {
+        "id": "demolition",
+        "weight": 0.17169992975501208
+      }
+    ],
+    "contract-mansion": [
+      {
+        "id": "brute-force",
+        "weight": 0.27725233392897036
+      },
+      {
+        "id": "lockpicking",
+        "weight": 0.25886601250750646
+      },
+      {
+        "id": "agility",
+        "weight": 0.2193445211186262
+      },
+      {
+        "id": "deception",
+        "weight": 0.15620640981951367
+      },
+      {
+        "id": "perception",
+        "weight": 0.08833072262538334
+      }
+    ],
+    "contract-records-office": [
+      {
+        "id": "trap-disarmament",
+        "weight": 0.23622742578368097
+      },
+      {
+        "id": "brute-force",
+        "weight": 0.19922667374190006
+      },
+      {
+        "id": "demolition",
+        "weight": 0.17330054167481126
+      },
+      {
+        "id": "lockpicking",
+        "weight": 0.1728243591793244
+      },
+      {
+        "id": "deception",
+        "weight": 0.13324114925662792
+      },
+      {
+        "id": "counter-thaumaturgy",
+        "weight": 0.08517985036365533
+      }
+    ],
+    "contract-smugglers-den": [
+      {
+        "id": "deception",
+        "weight": 0.23796735373561445
+      },
+      {
+        "id": "trap-disarmament",
+        "weight": 0.23194625833533777
+      },
+      {
+        "id": "perception",
+        "weight": 0.21852862667135897
+      },
+      {
+        "id": "brute-force",
+        "weight": 0.2156996850169248
+      },
+      {
+        "id": "demolition",
+        "weight": 0.09585807624076395
+      }
+    ],
+    "contract-repository": [
+      {
+        "id": "agility",
+        "weight": 0.25089570793642424
+      },
+      {
+        "id": "demolition",
+        "weight": 0.21706220399937082
+      },
+      {
+        "id": "perception",
+        "weight": 0.21676435286167034
+      },
+      {
+        "id": "trap-disarmament",
+        "weight": 0.15804423437880574
+      },
+      {
+        "id": "lockpicking",
+        "weight": 0.15723350082372875
+      }
+    ],
+    "contract-tunnels": [
+      {
+        "id": "brute-force",
+        "weight": 0.19279753580798606
+      },
+      {
+        "id": "engineering",
+        "weight": 0.18570452410351737
+      },
+      {
+        "id": "demolition",
+        "weight": 0.18022676452793043
+      },
+      {
+        "id": "agility",
+        "weight": 0.16579132564590499
+      },
+      {
+        "id": "trap-disarmament",
+        "weight": 0.1457319345725044
+      },
+      {
+        "id": "counter-thaumaturgy",
+        "weight": 0.12974791534215674
+      }
+    ],
+    "contract-laboratory": [
+      {
+        "id": "deception",
+        "weight": 0.34563606447790307
+      },
+      {
+        "id": "counter-thaumaturgy",
+        "weight": 0.22257774748839743
+      },
+      {
+        "id": "demolition",
+        "weight": 0.22074653916873294
+      },
+      {
+        "id": "perception",
+        "weight": 0.21103964886496662
+      }
+    ],
+    "contract-prohibited-library": [
+      {
+        "id": "engineering",
+        "weight": 0.24163774898050647
+      },
+      {
+        "id": "lockpicking",
+        "weight": 0.23872696856625703
+      },
+      {
+        "id": "perception",
+        "weight": 0.21814448916275947
+      },
+      {
+        "id": "deception",
+        "weight": 0.18290504232106133
+      },
+      {
+        "id": "counter-thaumaturgy",
+        "weight": 0.11858575096941579
+      }
+    ]
+  }
+}

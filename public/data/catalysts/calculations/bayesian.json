@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Catalysts",
   "description": "Calculated item weights for Catalysts using BAYESIAN method from 6 datasets",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.25.0",
   "sources": [
     {
@@ -68,43 +68,43 @@
   "items": [
     {
       "id": "intrinsic-catalyst",
-      "weight": 0.29525588500012095
+      "weight": 0.28834592583771923
     },
     {
       "id": "turbulent-catalyst",
-      "weight": 0.1495338005139918
-    },
-    {
-      "id": "noxious-catalyst",
-      "weight": 0.1434837932418508
+      "weight": 0.15104559985315516
     },
     {
       "id": "abrasive-catalyst",
-      "weight": 0.142791389650309
+      "weight": 0.1440309862078131
+    },
+    {
+      "id": "noxious-catalyst",
+      "weight": 0.1430459183527456
     },
     {
       "id": "imbued-catalyst",
-      "weight": 0.13646775292935392
+      "weight": 0.14208576959231428
     },
     {
       "id": "fertile-catalyst",
-      "weight": 0.0356908917222854
+      "weight": 0.035127902416050606
     },
     {
       "id": "prismatic-catalyst",
-      "weight": 0.03440700176747861
+      "weight": 0.03400711537582745
     },
     {
       "id": "tempering-catalyst",
-      "weight": 0.03380711005304206
-    },
-    {
-      "id": "unstable-catalyst",
-      "weight": 0.014457679460674784
+      "weight": 0.03299702154409181
     },
     {
       "id": "accelerating-catalyst",
-      "weight": 0.014104695660892699
+      "weight": 0.01491422126654512
+    },
+    {
+      "id": "unstable-catalyst",
+      "weight": 0.014399539553737743
     }
   ],
   "inputItems": [

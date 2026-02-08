@@ -6,7 +6,7 @@ import { createElement, clearElement } from '../utils/dom.js';
 import { renderRankedBarChart, renderLogScaleBarChart, renderCDFCurve, renderHeatmap } from '../visualization/weightVisualizations.js';
 import { renderBayesianWeightDisplay, getCurrentBayesianResult } from './bayesianWeightDisplay.js';
 import { displayError } from '../utils/errors.js';
-import { inferWeights } from '../services/bayesianWeightCalculator.js';
+import { inferWeights, inferWeightsPerInputItem } from '../services/bayesianWeightCalculator.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 import { router } from '../services/router.js';
 import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUrls.js';
@@ -22,6 +22,25 @@ let currentOptions = null; // Store current options for view switching
 let renderDeterministicFn = null; // Store deterministic render function
 let renderBayesianFn = null; // Store Bayesian render function
 let renderComparisonFn = null; // Store comparison render function
+let currentPerInputMode = false; // True when weights are per input item (e.g. contracts)
+
+/**
+ * Detect if weights are per-input (e.g. contracts: one weight set per input item).
+ * @param {Object} weights - Weights object
+ * @returns {boolean}
+ */
+function isPerInputWeights(weights) {
+  if (!weights || typeof weights !== 'object') return false;
+  const keys = Object.keys(weights);
+  if (keys.length === 0) return false;
+  const firstVal = weights[keys[0]];
+  return (
+    typeof firstVal === 'object' &&
+    firstVal !== null &&
+    !Array.isArray(firstVal) &&
+    Object.values(firstVal).some(v => typeof v === 'number')
+  );
+}
 
 /**
  * Render weight display in container with visualization switching
@@ -68,6 +87,9 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
     container.appendChild(weightDisplay);
     return;
   }
+
+  const perInputMode = isPerInputWeights(weights);
+  currentPerInputMode = perInputMode;
 
   // Create header
   const header = createElement('div', { className: 'weight-display-header' });
@@ -189,26 +211,38 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
     renderDeterministicFn = () => {
       if (!persistentContentContainer) return;
       clearElement(persistentContentContainer);
-      
-      // Create visualization tabs
-      const tabsContainer = createVisualizationTabs(weights, items, categoryId, options.defaultView || 'table');
+      const defaultView = options.defaultView || 'table';
+      const perInput = isPerInputWeights(weights);
+      currentPerInputMode = perInput;
       const contentWrapper = createElement('div');
-      contentWrapper.appendChild(tabsContainer);
-      
-      // Create content area for visualizations
-      const contentArea = createElement('div', { className: 'weight-visualization-content' });
-      contentWrapper.appendChild(contentArea);
-      
+      if (perInput) {
+        const firstInputId = Object.keys(weights)[0];
+        const tabsContainer = createVisualizationTabs(weights[firstInputId], getJobItemsForInput(firstInputId, items), categoryId, defaultView);
+        contentWrapper.appendChild(tabsContainer);
+        const sectionsWrapper = createElement('div', { className: 'per-input-sections' });
+        for (const inputId of Object.keys(weights)) {
+          const singleWeights = weights[inputId];
+          const jobItems = getJobItemsForInput(inputId, items);
+          const contractName = items.find(i => i.id === inputId)?.name || inputId;
+          const section = createElement('div', { className: 'per-input-section' });
+          section.appendChild(createElement('h3', { className: 'per-input-section-title', textContent: contractName, style: 'margin: 1rem 0 0.5rem 0; font-size: 1.1rem;' }));
+          const contentArea = createElement('div', { className: 'weight-visualization-content', 'data-input-id': inputId });
+          section.appendChild(contentArea);
+          sectionsWrapper.appendChild(section);
+          renderVisualization(contentArea, defaultView, singleWeights, jobItems, categoryId);
+        }
+        contentWrapper.appendChild(sectionsWrapper);
+      } else {
+        const tabsContainer = createVisualizationTabs(weights, items, categoryId, defaultView);
+        contentWrapper.appendChild(tabsContainer);
+        const contentArea = createElement('div', { className: 'weight-visualization-content' });
+        contentWrapper.appendChild(contentArea);
+        renderVisualization(contentArea, defaultView, weights, items, categoryId);
+      }
       persistentContentContainer.appendChild(contentWrapper);
-      
-      // Store current data for tab switching
       currentWeights = weights;
       currentItems = items;
       currentCategoryId = categoryId;
-      
-      // Render default visualization
-      const defaultView = options.defaultView || 'table';
-      renderVisualization(contentArea, defaultView, weights, items, categoryId);
     };
     
     renderBayesianFn = async () => {
@@ -304,15 +338,43 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
     clearElement(persistentContentContainer);
   }
 
-  // Create visualization tabs for deterministic view
-  const tabsContainer = createVisualizationTabs(weights, items, categoryId, options.defaultView || 'table');
   const contentWrapper = createElement('div');
-  contentWrapper.appendChild(tabsContainer);
+  const defaultView = options.defaultView || 'table';
 
-  // Create content area for visualizations
-  const contentArea = createElement('div', { className: 'weight-visualization-content' });
-  contentWrapper.appendChild(contentArea);
-  
+  if (perInputMode) {
+    // Per-input: one section per input item (e.g. one per contract)
+    const tabsContainer = createVisualizationTabs(weights[Object.keys(weights)[0]], getJobItemsForInput(Object.keys(weights)[0], items), categoryId, defaultView);
+    contentWrapper.appendChild(tabsContainer);
+    const sectionsWrapper = createElement('div', { className: 'per-input-sections' });
+    for (const inputId of Object.keys(weights)) {
+      const singleWeights = weights[inputId];
+      const jobItems = getJobItemsForInput(inputId, items);
+      const contractName = items.find(i => i.id === inputId)?.name || inputId;
+      const section = createElement('div', { className: 'per-input-section' });
+      const sectionTitle = createElement('h3', {
+        className: 'per-input-section-title',
+        textContent: contractName,
+        style: 'margin: 1rem 0 0.5rem 0; font-size: 1.1rem;'
+      });
+      section.appendChild(sectionTitle);
+      const contentArea = createElement('div', {
+        className: 'weight-visualization-content',
+        'data-input-id': inputId
+      });
+      section.appendChild(contentArea);
+      sectionsWrapper.appendChild(section);
+      renderVisualization(contentArea, defaultView, singleWeights, jobItems, categoryId);
+    }
+    contentWrapper.appendChild(sectionsWrapper);
+  } else {
+    // Single weight set
+    const tabsContainer = createVisualizationTabs(weights, items, categoryId, defaultView);
+    contentWrapper.appendChild(tabsContainer);
+    const contentArea = createElement('div', { className: 'weight-visualization-content' });
+    contentWrapper.appendChild(contentArea);
+    renderVisualization(contentArea, defaultView, weights, items, categoryId);
+  }
+
   persistentContentContainer.appendChild(contentWrapper);
 
   // Store current data for tab switching
@@ -320,13 +382,20 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
   currentItems = items;
   currentCategoryId = categoryId;
 
-  // Render default visualization
-  const defaultView = options.defaultView || 'table';
-  renderVisualization(contentArea, defaultView, weights, items, categoryId);
-
   weightDisplay.appendChild(header);
   weightDisplay.appendChild(persistentContentContainer);
   container.appendChild(weightDisplay);
+}
+
+/**
+ * Get job (output) items for a contract input item. Used for per-input weight display (e.g. contracts).
+ * @param {string} inputId - Input item ID (e.g. contract id)
+ * @param {Array<Object>} items - Category items (e.g. contracts with jobs array)
+ * @returns {Array<Object>} Array of { id, name } for that input's outputs
+ */
+function getJobItemsForInput(inputId, items) {
+  const contract = items.find(i => i.id === inputId);
+  return (contract && Array.isArray(contract.jobs)) ? contract.jobs : [];
 }
 
 /**
@@ -423,9 +492,22 @@ function handleTabClick(viewType) {
   }
 
   // Render new visualization using stored data
-  const contentArea = document.querySelector('.weight-visualization-content');
-  if (contentArea && currentWeights) {
-    renderVisualization(contentArea, viewType, currentWeights, currentItems, currentCategoryId);
+  if (!currentWeights) return;
+  if (currentPerInputMode) {
+    const contentAreas = document.querySelectorAll('.weight-visualization-content[data-input-id]');
+    contentAreas.forEach(contentArea => {
+      const inputId = contentArea.getAttribute('data-input-id');
+      const singleWeights = currentWeights[inputId];
+      const jobItems = getJobItemsForInput(inputId, currentItems);
+      if (singleWeights) {
+        renderVisualization(contentArea, viewType, singleWeights, jobItems, currentCategoryId);
+      }
+    });
+  } else {
+    const contentArea = document.querySelector('.weight-visualization-content');
+    if (contentArea) {
+      renderVisualization(contentArea, viewType, currentWeights, currentItems, currentCategoryId);
+    }
   }
 }
 
@@ -920,19 +1002,19 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
       );
       
       if (cachedData) {
-        // Check if we have full result with posterior samples
-        if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
-          // Full result available
+        if (isPerInputWeights(cachedData) && Object.keys(cachedData).length > 0 && typeof Object.values(cachedData)[0]?.summaryStatistics === 'object') {
+          bayesianResult = cachedData;
+        } else if (cachedData.posteriorSamples && Object.keys(cachedData.posteriorSamples).length > 0) {
           bayesianResult = {
             posteriorSamples: cachedData.posteriorSamples,
             summaryStatistics: cachedData.summaryStatistics,
             convergenceDiagnostics: cachedData.convergenceDiagnostics,
             modelAssumptions: cachedData.modelAssumptions
           };
-        } else {
-          // Legacy cache format - reconstruct summaryStatistics
+        } else if (typeof Object.values(cachedData)[0] === 'number') {
           const summaryStatistics = {};
           for (const [itemId, median] of Object.entries(cachedData)) {
+            if (typeof median !== 'number') continue;
             summaryStatistics[itemId] = {
               median: median,
               map: median,
@@ -943,31 +1025,26 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
         }
       }
     }
-    
-    if (!bayesianResult) {
-      // Execute JAGS inference
-      const result = await inferWeights(datasets, options.jagsOptions || {});
-      
-      // Compute summary statistics if not already computed
-      let summaryStatistics = result.summaryStatistics;
-      if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
-        summaryStatistics = computeStatistics(result.posteriorSamples);
-      }
 
-      bayesianResult = {
-        ...result,
-        summaryStatistics
-      };
-      
-      // Cache the full Bayesian result (including posterior samples)
+    const perInputMode = isPerInputWeights(deterministicWeights);
+    if (!bayesianResult) {
+      if (perInputMode) {
+        bayesianResult = await inferWeightsPerInputItem(datasets, options.jagsOptions || {});
+      } else {
+        const result = await inferWeights(datasets, options.jagsOptions || {});
+        let summaryStatistics = result.summaryStatistics;
+        if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
+          summaryStatistics = computeStatistics(result.posteriorSamples);
+        }
+        bayesianResult = { ...result, summaryStatistics };
+      }
       if (options.indexData && options.normalizedDatasets && bayesianResult) {
         const { setCachedWeights } = await import('../services/weightCache.js');
-        // Store full result including posterior samples
         await setCachedWeights(
           categoryId,
           options.normalizedDatasets,
           'bayesian',
-          bayesianResult, // Store full result object
+          bayesianResult,
           options.indexData
         );
       }
@@ -978,8 +1055,22 @@ async function renderComparisonView(container, deterministicWeights, datasets, c
       comparisonDiv.appendChild(header);
     }
 
-    // Create comparison table
-    renderComparisonTable(comparisonDiv, deterministicWeights, bayesianResult, items, categoryId);
+    if (perInputMode && typeof bayesianResult === 'object' && !bayesianResult.summaryStatistics && Object.values(bayesianResult).some(v => v && v.summaryStatistics)) {
+      for (const inputId of Object.keys(deterministicWeights)) {
+        const singleMle = deterministicWeights[inputId];
+        const singleBayesian = bayesianResult[inputId];
+        const jobItems = getJobItemsForInput(inputId, items);
+        const contractName = items.find(i => i.id === inputId)?.name || inputId;
+        const section = createElement('div', { className: 'comparison-per-input-section' });
+        section.appendChild(createElement('h3', { className: 'per-input-section-title', textContent: contractName, style: 'margin: 1rem 0 0.5rem 0; font-size: 1.1rem;' }));
+        if (singleBayesian && singleBayesian.summaryStatistics) {
+          renderComparisonTable(section, singleMle, singleBayesian, jobItems, categoryId);
+        }
+        comparisonDiv.appendChild(section);
+      }
+    } else {
+      renderComparisonTable(comparisonDiv, deterministicWeights, bayesianResult, items, categoryId);
+    }
 
   } catch (error) {
     clearElement(comparisonDiv);

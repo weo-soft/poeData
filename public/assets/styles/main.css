@@ -2897,10 +2897,10 @@ input:focus, textarea:focus, select:focus {
   color: var(--poe-text);
 }
 
-/* Contract grid container - 4 columns for wider cards */
+/* Contract grid container - 3 columns for wider cards */
 .contract-grid-container {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, minmax(300px, 1fr));
   gap: 1rem;
   padding: 1rem 0;
   width: 100%;
@@ -2909,7 +2909,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Contract cards - wider than tattoo cards */
 .contract-grid-container .tattoo-card {
-  min-width: 200px;
+  min-width: 300px;
   width: 100%;
 }
 
@@ -3012,13 +3012,19 @@ input:focus, textarea:focus, select:focus {
 /* Responsive styles for contract grid */
 @media (max-width: 1200px) {
   .contract-grid-container {
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+  .contract-grid-container .tattoo-card {
+    min-width: 280px;
   }
 }
 
 @media (max-width: 900px) {
   .contract-grid-container {
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+  .contract-grid-container .tattoo-card {
+    min-width: 240px;
   }
 }
 

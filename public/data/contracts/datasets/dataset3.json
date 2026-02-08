@@ -1,0 +1,45 @@
+{
+    "name": "Dataset 3 - Mansion",
+    "description": "Mansion job counts",
+    "date": "2026-02-08",
+    "patch": "3.27.0",
+    "sources": [
+        {
+            "name": "Google Sheet",
+            "url": "https://docs.google.com/spreadsheets/d/13WnAx8grPj9tKtaeQr6tzfEg8d8JN56CUSXGCOJe9_Y/edit?usp=sharing",
+            "author": "Weo"
+        },
+        {
+            "name": "Discord Thread",
+            "url": "https://discord.com/channels/991073626721763429/991092346651287623/1469982683458306160",
+            "author": "Weo"
+        }
+    ],
+    "inputItems": [
+        {
+            "id": "contract-mansion"
+        }
+    ],
+    "items": [
+        {
+            "id": "agility",
+            "count": 19
+        },
+        {
+            "id": "brute-force",
+            "count": 23
+        },
+        {
+            "id": "deception",
+            "count": 13
+        },
+        {
+            "id": "lockpicking",
+            "count": 21
+        },
+        {
+            "id": "perception",
+            "count": 7
+        }
+    ]
+}

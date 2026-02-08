@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Delirium Orbs",
   "description": "Calculated item weights for Delirium Orbs using BAYESIAN method from 5 datasets",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.22.0",
   "sources": [
     {
@@ -57,80 +57,80 @@
   ],
   "items": [
     {
-      "id": "armoursmiths-delirium-orb",
-      "weight": 0.12503122462603852
+      "id": "fine-delirium-orb",
+      "weight": 0.1263478106193118
     },
     {
-      "id": "fine-delirium-orb",
-      "weight": 0.12313543849048135
+      "id": "armoursmiths-delirium-orb",
+      "weight": 0.12238721422306867
     },
     {
       "id": "blacksmiths-delirium-orb",
-      "weight": 0.11540546764357354
+      "weight": 0.11569323913629165
     },
     {
       "id": "jewellers-delirium-orb",
-      "weight": 0.10188022608822898
+      "weight": 0.1016374418311695
     },
     {
       "id": "diviners-delirium-orb",
-      "weight": 0.05994043247450413
+      "weight": 0.05841081337927868
     },
     {
       "id": "imperial-delirium-orb",
-      "weight": 0.05278498797956878
+      "weight": 0.05232704318293177
     },
     {
       "id": "whispering-delirium-orb",
-      "weight": 0.04975496385338785
+      "weight": 0.05095644152759959
     },
     {
       "id": "foreboding-delirium-orb",
-      "weight": 0.04942839710322678
+      "weight": 0.049252467123911924
     },
     {
       "id": "skittering-delirium-orb",
-      "weight": 0.03486213116544639
+      "weight": 0.03540510539937124
     },
     {
       "id": "fossilised-delirium-orb",
-      "weight": 0.03355661485143018
-    },
-    {
-      "id": "amorphous-delirium-orb",
-      "weight": 0.03235770706446717
-    },
-    {
-      "id": "fragmented-delirium-orb",
-      "weight": 0.03203524026735424
+      "weight": 0.033023457219210496
     },
     {
       "id": "blighted-delirium-orb",
-      "weight": 0.031250380852864856
+      "weight": 0.03278817802647602
     },
     {
-      "id": "cartographers-delirium-orb",
-      "weight": 0.030446128423987733
+      "id": "amorphous-delirium-orb",
+      "weight": 0.03218133359254243
     },
     {
-      "id": "timeless-delirium-orb",
-      "weight": 0.02987060392680875
+      "id": "fragmented-delirium-orb",
+      "weight": 0.030608116476606155
     },
     {
       "id": "abyssal-delirium-orb",
-      "weight": 0.029550280650233327
+      "weight": 0.03021064759233406
+    },
+    {
+      "id": "cartographers-delirium-orb",
+      "weight": 0.029854129307217456
+    },
+    {
+      "id": "timeless-delirium-orb",
+      "weight": 0.028509728626878166
     },
     {
       "id": "thaumaturges-delirium-orb",
-      "weight": 0.028011702784542455
+      "weight": 0.028410543984423182
     },
     {
       "id": "singular-delirium-orb",
-      "weight": 0.02300899256436061
+      "weight": 0.024526719095946906
     },
     {
       "id": "obscured-delirium-orb",
-      "weight": 0.017689079189494514
+      "weight": 0.01746956965543022
     }
   ],
   "inputItems": [

@@ -328,12 +328,69 @@ async function renderTattoosView(container, items, categoryId) {
  * @param {Array} jobs - Array of job objects or strings
  * @returns {Promise<Map<string, number>>} Map of job ID to weight
  */
+/**
+ * Load per-contract job weights from calculation files (mle.json / bayesian.json with perInput + weightsByInput).
+ * @returns {Promise<{ mle: Map<string, Map<string, number>>, bayesian: Map<string, Map<string, number>> }>}
+ *   Keys are contract id (e.g. "contract-bunker"); values are Map of job id -> weight for that contract.
+ */
+async function loadContractJobWeightsFromCalculations() {
+  const mleByContract = new Map();
+  const bayesianByContract = new Map();
+
+  try {
+    const [mleResponse, bayesianResponse] = await Promise.all([
+      fetch('/data/contracts/calculations/mle.json'),
+      fetch('/data/contracts/calculations/bayesian.json')
+    ]);
+
+    if (mleResponse.ok) {
+      const mleData = await mleResponse.json();
+      if (mleData.perInput === true && mleData.weightsByInput && typeof mleData.weightsByInput === 'object') {
+        for (const [contractId, items] of Object.entries(mleData.weightsByInput)) {
+          const jobMap = new Map();
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              if (item && item.id != null && typeof item.weight === 'number') {
+                jobMap.set(item.id, item.weight);
+              }
+            });
+          }
+          mleByContract.set(contractId, jobMap);
+        }
+      }
+    }
+
+    if (bayesianResponse.ok) {
+      const bayesianData = await bayesianResponse.json();
+      if (bayesianData.perInput === true && bayesianData.weightsByInput && typeof bayesianData.weightsByInput === 'object') {
+        for (const [contractId, items] of Object.entries(bayesianData.weightsByInput)) {
+          const jobMap = new Map();
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              if (item && item.id != null && typeof item.weight === 'number') {
+                jobMap.set(item.id, item.weight);
+              }
+            });
+          }
+          bayesianByContract.set(contractId, jobMap);
+        }
+      }
+    }
+  } catch (error) {
+    console.debug('Could not load contract job weights from calculations:', error);
+  }
+
+  return { mle: mleByContract, bayesian: bayesianByContract };
+}
+
+/**
+ * Load job weights (legacy: single global map). Used when per-contract weights are not available.
+ * @param {Array} jobs - List of job objects/ids
+ * @returns {Promise<Map<string, number>>}
+ */
 async function loadJobWeights(jobs) {
   const weightMap = new Map();
-  
   try {
-    // Try to load weights from calculation files
-    // First try MLE weights (more commonly available)
     const mleResponse = await fetch('/data/contracts/calculations/mle.json');
     if (mleResponse.ok) {
       const mleData = await mleResponse.json();
@@ -345,8 +402,6 @@ async function loadJobWeights(jobs) {
         });
       }
     }
-    
-    // If MLE weights not found, try Bayesian weights
     if (weightMap.size === 0) {
       const bayesianResponse = await fetch('/data/contracts/calculations/bayesian.json');
       if (bayesianResponse.ok) {
@@ -361,10 +416,8 @@ async function loadJobWeights(jobs) {
       }
     }
   } catch (error) {
-    // Silently fail - weights are optional
     console.debug('Could not load job weights:', error);
   }
-  
   return weightMap;
 }
 
@@ -501,8 +554,8 @@ async function renderTattooCard(container, tattoo, categoryId, jobWeights = unde
       });
       
       const weight = weights.get(jobId);
-      const weightText = weight !== undefined && weight !== null 
-        ? weight.toFixed(4) 
+      const weightText = weight !== undefined && weight !== null
+        ? (weight * 100).toFixed(2) + '%'
         : '—';
       const weightSpan = createElement('span', {
         className: 'contract-card-job-weight-value',
@@ -593,26 +646,17 @@ async function renderContractsView(container, items, categoryId) {
   const gridContainer = createElement('div', {
     className: 'contract-grid-container'
   });
-  
-  // Load job weights once for all contracts (optimization)
-  // Collect all unique job IDs from all contracts
-  const allJobIds = new Set();
-  items.forEach(contract => {
-    if (contract.jobs && Array.isArray(contract.jobs)) {
-      contract.jobs.forEach(job => {
-        const jobId = typeof job === 'string' ? job.toLowerCase().replace(/\s+/g, '-') : job.id;
-        allJobIds.add(jobId);
-      });
-    }
+
+  // Load per-contract job weights from public/data/contracts/calculations (mle.json / bayesian.json)
+  const { mle: mleByContract } = await loadContractJobWeightsFromCalculations();
+
+  // Render each contract as a card with that contract's job weights (MLE from calculations)
+  const contractPromises = items.map(contract => {
+    const jobWeightsForContract = mleByContract.get(contract.id) || null;
+    return renderTattooCard(gridContainer, contract, categoryId, jobWeightsForContract);
   });
-  
-  // Load weights once
-  const jobWeights = await loadJobWeights(Array.from(allJobIds));
-  
-  // Render each contract as a card, passing the weights
-  const contractPromises = items.map(contract => renderTattooCard(gridContainer, contract, categoryId, jobWeights));
   await Promise.all(contractPromises);
-  
+
   container.appendChild(gridContainer);
 }
 

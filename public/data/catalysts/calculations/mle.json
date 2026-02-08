@@ -1,7 +1,7 @@
 {
   "name": "Calculated Weights for Catalysts",
   "description": "Calculated item weights for Catalysts using MLE method from 6 datasets",
-  "date": "2026-02-03",
+  "date": "2026-02-08",
   "patch": "3.25.0",
   "sources": [
     {

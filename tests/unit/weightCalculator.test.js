@@ -7,7 +7,8 @@ import { describe, it, expect } from 'vitest';
 import {
   buildCountMatrix,
   estimateWeightsFromCounts,
-  estimateItemWeights
+  estimateItemWeights,
+  estimateItemWeightsPerInputItem
 } from '../../src/services/weightCalculator.js';
 
 describe('buildCountMatrix', () => {
@@ -431,5 +432,80 @@ describe('estimateItemWeights', () => {
     ];
 
     expect(() => estimateItemWeights(datasets, { learningRate: -0.01 })).toThrow('Invalid learning rate: must be positive');
+  });
+});
+
+describe('estimateItemWeightsPerInputItem', () => {
+  it('should throw error with empty datasets array', () => {
+    expect(() => estimateItemWeightsPerInputItem([])).toThrow('Datasets array cannot be empty');
+  });
+
+  it('should return one weight set per input item (contracts-style)', () => {
+    const datasets = [
+      {
+        inputItems: [{ id: 'contract-bunker' }],
+        items: [
+          { id: 'agility', count: 15 },
+          { id: 'engineering', count: 22 },
+          { id: 'demolition', count: 7 }
+        ]
+      },
+      {
+        inputItems: [{ id: 'contract-bunker' }],
+        items: [
+          { id: 'agility', count: 10 },
+          { id: 'lockpicking', count: 12 }
+        ]
+      },
+      {
+        inputItems: [{ id: 'contract-underbelly' }],
+        items: [
+          { id: 'brute-force', count: 32 },
+          { id: 'deception', count: 24 }
+        ]
+      }
+    ];
+
+    const result = estimateItemWeightsPerInputItem(datasets, { iterations: 500 });
+
+    expect(result).toHaveProperty('contract-bunker');
+    expect(result).toHaveProperty('contract-underbelly');
+    expect(Object.keys(result).length).toBe(2);
+
+    const bunker = result['contract-bunker'];
+    expect(bunker).toHaveProperty('agility');
+    expect(bunker).toHaveProperty('engineering');
+    expect(bunker).toHaveProperty('demolition');
+    expect(bunker).toHaveProperty('lockpicking');
+    const bunkerSum = Object.values(bunker).reduce((a, b) => a + b, 0);
+    expect(bunkerSum).toBeCloseTo(1.0, 3);
+
+    const underbelly = result['contract-underbelly'];
+    expect(underbelly).toHaveProperty('brute-force');
+    expect(underbelly).toHaveProperty('deception');
+    const underbellySum = Object.values(underbelly).reduce((a, b) => a + b, 0);
+    expect(underbellySum).toBeCloseTo(1.0, 3);
+  });
+
+  it('should ignore datasets without exactly one inputItem', () => {
+    const datasets = [
+      {
+        inputItems: [{ id: 'contract-bunker' }],
+        items: [{ id: 'agility', count: 10 }]
+      },
+      {
+        inputItems: [], // no input - skipped
+        items: [{ id: 'agility', count: 5 }]
+      },
+      {
+        inputItems: [{ id: 'a' }, { id: 'b' }], // two inputs - skipped
+        items: [{ id: 'agility', count: 5 }]
+      }
+    ];
+
+    const result = estimateItemWeightsPerInputItem(datasets);
+    expect(Object.keys(result).length).toBe(1);
+    expect(result).toHaveProperty('contract-bunker');
+    expect(result['contract-bunker'].agility).toBeCloseTo(1.0, 3);
   });
 });
