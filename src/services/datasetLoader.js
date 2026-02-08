@@ -497,6 +497,56 @@ export async function loadDataset(categoryId, datasetNumber) {
 }
 
 /**
+ * Get dataset count from a data directory (by loading index.json)
+ * @param {string} dirName - Directory name (e.g. 'scarabs', 'contracts')
+ * @returns {Promise<number>} Number of datasets or 0 if none
+ */
+async function getDatasetCountFromDir(dirName) {
+  const basePaths = [
+    `/data/${dirName}/datasets/`,
+    `/data/${dirName}/dataset/`
+  ];
+  for (const basePath of basePaths) {
+    try {
+      const response = await fetch(`${basePath}index.json`);
+      if (response.ok) {
+        const data = await response.json();
+        const list = data && data.datasets && Array.isArray(data.datasets) ? data.datasets : [];
+        return list.length;
+      }
+    } catch (e) {
+      // ignore, try next path
+    }
+  }
+  return 0;
+}
+
+/**
+ * Get dataset count for a category (for confidence indicator).
+ * Merged categories (breach, legion) use the minimum count across subcategories.
+ * @param {string} categoryId - Category identifier
+ * @returns {Promise<number>} Number of datasets (0 if none)
+ */
+export async function getDatasetCountForCategory(categoryId) {
+  if (categoryId === 'breach') {
+    const [splinters, stones] = await Promise.all([
+      getDatasetCountFromDir('breachSplinter'),
+      getDatasetCountFromDir('breachstones')
+    ]);
+    return Math.min(splinters, stones);
+  }
+  if (categoryId === 'legion') {
+    const [splinters, emblems] = await Promise.all([
+      getDatasetCountFromDir('legionSplinters'),
+      getDatasetCountFromDir('legionEmblems')
+    ]);
+    return Math.min(splinters, emblems);
+  }
+  const dirName = getCategoryDirectory(categoryId);
+  return getDatasetCountFromDir(dirName);
+}
+
+/**
  * Clear discovery cache
  * @param {string} [categoryId] - Optional category ID to clear specific cache
  */
