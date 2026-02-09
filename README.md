@@ -121,7 +121,7 @@ Item data is stored in JSON files in `public/data/`:
 - `legionEmblems/legionEmblems.json` - Legion Emblems items
 - `legionSplinters/legionSplinters.json` - Legion Splinters items
 - `oils/oils.json` - Oils items
-- `tattoos/tattos.json` - Tattoos items
+- `tattoos/tattoos.json` - Tattoos items
 
 ### Dataset Files
 

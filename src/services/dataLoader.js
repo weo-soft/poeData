@@ -310,7 +310,7 @@ function getCategoryFilename(categoryId) {
     'essences': 'essences/essences.json',
     'fossils': 'fossils/fossils.json',
     'oils': 'oils/oils.json',
-    'tattoos': 'tattoos/tattos.json', // Note: filename is "tattos" not "tattoos"
+    'tattoos': 'tattoos/tattoos.json',
     'runegrafts': 'runegrafts/runegrafts.json',
     'contracts': 'contracts/contracts.json'
   };
