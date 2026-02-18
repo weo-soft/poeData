@@ -251,9 +251,27 @@ export function estimateWeightsFromCounts(countMatrix, options = {}) {
 }
 
 /**
+ * Get total count per output item across all datasets
+ * @param {Array<Object>} datasets - Array of dataset objects
+ * @returns {Object} { [itemId: string]: number }
+ */
+function getTotalCountPerOutputItem(datasets) {
+  const totalByItem = {};
+  for (const ds of datasets) {
+    for (const item of ds.items || []) {
+      if (item && item.id != null) {
+        totalByItem[item.id] = (totalByItem[item.id] || 0) + (item.count || 0);
+      }
+    }
+  }
+  return totalByItem;
+}
+
+/**
  * Calculate item weights from datasets (high-level function)
  * Combines buildCountMatrix and estimateWeightsFromCounts
- * 
+ * Items with total count 0 across all datasets get weight 0.
+ *
  * @param {Array<Object>} datasets - Array of full dataset objects
  * @param {Object} options - MLE optimization options (same as estimateWeightsFromCounts)
  * @returns {Object} { [itemId: string]: number } - Map of item IDs to normalized weights
@@ -282,19 +300,21 @@ export function estimateItemWeights(datasets, options = {}) {
     }
   }
 
+  const totalCountByItem = getTotalCountPerOutputItem(datasets);
+
   // Convert to item ID -> weight mapping, but only include output items
+  // Set weight to 0 for any item with total count 0
   const result = {};
   let outputWeightSum = 0;
-  
+
   for (const [id, idx] of itemIndex.entries()) {
-    // Only include items that appear as outputs
-    if (outputItemIds.has(id)) {
-      result[id] = weights[idx];
-      outputWeightSum += weights[idx];
-    }
+    if (!outputItemIds.has(id)) continue;
+    const totalCount = totalCountByItem[id] ?? 0;
+    result[id] = totalCount === 0 ? 0 : weights[idx];
+    outputWeightSum += result[id];
   }
 
-  // Renormalize weights so they sum to 1.0 (only for output items)
+  // Renormalize weights so they sum to 1.0 (only for output items with non-zero weight)
   if (outputWeightSum > 0) {
     for (const id in result) {
       result[id] /= outputWeightSum;

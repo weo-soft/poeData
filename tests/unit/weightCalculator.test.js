@@ -433,6 +433,28 @@ describe('estimateItemWeights', () => {
 
     expect(() => estimateItemWeights(datasets, { learningRate: -0.01 })).toThrow('Invalid learning rate: must be positive');
   });
+
+  it('should assign weight 0 to items with total count 0 across datasets', () => {
+    const datasets = [
+      {
+        inputItems: [],
+        items: [
+          { id: 'a', count: 100 },
+          { id: 'b', count: 50 },
+          { id: 'c', count: 0 }
+        ]
+      }
+    ];
+
+    const weights = estimateItemWeights(datasets, { iterations: 500 });
+
+    expect(weights).toHaveProperty('c');
+    expect(weights.c).toBe(0);
+    expect(weights.a).toBeGreaterThan(0);
+    expect(weights.b).toBeGreaterThan(0);
+    const sum = Object.values(weights).reduce((s, w) => s + w, 0);
+    expect(sum).toBeCloseTo(1.0, 10);
+  });
 });
 
 describe('estimateItemWeightsPerInputItem', () => {

@@ -1,0 +1,100 @@
+{
+  "name": "Dataset 1",
+  "description": "Runegraft drop/sample dataset. Update counts from your source data.",
+  "date": "2025-02-18",
+  "patch": "3.27.0",
+  "sources": [
+    {
+      "name": "Reddit Thread",
+      "url": "https://www.reddit.com/r/pathofexile/comments/1r7lsmr/runegrafts_weight_breakdown_from_15_000_runes/",
+      "author": "u/QualiaH_"
+    }
+  ],
+  "inputItems": [],
+  "items": [
+    {
+      "id": "runegraft-of-bellows",
+      "count": 392
+    },
+    {
+      "id": "runegraft-of-blasphemy",
+      "count": 392
+    },
+    {
+      "id": "runegraft-of-gemcraft",
+      "count": 27
+    },
+    {
+      "id": "runegraft-of-loyalty",
+      "count": 145
+    },
+    {
+      "id": "runegraft-of-quaffing",
+      "count": 385
+    },
+    {
+      "id": "runegraft-of-refraction",
+      "count": 274
+    },
+    {
+      "id": "runegraft-of-restitching",
+      "count": 381
+    },
+    {
+      "id": "runegraft-of-stability",
+      "count": 17
+    },
+    {
+      "id": "runegraft-of-the-angler",
+      "count": 0
+    },
+    {
+      "id": "runegraft-of-the-bound",
+      "count": 283
+    },
+    {
+      "id": "runegraft-of-the-combatant",
+      "count": 380
+    },
+    {
+      "id": "runegraft-of-the-fortress",
+      "count": 262
+    },
+    {
+      "id": "runegraft-of-the-jeweller",
+      "count": 415
+    },
+    {
+      "id": "runegraft-of-the-novamark",
+      "count": 246
+    },
+    {
+      "id": "runegraft-of-the-river",
+      "count": 398
+    },
+    {
+      "id": "runegraft-of-the-sinistral",
+      "count": 420
+    },
+    {
+      "id": "runegraft-of-the-soulwick",
+      "count": 35
+    },
+    {
+      "id": "runegraft-of-the-warp",
+      "count": 142
+    },
+    {
+      "id": "runegraft-of-the-witchmark",
+      "count": 26
+    },
+    {
+      "id": "runegraft-of-time",
+      "count": 124
+    },
+    {
+      "id": "runegraft-of-treachery",
+      "count": 256
+    }
+  ]
+}

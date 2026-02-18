@@ -8,6 +8,23 @@ import { runMcmcSampling } from './bayesianMcmc.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
 
 /**
+ * Get total count per output item across all datasets
+ * @param {Array<Object>} datasets - Array of dataset objects
+ * @returns {Object} { [itemId: string]: number }
+ */
+function getTotalCountPerOutputItem(datasets) {
+  const totalByItem = {};
+  for (const ds of datasets) {
+    for (const item of ds.items || []) {
+      if (item && item.id != null) {
+        totalByItem[item.id] = (totalByItem[item.id] || 0) + (item.count || 0);
+      }
+    }
+  }
+  return totalByItem;
+}
+
+/**
  * Execute Bayesian weight inference using client-side MCMC
  * @param {Array<Object>} datasets - Array of dataset objects with inputItems and items properties
  * @param {Object} options - Configuration options
@@ -81,6 +98,40 @@ export async function inferWeights(datasets, options = {}) {
         if (stats.credibleInterval) {
           stats.credibleInterval.lower /= weightSum;
           stats.credibleInterval.upper /= weightSum;
+        }
+      }
+    }
+
+    // Set weight to 0 for items with total count 0 across all datasets, then renormalize
+    const totalCountByItem = getTotalCountPerOutputItem(datasets);
+    weightSum = 0;
+    for (const itemId of Object.keys(summaryStatistics)) {
+      const totalCount = totalCountByItem[itemId] ?? 0;
+      if (totalCount === 0) {
+        const stats = summaryStatistics[itemId];
+        if (stats.median !== undefined) stats.median = 0;
+        if (stats.map !== undefined) stats.map = 0;
+        if (stats.mean !== undefined) stats.mean = 0;
+        if (stats.credibleInterval) {
+          stats.credibleInterval.lower = 0;
+          stats.credibleInterval.upper = 0;
+        }
+      } else {
+        weightSum += summaryStatistics[itemId].median ?? summaryStatistics[itemId].map ?? 0;
+      }
+    }
+    if (weightSum > 0) {
+      for (const itemId in summaryStatistics) {
+        const stats = summaryStatistics[itemId];
+        const w = stats.median ?? stats.map ?? 0;
+        if (w > 0) {
+          if (stats.median !== undefined) stats.median /= weightSum;
+          if (stats.map !== undefined) stats.map /= weightSum;
+          if (stats.mean !== undefined) stats.mean /= weightSum;
+          if (stats.credibleInterval) {
+            stats.credibleInterval.lower /= weightSum;
+            stats.credibleInterval.upper /= weightSum;
+          }
         }
       }
     }
