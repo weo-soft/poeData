@@ -22,8 +22,8 @@ if (!app) {
 } else {
   // Initialize app asynchronously
   (async () => {
-    // Create navigation (now includes categories dropdown)
-    const navigation = await createNavigation();
+    // Create navigation (static category list – no data fetch)
+    const navigation = createNavigation();
     
     // Create main content container
     const mainContent = document.createElement('main');

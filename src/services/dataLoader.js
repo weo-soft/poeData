@@ -359,79 +359,51 @@ export function clearCache(categoryId) {
 }
 
 /**
- * Get all available categories from data directory
- * This is a simplified version - in production, you might want to
- * maintain a categories configuration file
- * @returns {Promise<Array>} Array of category objects
+ * Static list of categories (id, name, description only). No network requests.
+ * Use this for navigation, dropdowns, and any place that does not need item counts.
+ */
+const CATEGORY_LIST = [
+  { id: 'scarabs', name: 'Scarabs', description: 'Scarabs modify map areas' },
+  { id: 'divination-cards', name: 'Divination Cards', description: 'Collectible cards that can be turned in for rewards' },
+  { id: 'breach', name: 'Breach', description: 'Breach splinters and breachstones' },
+  { id: 'catalysts', name: 'Catalysts', description: 'Items used to enhance quality of jewelry' },
+  { id: 'delirium-orbs', name: 'Delirium Orbs', description: 'Orbs that add delirium effects to maps' },
+  { id: 'essences', name: 'Essences', description: 'Items used to craft item modifiers' },
+  { id: 'fossils', name: 'Fossils', description: 'Items used to modify crafting outcomes' },
+  { id: 'legion', name: 'Legion', description: 'Legion splinters and emblems' },
+  { id: 'oils', name: 'Oils', description: 'Items used to anoint passive skills' },
+  { id: 'tattoos', name: 'Tattoos', description: 'Items that modify passive skill trees' },
+  { id: 'runegrafts', name: 'Runegrafts', description: 'Items that replace mastery passive skills' },
+  { id: 'contracts', name: 'Contracts', description: 'Heist contracts used to embark on heists' }
+];
+
+/**
+ * Get the static category list (id, name, description). No data is fetched.
+ * Use for navigation, sidebar, and anywhere item counts are not needed.
+ * @returns {Array<{id: string, name: string, description: string}>}
+ */
+export function getCategoryList() {
+  return [...CATEGORY_LIST];
+}
+
+/**
+ * Get display name for a category by id. No data is fetched.
+ * @param {string} categoryId - Category identifier
+ * @returns {string} Category name or the id if not found
+ */
+export function getCategoryName(categoryId) {
+  const category = CATEGORY_LIST.find(c => c.id === categoryId);
+  return category ? category.name : categoryId;
+}
+
+/**
+ * Get all available categories with item counts. Loads category data for each category.
+ * Only call this when a page actually needs item counts (e.g. category list page, submission form).
+ * @returns {Promise<Array>} Array of category objects including itemCount
  */
 export async function getAvailableCategories() {
-  // For now, return hardcoded categories based on existing data files
-  // In a real implementation, you might scan the data directory or
-  // maintain a categories.json file
-  const categories = [
-    {
-      id: 'scarabs',
-      name: 'Scarabs',
-      description: 'Scarabs modify map areas'
-    },
-    {
-      id: 'divination-cards',
-      name: 'Divination Cards',
-      description: 'Collectible cards that can be turned in for rewards'
-    },
-    {
-      id: 'breach',
-      name: 'Breach',
-      description: 'Breach splinters and breachstones'
-    },
-    {
-      id: 'catalysts',
-      name: 'Catalysts',
-      description: 'Items used to enhance quality of jewelry'
-    },
-    {
-      id: 'delirium-orbs',
-      name: 'Delirium Orbs',
-      description: 'Orbs that add delirium effects to maps'
-    },
-    {
-      id: 'essences',
-      name: 'Essences',
-      description: 'Items used to craft item modifiers'
-    },
-    {
-      id: 'fossils',
-      name: 'Fossils',
-      description: 'Items used to modify crafting outcomes'
-    },
-    {
-      id: 'legion',
-      name: 'Legion',
-      description: 'Legion splinters and emblems'
-    },
-    {
-      id: 'oils',
-      name: 'Oils',
-      description: 'Items used to anoint passive skills'
-    },
-    {
-      id: 'tattoos',
-      name: 'Tattoos',
-      description: 'Items that modify passive skill trees'
-    },
-    {
-      id: 'runegrafts',
-      name: 'Runegrafts',
-      description: 'Items that replace mastery passive skills'
-    },
-    {
-      id: 'contracts',
-      name: 'Contracts',
-      description: 'Heist contracts used to embark on heists'
-    }
-  ];
-  
-  // Load item counts
+  const categories = CATEGORY_LIST.map(c => ({ ...c, itemCount: 0 }));
+
   for (const category of categories) {
     try {
       const items = await loadCategoryData(category.id);
@@ -441,7 +413,7 @@ export async function getAvailableCategories() {
       category.itemCount = 0;
     }
   }
-  
+
   return categories;
 }
 

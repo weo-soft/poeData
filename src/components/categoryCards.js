@@ -1,9 +1,10 @@
 /**
  * Category Cards component - Renders the grid of category links (shared by home and category view)
+ * Renders immediately from static list; icons and confidence badges load lazily per category.
  */
 
 import { createElement } from '../utils/dom.js';
-import { getAvailableCategories, loadCategoryData } from '../services/dataLoader.js';
+import { getCategoryList, loadCategoryData } from '../services/dataLoader.js';
 import { getDatasetCountForCategory } from '../services/datasetLoader.js';
 import { getIconUrl } from '../utils/iconLoader.js';
 
@@ -37,86 +38,104 @@ function createConfidenceIcon(kind, title) {
   return wrapper;
 }
 
-export async function renderCategoryCards(container) {
+/**
+ * Load icon URL for a category (first item or known asset). Called lazily per card.
+ */
+async function loadCategoryIconSrc(category) {
+  if (category.id === 'divination-cards') {
+    return '/assets/images/divinationcards/divination-card-inventory-icon.png';
+  }
+  if (category.id === 'breach') {
+    return '/assets/images/breachSplinters/splinter-of-chayula.png';
+  }
+  if (category.id === 'legion') {
+    return '/assets/images/legionSplinters/timeless-eternal-empire-splinter.png';
+  }
+  try {
+    const items = await loadCategoryData(category.id);
+    if (items && items.length > 0) {
+      return getIconUrl(items[0], category.id);
+    }
+  } catch (error) {
+    console.warn(`Could not load representative item for category ${category.id}:`, error);
+  }
+  return null;
+}
+
+/**
+ * Render confidence badge and icon for one card when lazy data is ready.
+ */
+function applyCardLazyData(card, category, datasetCount, iconSrc) {
+  const existingBadge = card.querySelector('.home-category-confidence');
+  if (existingBadge) existingBadge.remove();
+
+  const isLowConfidence = category.id === 'contracts' || category.id === 'legion' ||
+    (datasetCount > 0 && datasetCount <= LOW_CONFIDENCE_DATASET_THRESHOLD);
+
+  if (category.id === 'legion') {
+    card.insertBefore(createConfidenceIcon('low',
+      'Low confidence: weight estimates are available for Legion Splinters only; no data for Legion Emblems.'), card.firstChild);
+  } else if (datasetCount === 0) {
+    card.insertBefore(createConfidenceIcon('none',
+      'No data: this category has no datasets, so no calculated weights are available.'), card.firstChild);
+  } else if (isLowConfidence) {
+    const lowDetail = category.id === 'contracts'
+      ? 'Weights are per contract type with limited data per type.'
+      : `Based on ${datasetCount} dataset${datasetCount === 1 ? '' : 's'}.`;
+    card.insertBefore(createConfidenceIcon('low',
+      `Low confidence: weight estimates may be less reliable. ${lowDetail}`), card.firstChild);
+  }
+
+  const iconContainer = card.querySelector('.home-category-icon-container');
+  if (iconContainer && iconSrc) {
+    const iconImg = createElement('img', {
+      className: 'home-category-icon',
+      src: iconSrc,
+      alt: category.name,
+      onerror: function () {
+        this.style.display = 'none';
+      }
+    });
+    iconContainer.appendChild(iconImg);
+  }
+}
+
+export function renderCategoryCards(container) {
   const categoriesSection = createElement('div', { className: 'home-categories' });
   const categoriesGrid = createElement('div', { className: 'home-categories-grid' });
 
-  try {
-    const categories = await getAvailableCategories();
-    const datasetCounts = await Promise.all(categories.map(c => getDatasetCountForCategory(c.id)));
+  const categories = getCategoryList();
 
-    for (let i = 0; i < categories.length; i++) {
-      const category = categories[i];
-      const datasetCount = datasetCounts[i];
+  for (const category of categories) {
+    const categoryCard = createElement('div', { className: 'home-category-card' });
 
-      let iconSrc = null;
-      if (category.id === 'divination-cards') {
-        iconSrc = '/assets/images/divinationcards/divination-card-inventory-icon.png';
-      } else if (category.id === 'breach') {
-        iconSrc = '/assets/images/breachSplinters/splinter-of-chayula.png';
-      } else if (category.id === 'legion') {
-        iconSrc = '/assets/images/legionSplinters/timeless-eternal-empire-splinter.png';
-      } else {
-        try {
-          const items = await loadCategoryData(category.id);
-          if (items && items.length > 0) {
-            iconSrc = getIconUrl(items[0], category.id);
-          }
-        } catch (error) {
-          console.warn(`Could not load representative item for category ${category.id}:`, error);
-        }
+    const categoryLink = createElement('a', {
+      href: `#/category/${category.id}`,
+      className: 'home-category-link'
+    });
+
+    const iconContainer = createElement('div', { className: 'home-category-icon-container' });
+    const categoryName = createElement('span', {
+      className: 'home-category-name',
+      textContent: category.name
+    });
+
+    categoryLink.appendChild(iconContainer);
+    categoryLink.appendChild(categoryName);
+    categoryCard.appendChild(categoryLink);
+    categoriesGrid.appendChild(categoryCard);
+
+    // Lazy-load icon and dataset count for this category (no await – don't block first paint)
+    Promise.all([
+      getDatasetCountForCategory(category.id),
+      loadCategoryIconSrc(category)
+    ]).then(([datasetCount, iconSrc]) => {
+      if (categoryCard.isConnected) {
+        applyCardLazyData(categoryCard, category, datasetCount, iconSrc);
       }
-
-      const categoryCard = createElement('div', { className: 'home-category-card' });
-
-      // Contracts: per input item → low confidence. Legion: joint category, only Splinters have datasets → low confidence
-      const isLowConfidence = category.id === 'contracts' || category.id === 'legion' ||
-        (datasetCount > 0 && datasetCount <= LOW_CONFIDENCE_DATASET_THRESHOLD);
-
-      if (category.id === 'legion') {
-        categoryCard.appendChild(createConfidenceIcon('low',
-          'Low confidence: weight estimates are available for Legion Splinters only; no data for Legion Emblems.'));
-      } else if (datasetCount === 0) {
-        categoryCard.appendChild(createConfidenceIcon('none',
-          'No data: this category has no datasets, so no calculated weights are available.'));
-      } else if (isLowConfidence) {
-        const lowDetail = category.id === 'contracts'
-          ? 'Weights are per contract type with limited data per type.'
-          : `Based on ${datasetCount} dataset${datasetCount === 1 ? '' : 's'}.`;
-        categoryCard.appendChild(createConfidenceIcon('low',
-          `Low confidence: weight estimates may be less reliable. ${lowDetail}`));
-      }
-
-      const categoryLink = createElement('a', {
-        href: `#/category/${category.id}`,
-        className: 'home-category-link'
-      });
-
-      const iconContainer = createElement('div', { className: 'home-category-icon-container' });
-      if (iconSrc) {
-        const iconImg = createElement('img', {
-          className: 'home-category-icon',
-          src: iconSrc,
-          alt: category.name,
-          onerror: function () {
-            this.style.display = 'none';
-          }
-        });
-        iconContainer.appendChild(iconImg);
-      }
-
-      const categoryName = createElement('span', {
-        className: 'home-category-name',
-        textContent: category.name
-      });
-
-      categoryLink.appendChild(iconContainer);
-      categoryLink.appendChild(categoryName);
-      categoryCard.appendChild(categoryLink);
-      categoriesGrid.appendChild(categoryCard);
-    }
-  } catch (error) {
-    console.error('Error loading categories for category cards:', error);
+    }).catch(err => {
+      console.warn(`Category card lazy load failed for ${category.id}:`, err);
+    });
   }
 
   categoriesSection.appendChild(categoriesGrid);

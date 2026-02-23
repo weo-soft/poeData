@@ -3,7 +3,7 @@
  */
 
 import { createElement, clearElement, setLoadingState } from '../utils/dom.js';
-import { loadCategoryData, getAvailableCategories } from '../services/dataLoader.js';
+import { loadCategoryData, getCategoryName } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
 import { renderStashTab } from '../visualization/stashTabRenderer.js';
 import { generateCategoryCharts } from '../visualization/chartGenerator.js';
@@ -1364,10 +1364,7 @@ async function renderContributionGuide(container, categoryId) {
     // Load contribution content for this category
     const content = await loadContent(categoryId);
     
-    // Get category name
-    const categories = await getAvailableCategories();
-    const category = categories.find(c => c.id === categoryId);
-    const categoryName = category?.name || categoryId;
+    const categoryName = getCategoryName(categoryId);
     
     // Create contribution guide section
     const guideSection = createElement('div', { className: 'category-contribution-guide' });

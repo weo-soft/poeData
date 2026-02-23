@@ -3,7 +3,7 @@
  */
 
 import { createElement } from '../utils/dom.js';
-import { getAvailableCategories } from '../services/dataLoader.js';
+import { getCategoryList } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
 
 let categoriesCache = null;
@@ -27,7 +27,7 @@ export async function createCategorySidebar() {
   const categoryList = createElement('ul', { className: 'category-menu-list' });
   
   try {
-    const categories = await getAvailableCategories();
+    const categories = getCategoryList();
     categoriesCache = categories;
     
     if (categories.length === 0) {

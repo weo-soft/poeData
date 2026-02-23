@@ -3,17 +3,17 @@
  */
 
 import { createElement } from '../utils/dom.js';
-import { getAvailableCategories } from '../services/dataLoader.js';
+import { getCategoryList } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
 import { isMobileViewport } from '../utils/mobileUtils.js';
 
 let categoriesCache = null;
 
 /**
- * Create and render the global navigation bar
- * @returns {Promise<HTMLElement>} Navigation element
+ * Create and render the global navigation bar (sync – uses static category list only).
+ * @returns {HTMLElement} Navigation element
  */
-export async function createNavigation() {
+export function createNavigation() {
   const nav = createElement('nav', { className: 'global-nav' });
   const navContainer = createElement('div', { className: 'nav-container' });
   const navList = createElement('ul', { className: 'nav-list' });
@@ -44,7 +44,7 @@ export async function createNavigation() {
   const dropdownMenu = createElement('ul', { className: 'dropdown-menu' });
   
   try {
-    const categories = await getAvailableCategories();
+    const categories = getCategoryList();
     categoriesCache = categories;
     
     if (categories.length === 0) {

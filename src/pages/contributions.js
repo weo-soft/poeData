@@ -13,7 +13,7 @@
 import { createElement, clearElement } from '../utils/dom.js';
 import { displayError } from '../utils/errors.js';
 import { loadContent } from '../services/contributionContentLoader.js';
-import { getAvailableCategories } from '../services/dataLoader.js';
+import { getCategoryName } from '../services/dataLoader.js';
 
 /**
  * Render contribution guide page
@@ -128,10 +128,7 @@ async function renderCategoryGuide(container, categoryId) {
   // Load category-specific content (throws if not available)
   const content = await loadContent(categoryId);
   
-  // Get category name
-  const categories = await getAvailableCategories();
-  const category = categories.find(c => c.id === categoryId);
-  const categoryName = category?.name || categoryId;
+  const categoryName = getCategoryName(categoryId);
   
   // Breadcrumbs
   const breadcrumbs = createElement('nav', { className: 'breadcrumbs' });
