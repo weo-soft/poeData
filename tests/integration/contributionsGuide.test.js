@@ -6,7 +6,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { renderContributions } from '../../src/pages/contributions.js';
 import { loadMetadata, loadContent } from '../../src/services/contributionContentLoader.js';
-import { getAvailableCategories } from '../../src/services/dataLoader.js';
+import { getAvailableCategories, getCategoryName } from '../../src/services/dataLoader.js';
 
 // Mock contributionContentLoader
 vi.mock('../../src/services/contributionContentLoader.js', () => ({
@@ -14,9 +14,13 @@ vi.mock('../../src/services/contributionContentLoader.js', () => ({
   loadContent: vi.fn()
 }));
 
-// Mock dataLoader
+// Mock dataLoader (getCategoryName used by category-specific guide; getAvailableCategories for overview)
 vi.mock('../../src/services/dataLoader.js', () => ({
-  getAvailableCategories: vi.fn()
+  getAvailableCategories: vi.fn(),
+  getCategoryName: vi.fn((id) => {
+    const names = { scarabs: 'Scarabs', 'divination-cards': 'Divination Cards', breach: 'Breach' };
+    return names[id] ?? id;
+  })
 }));
 
 
@@ -60,6 +64,10 @@ describe('Contribution Guide Integration Tests', () => {
     loadMetadata.mockResolvedValue(mockMetadata);
     loadContent.mockResolvedValue(mockGenericContent);
     getAvailableCategories.mockResolvedValue(mockCategories);
+    getCategoryName.mockImplementation((id) => {
+      const c = mockCategories.find((cat) => cat.id === id);
+      return c ? c.name : id;
+    });
   });
 
   afterEach(() => {

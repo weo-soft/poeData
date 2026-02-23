@@ -3,7 +3,7 @@
  * Tests the full flow from category view to rendered grid
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderCategoryView } from '../../src/pages/categoryView.js';
 import { renderStashTab } from '../../src/visualization/stashTabRenderer.js';
 import { getGridConfig } from '../../src/config/gridConfig.js';
@@ -102,45 +102,59 @@ vi.mock('../../src/services/contributionContentLoader.js', () => ({
   })
 }));
 
+/** Mock 2d context used by stashTabRenderer (scale, measureText, drawImage, etc.) */
+function createMockContext() {
+  return {
+    scale: vi.fn(),
+    drawImage: vi.fn(),
+    fillRect: vi.fn(),
+    clearRect: vi.fn(),
+    save: vi.fn(),
+    restore: vi.fn(),
+    beginPath: vi.fn(),
+    rect: vi.fn(),
+    stroke: vi.fn(),
+    strokeRect: vi.fn(),
+    fill: vi.fn(),
+    fillText: vi.fn(),
+    strokeText: vi.fn(),
+    arc: vi.fn(),
+    measureText: vi.fn(() => ({ width: 0 })),
+    fillStyle: '',
+    strokeStyle: '',
+    lineWidth: 0,
+    font: '',
+    textAlign: '',
+    textBaseline: '',
+    globalAlpha: 1
+  };
+}
+
 describe('Category Grid Integration Tests', () => {
   let container;
   let canvas;
+  let getContextSpy;
 
   beforeEach(() => {
     // Create container
     container = document.createElement('div');
     document.body.appendChild(container);
 
-    // Create mock canvas with proper getContext implementation
+    const mockCtx = createMockContext();
+    // Make any canvas created in the document (e.g. by stashTabRenderer) return a valid 2d context
+    getContextSpy = vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(function (type) {
+      if (type === '2d') return createMockContext();
+      return null;
+    });
+
+    // Create mock canvas for direct renderStashTab tests
     canvas = document.createElement('canvas');
-    const ctx = {
-      scale: vi.fn(),
-      drawImage: vi.fn((...args) => {
-        // Accept any arguments - don't validate them
-        return;
-      }),
-      fillRect: vi.fn(),
-      clearRect: vi.fn(),
-      save: vi.fn(),
-      restore: vi.fn(),
-      beginPath: vi.fn(),
-      rect: vi.fn(),
-      stroke: vi.fn(),
-      strokeRect: vi.fn(),
-      fill: vi.fn(),
-      fillStyle: '',
-      strokeStyle: '',
-      lineWidth: 0,
-      globalAlpha: 1
-    };
-    // Override getContext to return our mock context
+    const ctx = createMockContext();
     Object.defineProperty(canvas, 'getContext', {
       value: vi.fn(() => ctx),
       writable: true,
       configurable: true
     });
-    
-    // Mock addEventListener to track calls
     canvas.addEventListener = vi.fn();
     canvas.getBoundingClientRect = vi.fn(() => ({
       left: 0,
@@ -150,12 +164,15 @@ describe('Category Grid Integration Tests', () => {
     }));
     canvas.style = {};
 
-    // Mock window.devicePixelRatio
     Object.defineProperty(window, 'devicePixelRatio', {
       writable: true,
       configurable: true,
       value: 1
     });
+  });
+
+  afterEach(() => {
+    getContextSpy?.mockRestore();
   });
 
   describe('Breach Category Grid Rendering', () => {
