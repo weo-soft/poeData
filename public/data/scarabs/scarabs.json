@@ -9,6 +9,15 @@
     "flavourText": "They search forever for more souls to drag to the dark."
   },
   {
+    "name": "Abyss Scarab of Descending",
+    "id": "abyss-scarab-of-descending",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Area contains an Abyssal Depths",
+    "dropLevel": 78,
+    "flavourText": "They invite you to meet them; to join them."
+  },
+  {
     "name": "Abyss Scarab of Edifice",
     "id": "abyss-scarab-of-edifice",
     "dropEnabledd": true,
@@ -40,7 +49,7 @@
     "id": "ambush-scarab",
     "dropEnabledd": true,
     "limit": 3,
-    "description": "Area contains 3 additional Strongboxes",
+    "description": "Area contains 4 additional Strongboxes",
     "dropLevel": 68,
     "flavourText": "Is it still an ambush if you're expecting it?"
   },
@@ -85,7 +94,7 @@
     "id": "anarchy-scarab",
     "dropEnabledd": true,
     "limit": 5,
-    "description": "Area contains 4 additional Rogue Exiles",
+    "description": "Area contains 5 additional Rogue Exiles",
     "dropLevel": 68,
     "flavourText": "On Wraeclast, it's kill or be killed."
   },
@@ -106,6 +115,15 @@
     "description": "Wild Rogue Exiles in Area have a 50% chance to appear in pairs",
     "dropLevel": 73,
     "flavourText": "Among exiles, alliances shift and change constantly."
+  },
+  {
+    "name": "Anarchy Scarab of the Exceptional",
+    "id": "anarchy-scarab-of-the-exceptional",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Area contains an additional Exceptional Rogue Exile",
+    "dropLevel": 78,
+    "flavourText": "Among many, one stands above the rest."
   },
   {
     "name": "Bestiary Scarab",
@@ -135,6 +153,15 @@
     "flavourText": "The First Ones ran rampant and free in the forests of old."
   },
   {
+    "name": "Bestiary Scarab of the Shadowed Crow",
+    "id": "bestiary-scarab-of-the-shadowed-crow",
+    "dropEnabledd": false,
+    "limit": 1,
+    "description": "Area contains The Black Mórrigan if it contains Einhar",
+    "dropLevel": 73,
+    "flavourText": "The Nameless begin to slip their bonds of nonexistence..."
+  },
+  {
     "name": "Betrayal Scarab",
     "id": "betrayal-scarab",
     "dropEnabledd": true,
@@ -162,6 +189,15 @@
     "flavourText": "Those that can never die fear only pain."
   },
   {
+    "name": "Betrayal Scarab of Unbreaking",
+    "id": "betrayal-scarab-of-unbreaking",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Interrogated Immortal Syndicate targets in Area have a 50% chance to\nnot lose Rank upon completing Interrogation",
+    "dropLevel": 73,
+    "flavourText": "Dying over and over builds a tolerance to pain."
+  },
+  {
     "name": "Beyond Scarab",
     "id": "beyond-scarab",
     "dropEnabledd": true,
@@ -184,7 +220,7 @@
     "id": "beyond-scarab-of-resurgence",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Beyond Bosses in Area are enraged on low life\nBeyond Bosses in Area drop 100% increased Tainted Currency\nBeyond Portals in Area have 30% increased chance to spawn a Unique Boss",
+    "description": "Beyond Bosses Spawned in Area are accompanied by Beyond Bosses of other Factions\nBeyond Bosses in Area drop 20% increased Tainted Currency\nBeyond Portals in Area have 30% increased chance to spawn a Unique Boss",
     "dropLevel": 78,
     "flavourText": "They hunger."
   },
@@ -196,6 +232,15 @@
     "description": "Rare and Unique Monsters slain in Area create 8 to 12 additional Beyond Portals",
     "dropLevel": 78,
     "flavourText": "The fated hour is almost nigh."
+  },
+  {
+    "name": "Beyond Scarab of Corruption",
+    "id": "beyond-scarab-of-corruption",
+    "dropEnabledd": false,
+    "limit": 1,
+    "description": "Items dropped by Beyond Demons in Area are Corrupted",
+    "dropLevel": 78,
+    "flavourText": "Their very flesh exudes Corruption."
   },
   {
     "name": "Blight Scarab",
@@ -229,54 +274,63 @@
     "id": "blight-scarab-of-the-blightheart",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Blight Encounters in Area have one Blighted Chest\nBlight Encounters in Area spawn many more waves of Enemies\nBlighted Chests in Area grow larger and more\nrewarding the more Blighted Enemies are slain",
+    "description": "Blight Encounters in Area have one Blighted Chest\nBlight Encounters in Area spawn additional waves of Enemies\nBlighted Chests in Area grow larger and more\nrewarding the more Blighted Enemies are slain",
     "dropLevel": 73,
     "flavourText": "The core grows larger with each cycle, doomed to spill forth..."
   },
   {
-    "name": "Breach Scarab",
-    "id": "breach-scarab",
+    "name": "Breach Scarab of Instability",
+    "id": "breach-scarab-of-instability",
     "dropEnabledd": true,
-    "limit": 5,
-    "description": "Area contains 2 additional Breaches",
+    "limit": 2,
+    "description": "Area contains 2 additional Unstable Breaches",
     "dropLevel": 68,
-    "flavourText": "They are never far."
-  },
-  {
-    "name": "Breach Scarab of Lordship",
-    "id": "breach-scarab-of-lordship",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Breaches in Area each contain a Breachlord",
-    "dropLevel": 73,
-    "flavourText": "Their kingdoms always seek expansion."
+    "flavourText": "Reality warps and bends."
   },
   {
     "name": "Breach Scarab of Resonant Cascade",
     "id": "breach-scarab-of-resonant-cascade",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Breaches in Areas open and close 10% faster for each Breach already opened\nMonsters from Breaches in Areas have increased Difficulty and Reward for\neach Breach already opened",
+    "description": "Unstable Breaches in Areas are 10% faster for each Unstable Breach already opened\nMonsters from Unstable Breaches in Areas have increased Difficulty and Reward for\neach Unstable Breach already opened",
     "dropLevel": 78,
     "flavourText": "Reality weakens with each new wound."
   },
   {
-    "name": "Breach Scarab of Snares",
-    "id": "breach-scarab-of-snares",
+    "name": "Breach Scarab of the Hive",
+    "id": "breach-scarab-of-the-hive",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Breaches in Area have 3 to 5 additional Clasped Hands\nClasped Hands in Area are guarded by a rare Breach Monster",
-    "dropLevel": 78,
-    "flavourText": "Care where you step."
+    "description": "Area contains a Breach Hive",
+    "dropLevel": 68,
+    "flavourText": "Their kingdoms always seek expansion."
   },
   {
-    "name": "Breach Scarab of Splintering",
-    "id": "breach-scarab-of-splintering",
+    "name": "Breach Scarab of the Incensed Swarm",
+    "id": "breach-scarab-of-the-incensed-swarm",
     "dropEnabledd": true,
-    "limit": 2,
-    "description": "Breach Monsters in Area drop 50% more Breach Splinters\nClasped Hands in Area drop 50% more Breach Splinters",
+    "limit": 1,
+    "description": "Ailith's skills in Area instead enrage the Hive, increasing the Difficulty\nand Reward of subsequent waves",
+    "dropLevel": 78,
+    "flavourText": "Their Domain expands further still."
+  },
+  {
+    "name": "Breach Scarab of the Marshal",
+    "id": "breach-scarab-of-the-marshal",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Unstable Breaches in Area contain a Boss\nBreach Hives in Area lead to a Hive Fortress",
     "dropLevel": 73,
-    "flavourText": "Bit by bit."
+    "flavourText": "Engineered and Unwavering Loyalty."
+  },
+  {
+    "name": "Breach Scarab of the Dreamer",
+    "id": "breach-scarab-of-the-dreamer",
+    "dropEnabledd": false,
+    "limit": 1,
+    "description": "Breaches in Area will always belong to Chayula",
+    "dropLevel": 78,
+    "flavourText": "Dreams quickly sour into Nightmare."
   },
   {
     "name": "Cartography Scarab of Corruption",
@@ -315,6 +369,15 @@
     "flavourText": "There is no end, no horizon."
   },
   {
+    "name": "Cartography Scarab of Singularity",
+    "id": "cartography-scarab-of-singularity",
+    "dropEnabledd": false,
+    "limit": 1,
+    "description": "A Unique Map will drop from the Final Map Boss",
+    "dropLevel": 78,
+    "flavourText": "Some regions of the Atlas never change."
+  },
+  {
     "name": "Delirium Scarab",
     "id": "delirium-scarab",
     "dropEnabledd": true,
@@ -346,7 +409,7 @@
     "id": "delirium-scarab-of-neuroses",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Delirium Encounters in Area contain all Unique Delirium Bosses\nCan only be used with Tier 11+ Maps",
+    "description": "Delirium Encounters in Area contain all Unique Delirium Bosses\nDelirium Reward Types in Area gain +1 to count on defeating a Unique Delirium Boss\nCan only be used with Tier 11+ Maps",
     "dropLevel": 73,
     "flavourText": "Toothy grins shine in the dark."
   },
@@ -391,7 +454,7 @@
     "id": "domination-scarab",
     "dropEnabledd": true,
     "limit": 4,
-    "description": "Area contains 2 additional Shrines",
+    "description": "Area contains 3 additional Shrines",
     "dropLevel": 68,
     "flavourText": "A simple exchange. Blood for power."
   },
@@ -427,7 +490,7 @@
     "id": "essence-scarab",
     "dropEnabledd": true,
     "limit": 5,
-    "description": "Area contains 2 additional Imprisoned Monsters",
+    "description": "Area contains 3 additional Imprisoned Monsters",
     "dropLevel": 68,
     "flavourText": "It is perfectly safe, the creatures trapped inside couldn't possibly still be living."
   },
@@ -486,6 +549,15 @@
     "flavourText": "Curiosity leads to wisdom. Wisdom leads to power."
   },
   {
+    "name": "Expedition Scarab of Infusion",
+    "id": "expedition-scarab-of-infusion",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Logbooks found in Area always have 4 Implicits\nExpedition Monsters gain increased Difficulty and Reward for each Remnant detonated",
+    "dropLevel": 73,
+    "flavourText": "Starlight empowers even the dead if bathed long enough."
+  },
+  {
     "name": "Expedition Scarab of Runefinding",
     "id": "expedition-scarab-of-runefinding",
     "dropEnabledd": true,
@@ -502,42 +574,6 @@
     "description": "Expedition Encounters in Area have 50% increased number of Explosives\n80% increased Explosive Radius",
     "dropLevel": 73,
     "flavourText": "A properly refined pinch makes all the difference."
-  },
-  {
-    "name": "Harbinger Scarab",
-    "id": "harbinger-scarab",
-    "dropEnabledd": true,
-    "limit": 4,
-    "description": "Area contains 3 additional Harbingers",
-    "dropLevel": 68,
-    "flavourText": "Their troops came in numbers uncountable and from lands unknown."
-  },
-  {
-    "name": "Harbinger Scarab of Obelisks",
-    "id": "harbinger-scarab-of-obelisks",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Harbingers in Area spawn Empowered Obelisks\nEmpowered Obelisks drop Currency Shards when defeated",
-    "dropLevel": 73,
-    "flavourText": "They seek to establish an unknown pattern."
-  },
-  {
-    "name": "Harbinger Scarab of Regency",
-    "id": "harbinger-scarab-of-regency",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Harbingers in Area have a 50% chance to be replaced by a powerful Harbinger Boss",
-    "dropLevel": 73,
-    "flavourText": "The truly noble wage war from the front."
-  },
-  {
-    "name": "Harbinger Scarab of Warhoards",
-    "id": "harbinger-scarab-of-warhoards",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Currency shards dropped by Harbingers in Area are duplicated",
-    "dropLevel": 73,
-    "flavourText": "For those who can leverage it, war can be as much a machine of profit as it is death."
   },
   {
     "name": "Harvest Scarab",
@@ -571,7 +607,7 @@
     "id": "horned-scarab-of-awakening",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "You can select one Imbued crafting option on the Map Device",
+    "description": "Tier 16+ Areas contain the Bosses from a random Maven Invitation",
     "dropLevel": 81,
     "flavourText": "The Atlas can be anything you want... and everything you want."
   },
@@ -626,7 +662,7 @@
     "dropEnabledd": true,
     "limit": 1,
     "description": "All Rare and Unique Monsters in Area have dropped items\ntransformed by a Reward Modifier",
-    "dropLevel": 81,
+    "dropLevel": 83,
     "flavourText": "To the strongest, prosperity be thine."
   },
   {
@@ -666,15 +702,6 @@
     "flavourText": "They say if you go far enough, you will meet yourself..."
   },
   {
-    "name": "Influencing Scarab of Conversion",
-    "id": "influencing-scarab-of-conversion",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Tier 14+ Maps found in Area have a chance to drop as Shaper Guardian, Elder Guardian, Conqueror or Unique Synthesised Maps instead",
-    "dropLevel": 73,
-    "flavourText": "Memories resound in the Atlas, echoing forever."
-  },
-  {
     "name": "Influencing Scarab of Hordes",
     "id": "influencing-scarab-of-hordes",
     "dropEnabledd": true,
@@ -682,6 +709,15 @@
     "description": "Influenced Monster Packs in Area have 40% increased Pack Size",
     "dropLevel": 73,
     "flavourText": "Ideas cannot be contained."
+  },
+  {
+    "name": "Influencing Scarab of Interference",
+    "id": "influencing-scarab-of-interference",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "A Map Boss is accompanied by a random Shaper Guardian, Elder Guardian, Conqueror or Synthesis Boss\nCan only be used with Tier 14+ Maps",
+    "dropLevel": 73,
+    "flavourText": "Memories resound in the Atlas, echoing forever."
   },
   {
     "name": "Influencing Scarab of the Elder",
@@ -706,9 +742,18 @@
     "id": "kalguuran-scarab",
     "dropEnabledd": true,
     "limit": 2,
-    "description": "Area contains an additional Ore Deposit",
+    "description": "Area contains 2 additional Ore Deposits",
     "dropLevel": 68,
     "flavourText": "Rich veins run deeper still."
+  },
+  {
+    "name": "Kalguuran Scarab of Enriching",
+    "id": "kalguuran-scarab-of-enriching",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Monsters guarding Ore Deposits have increased Difficulty and\nReward and Ore Deposits contain 15% increased Ore\nfor each Ore Deposit completed in Area",
+    "dropLevel": 73,
+    "flavourText": "The ore lives and breathes; and is not happy with your efforts."
   },
   {
     "name": "Kalguuran Scarab of Guarded Riches",
@@ -738,15 +783,6 @@
     "flavourText": "What good is peace to a warrior?"
   },
   {
-    "name": "Legion Scarab of Command",
-    "id": "legion-scarab-of-command",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Legion Factions in Area are accompanied by a General",
-    "dropLevel": 73,
-    "flavourText": "Cut off the head and the snake will perish."
-  },
-  {
     "name": "Legion Scarab of Eternal Conflict",
     "id": "legion-scarab-of-eternal-conflict",
     "dropEnabledd": true,
@@ -765,6 +801,24 @@
     "flavourText": "Even a battlefield has middle management."
   },
   {
+    "name": "Legion Scarab of Treasures",
+    "id": "legion-scarab-of-treasures",
+    "dropEnabledd": true,
+    "limit": 3,
+    "description": "Legion Chests in Area have a 20% chance to spread their Rewards\nto Legion Monsters they release from stasis when they are broken out\nLegion Monsters that have gained Rewards have increased Difficulty",
+    "dropLevel": 73,
+    "flavourText": "Ancient Hoards imbued with powerful Artifacts."
+  },
+  {
+    "name": "Legion Scarab of The Sekhema",
+    "id": "legion-scarab-of-the-sekhema",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "Legion Encounters in Area always contain the Maraketh Faction",
+    "dropLevel": 73,
+    "flavourText": "Storms of blood-stained sand will drown the enemies of the Maraketh."
+  },
+  {
     "name": "Ritual Scarab of Abundance",
     "id": "ritual-scarab-of-abundance",
     "dropEnabledd": true,
@@ -774,11 +828,20 @@
     "flavourText": "He draws ever closer..."
   },
   {
+    "name": "Ritual Scarab of Corpses",
+    "id": "ritual-scarab-of-corpses",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Rituals in Area contain an additional Rare Itemised Corpse Monster",
+    "dropLevel": 73,
+    "flavourText": "Reduced to mere Puppets; they yearn for life once more."
+  },
+  {
     "name": "Ritual Scarab of Selectiveness",
     "id": "ritual-scarab-of-selectiveness",
     "dropEnabledd": true,
     "limit": 2,
-    "description": "Rerolling Favours at Ritual Altars in Area has no cost the first 2 times\nRitual Altars in Area allow rerolling Favours 1 additional time",
+    "description": "Rerolling Favours at Ritual Altars in Area has no cost the first 2 times\nRitual Altars in Area allow rerolling Favours 2 additional times",
     "dropLevel": 68,
     "flavourText": "Pick and choose which sacred tenets you prefer..."
   },
@@ -801,15 +864,6 @@
     "flavourText": "They stand against you with equal enmity."
   },
   {
-    "name": "Scarab of Bisection",
-    "id": "scarab-of-bisection",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "You can select the Nullify Prefixes or Nullify Suffixes crafting options on the Map Device",
-    "dropLevel": 78,
-    "flavourText": "When something is cut in half, which half is the original?"
-  },
-  {
     "name": "Scarab of Divinity",
     "id": "scarab-of-divinity",
     "dropEnabledd": true,
@@ -817,15 +871,6 @@
     "description": "Up to 3 additional Rare Monsters in Area will be Pantheon-Touched\nApparitions spawned by Pantheon-Touched Monsters deal 100% increased damage",
     "dropLevel": 73,
     "flavourText": "Faith transforms."
-  },
-  {
-    "name": "Scarab of Hunted Traitors",
-    "id": "scarab-of-hunted-traitors",
-    "dropEnabledd": true,
-    "limit": 1,
-    "description": "Area contains Hunted Traitors",
-    "dropLevel": 73,
-    "flavourText": "Nothing is as unforgiveable."
   },
   {
     "name": "Scarab of Monstrous Lineage",
@@ -855,6 +900,24 @@
     "flavourText": "Astonishing! A means to sustain the connection..."
   },
   {
+    "name": "Scarab of the Dextral",
+    "id": "scarab-of-the-dextral",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "100% increased effect of Area Suffix Modifiers\nArea Prefix Modifiers have no effect",
+    "dropLevel": 73,
+    "flavourText": "Flip a coin, do you wish for Tails?"
+  },
+  {
+    "name": "Scarab of the Sinistral",
+    "id": "scarab-of-the-sinistral",
+    "dropEnabledd": true,
+    "limit": 1,
+    "description": "100% increased effect of Area Prefix Modifiers\nArea Suffix Modifiers have no effect",
+    "dropLevel": 78,
+    "flavourText": "Flip a coin, do you wish for Heads?"
+  },
+  {
     "name": "Scarab of Wisps",
     "id": "scarab-of-wisps",
     "dropEnabledd": true,
@@ -868,7 +931,7 @@
     "id": "sulphite-scarab",
     "dropEnabledd": true,
     "limit": 1,
-    "description": "Area contains Niko\nMap owner gains 150% more Sulphite",
+    "description": "Area contains Niko",
     "dropLevel": 68,
     "flavourText": "Delve into darkness in search of the truth..."
   },
@@ -880,6 +943,15 @@
     "description": "Sulphite found in Map Area releases Enraging Fumes\nMonsters affected by Enraging Fumes have 50% increased Item Quantity\nSulphite in your maps is guarded by Monsters from the Azurite Mine",
     "dropLevel": 73,
     "flavourText": "When the land itself is sick, even the very ground rots and spills forth."
+  },
+  {
+    "name": "Sulphite Scarab of Greed",
+    "id": "sulphite-scarab",
+    "dropEnabledd": false,
+    "limit": 1,
+    "description": "Map owner gains 150% more Sulphite",
+    "dropLevel": 73,
+    "flavourText": "There is no such thing as 'enough'."
   },
   {
     "name": "Titanic Scarab",
@@ -913,7 +985,7 @@
     "id": "torment-scarab",
     "dropEnabledd": true,
     "limit": 2,
-    "description": "Area is haunted by 3 additional Tormented Spirits\nTormented Spirits in Area have a 50% chance to\nbe set free when Possessed Monsters are slain",
+    "description": "Area is haunted by 4 additional Tormented Spirits\nTormented Spirits in Area have a 10% chance to\nbe set free when Possessed Monsters are slain\nand dig up a Possessed Monster",
     "dropLevel": 68,
     "flavourText": "Their crimes in life haunt you in death."
   },
@@ -934,6 +1006,15 @@
     "description": "Rare Monsters in Area have a quarter chance to be Possessed by up to 3 Tormented Spirits",
     "dropLevel": 73,
     "flavourText": "The strong are never truly alone."
+  },
+  {
+    "name": "Torment Scarab of Release",
+    "id": "torment-scarab-of-release",
+    "dropEnabledd": true,
+    "limit": 2,
+    "description": "Tormented Spirits in Area have a 25% chance to\nbe set free when Possessed Monsters are slain",
+    "dropLevel": 73,
+    "flavourText": "If it could end, it wouldn't really be damnation."
   },
   {
     "name": "Ultimatum Scarab",

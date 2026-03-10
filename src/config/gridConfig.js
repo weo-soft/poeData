@@ -23,73 +23,57 @@ export const CELL_PADDING = 2;
 /**
  * Cell group configuration
  * Defines groups of cells with their positions and types
- * Format: { x, y, count, cellWidth?, cellHeight?, padding?, type }
+ * Format: { x, y, count, cellWidth?, cellHeight?, padding?, type, layout? }
  * - x, y: top-left corner of the group
  * - count: number of cells in that group
  * - cellWidth (optional): override default cell width for this group
  * - cellHeight (optional): override default cell height for this group
  * - padding (optional): override default padding for this group
  * - type: scarab type identifier
+ * - layout (optional): 'horizontal' (default) or 'vertical' — direction cells are laid out within the group
  */
 export const CELL_GROUP_CONFIG = [
   // Row 1 (y=24)
-  { x: 151, y: 24, count: 3, type: 'titanic' }, // Titanic
-  { x: 333, y: 24, count: 2, type: 'sulphite' }, // Sulphite
-  { x: 517, y: 24, count: 3, type: 'divination' }, // Divination
+  { x: 52, y: 20, count: 5, cellWidth: 49, padding: 4, type: 'cartography' }, // Cartography
+  { x: 373, y: 20, count: 4, type: 'influencing' }, // Influencing
+
+  { x: 52, y: 80, count: 3, type: 'divination' }, // Divination
+  { x: 373, y: 80, count: 3, type: 'titanic' }, // Titanic
+
+  { x: 52, y: 147, count: 4, type: 'bestiary' }, // Bestiary
+  { x: 373, y: 147, count: 5, cellWidth: 49, padding: 4, type: 'abyss' }, // Abyss
+
+  { x: 52, y: 210, count: 4, type: 'betrayal' }, // Betrayal
+  { x: 373, y: 210, count: 4, cellWidth: 49, padding: 4, type: 'blight' }, // Blight
+
+  { x: 53, y: 270, count: 4, type: 'incursion' }, // Incursion
+  { x: 373, y: 270, count: 6, cellWidth: 49, padding: 4, type: 'breach' }, // Breach
+
+  { x: 53, y: 336, count: 3, type: 'sulphite' }, // Sulphite
+  { x: 373, y: 336, count: 5, cellWidth: 49, padding: 4, type: 'delirium' }, // Delirium
+
+  { x: 53, y: 398, count: 5, cellWidth: 49, padding: 4, type: 'ambush' }, // Ambush
+  { x: 373, y: 398, count: 5, cellWidth: 49, padding: 4, type: 'expedition' }, // Expedition
 
   // Row 2 (y=80)
-  { x: 63, y: 80, count: 3, type: 'anarchy' }, // Anarchy
-  { x: 246, y: 80, count: 3, type: 'ritual' }, // Ritual
-  { x: 427, y: 80, count: 3, type: 'harvest' }, // Harvest
-  { x: 608, y: 80, count: 3, type: 'kalguuran' }, // Kalguuran
+  { x: 53, y: 460, count: 4, type: 'anarchy' }, // Anarchy
+  { x: 373, y: 460, count: 3, type: 'harvest' }, // Harvest
 
-  // Row 3 (y=139)
-  { x: 309, y: 139, count: 4, type: 'influencing' }, // Influencing
+  { x: 53, y: 523, count: 5, cellWidth: 49, padding: 4, type: 'beyond' }, // Beyond
+  { x: 373, y: 523, count: 4, type: 'kalguuran' }, // Kalguuran
 
-  // Row 4 (y=167)
-  { x: 63, y: 167, count: 3, type: 'bestiary' }, // Bestiary
-  { x: 557, y: 167, count: 4, type: 'harbinger' }, // Harbinger
+  { x: 53, y: 583, count: 4, type: 'domination' }, // Domination
+  { x: 373, y: 583, count: 5, cellWidth: 49, padding: 4, type: 'legion' }, // Legion
 
-  // Row 5 (y=196)
-  { x: 309, y: 196, count: 3, type: 'betrayal' }, // Betrayal
+  { x: 53, y: 646, count: 5, cellWidth: 49, padding: 4, type: 'essence' }, // Essence
+  { x: 373, y: 646, count: 4, type: 'ritual' }, // Ritual
 
-  // Row 6 (y=228)
-  { x: 63, y: 228, count: 4, type: 'incursion' }, // Incursion
-  { x: 557, y: 228, count: 4, type: 'domination' }, // Domination
+  { x: 53, y: 709, count: 4, type: 'torment' }, // Torment
+  { x: 373, y: 709, count: 5, cellWidth: 49, padding: 4, type: 'ultimatum' }, // Ultimatum
 
-  // Row 7 (y=254)
-  { x: 309, y: 254, count: 3, type: 'torment' }, // Torment
-
-  // Row 8 (y=310)
-  { x: 126, y: 310, count: 4, cellWidth: 49, padding: 4, type: 'cartography' }, // Cartography
-  { x: 436, y: 310, count: 4, cellWidth: 49, padding: 4, type: 'beyond' }, // Beyond
-
-  // Row 9 (y=370)
-  { x: 126, y: 370, count: 5, cellWidth: 49, padding: 4, type: 'ambush' }, // Ambush
-  { x: 436, y: 370, count: 5, cellWidth: 49, padding: 4, type: 'ultimatum' }, // Ultimatum
-
-  // Row 10 (y=429)
-  { x: 126, y: 429, count: 4, cellWidth: 49, padding: 4, type: 'expedition' }, // Expedition
-  { x: 436, y: 429, count: 5, cellWidth: 49, padding: 4, type: 'delirium' }, // Delirium
-
-  // Row 11 (y=486)
-  { x: 126, y: 486, count: 4, cellWidth: 49, padding: 4, type: 'legion' }, // Legion
-  { x: 436, y: 486, count: 4, cellWidth: 49, padding: 4, type: 'blight' }, // Blight
-
-  // Row 12 (y=543)
-  { x: 126, y: 543, count: 4, cellWidth: 49, padding: 4, type: 'abyss' }, // Abyss
-  { x: 436, y: 543, count: 5, cellWidth: 49, padding: 4, type: 'essence' }, // Essence
-
-  // Row 13 (y=604)
-  { x: 255, y: 604, count: 5, cellWidth: 49, padding: 4, type: 'breach' }, // Breach
-
-  // Row 14 (y=659)
-  { x: 142, y: 661, count: 4, cellWidth: 50, padding: 5, type: 'misc' }, // Misc1
-  { x: 435, y: 661, count: 5, cellWidth: 51, padding: 5, type: 'horned' }, // Horned1
-
-  // Row 15 (y=718)
-  { x: 142, y: 718, count: 4, cellWidth: 50, padding: 5, type: 'misc2' }, // Misc2
-  { x: 520, y: 718, count: 2, cellWidth: 50, padding: 5, type: 'horned2' } // Horned2
+  // Row 14–15: vertical groups (misc and horned columns)
+  { x: 695, y: 178, count: 8, cellWidth: 50, padding: 5, type: 'misc', layout: 'vertical' }, // Misc column
+  { x: 755, y: 203, count: 7, cellWidth: 51, padding: 5, type: 'horned', layout: 'vertical' }, // Horned column
 ];
 
 /**
@@ -105,6 +89,7 @@ export const SCARAB_ORDER_CONFIG = {
   ],
   'sulphite': [
     'sulphite-scarab',
+    'sulphite-scarab-of-greed',
     'sulphite-scarab-of-fumes'
   ],
   'divination': [
@@ -115,12 +100,14 @@ export const SCARAB_ORDER_CONFIG = {
   'anarchy': [
     'anarchy-scarab',
     'anarchy-scarab-of-gigantification',
-    'anarchy-scarab-of-partnership'
+    'anarchy-scarab-of-partnership',
+    'anarchy-scarab-of-the-exceptional'
   ],
   'ritual': [
     'ritual-scarab-of-selectiveness',
     'ritual-scarab-of-wisps',
-    'ritual-scarab-of-abundance'
+    'ritual-scarab-of-abundance',
+    'ritual-scarab-of-corpses'
   ],
   'harvest': [
     'harvest-scarab',
@@ -130,7 +117,8 @@ export const SCARAB_ORDER_CONFIG = {
   'kalguuran': [
     'kalguuran-scarab',
     'kalguuran-scarab-of-guarded-riches',
-    'kalguuran-scarab-of-refinement'
+    'kalguuran-scarab-of-refinement',
+    'kalguuran-scarab-of-enriching'
   ],
   'influencing': [
     'influencing-scarab-of-the-shaper',
@@ -141,7 +129,8 @@ export const SCARAB_ORDER_CONFIG = {
   'bestiary': [
     'bestiary-scarab',
     'bestiary-scarab-of-the-herd',
-    'bestiary-scarab-of-duplicating'
+    'bestiary-scarab-of-duplicating',
+    'bestiary-scarab-of-shadowed-crow'
   ],
   'harbinger': [
     'harbinger-scarab',
@@ -152,7 +141,8 @@ export const SCARAB_ORDER_CONFIG = {
   'betrayal': [
     'betrayal-scarab',
     'betrayal-scarab-of-the-allflame',
-    'betrayal-scarab-of-reinforcements'
+    'betrayal-scarab-of-reinforcements',
+    'betrayal-scarab-of-unbreaking'
   ],
   'incursion': [
     'incursion-scarab',
@@ -169,19 +159,22 @@ export const SCARAB_ORDER_CONFIG = {
   'torment': [
     'torment-scarab',
     'torment-scarab-of-peculiarity',
-    'torment-scarab-of-possession'
+    'torment-scarab-of-possession',
+    'torment-scarab-of-release'
   ],
   'cartography': [
     'cartography-scarab-of-escalation',
     'cartography-scarab-of-risk',
+    'cartography-scarab-of-the-multitude',
     'cartography-scarab-of-corruption',
-    'cartography-scarab-of-the-multitude'
+    'cartography-scarab-of-singularity'
   ],
   'beyond': [
     'beyond-scarab',
     'beyond-scarab-of-haemophilia',
     'beyond-scarab-of-resurgence',
-    'beyond-scarab-of-the-invasion'
+    'beyond-scarab-of-the-invasion',
+    'beyond-scarab-of-corruption'
   ],
   'ambush': [
     'ambush-scarab',
@@ -201,6 +194,7 @@ export const SCARAB_ORDER_CONFIG = {
     'expedition-scarab',
     'expedition-scarab-of-runefinding',
     'expedition-scarab-of-verisium-powder',
+    'expedition-scarab-of-infusion',
     'expedition-scarab-of-archaeology'
   ],
   'delirium': [
@@ -213,8 +207,9 @@ export const SCARAB_ORDER_CONFIG = {
   'legion': [
     'legion-scarab',
     'legion-scarab-of-officers',
-    'legion-scarab-of-command',
-    'legion-scarab-of-eternal-conflict'
+    'legion-scarab-of-treasures',
+    'legion-scarab-of-eternal-conflict',
+    'legion-scarab-of-sekhema',
   ],
   'blight': [
     'blight-scarab',
@@ -226,6 +221,7 @@ export const SCARAB_ORDER_CONFIG = {
     'abyss-scarab',
     'abyss-scarab-of-multitudes',
     'abyss-scarab-of-edifice',
+    'abyss-scarab-of-decending',
     'abyss-scarab-of-profound-depth'
   ],
   'essence': [
@@ -239,32 +235,30 @@ export const SCARAB_ORDER_CONFIG = {
     'scarab-of-monstrous-lineage',
     'scarab-of-adversaries',
     'scarab-of-divinity',
-    'scarab-of-hunted-traitors'
-  ],
-  'misc2': [
-    'scarab-of-stability',
+    'scarab-of-the-dextral',
+    'scarab-of-the-sinistral',
     'scarab-of-wisps',
     'scarab-of-radiant-storms',
-    'scarab-of-bisection'
+    'scarab-of-stability'
   ],
   'breach': [
-    'breach-scarab',
-    'breach-scarab-of-lordship',
-    'breach-scarab-of-splintering',
-    'breach-scarab-of-snares',
-    'breach-scarab-of-resonant-cascade'
+    'breach-scarab-of-the-hive',
+    'breach-scarab-of-instability',
+    'breach-scarab-of-the-marshal',
+    'breach-scarab-of-the-incensed-swarm',
+    'breach-scarab-of-resonant-cascade',
+    'breach-scarab-of-the-dreamer'
   ],
   'horned': [
     'horned-scarab-of-bloodlines',
     'horned-scarab-of-nemeses',
     'horned-scarab-of-preservation',
     'horned-scarab-of-awakening',
-    'horned-scarab-of-tradition'
-  ],
-  'horned2': [
+    'horned-scarab-of-tradition',
     'horned-scarab-of-glittering',
     'horned-scarab-of-pandemonium'
   ]
+
 };
 
 /**
@@ -279,6 +273,8 @@ export function createCellsFromGroups() {
   let lastY = -1;
 
   CELL_GROUP_CONFIG.forEach((group, groupConfigIndex) => {
+    const layout = group.layout ?? 'horizontal';
+
     // Determine row number based on Y position
     // If Y changed significantly, it's a new row
     if (lastY === -1 || Math.abs(group.y - lastY) > 10) {
@@ -297,20 +293,36 @@ export function createCellsFromGroups() {
     // Create cells in this group
     let colInRow = 0;
     for (let i = 0; i < group.count; i++) {
-      const cellX = group.x + i * (cellWidth + padding);
+      const cellX = layout === 'vertical'
+        ? group.x
+        : group.x + i * (cellWidth + padding);
+      const cellY = layout === 'vertical'
+        ? group.y + i * (cellHeight + padding)
+        : group.y;
+      const cellRow = layout === 'vertical' ? globalRow + i : globalRow;
+      const cellCol = layout === 'vertical' ? 0 : colInRow++;
+
+      const orderForType = SCARAB_ORDER_CONFIG[group.type];
+      const scarabId = orderForType && orderForType[i] ? orderForType[i] : null;
 
       cells.push({
         id: `cell-${cellId++}`,
         x: cellX,
-        y: group.y,
+        y: cellY,
         width: cellWidth,
         height: cellHeight,
-        row: globalRow,
-        col: colInRow++,
+        row: cellRow,
+        col: cellCol,
         groupIndex: i, // Index within the group (0-based)
         groupType: group.type, // Type of scarab group (e.g., 'titanic', 'abyss')
-        groupConfigIndex: groupConfigIndex // Index of the group in CELL_GROUP_CONFIG
+        groupConfigIndex: groupConfigIndex, // Index of the group in CELL_GROUP_CONFIG
+        scarabId // Scarab ID from SCARAB_ORDER_CONFIG for icon loading (no JSON dependency)
       });
+    }
+
+    // For vertical groups, advance lastY to the bottom of the column so next group gets correct row
+    if (layout === 'vertical') {
+      lastY = group.y + (group.count - 1) * (cellHeight + padding) + cellHeight;
     }
   });
 
@@ -382,6 +394,11 @@ export const CATEGORY_GRID_MAPPING = {
     tabImagePath: '/assets/images/stashTabs/catalysts-tab.png',
     gridConfigKey: 'catalysts',
     imageDirectory: '/assets/images/catalysts/'
+  },
+  'scarabs': {
+    tabImagePath: '/assets/images/stashTabs/scarab-tab.png',
+    gridConfigKey: 'scarab', // scarab layout uses CELL_GROUP_CONFIG, not GRID_CONFIGS
+    imageDirectory: '/assets/images/scarabs/'
   }
 };
 
@@ -428,32 +445,32 @@ export const BREACH_GRID_CONFIG = {
   },
   cellGroups: [
     // Row 1 (Top row) - 5 cells (currently unused)
-    { x: 207, y: 203, count: 1,  type: 'breach' },
-    { x: 299, y: 203, count: 1,  type: 'breach' },
-    { x: 390, y: 203, count: 1,  type: 'breach' },
-    { x: 480, y: 203, count: 1, type: 'breach' },
-    { x: 571, y: 203, count: 1,  type: 'breach' },
+    { x: 207, y: 203, count: 1 },
+    { x: 299, y: 203, count: 1 },
+    { x: 390, y: 203, count: 1 },
+    { x: 480, y: 203, count: 1 },
+    { x: 571, y: 203, count: 1 },
 
     // Row 2 - Breach Splinters (order: Xoph, Tul, Esh, Uul-Netol, Chayula)
-    { x: 207, y: 295, count: 1,  type: 'splinter' },
-    { x: 299, y: 295, count: 1,  type: 'splinter' },
-    { x: 390, y: 295, count: 1,  type: 'splinter' },
-    { x: 480, y: 295, count: 1,  type: 'splinter' },
-    { x: 571, y: 295, count: 1,  type: 'splinter' },
+    { x: 207, y: 295, count: 1, type: 'splinter' },
+    { x: 299, y: 295, count: 1, type: 'splinter' },
+    { x: 390, y: 295, count: 1, type: 'splinter' },
+    { x: 480, y: 295, count: 1, type: 'splinter' },
+    { x: 571, y: 295, count: 1, type: 'splinter' },
 
     // Row 3 - Breachstones (order: Xoph, Tul, Esh, Uul-Netol, Chayula)
-    { x: 207, y: 386, count: 1,  type: 'breachstone' },
-    { x: 299, y: 386, count: 1,  type: 'breachstone' },
-    { x: 390, y: 386, count: 1,  type: 'breachstone' },
-    { x: 480, y: 386, count: 1,  type: 'breachstone' },
-    { x: 571, y: 386, count: 1,  type: 'breachstone' },
+    { x: 207, y: 386, count: 1, type: 'breachstone' },
+    { x: 299, y: 386, count: 1, type: 'breachstone' },
+    { x: 390, y: 386, count: 1, type: 'breachstone' },
+    { x: 480, y: 386, count: 1, type: 'breachstone' },
+    { x: 571, y: 386, count: 1, type: 'breachstone' },
 
     // Row 4 (Bottom row) - 5 cells (currently unused)
-    { x: 207, y: 477, count: 1,  type: 'breach' },
-    { x: 299, y: 477, count: 1,  type: 'breach' },
-    { x: 390, y: 477, count: 1,  type: 'breach' },
-    { x: 480, y: 477, count: 1,  type: 'breach' },
-    { x: 571, y: 477, count: 1, type: 'breach' }
+    { x: 207, y: 477, count: 1 },
+    { x: 299, y: 477, count: 1 },
+    { x: 390, y: 477, count: 1 },
+    { x: 480, y: 477, count: 1 },
+    { x: 571, y: 477, count: 1 }
   ],
   defaultCellSize: {
     width: 60,
@@ -493,85 +510,85 @@ export const FRAGMENTS_GRID_CONFIG = {
   },
   cellGroups: [
     // Row 1 - 8 cells
-    { x: 98, y: 39, count: 1, type: 'legion' },
-    { x: 175, y: 39, count: 1, type: 'legion' },
-    { x: 262, y: 39, count: 1, type: 'legion' },
-    { x: 345, y: 39, count: 1, type: 'legion' },
-    { x: 432, y: 39, count: 1, type: 'legion' },
-    { x: 545, y: 39, count: 1, type: 'legion' },
-    { x: 603, y: 39, count: 1, type: 'legion' },
-    { x: 680, y: 39, count: 1, type: 'legion' },
+    { x: 98, y: 39, count: 1 },
+    { x: 175, y: 39, count: 1 },
+    { x: 262, y: 39, count: 1 },
+    { x: 345, y: 39, count: 1 },
+    { x: 432, y: 39, count: 1 },
+    { x: 513, y: 39, count: 1 },
+    { x: 603, y: 39, count: 1 },
+    { x: 680, y: 39, count: 1 },
 
     // Row 2 - 8 cells
-    { x: 98, y: 118, count: 1, type: 'legion' },
-    { x: 175, y: 118, count: 1, type: 'legion' },
-    { x: 262, y: 118, count: 1, type: 'legion' },
-    { x: 345, y: 118, count: 1, type: 'legion' },
-    { x: 432, y: 118, count: 1, type: 'legion' },
-    { x: 515, y: 118, count: 1, type: 'legion' },
-    { x: 603, y: 118, count: 1, type: 'legion' },
-    { x: 680, y: 118, count: 1, type: 'legion' },
+    { x: 98, y: 118, count: 1 },
+    { x: 175, y: 118, count: 1 },
+    { x: 262, y: 118, count: 1 },
+    { x: 345, y: 118, count: 1 },
+    { x: 432, y: 118, count: 1 },
+    { x: 515, y: 118, count: 1 },
+    { x: 603, y: 118, count: 1 },
+    { x: 680, y: 118, count: 1 },
 
     // Row 3 - 7 cells (Legion Splinters starting from second cell)
-    { x: 130, y: 202, count: 1, type: 'legion' },
+    { x: 130, y: 202, count: 1 },
     { x: 230, y: 202, count: 1, type: 'splinter' },
     { x: 310, y: 202, count: 1, type: 'splinter' },
     { x: 390, y: 202, count: 1, type: 'splinter' },
     { x: 473, y: 202, count: 1, type: 'splinter' },
     { x: 553, y: 202, count: 1, type: 'splinter' },
-    { x: 650, y: 202, count: 1, type: 'splinter' },
+    { x: 650, y: 202, count: 1},
 
     // Row 4 - 7 cells (Emblems starting from second cell)
-    { x: 130, y: 280, count: 1, type: 'legion' },
+    { x: 130, y: 280, count: 1 },
     { x: 230, y: 280, count: 1, type: 'emblem' },
     { x: 310, y: 280, count: 1, type: 'emblem' },
     { x: 390, y: 280, count: 1, type: 'emblem' },
     { x: 473, y: 280, count: 1, type: 'emblem' },
     { x: 553, y: 280, count: 1, type: 'emblem' },
-    { x: 650, y: 280, count: 1, type: 'emblem' },
+    { x: 650, y: 280, count: 1},
 
     // Row 5 - 6 cells
-    { x: 130, y: 360, count: 1, type: 'legion' },
-    { x: 230, y: 360, count: 1, type: 'legion' },
-    { x: 310, y: 360, count: 1, type: 'legion' },
-    { x: 390, y: 360, count: 1, type: 'legion' },
-    { x: 473, y: 360, count: 1, type: 'legion' },
-    { x: 553, y: 360, count: 1, type: 'legion' },
+    { x: 130, y: 360, count: 1 },
+    { x: 230, y: 360, count: 1 },
+    { x: 310, y: 360, count: 1 },
+    { x: 390, y: 360, count: 1 },
+    { x: 473, y: 360, count: 1 },
+    { x: 553, y: 360, count: 1 },
 
     // Row 6 - 5 cells (grouped)
-    { x: 130, y: 447, count: 1, type: 'legion' },
-    { x: 285, y: 447, count: 1, type: 'legion' },
-    { x: 390, y: 447, count: 1, type: 'legion' },
-    { x: 495, y: 447, count: 1, type: 'legion' },
-    { x: 650, y: 447, count: 1, type: 'legion' },
+    { x: 130, y: 447, count: 1 },
+    { x: 285, y: 447, count: 1 },
+    { x: 390, y: 447, count: 1 },
+    { x: 495, y: 447, count: 1 },
+    { x: 650, y: 447, count: 1 },
 
     // Row 7 - 6 cells (grouped)
-    { x: 130, y: 530, count: 1, type: 'legion' },
-    { x: 215, y: 530, count: 1, type: 'legion' },
-    { x: 350, y: 530, count: 1, type: 'legion' },
-    { x: 430, y: 530, count: 1, type: 'legion' },
-    { x: 570, y: 530, count: 1, type: 'legion' },
-    { x: 650, y: 530, count: 1, type: 'legion' },
+    { x: 130, y: 530, count: 1 },
+    { x: 215, y: 530, count: 1 },
+    { x: 350, y: 530, count: 1 },
+    { x: 430, y: 530, count: 1 },
+    { x: 570, y: 530, count: 1 },
+    { x: 650, y: 530, count: 1 },
 
     // Row 8 - 6 cells (grouped)
-    { x: 130, y: 612, count: 1, type: 'legion' },
-    { x: 215, y: 612, count: 1, type: 'legion' },
-    { x: 350, y: 612, count: 1, type: 'legion' },
-    { x: 430, y: 612, count: 1, type: 'legion' },
-    { x: 570, y: 612, count: 1, type: 'legion' },
-    { x: 650, y: 612, count: 1, type: 'legion' },
+    { x: 130, y: 612, count: 1 },
+    { x: 215, y: 612, count: 1 },
+    { x: 350, y: 612, count: 1 },
+    { x: 430, y: 612, count: 1 },
+    { x: 570, y: 612, count: 1 },
+    { x: 650, y: 612, count: 1 },
 
     // Bottom Row 9 - 10 cells (empty fragment slots)
-    { x: 22, y: 700, count: 1, type: 'legion' },
-    { x: 105, y: 700, count: 1, type: 'legion' },
-    { x: 185, y: 700, count: 1, type: 'legion' },
-    { x: 265, y: 700, count: 1, type: 'legion' },
-    { x: 350, y: 700, count: 1, type: 'legion' },
-    { x: 430, y: 700, count: 1, type: 'legion' },
-    { x: 515, y: 700, count: 1, type: 'legion' },
-    { x: 595, y: 700, count: 1, type: 'legion' },
-    { x: 675, y: 700, count: 1, type: 'legion' },
-    { x: 755, y: 700, count: 1, type: 'legion' }
+    { x: 22, y: 700, count: 1 },
+    { x: 105, y: 700, count: 1 },
+    { x: 185, y: 700, count: 1 },
+    { x: 265, y: 700, count: 1 },
+    { x: 350, y: 700, count: 1 },
+    { x: 430, y: 700, count: 1 },
+    { x: 515, y: 700, count: 1 },
+    { x: 595, y: 700, count: 1 },
+    { x: 675, y: 700, count: 1 },
+    { x: 755, y: 700, count: 1 }
   ],
   defaultCellSize: {
     width: 60,
@@ -639,70 +656,15 @@ export const DELIRIUM_ORBS_GRID_CONFIG = {
 
     // Bottom Storage Grid (12 × 5 = 60 cells)
     // Row 1
-    { x: 51, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 112, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 175, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 238, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 303, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 365, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 428, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 492, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 555, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 618, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 681, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 744, y: 512, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    // Row 2
-    { x: 51, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 112, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 175, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 238, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 303, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 365, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 428, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 492, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 555, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 618, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 681, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 744, y: 575, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    // Row 3
-    { x: 51, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 112, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 175, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 238, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 303, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 365, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 428, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 492, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 555, y: 639, count: 1, cellWidth: 44, cellHeight: 44,type: 'delirium-orb' },
-    { x: 618, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 681, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 744, y: 639, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    // Row 4
-    { x: 51, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 112, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 175, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 238, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 303, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 365, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 428, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 492, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 555, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 618, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 681, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 744, y: 701, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    // Row 5
-    { x: 51, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 112, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 175, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 238, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 303, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 365, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 428, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 492, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 555, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 618, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 681, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' },
-    { x: 744, y: 765, count: 1, cellWidth: 44, cellHeight: 44, type: 'delirium-orb' }
+    { x: 50, y: 512, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Row 2 
+    { x: 50, y: 575, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Row 3 
+    { x: 50, y: 639, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Row 4 
+    { x: 50, y: 701, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Row 5 
+    { x: 50, y: 765, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
   ],
   defaultCellSize: {
     width: 61,
@@ -925,75 +887,15 @@ export const OILS_GRID_CONFIG = {
     { x: 748, y: 115, count: 1, type: 'oil' },
 
     // Bottom Storage Grid - Row 1 (12 cells)
-    { x: 45, y: 500, count: 1, type: 'oil' },
-    { x: 110, y: 500, count: 1, type: 'oil' },
-    { x: 173, y: 500, count: 1, type: 'oil' },
-    { x: 235, y: 500, count: 1, type: 'oil' },
-    { x: 300, y: 500, count: 1, type: 'oil' },
-    { x: 364, y: 500, count: 1, type: 'oil' },
-    { x: 428, y: 500, count: 1, type: 'oil' },
-    { x: 492, y: 500, count: 1, type: 'oil' },
-    { x: 555, y: 500, count: 1, type: 'oil' },
-    { x: 618, y: 500, count: 1, type: 'oil' },
-    { x: 680, y: 500, count: 1, type: 'oil' },
-    { x: 742, y: 500, count: 1, type: 'oil' },
-
+    { x: 49, y: 500, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
     // Bottom Storage Grid - Row 2 (12 cells)
-    { x: 45, y: 565, count: 1, type: 'oil' },
-    { x: 110, y: 565, count: 1, type: 'oil' },
-    { x: 173, y: 565, count: 1, type: 'oil' },
-    { x: 235, y: 565, count: 1, type: 'oil' },
-    { x: 300, y: 565, count: 1, type: 'oil' },
-    { x: 364, y: 565, count: 1, type: 'oil' },
-    { x: 428, y: 565, count: 1, type: 'oil' },
-    { x: 492, y: 565, count: 1, type: 'oil' },
-    { x: 555, y: 565, count: 1, type: 'oil' },
-    { x: 618, y: 565, count: 1, type: 'oil' },
-    { x: 680, y: 565, count: 1, type: 'oil' },
-    { x: 742, y: 565, count: 1, type: 'oil' },
-
-
+    { x: 49, y: 565, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
     // Bottom Storage Grid - Row 3 (12 cells)
-    { x: 45, y: 630, count: 1, type: 'oil' },
-    { x: 110, y: 630, count: 1, type: 'oil' },
-    { x: 173, y: 630, count: 1, type: 'oil' },
-    { x: 235, y: 630, count: 1, type: 'oil' },
-    { x: 300, y: 630, count: 1, type: 'oil' },
-    { x: 364, y: 630, count: 1, type: 'oil' },
-    { x: 428, y: 630, count: 1, type: 'oil' },
-    { x: 492, y: 630, count: 1, type: 'oil' },
-    { x: 555, y: 630, count: 1, type: 'oil' },
-    { x: 618, y: 630, count: 1, type: 'oil' },
-    { x: 680, y: 630, count: 1, type: 'oil' },
-    { x: 742, y: 630, count: 1, type: 'oil' },
-
+    { x: 49, y: 630, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
     // Bottom Storage Grid - Row 4 (12 cells)
-    { x: 45, y: 690, count: 1, type: 'oil' },
-    { x: 110, y: 690, count: 1, type: 'oil' },
-    { x: 173, y: 690, count: 1, type: 'oil' },
-    { x: 235, y: 690, count: 1, type: 'oil' },
-    { x: 300, y: 690, count: 1, type: 'oil' },
-    { x: 364, y: 690, count: 1, type: 'oil' },
-    { x: 428, y: 690, count: 1, type: 'oil' },
-    { x: 492, y: 690, count: 1, type: 'oil' },
-    { x: 555, y: 690, count: 1, type: 'oil' },
-    { x: 618, y: 690, count: 1, type: 'oil' },
-    { x: 680, y: 690, count: 1, type: 'oil' },
-    { x: 742, y: 690, count: 1, type: 'oil' },
-
+    { x: 49, y: 690, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
     // Bottom Storage Grid - Row 5 (12 cells)
-    { x: 45, y: 755, count: 1, type: 'oil' },
-    { x: 110, y: 755, count: 1, type: 'oil' },
-    { x: 173, y: 755, count: 1, type: 'oil' },
-    { x: 235, y: 755, count: 1, type: 'oil' },
-    { x: 300, y: 755, count: 1, type: 'oil' },
-    { x: 364, y: 755, count: 1, type: 'oil' },
-    { x: 428, y: 755, count: 1, type: 'oil' },
-    { x: 492, y: 755, count: 1, type: 'oil' },
-    { x: 555, y: 755, count: 1, type: 'oil' },
-    { x: 618, y: 755, count: 1, type: 'oil' },
-    { x: 680, y: 755, count: 1, type: 'oil' },
-    { x: 742, y: 755, count: 1, type: 'oil' }
+    { x: 49, y: 755, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 }
 
   ],
   defaultCellSize: {
@@ -1058,18 +960,18 @@ export const CATALYSTS_GRID_CONFIG = {
     { x: 593, y: 230, count: 1, type: 'catalyst' },
     { x: 680, y: 230, count: 1, type: 'catalyst' },
 
-  // Bottom Storage Grid - Row 1 (12 cells)
-  { x: 50, y: 494, cellHeight: 46, cellWidth: 46, count: 12, padding:17, type: 'oil' },
-  // Bottom Storage Grid - Row 2 (12 cells)
-  { x: 50, y: 555, cellHeight: 46, cellWidth: 46, count: 12, padding:17, type: 'oil' },
-  // Bottom Storage Grid - Row 3 (12 cells)
-  { x: 50, y: 621, cellHeight: 46, cellWidth: 46, count: 12, padding:17, type: 'oil' },
-  // Bottom Storage Grid - Row 4 (12 cells)
-  { x: 50, y: 682, cellHeight: 46, cellWidth: 46, count: 12, padding:17, type: 'oil' },
-  // Bottom Storage Grid - Row 5 (12 cells)
-  { x: 50, y: 748, cellHeight: 46, cellWidth: 46, count: 12, padding:17, type: 'oil' },
-  // Central Vertical Slot
-  { x: 365, y: 230, cellHeight: 230, cellWidth: 110, count: 1, type: 'catalyst' },
+    // Bottom Storage Grid - Row 1 (12 cells)
+    { x: 50, y: 494, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Bottom Storage Grid - Row 2 (12 cells)
+    { x: 50, y: 555, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Bottom Storage Grid - Row 3 (12 cells)
+    { x: 50, y: 621, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Bottom Storage Grid - Row 4 (12 cells)
+    { x: 50, y: 682, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Bottom Storage Grid - Row 5 (12 cells)
+    { x: 50, y: 748, cellHeight: 46, cellWidth: 46, count: 12, padding: 17 },
+    // Central Vertical Slot
+    { x: 365, y: 230, cellHeight: 230, cellWidth: 110, count: 1 },
   ],
   defaultCellSize: {
     width: 60,
@@ -1121,7 +1023,8 @@ export function getGridConfig(categoryId) {
 
 /**
  * Create cell definitions from group configuration for a specific grid config
- * Supports per-group overrides for cell dimensions and padding
+ * Supports per-group overrides for cell dimensions and padding.
+ * Set group.expectIconFromOrder = false for generic storage cells (no default icon from order config).
  * @param {Object} gridConfig - Grid configuration object with cellGroups array
  * @returns {Array<Object>} Array of cell definitions
  */
@@ -1139,6 +1042,8 @@ export function createCellsFromGroupsForCategory(gridConfig) {
   const defaultPadding = gridConfig.defaultPadding ?? CELL_PADDING;
 
   gridConfig.cellGroups.forEach((group, groupConfigIndex) => {
+    const layout = group.layout ?? 'horizontal';
+
     // Determine row number based on Y position
     // If Y changed significantly, it's a new row
     if (lastY === -1 || Math.abs(group.y - lastY) > 10) {
@@ -1154,23 +1059,43 @@ export function createCellsFromGroupsForCategory(gridConfig) {
     const cellHeight = group.cellHeight ?? defaultCellSize.height;
     const padding = group.padding ?? defaultPadding;
 
+    // Order config: expected item ID per cell for icon loading (no JSON dependency)
+    // Set expectIconFromOrder: false on groups that are generic storage (no default icon per slot)
+    const orderConfig = gridConfig.itemOrderConfig || {};
+    const orderForType = orderConfig[group.type];
+    const useOrderForIcon = group.expectIconFromOrder !== false;
+
     // Create cells in this group
     let colInRow = 0;
     for (let i = 0; i < group.count; i++) {
-      const cellX = group.x + i * (cellWidth + padding);
+      const cellX = layout === 'vertical'
+        ? group.x
+        : group.x + i * (cellWidth + padding);
+      const cellY = layout === 'vertical'
+        ? group.y + i * (cellHeight + padding)
+        : group.y;
+      const cellRow = layout === 'vertical' ? globalRow + i : globalRow;
+      const cellCol = layout === 'vertical' ? 0 : colInRow++;
+      const expectedItemId = useOrderForIcon && orderForType && orderForType[i] ? orderForType[i] : null;
 
       cells.push({
         id: `cell-${cellId++}`,
         x: cellX,
-        y: group.y,
+        y: cellY,
         width: cellWidth,
         height: cellHeight,
-        row: globalRow,
-        col: colInRow++,
+        row: cellRow,
+        col: cellCol,
         groupIndex: i, // Index within the group (0-based)
         groupType: group.type, // Type of group (e.g., 'breachstone', 'essence')
-        groupConfigIndex: groupConfigIndex // Index of the group in cellGroups array
+        groupConfigIndex: groupConfigIndex, // Index of the group in cellGroups array
+        expectedItemId // Item ID from itemOrderConfig for icon from assets (same name as id)
       });
+    }
+
+    // For vertical groups, advance lastY to the bottom of the column so next group gets correct row
+    if (layout === 'vertical') {
+      lastY = group.y + (group.count - 1) * (cellHeight + padding) + cellHeight;
     }
   });
 

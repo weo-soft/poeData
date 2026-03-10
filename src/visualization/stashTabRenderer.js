@@ -132,9 +132,17 @@ export async function highlightGridItem(itemId) {
  */
 async function renderScarabGrid(canvas, items) {
   try {
-    // Load base image
-    const baseImagePath = '/assets/images/Scarab-tab.png';
-    baseImage = await loadImage(baseImagePath);
+    // Load base image from stashTabs directory (cached like other categories)
+    if (tabImageCache.has('scarabs')) {
+      baseImage = tabImageCache.get('scarabs');
+    } else {
+      const baseImagePath = getCategoryTabImage('scarabs');
+      if (!baseImagePath) {
+        throw new Error('No tab image path found for category: scarabs');
+      }
+      baseImage = await loadImage(baseImagePath);
+      tabImageCache.set('scarabs', baseImage);
+    }
     
     // Setup canvas to match image dimensions
     setupCanvas(canvas, baseImage.width, baseImage.height);
@@ -690,12 +698,21 @@ function getItemType(item, gridConfig, categoryId) {
 
 /**
  * Preload item images
+ * Grid views: preload from order config (cell.scarabId / cell.expectedItemId) so icons show even when JSON has no entry.
+ * Icons are loaded from the category image directory; filename = id from order config.
  * @param {Array} items - Array of items
  * @param {string} categoryId - Category identifier
  */
 async function preloadItemImages(items, categoryId) {
-  const itemsToLoad = Array.from(cellToItemMap.values());
-  const loadPromises = itemsToLoad.map(item => loadItemImage(item, categoryId));
+  const iconIds = new Set();
+  cellDefinitions.forEach(cell => {
+    const id = cell.scarabId ?? cell.expectedItemId;
+    if (id) iconIds.add(id);
+  });
+  Array.from(cellToItemMap.values()).forEach(item => {
+    if (item?.id) iconIds.add(item.id);
+  });
+  const loadPromises = Array.from(iconIds, id => loadItemImage({ id }, categoryId));
   await Promise.allSettled(loadPromises);
 }
 
@@ -774,22 +791,24 @@ function renderGrid(canvas, items, categoryId) {
     ctx.fillRect(0, 0, displayWidth, displayHeight);
   }
   
-  // Draw cell borders for all cells (hidden)
-  // cellDefinitions.forEach(cell => {
-  //   drawCellBorder(ctx, cell.x, cell.y, cell.width, cell.height, '#666666', 1);
-  // });
+  // Draw cell borders for all cells
+  cellDefinitions.forEach(cell => {
+    drawCellBorder(ctx, cell.x, cell.y, cell.width, cell.height, '#666666', 1);
+  });
   
   // Draw cell IDs for debugging (hidden)
   // cellDefinitions.forEach(cell => {
   //   drawCellId(ctx, cell);
   // });
   
-  // Draw item overlays
+  // Draw item overlays: use item from JSON when mapped, else icon from order config (scarabId / expectedItemId)
   cellDefinitions.forEach(cell => {
     const item = cellToItemMap.get(cell.id);
+    const iconId = item?.id ?? cell.scarabId ?? cell.expectedItemId;
+    if (iconId) {
+      drawCellOverlay(ctx, cell, { id: iconId }, categoryId);
+    }
     if (item) {
-      drawCellOverlay(ctx, cell, item, categoryId);
-      
       // Draw highlight if this item is highlighted (hover) or filtered
       const isHovered = highlightedItemId === item.id;
       const isFiltered = highlightedItemIds.has(item.id);
