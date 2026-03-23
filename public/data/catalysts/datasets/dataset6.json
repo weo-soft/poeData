@@ -3,6 +3,7 @@
     "description": "Dataset 6",
     "date": "2023-04-03",
     "patch": "3.25.0",
+    "outdated": false,
     "sources": [
         {
             "name": "Google Sheet",

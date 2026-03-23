@@ -3,6 +3,8 @@
  * Calculates item weights from transformation data across datasets
  */
 
+import { filterDatasetsForWeightCalculation } from './datasetWeightFilter.js';
+
 /**
  * Build count matrix from datasets
  * Aggregates transformation counts into an N×N matrix where counts[k][j] = 
@@ -281,6 +283,10 @@ export function estimateItemWeights(datasets, options = {}) {
   if (!datasets || datasets.length === 0) {
     throw new Error('Datasets array cannot be empty');
   }
+  datasets = filterDatasetsForWeightCalculation(datasets);
+  if (!datasets || datasets.length === 0) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
+  }
 
   // Build count matrix
   const { counts, itemIndex } = buildCountMatrix(datasets);
@@ -361,12 +367,21 @@ export function estimateItemWeightsPerInputItem(datasets, options = {}) {
     throw new Error('Datasets array cannot be empty');
   }
 
+  datasets = filterDatasetsForWeightCalculation(datasets);
+  if (!datasets || datasets.length === 0) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
+  }
+
   const byInput = groupDatasetsByInputItem(datasets);
   const result = {};
 
   for (const [inputItemId, group] of byInput.entries()) {
     if (group.length === 0) continue;
     result[inputItemId] = estimateItemWeights(group, options);
+  }
+
+  if (Object.keys(result).length === 0) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
   }
 
   return result;

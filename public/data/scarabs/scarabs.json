@@ -1051,7 +1051,7 @@
   },
   {
     "name": "Sulphite Scarab of Greed",
-    "id": "sulphite-scarab",
+    "id": "sulphite-scarab-of-greed",
     "dropEnabledd": false,
     "limit": 1,
     "description": "Map owner gains 150% more Sulphite",

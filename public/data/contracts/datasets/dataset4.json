@@ -3,6 +3,7 @@
     "description": "Records Office job counts",
     "date": "2026-02-08",
     "patch": "3.27.0",
+    "outdated": false,
     "sources": [
         {
             "name": "Google Sheet",

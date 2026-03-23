@@ -3,6 +3,7 @@
     "description": "Dataset 7",
     "date": "2022-09-26",
     "patch": "3.19.0",
+    "outdated": false,
     "sources": [
         {
             "name": "Discord Thread",

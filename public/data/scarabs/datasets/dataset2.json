@@ -1,451 +1,461 @@
 {
-    "name": "Dataset 1",
-    "description": "Dataset 1",
-    "date": "2025-12-21",
-    "patch": "3.27.0",
-    "outdated": true,
+    "name": "Dataset 2",
+    "description": "Dataset 2",
+    "date": "2026-03-23",
+    "patch": "3.28.0",
+    "outdated": false,
     "sources": [
         {
-            "name": "Reddit Post",
-            "url": "https://old.reddit.com/r/pathofexile/comments/1psepyv/100k_scarabs_vendored_327_weighting_and_profits/",
-            "author": "VTSAX_ (u/VTSAX_)"
-        },
-        {
             "name": "Google Sheet",
-            "url": "https://docs.google.com/spreadsheets/d/1HToI124FJIKw6M3HRuvukJuVUEVwd2u-TFRs8XO4MCU/edit?gid=0#gid=0",
-            "author": "Lextra"
+            "url": "docs.google.com/spreadsheets/d/1-Uvjn0xb6ouTAo0VRPy00sYEd1uBfW7dFObdqExshUo/",
+            "author": "Weo_"
         }
     ],
-    "inputItems": [
-        {
-            "id": "influencing-scarab-of-the-elder"
-        },
-        {
-            "id": "influencing-scarab-of-the-shaper"
-        },
-        {
-            "id": "ultimatum-scarab"
-        },
-        {
-            "id": "harvest-scarab"
-        }
-    ],
+    "inputItems": [],
     "items": [
         {
             "id": "abyss-scarab",
-            "count": 601
+            "count": 290
+        },
+        {
+            "id": "abyss-scarab-of-descending",
+            "count": 92
         },
         {
             "id": "abyss-scarab-of-edifice",
-            "count": 190
+            "count": 98
         },
         {
             "id": "abyss-scarab-of-multitudes",
-            "count": 411
-        },
-        {
-            "id": "abyss-scarab-of-profound-depth",
-            "count": 26
-        },
-        {
-            "id": "ambush-scarab",
-            "count": 646
-        },
-        {
-            "id": "ambush-scarab-of-containment",
-            "count": 13
-        },
-        {
-            "id": "ambush-scarab-of-discernment",
-            "count": 210
-        },
-        {
-            "id": "ambush-scarab-of-hidden-compartments",
-            "count": 415
-        },
-        {
-            "id": "ambush-scarab-of-potency",
-            "count": 400
-        },
-        {
-            "id": "anarchy-scarab",
-            "count": 628
-        },
-        {
-            "id": "anarchy-scarab-of-gigantification",
-            "count": 414
-        },
-        {
-            "id": "anarchy-scarab-of-partnership",
-            "count": 239
-        },
-        {
-            "id": "bestiary-scarab",
-            "count": 576
-        },
-        {
-            "id": "bestiary-scarab-of-duplicating",
-            "count": 217
-        },
-        {
-            "id": "bestiary-scarab-of-the-herd",
-            "count": 389
-        },
-        {
-            "id": "betrayal-scarab",
-            "count": 593
-        },
-        {
-            "id": "betrayal-scarab-of-reinforcements",
-            "count": 439
-        },
-        {
-            "id": "betrayal-scarab-of-the-allflame",
-            "count": 426
-        },
-        {
-            "id": "beyond-scarab",
-            "count": 558
-        },
-        {
-            "id": "beyond-scarab-of-haemophilia",
-            "count": 418
-        },
-        {
-            "id": "beyond-scarab-of-resurgence",
-            "count": 208
-        },
-        {
-            "id": "beyond-scarab-of-the-invasion",
-            "count": 213
-        },
-        {
-            "id": "blight-scarab",
-            "count": 479
-        },
-        {
-            "id": "blight-scarab-of-blooming",
-            "count": 32
-        },
-        {
-            "id": "blight-scarab-of-invigoration",
-            "count": 23
-        },
-        {
-            "id": "blight-scarab-of-the-blightheart",
-            "count": 201
-        },
-        {
-            "id": "cartography-scarab-of-corruption",
-            "count": 192
-        },
-        {
-            "id": "cartography-scarab-of-escalation",
-            "count": 645
-        },
-        {
-            "id": "cartography-scarab-of-risk",
-            "count": 30
-        },
-        {
-            "id": "cartography-scarab-of-the-multitude",
-            "count": 430
-        },
-        {
-            "id": "delirium-scarab",
-            "count": 631
-        },
-        {
-            "id": "delirium-scarab-of-delusions",
             "count": 193
         },
         {
-            "id": "delirium-scarab-of-mania",
-            "count": 434
+            "id": "abyss-scarab-of-profound-depth",
+            "count": 17
         },
         {
-            "id": "delirium-scarab-of-neuroses",
-            "count": 210
+            "id": "ambush-scarab",
+            "count": 278
         },
         {
-            "id": "delirium-scarab-of-paranoia",
-            "count": 413
-        },
-        {
-            "id": "divination-scarab-of-pilfering",
-            "count": 19
-        },
-        {
-            "id": "divination-scarab-of-plenty",
-            "count": 211
-        },
-        {
-            "id": "divination-scarab-of-the-cloister",
-            "count": 661
-        },
-        {
-            "id": "domination-scarab",
-            "count": 652
-        },
-        {
-            "id": "domination-scarab-of-apparitions",
-            "count": 365
-        },
-        {
-            "id": "domination-scarab-of-evolution",
-            "count": 215
-        },
-        {
-            "id": "domination-scarab-of-terrors",
-            "count": 26
-        },
-        {
-            "id": "essence-scarab",
-            "count": 603
-        },
-        {
-            "id": "essence-scarab-of-adaptation",
-            "count": 21
-        },
-        {
-            "id": "essence-scarab-of-ascent",
-            "count": 203
-        },
-        {
-            "id": "essence-scarab-of-calcification",
-            "count": 24
-        },
-        {
-            "id": "essence-scarab-of-stability",
-            "count": 407
-        },
-        {
-            "id": "expedition-scarab",
-            "count": 652
-        },
-        {
-            "id": "expedition-scarab-of-archaeology",
-            "count": 234
-        },
-        {
-            "id": "expedition-scarab-of-runefinding",
-            "count": 406
-        },
-        {
-            "id": "expedition-scarab-of-verisium-powder",
-            "count": 412
-        },
-        {
-            "id": "harbinger-scarab",
-            "count": 614
-        },
-        {
-            "id": "harbinger-scarab-of-obelisks",
-            "count": 430
-        },
-        {
-            "id": "harbinger-scarab-of-regency",
-            "count": 182
-        },
-        {
-            "id": "harbinger-scarab-of-warhoards",
-            "count": 218
-        },
-        {
-            "id": "harvest-scarab",
-            "count": 649
-        },
-        {
-            "id": "harvest-scarab-of-cornucopia",
-            "count": 25
-        },
-        {
-            "id": "harvest-scarab-of-doubling",
-            "count": 218
-        },
-        {
-            "id": "horned-scarab-of-awakening",
-            "count": 19
-        },
-        {
-            "id": "horned-scarab-of-bloodlines",
-            "count": 34
-        },
-        {
-            "id": "horned-scarab-of-glittering",
-            "count": 24
-        },
-        {
-            "id": "horned-scarab-of-nemeses",
-            "count": 219
-        },
-        {
-            "id": "horned-scarab-of-pandemonium",
-            "count": 19
-        },
-        {
-            "id": "horned-scarab-of-preservation",
-            "count": 3
-        },
-        {
-            "id": "horned-scarab-of-tradition",
-            "count": 23
-        },
-        {
-            "id": "incursion-scarab",
-            "count": 617
-        },
-        {
-            "id": "incursion-scarab-of-champions",
-            "count": 187
-        },
-        {
-            "id": "incursion-scarab-of-invasion",
-            "count": 421
-        },
-        {
-            "id": "incursion-scarab-of-timelines",
-            "count": 24
-        },
-        {
-            "id": "influencing-scarab-of-conversion",
-            "count": 204
-        },
-        {
-            "id": "influencing-scarab-of-hordes",
-            "count": 436
-        },
-        {
-            "id": "influencing-scarab-of-the-elder",
-            "count": 518
-        },
-        {
-            "id": "influencing-scarab-of-the-shaper",
-            "count": 558
-        },
-        {
-            "id": "kalguuran-scarab",
-            "count": 612
-        },
-        {
-            "id": "kalguuran-scarab-of-guarded-riches",
-            "count": 420
-        },
-        {
-            "id": "kalguuran-scarab-of-refinement",
-            "count": 29
-        },
-        {
-            "id": "legion-scarab",
-            "count": 630
-        },
-        {
-            "id": "legion-scarab-of-command",
-            "count": 231
-        },
-        {
-            "id": "legion-scarab-of-eternal-conflict",
-            "count": 24
-        },
-        {
-            "id": "legion-scarab-of-officers",
-            "count": 208
-        },
-        {
-            "id": "ritual-scarab-of-abundance",
-            "count": 226
-        },
-        {
-            "id": "ritual-scarab-of-selectiveness",
-            "count": 674
-        },
-        {
-            "id": "ritual-scarab-of-wisps",
-            "count": 421
-        },
-        {
-            "id": "scarab-of-adversaries",
-            "count": 634
-        },
-        {
-            "id": "scarab-of-bisection",
-            "count": 216
-        },
-        {
-            "id": "scarab-of-divinity",
-            "count": 403
-        },
-        {
-            "id": "scarab-of-hunted-traitors",
-            "count": 414
-        },
-        {
-            "id": "scarab-of-monstrous-lineage",
-            "count": 613
-        },
-        {
-            "id": "scarab-of-radiant-storms",
-            "count": 32
-        },
-        {
-            "id": "scarab-of-stability",
-            "count": 183
-        },
-        {
-            "id": "scarab-of-wisps",
-            "count": 212
-        },
-        {
-            "id": "sulphite-scarab",
-            "count": 657
-        },
-        {
-            "id": "sulphite-scarab-of-fumes",
-            "count": 224
-        },
-        {
-            "id": "titanic-scarab",
-            "count": 616
-        },
-        {
-            "id": "titanic-scarab-of-legend",
-            "count": 212
-        },
-        {
-            "id": "titanic-scarab-of-treasures",
-            "count": 187
-        },
-        {
-            "id": "torment-scarab",
-            "count": 605
-        },
-        {
-            "id": "torment-scarab-of-peculiarity",
-            "count": 403
-        },
-        {
-            "id": "torment-scarab-of-possession",
-            "count": 197
-        },
-        {
-            "id": "ultimatum-scarab",
-            "count": 514
-        },
-        {
-            "id": "ultimatum-scarab-of-bribing",
-            "count": 420
-        },
-        {
-            "id": "ultimatum-scarab-of-catalysing",
-            "count": 22
-        },
-        {
-            "id": "ultimatum-scarab-of-dueling",
+            "id": "ambush-scarab-of-containment",
             "count": 18
         },
         {
+            "id": "ambush-scarab-of-discernment",
+            "count": 87
+        },
+        {
+            "id": "ambush-scarab-of-hidden-compartments",
+            "count": 167
+        },
+        {
+            "id": "ambush-scarab-of-potency",
+            "count": 202
+        },
+        {
+            "id": "anarchy-scarab",
+            "count": 253
+        },
+        {
+            "id": "anarchy-scarab-of-gigantification",
+            "count": 192
+        },
+        {
+            "id": "anarchy-scarab-of-partnership",
+            "count": 84
+        },
+        {
+            "id": "anarchy-scarab-of-the-exceptional",
+            "count": 94
+        },
+        {
+            "id": "bestiary-scarab",
+            "count": 270
+        },
+        {
+            "id": "bestiary-scarab-of-duplicating",
+            "count": 83
+        },
+        {
+            "id": "bestiary-scarab-of-the-herd",
+            "count": 193
+        },
+        {
+            "id": "betrayal-scarab",
+            "count": 293
+        },
+        {
+            "id": "betrayal-scarab-of-reinforcements",
+            "count": 197
+        },
+        {
+            "id": "betrayal-scarab-of-the-allflame",
+            "count": 194
+        },
+        {
+            "id": "betrayal-scarab-of-unbreaking",
+            "count": 101
+        },
+        {
+            "id": "beyond-scarab",
+            "count": 302
+        },
+        {
+            "id": "beyond-scarab-of-haemophilia",
+            "count": 191
+        },
+        {
+            "id": "beyond-scarab-of-resurgence",
+            "count": 100
+        },
+        {
+            "id": "beyond-scarab-of-the-invasion",
+            "count": 79
+        },
+        {
+            "id": "blight-scarab",
+            "count": 318
+        },
+        {
+            "id": "blight-scarab-of-blooming",
+            "count": 6
+        },
+        {
+            "id": "blight-scarab-of-invigoration",
+            "count": 9
+        },
+        {
+            "id": "blight-scarab-of-the-blightheart",
+            "count": 86
+        },
+        {
+            "id": "breach-scarab-of-instability",
+            "count": 194
+        },
+        {
+            "id": "breach-scarab-of-resonant-cascade",
+            "count": 12
+        },
+        {
+            "id": "breach-scarab-of-the-hive",
+            "count": 291
+        },
+        {
+            "id": "breach-scarab-of-the-incensed-swarm",
+            "count": 17
+        },
+        {
+            "id": "breach-scarab-of-the-marshal",
+            "count": 87
+        },
+        {
+            "id": "cartography-scarab-of-corruption",
+            "count": 95
+        },
+        {
+            "id": "cartography-scarab-of-escalation",
+            "count": 264
+        },
+        {
+            "id": "cartography-scarab-of-risk",
+            "count": 15
+        },
+        {
+            "id": "cartography-scarab-of-the-multitude",
+            "count": 196
+        },
+        {
+            "id": "delirium-scarab",
+            "count": 301
+        },
+        {
+            "id": "delirium-scarab-of-delusions",
+            "count": 91
+        },
+        {
+            "id": "delirium-scarab-of-mania",
+            "count": 197
+        },
+        {
+            "id": "delirium-scarab-of-neuroses",
+            "count": 97
+        },
+        {
+            "id": "delirium-scarab-of-paranoia",
+            "count": 202
+        },
+        {
+            "id": "divination-scarab-of-pilfering",
+            "count": 18
+        },
+        {
+            "id": "divination-scarab-of-plenty",
+            "count": 86
+        },
+        {
+            "id": "divination-scarab-of-the-cloister",
+            "count": 291
+        },
+        {
+            "id": "domination-scarab",
+            "count": 289
+        },
+        {
+            "id": "domination-scarab-of-apparitions",
+            "count": 182
+        },
+        {
+            "id": "domination-scarab-of-evolution",
+            "count": 116
+        },
+        {
+            "id": "domination-scarab-of-terrors",
+            "count": 8
+        },
+        {
+            "id": "essence-scarab",
+            "count": 291
+        },
+        {
+            "id": "essence-scarab-of-adaptation",
+            "count": 16
+        },
+        {
+            "id": "essence-scarab-of-ascent",
+            "count": 104
+        },
+        {
+            "id": "essence-scarab-of-calcification",
+            "count": 10
+        },
+        {
+            "id": "essence-scarab-of-stability",
+            "count": 164
+        },
+        {
+            "id": "expedition-scarab",
+            "count": 292
+        },
+        {
+            "id": "expedition-scarab-of-archaeology",
+            "count": 85
+        },
+        {
+            "id": "expedition-scarab-of-infusion",
+            "count": 73
+        },
+        {
+            "id": "expedition-scarab-of-runefinding",
+            "count": 177
+        },
+        {
+            "id": "expedition-scarab-of-verisium-powder",
+            "count": 173
+        },
+        {
+            "id": "harvest-scarab",
+            "count": 294
+        },
+        {
+            "id": "harvest-scarab-of-cornucopia",
+            "count": 10
+        },
+        {
+            "id": "harvest-scarab-of-doubling",
+            "count": 77
+        },
+        {
+            "id": "horned-scarab-of-awakening",
+            "count": 14
+        },
+        {
+            "id": "horned-scarab-of-bloodlines",
+            "count": 16
+        },
+        {
+            "id": "horned-scarab-of-glittering",
+            "count": 8
+        },
+        {
+            "id": "horned-scarab-of-nemeses",
+            "count": 99
+        },
+        {
+            "id": "horned-scarab-of-pandemonium",
+            "count": 15
+        },
+        {
+            "id": "horned-scarab-of-preservation",
+            "count": 2
+        },
+        {
+            "id": "horned-scarab-of-tradition",
+            "count": 1
+        },
+        {
+            "id": "incursion-scarab",
+            "count": 279
+        },
+        {
+            "id": "incursion-scarab-of-champions",
+            "count": 92
+        },
+        {
+            "id": "incursion-scarab-of-invasion",
+            "count": 180
+        },
+        {
+            "id": "incursion-scarab-of-timelines",
+            "count": 12
+        },
+        {
+            "id": "influencing-scarab-of-hordes",
+            "count": 200
+        },
+        {
+            "id": "influencing-scarab-of-interference",
+            "count": 83
+        },
+        {
+            "id": "influencing-scarab-of-the-elder",
+            "count": 297
+        },
+        {
+            "id": "influencing-scarab-of-the-shaper",
+            "count": 304
+        },
+        {
+            "id": "kalguuran-scarab",
+            "count": 251
+        },
+        {
+            "id": "kalguuran-scarab-of-enriching",
+            "count": 94
+        },
+        {
+            "id": "kalguuran-scarab-of-guarded-riches",
+            "count": 181
+        },
+        {
+            "id": "kalguuran-scarab-of-refinement",
+            "count": 9
+        },
+        {
+            "id": "legion-scarab",
+            "count": 283
+        },
+        {
+            "id": "legion-scarab-of-eternal-conflict",
+            "count": 7
+        },
+        {
+            "id": "legion-scarab-of-officers",
+            "count": 102
+        },
+        {
+            "id": "legion-scarab-of-treasures",
+            "count": 106
+        },
+        {
+            "id": "ritual-scarab-of-abundance",
+            "count": 103
+        },
+        {
+            "id": "ritual-scarab-of-corpses",
+            "count": 109
+        },
+        {
+            "id": "ritual-scarab-of-selectiveness",
+            "count": 275
+        },
+        {
+            "id": "ritual-scarab-of-wisps",
+            "count": 204
+        },
+        {
+            "id": "scarab-of-adversaries",
+            "count": 298
+        },
+        {
+            "id": "scarab-of-divinity",
+            "count": 156
+        },
+        {
+            "id": "scarab-of-monstrous-lineage",
+            "count": 301
+        },
+        {
+            "id": "scarab-of-radiant-storms",
+            "count": 11
+        },
+        {
+            "id": "scarab-of-stability",
+            "count": 99
+        },
+        {
+            "id": "scarab-of-the-dextral",
+            "count": 97
+        },
+        {
+            "id": "scarab-of-the-sinistral",
+            "count": 103
+        },
+        {
+            "id": "scarab-of-wisps",
+            "count": 112
+        },
+        {
+            "id": "sulphite-scarab",
+            "count": 300
+        },
+        {
+            "id": "sulphite-scarab-of-fumes",
+            "count": 70
+        },
+        {
+            "id": "titanic-scarab",
+            "count": 315
+        },
+        {
+            "id": "titanic-scarab-of-legend",
+            "count": 106
+        },
+        {
+            "id": "titanic-scarab-of-treasures",
+            "count": 79
+        },
+        {
+            "id": "torment-scarab",
+            "count": 284
+        },
+        {
+            "id": "torment-scarab-of-peculiarity",
+            "count": 185
+        },
+        {
+            "id": "torment-scarab-of-possession",
+            "count": 104
+        },
+        {
+            "id": "ultimatum-scarab",
+            "count": 293
+        },
+        {
+            "id": "ultimatum-scarab-of-bribing",
+            "count": 176
+        },
+        {
+            "id": "ultimatum-scarab-of-catalysing",
+            "count": 13
+        },
+        {
+            "id": "ultimatum-scarab-of-dueling",
+            "count": 13
+        },
+        {
             "id": "ultimatum-scarab-of-inscription",
-            "count": 179
+            "count": 110
         }
     ]
 }

@@ -3,6 +3,7 @@
   "description": "Runegraft drop/sample dataset. Update counts from your source data.",
   "date": "2025-02-18",
   "patch": "3.27.0",
+  "outdated": false,
   "sources": [
     {
       "name": "Reddit Thread",

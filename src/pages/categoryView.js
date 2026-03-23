@@ -10,6 +10,7 @@ import { generateCategoryCharts } from '../visualization/chartGenerator.js';
 import { renderDivinationCard } from '../visualization/divinationCardRenderer.js';
 import { renderListView, filterTattoos, filterRunegrafts, filterContracts, renderListViewWithWeights } from '../visualization/listViewRenderer.js';
 import { discoverDatasetsParallel, loadDataset } from '../services/datasetLoader.js';
+import { filterDatasetsForWeightCalculation } from '../services/datasetWeightFilter.js';
 import { renderDatasetList, sortDatasetsByPatch } from '../components/datasetList.js';
 import { renderDatasetDetail } from '../components/datasetDetail.js';
 import { renderWeightDisplay } from '../components/weightDisplay.js';
@@ -948,7 +949,9 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
   let calculatedWeights = null;
   let categoryItems = null;
   let allDatasets = null; // Store datasets for weight calculation
-  let fullDatasetsForWeights = null; // Store full datasets for Bayesian calculation
+  let fullDatasetsForWeights = null; // Store full datasets for Bayesian calculation (non-outdated only)
+  let weightsViewIndexData = null; // index.json used with cached weights (subset of datasets)
+  let weightsViewNormalizedDatasets = null; // Normalized entries matching fullDatasetsForWeights
   let datasetsOverlay = null; // Reference to overlay element
   
   /**
@@ -985,6 +988,21 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
       console.warn(`[CategoryView] Failed to load index.json for ${categoryId}:`, error);
       return null;
     }
+  };
+
+  /**
+   * Load full dataset JSON for each discovery entry, return only pairs usable for weight calculation.
+   * @param {Array<Object>} discoveryList - Metadata from discoverDatasetsParallel
+   * @returns {Promise<Array<{ meta: { number: number, filename: string }, full: Object }>>}
+   */
+  const loadDatasetPairsForWeights = async (discoveryList) => {
+    const pairs = await Promise.all(
+      discoveryList.map(async (ds) => ({
+        meta: { number: ds.datasetNumber, filename: ds.filename },
+        full: await loadDataset(categoryId, ds.datasetNumber)
+      }))
+    );
+    return pairs.filter((p) => filterDatasetsForWeightCalculation([p.full]).length === 1);
   };
   
   /**
@@ -1147,18 +1165,24 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
           detailContainer.appendChild(emptyState);
           return;
         }
-        
+
+        const currentPairs = await loadDatasetPairsForWeights(datasets);
+        if (currentPairs.length === 0) {
+          const emptyState = createElement('div', {
+            className: 'dataset-detail-empty',
+            textContent: 'No current datasets for weight calculation (all are marked outdated)'
+          });
+          detailContainer.appendChild(emptyState);
+          return;
+        }
+
+        normalizedDatasets = currentPairs.map((p) => p.meta);
+        const fullDatasetsForCalc = currentPairs.map((p) => p.full);
+
         // Load index.json data for cache validation
         indexData = await loadIndexData(categoryId);
         
-        // Normalize datasets to match index.json structure (number, filename)
-        // discoverDatasetsParallel returns objects with datasetNumber, but cache expects number
-        normalizedDatasets = datasets.map(ds => ({
-          number: ds.datasetNumber,
-          filename: ds.filename
-        }));
-        
-        // Try to get cached weights first
+        // Try to get cached weights first (signature uses only non-outdated datasets)
         if (indexData) {
           const cachedWeights = await getCachedWeights(
             categoryId,
@@ -1172,9 +1196,9 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
             calculatedWeights = cachedWeights;
             // Still need to load category items and full datasets for display
             categoryItems = await loadCategoryData(categoryId);
-            fullDatasetsForWeights = await Promise.all(
-              datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
-            );
+            fullDatasetsForWeights = fullDatasetsForCalc;
+            weightsViewIndexData = indexData;
+            weightsViewNormalizedDatasets = normalizedDatasets;
             clearElement(detailContainer);
           }
         }
@@ -1189,18 +1213,14 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
           detailContainer.appendChild(loadingDiv);
           setLoadingState(loadingDiv, true);
           
-          const fullDatasets = await Promise.all(
-            datasets.map(ds => loadDataset(categoryId, ds.datasetNumber))
-          );
-          
           // Store full datasets for Bayesian calculation
-          fullDatasetsForWeights = fullDatasets;
+          fullDatasetsForWeights = fullDatasetsForCalc;
           
           // Calculate weights (contracts: per input item; others: single set)
           const usePerInputCalculation = categoryId === 'contracts';
           calculatedWeights = usePerInputCalculation
-            ? estimateItemWeightsPerInputItem(fullDatasets)
-            : estimateItemWeights(fullDatasets);
+            ? estimateItemWeightsPerInputItem(fullDatasetsForCalc)
+            : estimateItemWeights(fullDatasetsForCalc);
           
           // Cache the calculated weights
           if (indexData) {
@@ -1213,6 +1233,9 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
             );
           }
           
+          weightsViewIndexData = indexData;
+          weightsViewNormalizedDatasets = normalizedDatasets;
+
           // Load category items
           categoryItems = await loadCategoryData(categoryId);
           
@@ -1222,15 +1245,19 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
         // If calculatedWeights already exists, we still need indexData and normalizedDatasets
         // for Bayesian cache, so load them if not already available
         if (!indexData) {
-          indexData = await loadIndexData(categoryId);
+          indexData = weightsViewIndexData ?? await loadIndexData(categoryId);
         }
         
-        // Get normalized datasets from allDatasets if available
+        if (!normalizedDatasets) {
+          normalizedDatasets = weightsViewNormalizedDatasets;
+        }
+
         if (!normalizedDatasets && allDatasets) {
-          normalizedDatasets = allDatasets.map(ds => ({
-            number: ds.datasetNumber,
-            filename: ds.filename
-          }));
+          const pairs = await loadDatasetPairsForWeights(allDatasets);
+          normalizedDatasets = pairs.map((p) => p.meta);
+          if ((!fullDatasetsForWeights || fullDatasetsForWeights.length === 0) && pairs.length > 0) {
+            fullDatasetsForWeights = pairs.map((p) => p.full);
+          }
         }
       }
       

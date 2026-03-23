@@ -6,6 +6,7 @@
 
 import { runMcmcSampling } from './bayesianMcmc.js';
 import { computeStatistics } from '../utils/posteriorStats.js';
+import { filterDatasetsForWeightCalculation } from './datasetWeightFilter.js';
 
 /**
  * Get total count per output item across all datasets
@@ -38,6 +39,11 @@ function getTotalCountPerOutputItem(datasets) {
 export async function inferWeights(datasets, options = {}) {
   if (!datasets || datasets.length === 0) {
     throw new Error('Datasets array cannot be empty');
+  }
+
+  datasets = filterDatasetsForWeightCalculation(datasets);
+  if (!datasets.length) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
   }
 
   const {
@@ -186,6 +192,11 @@ export async function inferWeightsPerInputItem(datasets, options = {}) {
     throw new Error('Datasets array cannot be empty');
   }
 
+  datasets = filterDatasetsForWeightCalculation(datasets);
+  if (!datasets || datasets.length === 0) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
+  }
+
   const byInput = groupDatasetsByInputItem(datasets);
   const result = {};
   const inputIds = Array.from(byInput.keys());
@@ -206,6 +217,10 @@ export async function inferWeightsPerInputItem(datasets, options = {}) {
       ...inferenceResult,
       weights
     };
+  }
+
+  if (Object.keys(result).length === 0) {
+    throw new Error('No datasets for weight calculation (all marked outdated or none provided)');
   }
 
   return result;
