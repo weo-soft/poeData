@@ -21,8 +21,16 @@
     "item-browser",
     "data-visualization"
   ],
-  "author": "",
+  "author": "WeoSoft",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weo-soft/poeData.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weo-soft/poeData/issues"
+  },
+  "homepage": "https://PoeData.dev",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@vitest/coverage-v8": "^1.0.0",

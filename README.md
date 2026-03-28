@@ -133,6 +133,16 @@ The site deploys to **GitHub Pages** via `.github/workflows/deploy.yml` on pushe
 - **Custom domain**: `public/CNAME` (copied to `dist/` on build) — e.g. PoeData.dev
 - **GitHub**: Repository **Settings → Pages** should use the GitHub Actions source; EmailJS-related build variables are set as repository **Variables** for the workflow
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). High-level developer notes: [AGENTS.md](AGENTS.md).
+
+## Third-party content
+
+*Path of Exile* and related names and imagery are trademarks or registered trademarks of Grinding Gear Games. This project is a **fan-made, community-driven** tool and is **not affiliated with or endorsed by** Grinding Gear Games. Game data and assets in `public/data/` and elsewhere are used for informational purposes; rights remain with their respective owners. The **source code** in this repository is licensed under the MIT License (see below); that license does not grant rights to GGG’s intellectual property.
+
 ## License
 
-MIT
+The project source code is licensed under the [MIT License](LICENSE).
+
+See [SECURITY.md](SECURITY.md) for reporting security issues.

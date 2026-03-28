@@ -79,4 +79,4 @@ GitHub Actions production build injects the first three from repository **Variab
 
 ## License
 
-MIT (see `README.md`).
+MIT — see [`LICENSE`](LICENSE) in the repository root.
