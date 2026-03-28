@@ -36,9 +36,7 @@ let currentContentArea = null;
 let currentChartInstance = null;
 let currentDatasets = null; // Store datasets for potential recalculation
 let currentCategoryId = null; // Store categoryId for recalculation
-let currentOptions = null; // Store options for recalculation
 let currentDeterministicWeights = null; // Store deterministic weights for navigation back
-let currentContainer = null; // Store container reference for navigation back
 let isLoading = false;
 
 /**
@@ -67,10 +65,8 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     return;
   }
 
-  // Store container and deterministic weights for navigation back
-  currentContainer = container;
+  // Store deterministic weights for navigation back
   currentDeterministicWeights = options.deterministicWeights || null;
-  currentOptions = options; // Store options for navigation back
   currentCategoryId = categoryId; // Store categoryId
   currentItems = items; // Store items
 
@@ -143,8 +139,6 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
   try {
     // Check cache first if indexData and normalizedDatasets are provided
     let result = null;
-    let cachedWeights = null;
-    let isFromCache = false;
     
     if (options.indexData && options.normalizedDatasets) {
       const cachedData = await getCachedWeights(
@@ -157,7 +151,6 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
       if (cachedData) {
         // Cache hit
         console.log('[BayesianWeightDisplay] Cache hit for Bayesian weights');
-        isFromCache = true;
         
         // Per-input result (e.g. contracts: one result per input item)
         if (isPerInputBayesianResult(cachedData)) {
@@ -201,7 +194,6 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
         // Store datasets and options for potential recalculation (if needed)
         currentDatasets = datasets;
         currentCategoryId = categoryId;
-        currentOptions = options;
         
         // Skip loading state for cache hits
         isLoading = false;
@@ -279,7 +271,6 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
     currentItems = items;
     currentDatasets = datasets;
     currentCategoryId = categoryId;
-    currentOptions = options;
 
     if (isPerInputResult) {
       // Per-input: one section per input item
@@ -293,7 +284,7 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
         section.appendChild(createElement('h3', { className: 'per-input-section-title', textContent: contractName, style: 'margin: 1rem 0 0.5rem 0; font-size: 1.1rem;' }));
         const contentArea = createElement('div', { className: 'bayesian-visualization-content', 'data-input-id': inputId });
         section.appendChild(contentArea);
-        renderBayesianResults(contentArea, singleResult, jobItems, categoryId, singleResult.modelAssumptions, datasets);
+        renderBayesianResults(contentArea, singleResult, jobItems, categoryId);
         sectionsWrapper.appendChild(section);
         if (singleResult.convergenceDiagnostics) {
           renderConvergenceDiagnostics(section, singleResult.convergenceDiagnostics);
@@ -302,12 +293,12 @@ export async function renderBayesianWeightDisplay(container, datasets, categoryI
       bayesianDisplay.appendChild(sectionsWrapper);
       currentContentArea = null; // Multiple content areas
     } else {
-      const tabsContainer = createBayesianVisualizationTabs(currentBayesianResult, items);
+      const tabsContainer = createBayesianVisualizationTabs(currentBayesianResult);
       bayesianDisplay.appendChild(tabsContainer);
       const contentArea = createElement('div', { className: 'bayesian-visualization-content' });
       bayesianDisplay.appendChild(contentArea);
       currentContentArea = contentArea;
-      renderBayesianResults(contentArea, currentBayesianResult, items, categoryId, result.modelAssumptions, datasets);
+      renderBayesianResults(contentArea, currentBayesianResult, items, categoryId);
       if (result.convergenceDiagnostics) {
         renderConvergenceDiagnostics(bayesianDisplay, result.convergenceDiagnostics);
       }
@@ -409,10 +400,8 @@ function mapDatasetIdToCategoryId(datasetItemId, categoryItems) {
  * @param {Object} result - Bayesian result object
  * @param {Array<Object>} items - Item metadata
  * @param {string} categoryId - Category identifier
- * @param {Object} modelAssumptions - Model assumptions object (optional)
- * @param {Array<Object>} datasets - Dataset objects (optional, for exclusion constraint)
  */
-function renderBayesianResults(container, result, items, categoryId, modelAssumptions = null, datasets = null) {
+function renderBayesianResults(container, result, items, categoryId) {
   const { summaryStatistics } = result;
 
   if (!summaryStatistics || Object.keys(summaryStatistics).length === 0) {
@@ -565,102 +554,11 @@ function renderConvergenceDiagnostics(container, diagnostics) {
 }
 
 /**
- * Render model assumptions
- * @param {HTMLElement} container - Container element
- * @param {Object} assumptions - Model assumptions object
- */
-function renderModelAssumptions(container, assumptions) {
-  const assumptionsDiv = createElement('div', {
-    className: 'bayesian-model-assumptions'
-  });
-
-  const assumptionsTitle = createElement('h3', {
-    textContent: 'Model Assumptions'
-  });
-  assumptionsDiv.appendChild(assumptionsTitle);
-
-  // Summary with clear descriptions
-  const summary = createElement('div', {
-    className: 'assumptions-summary'
-  });
-
-  if (assumptions.singleKnownInput > 0) {
-    const singleDesc = createElement('p', {
-      className: 'assumption-type',
-      textContent: `Single Known Input (${assumptions.singleKnownInput} dataset(s)): ` +
-                    'The model uses the specified input item and enforces exclusion constraint (input cannot be returned).'
-    });
-    summary.appendChild(singleDesc);
-  }
-
-  if (assumptions.multipleKnownInputs > 0) {
-    const multipleDesc = createElement('p', {
-      className: 'assumption-type',
-      textContent: `Multiple Known Inputs (${assumptions.multipleKnownInputs} dataset(s)): ` +
-                    'The model handles multiple possible input items by using the first input item. ' +
-                    'Counts are distributed across all possible inputs.'
-    });
-    summary.appendChild(multipleDesc);
-  }
-
-  if (assumptions.unknownInputs > 0) {
-    const unknownDesc = createElement('p', {
-      className: 'assumption-type',
-      textContent: `Unknown/Random Inputs (${assumptions.unknownInputs} dataset(s)): ` +
-                    'The model assumes a uniform prior over all possible input items. ' +
-                    'This treats the input as if it was chosen randomly from all items.'
-    });
-    summary.appendChild(unknownDesc);
-  }
-
-  assumptionsDiv.appendChild(summary);
-
-  // Detailed assumptions per dataset
-  if (assumptions.assumptions && Object.keys(assumptions.assumptions).length > 0) {
-    const assumptionsTitle = createElement('h4', {
-      textContent: 'Per-Dataset Assumptions'
-    });
-    assumptionsDiv.appendChild(assumptionsTitle);
-
-    const assumptionsList = createElement('ul', { className: 'assumptions-list' });
-    Object.entries(assumptions.assumptions).forEach(([index, assumption]) => {
-      const li = createElement('li', {
-        className: `assumption-item assumption-${assumption.type}`
-      });
-
-      const datasetLabel = createElement('strong', {
-        textContent: `Dataset ${parseInt(index) + 1}: `
-      });
-      li.appendChild(datasetLabel);
-
-      const assumptionText = createElement('span', {
-        textContent: assumption.description
-      });
-      li.appendChild(assumptionText);
-
-      if (assumption.inputItems && assumption.inputItems.length > 0) {
-        const inputItemsText = createElement('span', {
-          className: 'input-items-list',
-          textContent: ` (Input items: ${assumption.inputItems.join(', ')})`
-        });
-        li.appendChild(inputItemsText);
-      }
-
-      assumptionsList.appendChild(li);
-    });
-    assumptionsDiv.appendChild(assumptionsList);
-  }
-
-  container.appendChild(assumptionsDiv);
-}
-
-/**
  * Create visualization tabs for Bayesian results
  * @param {Object} result - Bayesian result object
- * @param {Array<Object>} items - Item metadata
  * @returns {HTMLElement} Tabs container
  */
-function createBayesianVisualizationTabs(result, items) {
+function createBayesianVisualizationTabs(result) {
   const tabsContainer = createElement('div', {
     className: 'bayesian-visualization-tabs',
     style: 'display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;'
@@ -756,7 +654,7 @@ async function renderBayesianVisualization(container, viewType, result, items) {
 
   switch (viewType) {
     case 'table':
-      renderBayesianResults(container, result, items, currentCategoryId, result.modelAssumptions, currentDatasets);
+      renderBayesianResults(container, result, items, currentCategoryId);
       break;
     case 'density': {
       // Render density plot into a sub-container so the chart code can clear safely
@@ -846,7 +744,7 @@ async function renderBayesianVisualization(container, viewType, result, items) {
       break;
     }
     default:
-      renderBayesianResults(container, result, items, currentCategoryId, result.modelAssumptions, currentDatasets);
+      renderBayesianResults(container, result, items, currentCategoryId);
   }
 }
 
@@ -856,7 +754,7 @@ async function renderBayesianVisualization(container, viewType, result, items) {
  * @param {Array<Object>} datasets - Dataset objects (optional, for exclusion constraint)
  * @returns {HTMLElement}
  */
-function createModelAssumptionsInfoButton(modelAssumptions, datasets = null, options = {}) {
+function createModelAssumptionsInfoButton(modelAssumptions, _datasets = null, options = {}) {
   const infoIconContainer = createElement('div', {
     className: 'bayesian-info-icon-container',
     style: options.inline ? 'margin-bottom: 0; justify-content: flex-end;' : undefined
@@ -878,7 +776,7 @@ function createModelAssumptionsInfoButton(modelAssumptions, datasets = null, opt
 
   infoIcon.addEventListener('click', (e) => {
     e.stopPropagation();
-    showModelAssumptionsModal(modelAssumptions, datasets);
+    showModelAssumptionsModal();
   });
 
   infoIconContainer.appendChild(infoIcon);
@@ -931,7 +829,7 @@ function renderBayesianMcmcExplanation(container) {
     }
   ];
 
-  steps.forEach((step, index) => {
+  steps.forEach((step) => {
     const li = createElement('li', {
       style: 'margin-bottom: 0.75rem;'
     });
@@ -1034,11 +932,9 @@ function renderBayesianMcmcExplanation(container) {
 }
 
 /**
- * Show model assumptions in a modal dialog
- * @param {Object} assumptions - Model assumptions object (kept for compatibility, not used)
- * @param {Array<Object>} datasets - Dataset objects (kept for compatibility, not used)
+ * Show model assumptions in a modal dialog (static MCMC explanation content).
  */
-function showModelAssumptionsModal(assumptions, datasets = null) {
+function showModelAssumptionsModal() {
   // Remove existing modal if present
   const existingModal = document.querySelector('.model-assumptions-modal');
   if (existingModal) {
@@ -1114,40 +1010,6 @@ function showModelAssumptionsModal(assumptions, datasets = null) {
     }
   };
   document.addEventListener('keydown', escHandler);
-}
-
-/**
- * Render exclusion constraint information
- * @param {HTMLElement} container - Container element
- * @param {Array<Object>} datasets - Dataset objects
- */
-function renderExclusionConstraintInfo(container, datasets) {
-  // Count datasets with known inputs (where exclusion applies)
-  const datasetsWithInputs = datasets.filter(ds => 
-    ds.inputItems && ds.inputItems.length > 0
-  );
-
-  if (datasetsWithInputs.length === 0) {
-    return; // No exclusion constraint to display
-  }
-
-  const constraintDiv = createElement('div', {
-    className: 'bayesian-exclusion-constraint'
-  });
-
-  const constraintTitle = createElement('h3', {
-    textContent: 'Model Constraint: Exclusion'
-  });
-  constraintDiv.appendChild(constraintTitle);
-
-  const constraintDesc = createElement('p', {
-    className: 'exclusion-description',
-    textContent: 'The model enforces that input items cannot be returned as outputs in the same transformation. ' +
-                  'This constraint is applied to ' + datasetsWithInputs.length + ' dataset(s) with known input items.'
-  });
-  constraintDiv.appendChild(constraintDesc);
-
-  container.appendChild(constraintDiv);
 }
 
 /**

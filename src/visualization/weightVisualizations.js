@@ -58,7 +58,7 @@ function prepareBarChartData(sortedEntries) {
  * @returns {Chart|null} Chart.js instance or null if rendering failed
  * @throws {Error} If container is invalid or weights are empty
  */
-export function renderRankedBarChart(container, weights, items = [], options = {}) {
+export function renderRankedBarChart(container, weights, items = [], _options = {}) {
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
   }
@@ -154,7 +154,7 @@ export function renderRankedBarChart(container, weights, items = [], options = {
  * @returns {Chart|null} Chart.js instance or null if rendering failed
  * @throws {Error} If container is invalid or weights are empty
  */
-export function renderLogScaleBarChart(container, weights, items = [], options = {}) {
+export function renderLogScaleBarChart(container, weights, items = [], _options = {}) {
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
   }
@@ -266,7 +266,7 @@ export function renderLogScaleBarChart(container, weights, items = [], options =
  * @returns {Chart|null} Chart.js instance or null if rendering failed
  * @throws {Error} If container is invalid or weights are empty
  */
-export function renderCDFCurve(container, weights, options = {}) {
+export function renderCDFCurve(container, weights, _options = {}) {
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
   }

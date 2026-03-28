@@ -24,7 +24,6 @@ import { getMleCalculationUrl, getBayesianCalculationUrl } from '../utils/fileUr
 import { renderCategoryCards } from '../components/categoryCards.js';
 
 let currentItems = [];
-let currentCategoryId = null;
 let filteredDivinationCards = null; // Store filtered cards for divination cards view
 
 /**
@@ -37,7 +36,6 @@ export async function renderCategoryView(container, params) {
   clearElement(container);
   
   const categoryId = params.categoryId;
-  currentCategoryId = categoryId;
   
   // Check if we should show datasets view (from query param)
   const query = params.query || {};
@@ -945,7 +943,6 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
   
   container.appendChild(detailContainer);
   
-  let selectedDatasetNumber = null;
   let calculatedWeights = null;
   let categoryItems = null;
   let allDatasets = null; // Store datasets for weight calculation
@@ -1274,60 +1271,6 @@ async function renderDatasetsView(container, subcategoryId, mainCategoryId) {
     } catch (error) {
       clearElement(detailContainer);
       displayError(detailContainer, `Failed to calculate weights: ${error.message}`);
-    }
-  };
-  
-  // Function to handle dataset selection
-  const handleDatasetSelect = async (dataset) => {
-    const datasetNumber = dataset.datasetNumber;
-    
-    // Close overlay when dataset is selected
-    if (datasetsOverlay) {
-      datasetsOverlay.remove();
-      datasetsOverlay = null;
-    }
-    
-    selectedDatasetNumber = datasetNumber;
-    
-    // Clear and show loading
-    clearElement(detailContainer);
-    const detailLoading = createElement('div', {
-      className: 'loading',
-      textContent: 'Loading dataset details...'
-    });
-    detailContainer.appendChild(detailLoading);
-    setLoadingState(detailLoading, true);
-    
-    try {
-      // Load full dataset
-      const fullDataset = await loadDataset(categoryId, datasetNumber);
-      
-      // Clear loading and render detail
-      clearElement(detailContainer);
-      
-      // Render dataset detail inline (with back button to return to weights)
-      renderDatasetDetail(
-        detailContainer,
-        fullDataset,
-        categoryId,
-        () => {
-          // Back button handler - return to weights view
-          selectedDatasetNumber = null;
-          showWeightsView();
-        },
-        async (dataset, categoryId) => {
-          // Handle download (deprecated, kept for compatibility)
-          try {
-            await downloadDataset(categoryId, datasetNumber, dataset);
-          } catch (error) {
-            displayError(detailContainer, `Failed to download dataset: ${error.message}`);
-          }
-        },
-        datasetNumber // Pass datasetNumber for download link
-      );
-    } catch (error) {
-      clearElement(detailContainer);
-      displayError(detailContainer, `Failed to load dataset: ${error.message}`);
     }
   };
   

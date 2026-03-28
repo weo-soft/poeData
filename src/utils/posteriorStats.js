@@ -32,7 +32,6 @@ export function computeMAP(samples) {
   // Simple approach: use histogram-based mode estimation
   // For more accurate MAP, would need full KDE implementation
   const sorted = [...samples].sort((a, b) => a - b);
-  const n = sorted.length;
 
   // Use median as approximation for MAP
   // In practice, MAP computation requires KDE which is more complex

@@ -18,7 +18,6 @@ let currentItems = null;
 let currentCategoryId = null;
 let persistentButtonsContainer = null; // Store persistent buttons container
 let persistentContentContainer = null; // Store persistent content container
-let currentOptions = null; // Store current options for view switching
 let renderDeterministicFn = null; // Store deterministic render function
 let renderBayesianFn = null; // Store Bayesian render function
 let renderComparisonFn = null; // Store comparison render function
@@ -204,9 +203,6 @@ export function renderWeightDisplay(container, weights, categoryId, items = [], 
       });
     };
 
-    // Store current options for view switching
-    currentOptions = { ...options, weights, categoryId, items };
-    
     // Define content rendering functions (store in module-level state)
     renderDeterministicFn = () => {
       if (!persistentContentContainer) return;
@@ -861,7 +857,7 @@ function renderMleExplanation(container) {
     }
   ];
 
-  steps.forEach((step, index) => {
+  steps.forEach((step) => {
     const li = createElement('li', {
       style: 'margin-bottom: 0.75rem;'
     });

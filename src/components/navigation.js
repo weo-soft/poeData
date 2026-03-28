@@ -5,7 +5,6 @@
 import { createElement } from '../utils/dom.js';
 import { getCategoryList } from '../services/dataLoader.js';
 import { displayError } from '../utils/errors.js';
-import { isMobileViewport } from '../utils/mobileUtils.js';
 
 let categoriesCache = null;
 

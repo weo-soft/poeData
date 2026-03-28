@@ -4,8 +4,6 @@
  */
 
 let tooltipElement = null;
-let touchTooltipTimeout = null;
-let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 /**
  * Create tooltip element if it doesn't exist
@@ -42,7 +40,7 @@ function ensureTooltip() {
  * @param {string} categoryId - Optional category identifier for category-specific tooltips
  */
 export function showTooltip(item, x, y, categoryId = null) {
-  const tooltip = ensureTooltip();
+  ensureTooltip();
   
   // Check if this is a divination card
   const isDivinationCard = categoryId === 'divination-cards' || (item.explicitModifiers && item.flavourText && item.stackSize);

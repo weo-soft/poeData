@@ -388,7 +388,7 @@ async function loadContractJobWeightsFromCalculations() {
  * @param {Array} jobs - List of job objects/ids
  * @returns {Promise<Map<string, number>>}
  */
-async function loadJobWeights(jobs) {
+async function loadJobWeights(_jobs) {
   const weightMap = new Map();
   try {
     const mleResponse = await fetch('/data/contracts/calculations/mle.json');
@@ -901,7 +901,6 @@ function createSortableHeader(currentSort, onSortChange) {
   const isNameSort = currentSort.startsWith('name-');
   const isWeightSort = currentSort.startsWith('weight-');
   const isAscending = currentSort.endsWith('-asc');
-  const isDescending = currentSort.endsWith('-desc');
   
   // Name header
   const nameHeader = createElement('div', {

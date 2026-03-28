@@ -290,7 +290,7 @@ function mapItemsToCells(items, gridConfig, categoryId) {
   });
   
   // Sort cells within each group by position (left to right, top to bottom)
-  cellsByType.forEach((cells, type) => {
+  cellsByType.forEach((cells) => {
     cells.sort((a, b) => {
       if (a.row !== b.row) return a.row - b.row;
       return a.x - b.x;
@@ -393,7 +393,7 @@ function mapItemsToCells(items, gridConfig, categoryId) {
     });
     
     // Sort essences within each type by tier (ascending: tier1=lowest, tier7=highest)
-    essencesByType.forEach((essences, essenceType) => {
+    essencesByType.forEach((essences) => {
       essences.sort((a, b) => {
         const tierA = a.tier || 0;
         const tierB = b.tier || 0;
@@ -417,7 +417,7 @@ function mapItemsToCells(items, gridConfig, categoryId) {
     });
     
     // Sort cells within each row by x position (left to right)
-    cellsByRow.forEach((cells, row) => {
+    cellsByRow.forEach((cells) => {
       cells.sort((a, b) => a.x - b.x);
     });
     
@@ -558,9 +558,6 @@ function getItemType(item, gridConfig, categoryId) {
   if (!item || !item.id) return null;
   
   const idLower = item.id.toLowerCase();
-  
-  // Get order config from grid config or fallback to SCARAB_ORDER_CONFIG
-  const orderConfig = gridConfig?.itemOrderConfig || SCARAB_ORDER_CONFIG;
   
   // Special handling for scarabs (backward compatibility)
   if (categoryId === 'scarabs') {
@@ -820,38 +817,6 @@ function renderGrid(canvas, items, categoryId) {
       }
     }
   });
-}
-
-/**
- * Draw cell ID for debugging
- * @param {CanvasRenderingContext2D} ctx - Canvas context
- * @param {Object} cell - Cell definition
- */
-function drawCellId(ctx, cell) {
-  ctx.save();
-  ctx.font = '10px monospace';
-  ctx.fillStyle = '#ffff00'; // Yellow text for visibility
-  ctx.strokeStyle = '#000000'; // Black outline for contrast
-  ctx.lineWidth = 2;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  
-  // Draw cell ID in top-left corner with black outline for readability
-  const text = cell.id;
-  const x = cell.x + 2;
-  const y = cell.y + 2;
-  
-  // Draw text with outline
-  ctx.strokeText(text, x, y);
-  ctx.fillText(text, x, y);
-  
-  // Also draw row and col info
-  const infoText = `R${cell.row}C${cell.col}`;
-  ctx.font = '8px monospace';
-  ctx.strokeText(infoText, x, y + 12);
-  ctx.fillText(infoText, x, y + 12);
-  
-  ctx.restore();
 }
 
 /**

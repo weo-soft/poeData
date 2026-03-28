@@ -11,7 +11,6 @@ const BASE_WIDTH = 300;
 const MIN_WIDTH = 150;
 const MAX_WIDTH = 1200;
 const DEFAULT_WIDTH = 300;
-const ZOOM_STEP = 25;
 
 // Store card state for dynamic updates
 const cardState = {
@@ -23,20 +22,6 @@ const cardState = {
   isManualAdjustment: false,
   manualAdjustmentTimeout: null
 };
-
-/**
- * Mark that user is manually adjusting size (prevents responsive override)
- */
-function markManualSizeAdjustment() {
-  cardState.isManualAdjustment = true;
-  if (cardState.manualAdjustmentTimeout) {
-    clearTimeout(cardState.manualAdjustmentTimeout);
-  }
-  // Reset manual adjustment flag after 2 seconds of inactivity
-  cardState.manualAdjustmentTimeout = setTimeout(() => {
-    cardState.isManualAdjustment = false;
-  }, 2000);
-}
 
 /**
  * Render a divination card with dynamic scaling support
@@ -254,16 +239,6 @@ function enableResponsiveSizing() {
   
   // Add resize listener
   window.addEventListener('resize', cardState.resizeListener);
-}
-
-/**
- * Disable responsive sizing
- */
-function disableResponsiveSizing() {
-  if (cardState.resizeListener) {
-    window.removeEventListener('resize', cardState.resizeListener);
-    cardState.resizeListener = null;
-  }
 }
 
 /**
@@ -565,7 +540,7 @@ function formatFlavourText(text) {
   // Remove wiki/markup tags like <size:27>, <smaller>, <magicitem>, etc.
   text = text.replace(/<[^>]*>/g, '');
   // Remove surrounding braces often used on wiki examples
-  text = text.replace(/^\s*[\{\[\(\"'""]+/, '').replace(/[\}\]\)\"'""]+\s*$/, '');
+  text = text.replace(/^\s*[[{('"]+/, '').replace(/[\]})'"]+\s*$/, '');
   // Collapse multiple spaces and normalize whitespace/newlines
   text = text.replace(/\s+/g, ' ').trim();
   return text;

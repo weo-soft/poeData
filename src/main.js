@@ -12,7 +12,7 @@ import { renderSubmission } from './pages/submission.js';
 import { renderDatasetView } from './pages/datasetView.js';
 import { renderContributions } from './pages/contributions.js';
 import { renderContact } from './pages/contact.js';
-import { createNavigation, updateActiveLink, updateActiveCategoryLink, clearCategoryTitle } from './components/navigation.js';
+import { createNavigation, updateActiveLink, clearCategoryTitle } from './components/navigation.js';
 
 // Get app container
 const app = document.getElementById('app');

@@ -139,7 +139,7 @@ export function renderContact(container) {
     submitButton.textContent = 'Sending...';
     
     try {
-      const response = await sendContactForm(contactData);
+      await sendContactForm(contactData);
       
       // Show success message
       const successMessage = createElement('div', {

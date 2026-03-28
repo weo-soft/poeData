@@ -2,8 +2,6 @@
  * Download utility - Trigger browser-native downloads for dataset files
  */
 
-import { parseDataset, validateDataset } from './datasetParser.js';
-
 /**
  * Get directory name from category ID
  * Maps category IDs (kebab-case) to actual directory names (camelCase)
@@ -260,7 +258,7 @@ export async function downloadDatasetFromUrl(url, filename) {
  * @param {Array<Object>} [items] - Optional array of item metadata
  * @returns {Object} JSON structure similar to input dataset
  */
-export function generateWeightsJson(weights, categoryId, categoryName, calculationType = 'mle', datasets = null, items = null) {
+export function generateWeightsJson(weights, categoryId, categoryName, calculationType = 'mle', datasets = null, _items = null) {
   const now = new Date();
   const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD format
   

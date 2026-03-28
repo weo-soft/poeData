@@ -162,57 +162,6 @@ async function mergeWeightsFromCalculations(items, categoryId) {
 }
 
 /**
- * Merge weight data from calculation files into scarab items
- * @param {Array} items - Array of scarab items
- * @returns {Promise<Array>} Items with dropWeight (bayesian) and dropWeightMle merged from calculation files
- * @deprecated Use mergeWeightsFromCalculations instead
- */
-async function mergeScarabWeights(items) {
-  return mergeWeightsFromCalculations(items, 'scarabs');
-}
-
-/**
- * Merge weight data from dataset into divination card items
- * @param {Array} items - Array of divination card items
- * @returns {Promise<Array>} Items with dropWeight merged from dataset
- */
-async function mergeDivinationCardWeights(items) {
-  try {
-    // Load the dataset
-    const datasetResponse = await fetch('/data/divinationCards/datasets/dataset1.json');
-    
-    if (!datasetResponse.ok) {
-      console.warn('Could not load divination card dataset, items will not have dropWeight');
-      return items;
-    }
-    
-    const dataset = await datasetResponse.json();
-    
-    // Create a map of item ID to weight
-    const weightMap = new Map();
-    if (dataset.items && Array.isArray(dataset.items)) {
-      dataset.items.forEach(item => {
-        if (item.id && item.count !== undefined) {
-          weightMap.set(item.id, item.count);
-        }
-      });
-    }
-    
-    // Merge weights into items
-    return items.map(item => {
-      const weight = weightMap.get(item.id);
-      if (weight !== undefined) {
-        return { ...item, dropWeight: weight };
-      }
-      return item;
-    });
-  } catch (error) {
-    console.warn('Error merging divination card weights:', error);
-    return items;
-  }
-}
-
-/**
  * Merge breach data from splinters and stones
  * @param {Array} initialData - Initial data (from breachstones)
  * @returns {Promise<Array>} Merged items from both files

@@ -91,7 +91,7 @@ export async function inferWeights(datasets, options = {}) {
     // However, due to sampling variability and the fact that medians don't preserve sums,
     // the medians might not sum exactly to 1.0. We always renormalize to ensure consistency.
     let weightSum = 0;
-    for (const [itemId, stats] of Object.entries(summaryStatistics)) {
+    for (const [, stats] of Object.entries(summaryStatistics)) {
       weightSum += stats.median || stats.map || 0;
     }
     if (weightSum > 0) {

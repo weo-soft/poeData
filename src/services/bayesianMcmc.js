@@ -43,7 +43,8 @@ function sampleGamma(shape, scale) {
   const d = shape - 1 / 3;
   const c = 1 / Math.sqrt(9 * d);
 
-  while (true) {
+  // Rejection sampling for Gamma; unbounded iterations are standard for this algorithm.
+  for (;;) {
     let x, v;
     do {
       x = sampleNormal(0, 1);

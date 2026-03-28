@@ -5,7 +5,7 @@
 
 import { Chart, registerables } from 'chart.js';
 import { createElement, clearElement } from '../utils/dom.js';
-import { computeStatistics, computeCredibleInterval, computeMedian } from '../utils/posteriorStats.js';
+import { computeStatistics, computeCredibleInterval } from '../utils/posteriorStats.js';
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -367,9 +367,8 @@ export async function renderDensityPlot(container, posteriorSamples, items = [],
             font: { size: 12 },
             usePointStyle: true,
             padding: 8,
-            generateLabels: (chart) => {
+            generateLabels: (_chart) => {
               return datasets.map((dataset, index) => {
-                const item = itemData.find(d => d.itemName === dataset.label);
                 return {
                   text: dataset.label,
                   fillStyle: dataset.borderColor,
@@ -624,7 +623,7 @@ export async function renderDensityPlot(container, posteriorSamples, items = [],
  * @param {Object} options - Chart configuration options
  * @returns {Chart|null} Chart.js instance or null if rendering failed
  */
-export function renderRankedProbabilityChart(container, summaryStatistics, items = [], options = {}) {
+export function renderRankedProbabilityChart(container, summaryStatistics, items = [], _options = {}) {
   if (!container || !(container instanceof HTMLElement)) {
     throw new Error('Container must be a valid HTMLElement');
   }
@@ -657,8 +656,6 @@ export function renderRankedProbabilityChart(container, summaryStatistics, items
 
   const labels = entries.map(e => e.name);
   const medians = entries.map(e => e.median);
-  const lowerBounds = entries.map(e => e.lower);
-  const upperBounds = entries.map(e => e.upper);
 
   // Create canvas element
   const canvas = createElement('canvas');
